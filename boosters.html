@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atlantic Anarchy - Corações</title>
+    <link rel="stylesheet" href="css/straindez-style.css">
+    <link rel="stylesheet" href="css/performance.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href='https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap' rel='stylesheet'>
+</head>
+<body>
+    <div id="wrap">
+        <!-- Header -->
+        <div id="top" class="header-content">
+            <div class="header-bg">
+                <img src="assets/header-bg.png">
+            </div>
+            
+            <div class="header-main">
+                <div class="container">
+                    <div class="left hidden-lg hidden-md">
+                        <a href="/">
+                            <div class="logo">
+                                <img src="assets/logo1.png" class="desktop">
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <div class="right" style="padding-left: 0px; justify-content: space-between; border-left: none;">
+                        <div class="player-wrap" onclick="window.open('https://discord.gg/atlanticnetwork', '_blank');">
+                            <div class="pw-icon"><i class="fa-brands fa-discord"></i></div>
+                            <div class="pw-text">
+                                <small>JOIN OUR</small>
+                                <h4>DISCORD</h4>
+                            </div>
+                        </div>
+                        
+                        <div class="left hidden-xs hidden-sm">
+                            <a href="/">
+                                <div class="logo">
+                                    <img src="assets/logo1.png" class="desktop">
+                                </div>
+                            </a>
+                        </div>
+                        
+                        <div id="copy" class="player-wrap toggle-tooltip ip-address-element" style="margin-right: unset;" title="Click to copy">
+                            <div class="pw-icon"><i class="fa fa-server"></i></div>
+                            <div class="pw-text">
+                                <small>SERVER IP</small>
+                                <h4>NODE3.NORTHHOST.FR:26108</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="header-bottom">
+                <div class="container">
+                    <div class="user-card" onclick="location.href = 'login.html'">
+                        <div class="avatar">
+                            <img src="https://mc-heads.net/avatar/steve" id="user-avatar">
+                        </div>
+                        <div class="text">
+                            <small>Logged in as</small>
+                            <h3 id="username">Guest</h3>
+                        </div>
+                    </div>
+                    
+                    <div class="header">
+                        <div class="buttons">
+                            <div class="toolbar">
+                                <div class="discord-nav-button">
+                                    <a href="https://discord.gg/atlanticnetwork" target="_blank" class="btn btn-info empty">
+                                        <i class="fa-brands fa-discord"></i>Discord
+                                    </a>
+                                </div>
+                                <div class="currency">
+                                    <button type="button" class="btn btn-default dropdown-toggle">EUR <span class="fa fa-caret-down"></span></button>
+                                </div>
+                                <div class="basket">
+                                    <a href="cart.html" class="btn btn-info empty">
+                                        <i class="fa-solid fa-cart-shopping"></i>
+                                        <span id="cart-count">0</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div id="main" class="main-content">
+            <div class="container">
+                <div class="title">
+                    <a class="return" href="index.html"><i class="fa-solid fa-house"></i></a>
+                    <h2>Corações</h2>
+                </div>
+
+                <!-- Boosters Grid -->
+                <div class="category packages-image" id="boosters-container">
+                    <!-- Boosters will be dynamically loaded here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="bottom-content">
+            <div class="footer-top">
+                <div class="container flex">
+                    <div class="col lg">
+                        <h2>About Us</h2>
+                        <p>
+                            Atlantic Anarchy is a public minecraft anarchy server that welcomes both Java and Bedrock players!
+                            Join us at <b>node3.northhost.fr:26108</b>.
+                        </p>
+                    </div>
+                    <div class="col col-links">
+                        <h2>Useful Links</h2>
+                        <div class="link-list">
+                            <a href="index.html">Home</a>
+                            <a href="rules.html">Rules</a>
+                            <a href="mailto:support@atlantic.net">Support</a>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <h2>Support</h2>
+                        <p>
+                            Questions before purchasing? Reach out on Discord or email us for payment help.
+                            <a class="footer-btn" href="https://discord.gg/atlanticnetwork">Discord</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div class="container">
+                    <div class="left">
+                        <h1>2026 © <strong>Atlantic Anarchy</strong></h1>
+                        <p>
+                            We are not affiliated with or endorsed by Mojang, AB.<br>
+                            <small>Contact us via email <a href="mailto:support@atlantic.net">here!</a></small>
+                        </p>
+                    </div>
+                    <div class="right">
+                        <ul>
+                            <li><a href="#"><i class="fa-brands fa-twitter"></i></a></li>
+                            <li><a href="#"><i class="fa-brands fa-youtube"></i></a></li>
+                            <li><a href="#"><i class="fa-brands fa-tiktok"></i></a></li>
+                            <li><a href="https://discord.gg/atlanticnetwork"><i class="fa-brands fa-discord"></i></a></li>
+                            <li><a href="#top"><i class="fa-solid fa-arrow-turn-up"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/straindez.js"></script>
+    <script src="js/boosters.js"></script>
+</body>
+</html>

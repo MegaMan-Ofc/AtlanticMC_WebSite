@@ -1,0 +1,248 @@
+/* ============================================
+   MOBILE FIXES - Correções específicas mobile
+   ============================================ */
+
+/* Prevenir zoom em inputs (iOS) */
+input,
+select,
+textarea {
+    font-size: 16px !important;
+}
+
+/* Smooth scroll em mobile */
+html {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Fix para Safari iOS */
+body {
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+}
+
+/* Prevenir seleção de texto acidental */
+.btn,
+.product-card,
+.category-card {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+    user-select: none;
+}
+
+/* Melhorar performance de animações */
+.product-card,
+.btn,
+.category-card {
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    will-change: transform;
+}
+
+/* Fix para imagens em iOS */
+img {
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    user-drag: none;
+}
+
+/* Melhor aparência de botões em mobile */
+button,
+.btn,
+.btn-add-cart {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    cursor: pointer;
+    touch-action: manipulation;
+}
+
+/* Fix para sticky header em iOS */
+.header-content {
+    position: relative;
+    z-index: 1000;
+}
+
+/* Melhorar legibilidade em telas pequenas */
+@media screen and (max-width: 767px) {
+    /* Aumentar espaçamento de texto */
+    p {
+        line-height: 1.6;
+    }
+
+    /* Garantir que cards não quebrem */
+    .product-card,
+    .category-card {
+        min-width: 0;
+        overflow: hidden;
+    }
+
+    /* Fix para header sticky */
+    .header-main {
+        position: sticky;
+        top: 0;
+        z-index: 999;
+        background: rgba(0, 0, 0, 0.95);
+        backdrop-filter: blur(10px);
+    }
+
+    /* Melhorar toque em links */
+    a {
+        padding: 5px;
+        margin: -5px;
+    }
+
+    /* Fix para modal/overlay em mobile */
+    .modal,
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 9999;
+    }
+
+    /* Garantir scroll vertical apenas */
+    .products-grid,
+    .category-grid {
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+
+    /* Fix para tabelas em mobile */
+    table {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Melhorar espaçamento de seções */
+    section {
+        padding: 30px 15px;
+    }
+
+    /* Fix para footer em mobile */
+    .footer {
+        padding: 30px 15px;
+    }
+
+    .footer-bottom {
+        padding: 20px 15px;
+    }
+
+    /* Garantir que cards de rank sejam visíveis */
+    .rank-card {
+        width: 100%;
+        max-width: 100%;
+        margin: 10px 0;
+    }
+
+    /* Fix para preços grandes */
+    .product-price,
+    .cart-total {
+        word-break: break-word;
+    }
+
+    /* Melhorar aparência do carrinho */
+    .cart-item {
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    /* Fix para badges */
+    .featured-badge,
+    .best-value-badge,
+    .popular-badge {
+        position: absolute;
+        white-space: nowrap;
+    }
+}
+
+/* Orientação landscape em mobile */
+@media screen and (max-width: 767px) and (orientation: landscape) {
+    /* Reduzir altura de banners */
+    .sdz-samurai-hero {
+        height: 150px;
+    }
+
+    /* Ajustar header */
+    .header-main {
+        padding: 5px;
+    }
+
+    .player-wrap {
+        padding: 8px;
+    }
+
+    /* Grid com 2 colunas em landscape */
+    .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Tablets em retrato */
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+    .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+
+    .category-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Tablets em landscape */
+@media screen and (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    .products-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Fix para notch em iPhone X+ */
+@supports (padding: max(0px)) {
+    body {
+        padding-left: min(0px, env(safe-area-inset-left));
+        padding-right: min(0px, env(safe-area-inset-right));
+    }
+
+    .header-content {
+        padding-top: env(safe-area-inset-top);
+    }
+
+    .footer {
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+}
+
+/* Dark mode improvements */
+@media (prefers-color-scheme: dark) {
+    /* Já está em dark mode, sem alterações necessárias */
+}
+
+/* Reduzir movimento para acessibilidade */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Alto contraste */
+@media (prefers-contrast: high) {
+    .btn,
+    .product-card,
+    .category-card {
+        border-width: 2px;
+    }
+
+    .product-name,
+    .category-name {
+        font-weight: 700;
+    }
+}

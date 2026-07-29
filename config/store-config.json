@@ -1,0 +1,219 @@
+{
+  "discord": {
+    "clientId": "YOUR_DISCORD_CLIENT_ID",
+    "guildId": "YOUR_DISCORD_GUILD_ID",
+    "inviteLink": "https://discord.gg/DYspcWpUPv"
+  },
+  "server": {
+    "name": "Atlantic Anarchy",
+    "ip": "185.83.154.12",
+    "port": 25591
+  },
+  "checkout": {
+    "paymentLink": "https://your-payment-link.com/checkout"
+  },
+  "ranks": [
+    {
+      "id": "vip",
+      "name": "VIP Rank",
+      "price": 6.64,
+      "image": "assets/vip-rank.png",
+      "description": "VIP prefix in front of your name",
+      "features": [
+        "+300 RUBIS",
+        "Priority queue level 1 (skip the server waitlist!)",
+        "Access to set 2 homes (/sethome)",
+        "Access to create 3 auction house listings (/ah)",
+        "Access to VIP Rank in the Discord",
+        "Infinite VIP Kit! (/kit vip)"
+      ],
+      "kit": {
+        "items": [
+          { "material": "shulker_box", "amount": 1 },
+          { "material": "totem_of_undying", "amount": 1 },
+          { "material": "golden_apple", "amount": 1, "enchanted": true },
+          { "material": "diamond", "amount": 1 },
+          { "material": "golden_apple", "amount": 4 },
+          { "material": "banner", "amount": 1 },
+          { "material": "diamond_sword", "amount": 1, "enchanted": true },
+          { "material": "diamond_pickaxe", "amount": 1, "enchanted": true },
+          { "material": "diamond_sword", "amount": 1, "enchanted": true },
+          { "material": "diamond_axe", "amount": 1, "enchanted": true },
+          { "material": "diamond_shovel", "amount": 1, "enchanted": true },
+          { "material": "diamond_chestplate", "amount": 1, "enchanted": true },
+          { "material": "diamond_helmet", "amount": 1, "enchanted": true },
+          { "material": "diamond_leggings", "amount": 1, "enchanted": true },
+          { "material": "diamond_boots", "amount": 1, "enchanted": true },
+          { "material": "emerald", "amount": 8 }
+        ],
+        "description": [
+          "VIP Pickaxe",
+          "VIP Sword",
+          "VIP Axe",
+          "VIP Shovel",
+          "VIP Helmet",
+          "VIP Chestplate",
+          "VIP Leggings",
+          "VIP Boots",
+          "VIP Fishing Rod",
+          "VIP Shield",
+          "8 Ender Pearl",
+          "4 Enderchest",
+          "64 Golden Carrot",
+          "32 Golden Apple",
+          "8 Enchanted Golden Apple",
+          "1 Totem Of Undying",
+          "28 Diamond"
+        ]
+      }
+    },
+    {
+      "id": "mvp",
+      "name": "MVP Rank",
+      "price": 13.84,
+      "image": "assets/mvp-rank.png",
+      "description": "MVP prefix - All VIP perks plus more!",
+      "features": [
+        "+600 RUBIS",
+        "Priority queue level 2",
+        "Access to set 5 homes (/sethome)",
+        "Access to create 6 auction house listings (/ah)",
+        "Access to MVP Rank in the Discord",
+        "Infinite MVP Kit! (/kit mvp)",
+        "Access to /hat command"
+      ],
+      "kit": {
+        "items": [],
+        "description": []
+      }
+    },
+    {
+      "id": "marshal",
+      "name": "MARSHAL Rank",
+      "price": 24.35,
+      "image": "assets/marshal-rank.png",
+      "description": "MARSHAL prefix - Elite status!",
+      "features": [
+        "+1000 RUBIS",
+        "Priority queue level 3",
+        "Access to set 10 homes",
+        "Access to create 10 auction house listings",
+        "MARSHAL Discord Rank",
+        "Infinite MARSHAL Kit!",
+        "/hat command",
+        "/nick command (change your name color)"
+      ],
+      "kit": {
+        "items": [],
+        "description": []
+      }
+    },
+    {
+      "id": "mythic",
+      "name": "MYTHIC Rank",
+      "price": 32.68,
+      "image": "assets/mythic-rank.png",
+      "description": "MYTHIC prefix - Legendary tier!",
+      "features": [],
+      "kit": { "items": [], "description": [] }
+    },
+    {
+      "id": "celestial",
+      "name": "CELESTIAL Rank",
+      "price": 57.86,
+      "image": "assets/celestial-rank.png",
+      "description": "CELESTIAL prefix - Godlike power!",
+      "features": [],
+      "kit": { "items": [], "description": [] }
+    },
+    {
+      "id": "straindez",
+      "name": "STRAINDEZ Rank",
+      "price": 91.86,
+      "image": "assets/straindez-rank.png",
+      "description": "STRAINDEZ prefix - Ultimate rank!",
+      "features": [],
+      "kit": { "items": [], "description": [] }
+    },
+    {
+      "id": "custom",
+      "name": "CUSTOM Rank",
+      "price": 126.61,
+      "image": "assets/custom-rank.png",
+      "description": "Your own custom rank made just for you!",
+      "features": [
+        "Custom In-Game Rank",
+        "Custom Discord Rank",
+        "5000 Rubis",
+        "Hide Access (/hide)",
+        "20 Home Slots",
+        "20 Auction House Listings",
+        "Infinite Flight (/fly)",
+        "Enderchest Access (/echest)"
+      ],
+      "kit": null
+    }
+  ],
+  "rubis": [
+    {
+      "id": "rubis-500",
+      "name": "500 Rubis",
+      "amount": 500,
+      "price": 4.91,
+      "image": "assets/rubis-bag.png"
+    },
+    {
+      "id": "rubis-1200",
+      "name": "1,200 Rubis",
+      "amount": 1200,
+      "price": 12.73,
+      "image": "assets/rubis-barrel.png"
+    },
+    {
+      "id": "rubis-2500",
+      "name": "2,500 Rubis",
+      "amount": 2500,
+      "price": 24.35,
+      "image": "assets/rubis-chest.png"
+    },
+    {
+      "id": "rubis-6000",
+      "name": "6,000 Rubis",
+      "amount": 6000,
+      "price": 47.60,
+      "originalPrice": 59.99,
+      "image": "assets/rubis-crate.png"
+    },
+    {
+      "id": "rubis-13000",
+      "name": "13,000 Rubis",
+      "amount": 13000,
+      "price": 70.85,
+      "originalPrice": 89.99,
+      "image": "assets/rubis-barrel-large.png"
+    }
+  ],
+  "keys": [
+    {
+      "id": "time-key",
+      "name": "Time Key",
+      "price": 5.96,
+      "originalPrice": 7.98,
+      "image": "assets/time-key.png",
+      "badge": "LIMITED TIME ONLY",
+      "badgeColor": "#ea580c"
+    },
+    {
+      "id": "vanta-key",
+      "name": "Vanta Key",
+      "price": 7.20,
+      "image": "assets/vanta-key.png"
+    },
+    {
+      "id": "aventus-key",
+      "name": "Aventus Key",
+      "price": 8.86,
+      "image": "assets/aventus-key.png"
+    }
+  ]
+}
