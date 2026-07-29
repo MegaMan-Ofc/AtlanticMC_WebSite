@@ -1,0 +1,37 @@
+/* Styles moved from inline style attributes in index.html. */
+
+html body .atlantic-index-inline-001 {
+    padding-left: 0px; justify-content: space-between; border-left: none;
+}
+
+html body #copy.atlantic-index-inline-002 {
+    margin-right: unset;
+}
+
+html body .atlantic-index-inline-003 {
+    background: linear-gradient(50deg, #165D8F, #1F6FEB);
+}
+
+html body .atlantic-index-inline-004 {
+    max-width: 120px; max-height: 120px; object-fit: contain; margin-top: 20px;
+}
+
+html body .atlantic-index-inline-005 {
+    background: linear-gradient(50deg, #4A1624, #6D2835);
+}
+
+html body .atlantic-index-inline-006 {
+    background: linear-gradient(50deg, #7A4F9E, #B8658F);
+}
+
+html body .atlantic-index-inline-007 {
+    background: linear-gradient(50deg, #1a472a, #2d5016);
+}
+
+html body .atlantic-index-inline-008 {
+    max-width: 120px; max-height: 120px; object-fit: contain; filter: drop-shadow(0 0 20px rgba(76, 175, 80, 0.5));
+}
+
+html body .atlantic-index-inline-009 {
+    object-fit: contain; object-position: center center; max-width: 200px;
+}

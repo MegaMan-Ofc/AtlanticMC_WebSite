@@ -1,0 +1,206 @@
+/* Styles moved from <style> blocks in admin.html. */
+
+.admin-container {
+    max-width: 1400px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.admin-header {
+    background: var(--bg-card);
+    padding: 30px;
+    border-radius: 16px;
+    margin-bottom: 30px;
+}
+
+.admin-tabs {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.tab-btn {
+    background: var(--bg-dark);
+    border: 2px solid var(--border-color);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.tab-btn.active {
+    background: var(--primary-blue);
+    border-color: var(--primary-blue);
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.config-section {
+    background: var(--bg-card);
+    padding: 30px;
+    border-radius: 16px;
+    margin-bottom: 20px;
+}
+
+.config-form {
+    display: grid;
+    gap: 20px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    font-weight: 600;
+    color: var(--text-gray);
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    background: var(--bg-dark);
+    border: 2px solid var(--border-color);
+    color: white;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--primary-blue);
+}
+
+.item-list {
+    display: grid;
+    gap: 15px;
+}
+
+.item-card {
+    background: var(--bg-dark);
+    border: 2px solid var(--border-color);
+    padding: 20px;
+    border-radius: 12px;
+    display: grid;
+    grid-template-columns: 80px 1fr auto;
+    gap: 20px;
+    align-items: center;
+}
+
+.item-card img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+.item-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-edit, .btn-delete {
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.btn-edit {
+    background: var(--primary-blue);
+    color: white;
+}
+
+.btn-delete {
+    background: #ef4444;
+    color: white;
+}
+
+.btn-save {
+    background: var(--success-green);
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-save:hover {
+    background: #059669;
+    transform: scale(1.02);
+}
+
+.btn-add-new {
+    background: var(--primary-blue);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.alert {
+    padding: 15px 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.alert-success {
+    background: rgba(16, 185, 129, 0.2);
+    color: var(--success-green);
+    border: 1px solid var(--success-green);
+}
+
+.alert-error {
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+    border: 1px solid #ef4444;
+}
+
+
+
+/* Styles moved from inline style attributes in admin.html. */
+
+html body .atlantic-admin-inline-001 {
+    color: var(--text-gray); margin-top: 10px;
+}
+
+html body .atlantic-admin-inline-002 {
+    display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;
+}
+
+html body .atlantic-admin-inline-003 {
+    display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;
+}
+
+html body .atlantic-admin-inline-004 {
+    display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;
+}
