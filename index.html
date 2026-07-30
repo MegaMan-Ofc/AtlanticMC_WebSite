@@ -1,232 +1,206 @@
 <!DOCTYPE html>
-<html lang="pt">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Atlantic Anarchy - Store</title>
-    <link rel="stylesheet" href="css/straindez-style.css">
-    <link rel="stylesheet" href="css/performance.css">
-    <link rel="stylesheet" href="css/mobile-fixes.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href='https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap' rel='stylesheet'>
-    <link rel="stylesheet" href="css/index.css">
-</head>
-<body>
-    <div id="wrap">
-        <!-- Header -->
-        <div id="top" class="header-content">
-            <div class="header-bg">
-                <img src="assets/header-bg.png">
-            </div>
-            
-            <div class="header-main">
-                <div class="container">
-                    <div class="left hidden-lg hidden-md">
-                        <a href="/">
-                            <div class="logo">
-                                <img src="assets/logo atlantic (2).png" class="desktop">
-                            </div>
-                        </a>
-                    </div>
-                    
-                    <div class="right atlantic-index-inline-001">
-                        <div class="player-wrap" onclick="window.open('https://discord.gg/atlanticnetwork', '_blank');">
-                            <div class="pw-icon"><i class="fa-brands fa-discord"></i></div>
-                            <div class="pw-text">
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="theme-color" content="#0B0E13">
+        <title>Atlantic Anarchy - Store</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&amp;display=swap">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link rel="stylesheet" href="css/store.css">
+        <link rel="stylesheet" href="css/performance.css">
+        <link rel="stylesheet" href="css/responsive.css">
+        <link rel="stylesheet" href="css/layout.css">
+        <link rel="stylesheet" href="css/home.css">
+    </head>
+    <body class="page-home">
+        <div id="wrap">
+            <!-- Header -->
+            <header id="top" class="header-content site-header">
+                <div class="header-main">
+                    <div class="container header-main__inner">
+                        <a class="player-wrap header-action header-action--discord" href="https://discord.gg/atlanticnetwork" target="_blank" rel="noopener noreferrer" aria-label="Join the Atlantic Anarchy Discord server">
+                            <span class="pw-icon" aria-hidden="true">
+                                <i class="fa-brands fa-discord"></i>
+                            </span>
+                            <span class="pw-text">
                                 <small>JOIN OUR</small>
-                                <h4>DISCORD</h4>
-                            </div>
-                        </div>
-                        
-                        <div class="left hidden-xs hidden-sm">
-                            <a href="/">
-                                <div class="logo">
-                                    <img src="assets/logo atlantic (2).png" class="desktop">
-                                </div>
-                            </a>
-                        </div>
-                        
-                        <div id="copy" class="player-wrap toggle-tooltip ip-address-element atlantic-index-inline-002" title="Click to copy">
-                            <div class="pw-icon"><i class="fa fa-server"></i></div>
-                            <div class="pw-text">
-                                <small>SERVER IP</small>
-                                <h4>atlanticmc.secure.pebble.host</h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="header-bottom">
-                <div class="container">
-                    <div class="user-card" onclick="location.href = 'login.html'">
-                        <div class="avatar">
-                            <img src="https://mc-heads.net/avatar/steve" id="user-avatar">
-                        </div>
-                        <div class="text">
-                            <small>Logged in as</small>
-                            <h3 id="username">Guest</h3>
-                        </div>
-                    </div>
-                    
-                    <div class="header">
-                        <div class="buttons">
-                            <div class="toolbar">
-                                <div class="discord-nav-button">
-                                    <a href="https://discord.gg/atlanticnetwork" target="_blank" class="btn btn-info empty">
-                                        <i class="fa-brands fa-discord"></i>Discord
-                                    </a>
-                                </div>
-                                <div class="currency">
-                                    <button type="button" class="btn btn-default dropdown-toggle">EUR <span class="fa fa-caret-down"></span></button>
-                                </div>
-                                <div class="basket">
-                                    <a href="cart.html" class="btn btn-info empty">
-                                        <i class="fa-solid fa-cart-shopping"></i>
-                                        <span id="cart-count">0</span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Main Content -->
-        <div id="main" class="main-content">
-            <div class="container">
-                <!-- Magma Crate Banner -->
-                <div class="sdz-samurai-hero magma-banner" onclick="location.href='keys.html'">
-                    <!-- Fundo Galáxia Vermelha -->
-                    <div class="magma-galaxy-bg">
-                        <div class="magma-star"></div>
-                        <div class="magma-star"></div>
-                        <div class="magma-star"></div>
-                        <div class="magma-star"></div>
-                        <div class="magma-star"></div>
-                        <div class="magma-star"></div>
-                        <div class="magma-star"></div>
-                        <div class="magma-star"></div>
-                        <div class="magma-nebula magma-nebula-1"></div>
-                        <div class="magma-nebula magma-nebula-2"></div>
-                        <div class="magma-nebula magma-nebula-3"></div>
-                    </div>
-                    
-                    <!-- Texto ATRÁS (z-index baixo) -->
-                    <div class="magma-text-background">
-                        <div class="sdz-samurai-word">MAGMA</div>
-                        <div class="sdz-samurai-subword">EXCLUSIVE CRATE</div>
-                    </div>
-                    
-                    <!-- Chave NO MEIO (z-index médio) -->
-                    <div class="magma-key-foreground">
-                        <div class="magma-key-glow-circle"></div>
-                        <img class="sdz-samurai-key" src="assets/magma-key.png" alt="Magma Crate Key">
-                    </div>
-                    
-                    <!-- Botão EMBAIXO (z-index alto) -->
-                    <div class="magma-button-bottom">
-                        <a class="sdz-samurai-cta" href="keys.html">
-                            <span class="sdz-samurai-cta-main">Order Now →</span>
-                            <span class="sdz-samurai-cta-sub">LIMITED TIME ONLY</span>
+                                <strong>DISCORD</strong>
+                            </span>
                         </a>
+                        <a class="logo site-logo" href="index.html" aria-label="Atlantic Anarchy store home">
+                            <img class="desktop" src="assets/logo1.png" alt="Atlantic Anarchy">
+                        </a>
+                        <button id="copy" class="player-wrap toggle-tooltip ip-address-element header-action header-action--server" type="button" title="Click to copy" aria-label="Copy the Minecraft server address">
+                            <span class="pw-icon" aria-hidden="true">
+                                <i class="fa-solid fa-server"></i>
+                            </span>
+                            <span class="pw-text">
+                                <small>SERVER IP</small>
+                                <strong>atlanticmc.secure.pebble.host</strong>
+                            </span>
+                        </button>
                     </div>
                 </div>
-
-                <!-- Categories Grid -->
-                <div class="grid-container">
-                    <div class="category-card atlantic-index-inline-003" onclick="location.href='ranks.html'">
-                        <img class="atlantic-index-inline-004" src="assets/diamante.png">
-                        <h2>VIPs</h2>
-                    </div>
-                    <div class="category-card atlantic-index-inline-005" onclick="location.href='rubis.html'">
-                        <img src="assets/rubis-saco-pequeno.png.png">
-                        <h2>Rubis</h2>
-                    </div>
-                    <div class="category-card atlantic-index-inline-006" onclick="location.href='keys.html'">
-                        <img src="assets/atlantic-key.png">
-                        <h2>Keys</h2>
-                    </div>
-                    <div class="category-card atlantic-index-inline-007" onclick="location.href='money.html'">
-                        <img class="atlantic-index-inline-008" src="assets/money-icon.png" onerror="this.innerHTML='💰'; this.style.fontSize='80px';">
-                        <h2>Money</h2>
+                <div class="header-bottom">
+                    <div class="container header-bottom__inner">
+                        <button class="user-card" type="button" onclick="location.href='login.html'" aria-label="Open Minecraft account login">
+                            <span class="avatar">
+                                <img id="user-avatar" src="https://mc-heads.net/avatar/steve" alt="Minecraft avatar">
+                            </span>
+                            <span class="text">
+                                <small>Logged in as</small>
+                                <strong id="username">Guest</strong>
+                            </span>
+                        </button>
+                        <nav class="header-toolbar" aria-label="Store actions">
+                            <a href="https://discord.gg/atlanticnetwork" target="_blank" rel="noopener noreferrer" class="btn btn-info empty">
+                                <i class="fa-brands fa-discord" aria-hidden="true"></i>
+                                <span>Discord</span>
+                            </a>
+                            <button type="button" class="btn btn-default dropdown-toggle currency-button" aria-label="Selected currency: Euro">
+                    EUR <span class="fa fa-caret-down" aria-hidden="true"></span>
+                            </button>
+                            <a href="cart.html" class="btn btn-info empty cart-button" aria-label="Open shopping cart">
+                                <i class="fa-solid fa-cart-shopping" aria-hidden="true"></i>
+                                <span id="cart-count">0</span>
+                            </a>
+                        </nav>
                     </div>
                 </div>
-
-                <!-- Corações Card -->
-                <div class="sdz-rank-card boosters-card" onclick="location.href='boosters.html'">
-                    <div class="boosters-bg"></div>
-                    <div class="sdz-rank-left">
-                        <div class="sdz-rank-kicker">Power Up Your Game</div>
-                        <h2 class="sdz-rank-heading">
+            </header>
+            <!-- Main Content -->
+            <main id="main" class="main-content">
+                <div class="container">
+                    <!-- Magma Crate Banner -->
+                    <a class="sdz-samurai-hero magma-banner" href="keys.html">
+                        <!-- Fundo Galáxia Vermelha -->
+                        <div class="magma-galaxy-bg">
+                            <div class="magma-star"></div>
+                            <div class="magma-star"></div>
+                            <div class="magma-star"></div>
+                            <div class="magma-star"></div>
+                            <div class="magma-star"></div>
+                            <div class="magma-star"></div>
+                            <div class="magma-star"></div>
+                            <div class="magma-star"></div>
+                            <div class="magma-nebula magma-nebula-1"></div>
+                            <div class="magma-nebula magma-nebula-2"></div>
+                            <div class="magma-nebula magma-nebula-3"></div>
+                        </div>
+                        <!-- Texto ATRÁS (z-index baixo) -->
+                        <div class="magma-text-background">
+                            <div class="sdz-samurai-word">MAGMA</div>
+                            <div class="sdz-samurai-subword">EXCLUSIVE CRATE</div>
+                        </div>
+                        <!-- Chave NO MEIO (z-index médio) -->
+                        <div class="magma-key-foreground">
+                            <div class="magma-key-glow-circle"></div>
+                            <img class="sdz-samurai-key" src="assets/magma-key.png" alt="Magma Crate Key">
+                        </div>
+                        <!-- Botão EMBAIXO (z-index alto) -->
+                        <div class="magma-button-bottom">
+                            <span class="sdz-samurai-cta">
+                                <span class="sdz-samurai-cta-main">Order Now →</span>
+                                <span class="sdz-samurai-cta-sub">LIMITED TIME ONLY</span>
+                            </span>
+                        </div>
+                    </a>
+                    <!-- Categories Grid -->
+                    <div class="grid-container">
+                        <a class="category-card category-card--vips" href="ranks.html">
+                            <img src="assets/diamante.png" alt="VIP rank diamond" class="category-card__image category-card__image--vips">
+                            <h2>VIPs</h2>
+                        </a>
+                        <a class="category-card category-card--rubis" href="rubis.html">
+                            <img src="assets/rubis-saco-pequeno.png.png" alt="Small bag of Rubis" class="category-card__image">
+                            <h2>Rubis</h2>
+                        </a>
+                        <a class="category-card category-card--keys" href="keys.html">
+                            <img src="assets/atlantic-key.png" alt="Atlantic crate key" class="category-card__image">
+                            <h2>Keys</h2>
+                        </a>
+                        <div class="category-card category-card--money category-card--disabled" aria-disabled="true">
+                            <i class="fa-solid fa-coins category-card__icon" aria-hidden="true"></i>
+                            <h2>Money</h2>
+                            <small class="category-card__status">Coming soon</small>
+                        </div>
+                    </div>
+                    <!-- Corações Card -->
+                    <a class="sdz-rank-card boosters-card" href="boosters.html">
+                        <div class="boosters-bg"></div>
+                        <div class="sdz-rank-left">
+                            <div class="sdz-rank-kicker">Power Up Your Game</div>
+                            <h2 class="sdz-rank-heading">
                             CORAÇÕES
                             <span>VIDA EXTRA</span>
-                        </h2>
-                        <a class="sdz-rank-btn" href="boosters.html">
+                            </h2>
+                            <span class="sdz-rank-btn">
                             Ver Corações <span>→</span>
-                        </a>
-                    </div>
-                    <div class="sdz-rank-art">
-                        <img class="atlantic-index-inline-009" src="assets/heart (2).png" alt="Heart">
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Footer -->
-        <div class="bottom-content">
-            <div class="footer-top">
-                <div class="container flex">
-                    <div class="col lg">
-                        <h2>About Us</h2>
-                        <p>
-                            Atlantic Anarchy is a public minecraft anarchy server that welcomes both Java and Bedrock players!
-                            Join us at <b>185.83.154.12:25591</b>.
-                        </p>
-                    </div>
-                    <div class="col col-links">
-                        <h2>Useful Links</h2>
-                        <div class="link-list">
-                            <a href="/">Home</a>
-                            <a href="/rules.html">Rules</a>
-                            <a href="mailto:support@atlantic.net">Support</a>
+                            </span>
                         </div>
-                    </div>
-                    <div class="col">
-                        <h2>Support</h2>
-                        <p>
-                            Questions before purchasing? Reach out on Discord or email us for payment help.
-                            <a class="footer-btn" href="https://discord.gg/atlanticnetwork">Discord</a>
-                        </p>
+                        <div class="sdz-rank-art">
+                            <img src="assets/heart%20(2).png" alt="Extra life heart" class="boosters-card__image">
+                        </div>
+                    </a>
+                </div>
+            </main>
+            <!-- Footer -->
+            <footer class="bottom-content site-footer">
+                <div class="footer-top">
+                    <div class="container footer-grid">
+                        <section class="footer-column footer-column--about">
+                            <h2>About Us</h2>
+                            <p>
+                    Atlantic Anarchy is a public Minecraft anarchy server for Java and Bedrock players.
+                    Join us at <strong>atlanticmc.secure.pebble.host</strong>.
+                </p>
+                        </section>
+                        <nav class="footer-column" aria-label="Store links">
+                            <h2>Store</h2>
+                            <div class="link-list">
+                                <a href="index.html">Home</a>
+                                <a href="ranks.html">VIPs</a>
+                                <a href="rubis.html">Rubis</a>
+                                <a href="keys.html">Keys</a>
+                            </div>
+                        </nav>
+                        <section class="footer-column">
+                            <h2>Support</h2>
+                            <p>Questions before purchasing? Contact us through Discord or email.</p>
+                            <div class="footer-actions">
+                                <a class="footer-btn" href="https://discord.gg/atlanticnetwork" target="_blank" rel="noopener noreferrer">Discord</a>
+                                <a class="footer-btn footer-btn--secondary" href="mailto:support@atlantic.net">Email</a>
+                            </div>
+                        </section>
                     </div>
                 </div>
-            </div>
-            
-            <div class="footer-bottom">
-                <div class="container">
-                    <div class="left">
-                        <h1>2026 © <strong>Atlantic Anarchy</strong></h1>
-                        <p>
-                            We are not affiliated with or endorsed by Mojang, AB.<br>
-                            <small>Contact us via email <a href="mailto:support@atlantic.net">here!</a></small>
-                        </p>
-                    </div>
-                    <div class="right">
-                        <ul>
-                            <li><a href="#"><i class="fa-brands fa-twitter"></i></a></li>
-                            <li><a href="#"><i class="fa-brands fa-youtube"></i></a></li>
-                            <li><a href="#"><i class="fa-brands fa-tiktok"></i></a></li>
-                            <li><a href="https://discord.gg/atlanticnetwork"><i class="fa-brands fa-discord"></i></a></li>
-                            <li><a href="#top"><i class="fa-solid fa-arrow-turn-up"></i></a></li>
+                <div class="footer-bottom">
+                    <div class="container footer-bottom__inner">
+                        <div class="footer-legal">
+                            <p class="footer-brand">2026 © <strong>Atlantic Anarchy</strong>
+                            </p>
+                            <p>We are not affiliated with or endorsed by Mojang, AB.</p>
+                        </div>
+                        <ul class="footer-socials" aria-label="Social links">
+                            <li>
+                                <a href="https://discord.gg/atlanticnetwork" target="_blank" rel="noopener noreferrer" aria-label="Discord">
+                                    <i class="fa-brands fa-discord" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#top" aria-label="Back to top">
+                                    <i class="fa-solid fa-arrow-turn-up" aria-hidden="true"></i>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </div>
-            </div>
+            </footer>
         </div>
-    </div>
-
-    <script src="js/main.js"></script>
-    <script src="js/straindez.js"></script>
-</body>
+        <script src="js/main.js"></script>
+        <script src="js/straindez.js"></script>
+    </body>
 </html>
