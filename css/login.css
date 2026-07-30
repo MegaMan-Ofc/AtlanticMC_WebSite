@@ -1,4 +1,4 @@
-/* Styles moved from <style> blocks in login.html. */
+
 
 .login-container {
     max-width: 550px;
@@ -166,20 +166,8 @@
         width: 100%;
         padding: 0 15px;
     }
-    
+
     .login-box {
         padding: 30px 20px;
     }
-}
-
-
-
-/* Styles moved from inline style attributes in login.html. */
-
-html body .atlantic-login-inline-001 {
-    padding-left: 0px; justify-content: space-between; border-left: none;
-}
-
-html body #copy.atlantic-login-inline-002 {
-    margin-right: unset;
 }

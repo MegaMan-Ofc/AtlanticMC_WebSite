@@ -1,13 +1,13 @@
-/* ==================== PERFORMANCE OPTIMIZATIONS - EXTREMO ==================== */
 
-/* DESABILITAR will-change seletivo (pode causar lag) */
+
+
 .sdz-samurai-petals,
 .sdz-plus-card::before,
 .sdz-rank-bg {
     will-change: auto !important;
 }
 
-/* Forçar rendering por hardware apenas onde necessário */
+
 .package,
 .btn,
 .category-card {
@@ -15,7 +15,7 @@
     -webkit-transform: translateZ(0);
 }
 
-/* Simplificar TRANSIÇÕES (não todas) */
+
 .package,
 .package-image-main,
 .btn,
@@ -26,9 +26,9 @@
     transition-timing-function: ease !important;
 }
 
-/* Remover TODOS os filtros pesados - EXCETO logos */
+
 .package-image-main {
-    /* Mantém sem filtro para performance */
+    
 }
 
 .sdz-samurai-key,
@@ -38,10 +38,10 @@
 }
 
 .logo img {
-    filter: drop-shadow(0 0 20px rgba(108, 92, 231, 0.6)) !important; /* Mantém logo glow */
+    filter: drop-shadow(0 0 20px rgba(108, 92, 231, 0.6)) !important; 
 }
 
-/* Hover minimalista - CORRIGIDO */
+
 .package:hover {
     transform: translateY(-2px) translateZ(0) !important;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2) !important;
@@ -51,7 +51,7 @@
     transform: scale(1.02) translateZ(0) !important;
 }
 
-/* Botões normais */
+
 .btn:hover {
     transform: translateY(-1px) !important;
 }
@@ -77,16 +77,16 @@
     -webkit-backdrop-filter: none !important;
 }
 
-/* Simplificar backgrounds */
+
 .header-main {
-    background: rgba(11, 14, 19, 1) !important; /* Sólido ao invés de transparente */
+    background: rgba(11, 14, 19, 1) !important; 
 }
 
 .header-bottom {
     background: rgba(19, 22, 28, 1) !important;
 }
 
-/* Remover box-shadows pesados - CORRIGIDO */
+
 .btn-info:hover {
     box-shadow: 0 4px 12px rgba(108, 92, 231, 0.4) !important;
     transform: translateY(-1px) !important;
@@ -100,12 +100,12 @@
     box-shadow: 0 4px 12px rgba(228, 0, 58, 0.4) !important;
 }
 
-/* Desabilitar todas as animações */
+
 * {
     animation: none !important;
 }
 
-/* Simplificar gradientes - CORRIGIDO */
+
 .btn-info {
     background: linear-gradient(135deg, var(--straindez-accent), var(--straindez-accent-dark)) !important;
     color: white !important;
@@ -129,43 +129,43 @@
     background-clip: text !important;
 }
 
-/* Remover transforms complexos - CORRIGIDO */
+
 .player-wrap,
 .user-card,
 .category-card {
-    overflow: visible; /* Garante que conteúdo não seja cortado */
+    overflow: visible; 
 }
 
-/* Desabilitar backdrop-filter (MUITO PESADO) */
+
 .package,
 .category-card {
-    contain: layout paint; /* Removido 'strict' que causa bugs */
+    contain: layout paint; 
 }
 
 .btn {
-    contain: none; /* Botões sem containment */
+    contain: none; 
 }
 
-/* Otimizar scroll */
+
 * {
-    scroll-behavior: auto !important; /* Smooth causa lag */
+    scroll-behavior: auto !important; 
 }
 
-/* Desabilitar seleção de texto apenas em elementos interativos */
+
 .package-image-wrap,
 .category-card img {
     user-select: none;
     -webkit-user-select: none;
 }
 
-/* Forçar composite layers */
+
 .package,
 .package-image-main {
     will-change: transform;
     transform: translate3d(0, 0, 0);
 }
 
-/* Hardware acceleration for animated elements */
+
 .sdz-samurai-key,
 .sdz-plus-right img,
 .sdz-rank-art img,
@@ -178,7 +178,7 @@
     perspective: 1000px;
 }
 
-/* Reduce motion for users who prefer it */
+
 @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
@@ -187,7 +187,7 @@
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
     }
-    
+
     .sdz-samurai-key,
     .sdz-plus-right img,
     .sdz-rank-art img,
@@ -195,78 +195,78 @@
     .package-image-glow {
         animation: none !important;
     }
-    
+
     .sdz-samurai-petals {
         display: none !important;
     }
 }
 
-/* Optimize for mobile devices */
+
 @media (max-width: 768px) {
-    /* Reduce petals */
+    
     .sdz-samurai-petals span:nth-child(n+4) {
         display: none;
     }
+
     
-    /* Simplify backgrounds */
     body::before {
         background-size: 100px 100px;
         opacity: 0.5;
     }
-    
+
     body::after {
         opacity: 0.5;
     }
+
     
-    /* Reduce blur effects */
     .package-image-glow {
         filter: blur(10px);
     }
+
     
-    /* Disable some animations on mobile */
     .sdz-plus-card::before,
     .sdz-rank-bg {
         animation: none;
     }
 }
 
-/* Optimize for low-end devices */
+
 @media (max-width: 480px) {
-    /* Remove all petals */
+    
     .sdz-samurai-petals {
         display: none;
     }
+
     
-    /* Remove glow images */
     .package-image-glow {
         display: none;
     }
+
     
-    /* Simplify shadows */
     .package:hover {
         box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
     }
+
     
-    /* Disable heavy animations */
     .sdz-samurai-key,
     .package-image-main {
         animation: none;
     }
 }
 
-/* Optimize images loading */
+
 img {
     content-visibility: auto;
 }
 
-/* Optimize off-screen content */
+
 .category-card,
 .package {
     content-visibility: auto;
     contain-intrinsic-size: 0 500px;
 }
 
-/* Optimize modal rendering */
+
 .rank-modal {
     contain: layout style paint;
 }
@@ -275,7 +275,7 @@ img {
     contain: layout style;
 }
 
-/* Reduce repaints */
+
 .btn,
 .player-wrap,
 .user-card {
@@ -283,14 +283,14 @@ img {
     transform: translate3d(0, 0, 0);
 }
 
-/* Remove will-change after animation ends to free resources */
+
 .btn:not(:hover),
 .player-wrap:not(:hover),
 .user-card:not(:hover) {
     will-change: auto;
 }
 
-/* Optimize inventory grid rendering */
+
 .minecraft-inventory {
     contain: layout style paint;
 }
@@ -299,7 +299,7 @@ img {
     contain: layout;
 }
 
-/* Smooth scrolling optimization */
+
 html {
     scroll-behavior: smooth;
 }
@@ -310,24 +310,24 @@ html {
     }
 }
 
-/* Optimize text rendering */
+
 body {
     text-rendering: optimizeSpeed;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
 
-/* Lazy loading hint for browsers */
+
 img[loading="lazy"] {
     content-visibility: auto;
 }
 
-/* Reduce unnecessary reflows */
+
 * {
     box-sizing: border-box;
 }
 
-/* GPU acceleration hints */
+
 .header-main,
 .header-bottom,
 .modal-content,
@@ -336,22 +336,22 @@ img[loading="lazy"] {
     backface-visibility: hidden;
 }
 
-/* Optimize transitions to use only transform and opacity */
+
 .btn-info:hover,
 .player-wrap:hover,
 .category-card:hover {
     transition-property: transform, opacity, box-shadow;
 }
 
-/* Debounce hover effects */
+
 .inventory-slot:hover {
     transition-delay: 0.05s;
 }
 
-/* ==================== END OF PERFORMANCE OPTIMIZATIONS ==================== */
 
-/* ==================== FIX RANKS/VIPS BUTTONS ==================== */
-/* Força visibilidade AGRESSIVA dos botões nos VIPs/Ranks */
+
+
+
 #ranks-container .package {
     contain: none !important;
     content-visibility: visible !important;
@@ -389,7 +389,7 @@ img[loading="lazy"] {
     pointer-events: auto !important;
 }
 
-/* Remove qualquer clip-path ou mask */
+
 #ranks-container .package,
 #ranks-container .package .info,
 #ranks-container .package .button,
