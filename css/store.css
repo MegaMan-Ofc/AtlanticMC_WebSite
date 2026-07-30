@@ -1,17 +1,17 @@
-/* ===============================================
-   ATLANTIC STORE - STRAINDEZ STYLE
-   Criado por Kiro AI para Atlantic Anarchy
-   Design baseado no Straindez original
-   =============================================== */
 
-/* ROOT VARIABLES - Straindez Color Palette */
+
+
+
+
+
+
 :root {
-    /* Core Colors */
+    
     --straindez-bg: #0B0E13;
     --straindez-card: #13161C;
     --straindez-border: #1F232C;
 
-    /* Accent Colors - SUAVIZADAS */
+    
     --straindez-accent: #6C5CE7;
     --straindez-accent-dark: #5F4DD6;
     --straindez-cyan: #4A9FB5;
@@ -21,17 +21,17 @@
     --straindez-yellow: #D4B65A;
     --straindez-discord: #5865F2;
 
-    /* Text Colors */
+    
     --text-primary: #FFFFFF;
     --text-secondary: #B8BCC8;
     --text-muted: #6B7280;
 
-    /* Transitions */
+    
     --transition-fast: 0.15s ease;
     --transition-normal: 0.3s ease;
     --transition-slow: 0.5s ease;
 
-    /* Shadows */
+    
     --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
     --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.3);
     --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.4);
@@ -39,7 +39,7 @@
     --shadow-glow-cyan: 0 0 30px rgba(0, 217, 255, 0.4);
 }
 
-/* RESET & BASE */
+
 * {
     margin: 0;
     padding: 0;
@@ -60,14 +60,14 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-/* Background Grid Pattern - DESATIVADO (causa lag) */
+
 body::before {
-    display: none; /* REMOVIDO - Causa lag extremo */
+    display: none; 
 }
 
-/* Background Gradient Overlay - DESATIVADO (causa lag) */
+
 body::after {
-    display: none; /* REMOVIDO - Causa lag extremo */
+    display: none; 
 }
 
 #wrap {
@@ -76,7 +76,7 @@ body::after {
     min-height: 100vh;
 }
 
-/* Container */
+
 .container {
     max-width: 1400px;
     margin: 0 auto;
@@ -88,7 +88,7 @@ body::after {
     gap: 24px;
 }
 
-/* ==================== HEADER ==================== */
+
 #top {
     position: sticky;
     top: 0;
@@ -115,7 +115,7 @@ body::after {
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--straindez-border);
-    padding: 28px 0; /* Aumentado de 16px para 28px */
+    padding: 28px 0; 
     position: relative;
 }
 
@@ -138,18 +138,18 @@ body::after {
     justify-content: space-between;
 }
 
-/* Logo */
+
 .logo {
     display: flex;
     align-items: center;
 }
 
 .logo img {
-    height: 10rem; /* Aumentado de 64px para 90px */
+    height: 10rem; 
     filter: drop-shadow(0 0 20px rgba(108, 92, 231, 0.6));
     transition: var(--transition-normal);
-    background: transparent; /* Garante fundo transparente */
-    mix-blend-mode: normal; /* Remove qualquer blend que cause fundo branco */
+    background: transparent; 
+    mix-blend-mode: normal; 
 }
 
 .logo img:hover {
@@ -157,12 +157,12 @@ body::after {
     transform: scale(1.05);
 }
 
-/* Player Wrap (Server Info & Discord) */
+
 .player-wrap {
     display: flex;
     align-items: center;
     gap: 14px;
-    padding: 16px 24px; /* Aumentado de 12px 20px para 16px 24px */
+    padding: 16px 24px; 
     background: rgba(31, 35, 44, 0.5);
     border: 1px solid var(--straindez-border);
     border-radius: 12px;
@@ -182,14 +182,14 @@ body::after {
 }
 
 .pw-icon {
-    width: 48px; /* Aumentado de 40px para 48px */
-    height: 48px; /* Aumentado de 40px para 48px */
+    width: 48px; 
+    height: 48px; 
     display: flex;
     align-items: center;
     justify-content: center;
     background: linear-gradient(135deg, var(--straindez-accent), var(--straindez-accent-dark));
     border-radius: 10px;
-    font-size: 22px; /* Aumentado de 18px para 22px */
+    font-size: 22px; 
     color: white;
 }
 
@@ -203,7 +203,7 @@ body::after {
 
 .pw-text small {
     display: block;
-    font-size: 12px; /* Aumentado de 11px para 12px */
+    font-size: 12px; 
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -211,7 +211,7 @@ body::after {
 }
 
 .pw-text h4 {
-    font-size: 16px; /* Aumentado de 14px para 16px */
+    font-size: 16px; 
     font-weight: 700;
     background: linear-gradient(90deg, var(--straindez-cyan), var(--straindez-accent));
     -webkit-background-clip: text;
@@ -219,12 +219,12 @@ body::after {
     background-clip: text;
 }
 
-/* ==================== HEADER BOTTOM (User Bar) ==================== */
+
 .header-bottom {
     background: rgba(19, 22, 28, 0.8);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--straindez-border);
-    padding: 20px 0; /* Aumentado de 16px para 20px */
+    padding: 20px 0; 
 }
 
 .header-bottom .container {
@@ -233,12 +233,12 @@ body::after {
     justify-content: space-between;
 }
 
-/* User Card */
+
 .user-card {
     display: flex;
     align-items: center;
     gap: 14px;
-    padding: 10px 20px; /* Aumentado de 8px 16px para 10px 20px */
+    padding: 10px 20px; 
     background: rgba(31, 35, 44, 0.6);
     border: 1px solid var(--straindez-border);
     border-radius: 12px;
@@ -253,8 +253,8 @@ body::after {
 }
 
 .user-card .avatar {
-    width: 48px; /* Aumentado de 42px para 48px */
-    height: 48px; /* Aumentado de 42px para 48px */
+    width: 48px; 
+    height: 48px; 
     border-radius: 10px;
     overflow: hidden;
     border: 2px solid var(--straindez-accent);
@@ -277,12 +277,12 @@ body::after {
 }
 
 .user-card .text h3 {
-    font-size: 17px; /* Aumentado de 15px para 17px */
+    font-size: 17px; 
     font-weight: 700;
     color: var(--text-primary);
 }
 
-/* Header Buttons Toolbar */
+
 .header .buttons .toolbar {
     display: flex;
     align-items: center;
@@ -290,9 +290,9 @@ body::after {
 }
 
 .btn {
-    padding: 12px 24px; /* Aumentado de 10px 20px para 12px 24px */
+    padding: 12px 24px; 
     font-family: 'Poppins', sans-serif;
-    font-size: 14px; /* Aumentado de 13px para 14px */
+    font-size: 14px; 
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -336,7 +336,7 @@ body::after {
     box-shadow: 0 6px 20px rgba(88, 101, 242, 0.5);
 }
 
-/* Cart Badge */
+
 .basket .btn-info {
     position: relative;
 }
@@ -351,12 +351,12 @@ body::after {
     margin-left: 4px;
 }
 
-/* ==================== MAIN CONTENT ==================== */
+
 .main-content {
     padding: 40px 0 80px;
 }
 
-/* ==================== TIME CRATE BANNER ==================== */
+
 .sdz-samurai-hero {
     position: relative;
     height: 320px;
@@ -375,7 +375,7 @@ body::after {
     border-color: rgba(123, 44, 191, 0.6);
 }
 
-/* ==================== MAGMA BANNER - GALÁXIA VERMELHA ==================== */
+
 .magma-banner {
     background: radial-gradient(ellipse at center, #330000 0%, #1a0000 50%, #0d0000 100%) !important;
     height: 400px;
@@ -393,7 +393,7 @@ body::after {
     box-shadow: 0 20px 60px rgba(255, 0, 0, 0.6) !important;
 }
 
-/* Fundo Galáxia com Estrelas e Nebulosas */
+
 .magma-galaxy-bg {
     position: absolute;
     width: 100%;
@@ -404,7 +404,7 @@ body::after {
     overflow: hidden;
 }
 
-/* Estrelas */
+
 .magma-star {
     position: absolute;
     width: 2px;
@@ -428,7 +428,7 @@ body::after {
     50% { opacity: 0.3; transform: scale(1.5); }
 }
 
-/* Nebulosas Vermelhas */
+
 .magma-nebula {
     position: absolute;
     border-radius: 50%;
@@ -461,10 +461,10 @@ body::after {
     background: radial-gradient(circle, rgba(255, 0, 0, 0.6) 0%, rgba(100, 0, 0, 0.3) 40%, transparent 70%);
 }
 
-/* Texto ATRÁS (z-index 2) */
+
 .magma-text-background {
     position: absolute;
-    top: 40%; /* Movido de 50% para 40% para subir o texto */
+    top: 40%; 
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
@@ -492,7 +492,7 @@ body::after {
     margin-top: 10px;
 }
 
-/* Chave NO MEIO (z-index 5) */
+
 .magma-key-foreground {
     position: relative;
     z-index: 5;
@@ -525,7 +525,7 @@ body::after {
     transform: scale(1.1) translateY(-10px) rotate(5deg);
 }
 
-/* Botão EMBAIXO (z-index 10) */
+
 .magma-button-bottom {
     position: absolute;
     bottom: 30px;
@@ -571,7 +571,7 @@ body::after {
     letter-spacing: 1px;
 }
 
-/* Responsive */
+
 @media (max-width: 768px) {
     .magma-banner {
         height: 350px;
@@ -587,7 +587,7 @@ body::after {
     }
 
     .magma-text-background {
-        top: 35%; /* Ajuste para mobile também */
+        top: 35%; 
     }
 
     .magma-key-foreground .sdz-samurai-key {
@@ -603,15 +603,15 @@ body::after {
     }
 }
 
-/* Animated Petals - REMOVIDO (não usado mais) */
 
-/* Time Crate Title - REMOVIDO (redesenhado no magma-banner) */
 
-/* Floating Key Image - REMOVIDO (redesenhado no magma-banner) */
 
-/* CTA Button - REMOVIDO (redesenhado no magma-banner) */
 
-/* ==================== ATLANTIC PLUS CARD ==================== */
+
+
+
+
+
 .sdz-plus-card {
     display: grid;
     grid-template-columns: 1fr 400px;
@@ -628,7 +628,7 @@ body::after {
 }
 
 .sdz-plus-card::before {
-    display: none; /* Animação removida */
+    display: none; 
 }
 
 .sdz-plus-card:hover {
@@ -672,7 +672,7 @@ body::after {
     letter-spacing: 0.5px;
 }
 
-/* Plus Features List */
+
 .sdz-plus-features {
     list-style: none;
     display: grid;
@@ -698,7 +698,7 @@ body::after {
     font-size: 16px;
 }
 
-/* Plus Button */
+
 .sdz-plus-btn {
     display: inline-flex;
     align-items: center;
@@ -727,7 +727,7 @@ body::after {
     font-size: 18px;
 }
 
-/* Plus Character */
+
 .sdz-plus-right {
     position: relative;
     z-index: 2;
@@ -740,13 +740,13 @@ body::after {
     max-width: 100%;
     height: auto;
     filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.5));
-    /* Animação removida para performance */
+    
 }
 
-/* ==================== CATEGORY GRID ==================== */
+
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Mudado de 2 para 3 colunas */
+    grid-template-columns: repeat(3, 1fr); 
     gap: 24px;
     margin-bottom: 40px;
 }
@@ -790,8 +790,8 @@ body::after {
 .category-card img {
     position: relative;
     z-index: 2;
-    width: 200px; /* Aumentado de 120px para 200px */
-    height: 200px; /* Aumentado de 120px para 200px */
+    width: 200px; 
+    height: 200px; 
     object-fit: contain;
     filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.5));
     transition: var(--transition-normal);
@@ -814,7 +814,7 @@ body::after {
     padding-bottom: 30px;
 }
 
-/* ==================== CUSTOM RANK CARD ==================== */
+
 .sdz-rank-card {
     position: relative;
     display: grid;
@@ -831,28 +831,28 @@ body::after {
 }
 
 .sdz-rank-bg {
-    display: none; /* Animação removida */
+    display: none; 
 }
 
 .sdz-rank-card:hover {
     transform: translateY(-2px);
 }
 
-/* ==================== BOOSTERS CARD - TEMA CORAÇÕES (VERMELHO/ROSA) ==================== */
+
 .boosters-card {
     background: linear-gradient(135deg, #FF1744 0%, #E91E63 50%, #C2185B 100%) !important;
     border: 1px solid rgba(255, 23, 68, 0.4) !important;
-    overflow: visible !important; /* Permite Steve sair do card */
+    overflow: visible !important; 
 }
 
 .boosters-card .sdz-rank-art {
     position: relative;
-    right: -50px; /* Move Steve 50px para a direita (metade fora) */
+    right: -50px; 
     overflow: visible;
 }
 
 .boosters-card .sdz-rank-art img {
-    max-width: 450px; /* Steve maior */
+    max-width: 450px; 
     height: auto;
 }
 
@@ -914,7 +914,7 @@ body::after {
     margin-top: 8px;
 }
 
-/* Rank Features */
+
 .sdz-rank-features {
     list-style: none;
     display: grid;
@@ -939,7 +939,7 @@ body::after {
     font-size: 16px;
 }
 
-/* Rank Button */
+
 .sdz-rank-btn {
     display: inline-flex;
     align-items: center;
@@ -968,7 +968,7 @@ body::after {
     font-size: 18px;
 }
 
-/* Rank Art */
+
 .sdz-rank-art {
     position: relative;
     z-index: 2;
@@ -981,10 +981,10 @@ body::after {
     max-width: 100%;
     height: auto;
     filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.5));
-    /* Animação removida para performance */
+    
 }
 
-/* ==================== FOOTER ==================== */
+
 .bottom-content {
     background: var(--straindez-card);
     border-top: 1px solid var(--straindez-border);
@@ -1123,7 +1123,7 @@ body::after {
     box-shadow: 0 8px 20px rgba(108, 92, 231, 0.4);
 }
 
-/* ==================== RESPONSIVE ==================== */
+
 @media (max-width: 1200px) {
     .sdz-plus-card,
     .sdz-rank-card {
@@ -1197,7 +1197,7 @@ body::after {
     }
 }
 
-/* ==================== UTILITY CLASSES ==================== */
+
 .hidden-xs { display: none !important; }
 .hidden-sm { display: none !important; }
 
@@ -1216,7 +1216,7 @@ body::after {
     .hidden-lg { display: flex !important; }
 }
 
-/* ==================== ANIMATIONS ==================== */
+
 @keyframes fadeInUp {
     from {
         opacity: 0;
@@ -1237,7 +1237,7 @@ body::after {
     }
 }
 
-/* Apply entrance animations */
+
 .category-card,
 .sdz-plus-card,
 .sdz-rank-card,
@@ -1250,12 +1250,12 @@ body::after {
 .category-card:nth-child(3) { animation-delay: 0.3s; }
 .category-card:nth-child(4) { animation-delay: 0.4s; }
 
-/* Smooth scrolling */
+
 html {
     scroll-behavior: smooth;
 }
 
-/* Selection color */
+
 ::selection {
     background: var(--straindez-accent);
     color: white;
@@ -1278,14 +1278,14 @@ html {
     background: var(--straindez-accent-dark);
 }
 
-/* ==================== LOADING STATES ==================== */
+
 .loading {
     opacity: 0.6;
     pointer-events: none;
     filter: grayscale(100%);
 }
 
-/* ==================== GLASSMORPHISM EFFECT ==================== */
+
 .glass {
     background: rgba(31, 35, 44, 0.4);
     backdrop-filter: blur(10px);
@@ -1293,7 +1293,7 @@ html {
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* ==================== TEXT EFFECTS ==================== */
+
 .text-gradient {
     background: linear-gradient(90deg, var(--straindez-cyan), var(--straindez-accent));
     -webkit-background-clip: text;
@@ -1305,7 +1305,7 @@ html {
     text-shadow: 0 0 20px rgba(108, 92, 231, 0.6);
 }
 
-/* ==================== CARD HOVER EFFECTS ==================== */
+
 .card-hover-effect {
     transition: var(--transition-normal);
 }
@@ -1315,10 +1315,10 @@ html {
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
 }
 
-/* ==================== RUBIS PAGE - LARGE CENTERED IMAGES ==================== */
-/* Estilos específicos para a página de Rubis com imagens GRANDES e CENTRALIZADAS */
 
-/* Container de Rubis */
+
+
+
 .category.packages-image {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
@@ -1326,70 +1326,70 @@ html {
     padding: 20px 0;
 }
 
-/* Card de Rubis - AUMENTADO */
+
 .packages-image .package {
     background: var(--straindez-card);
     border: 2px solid var(--straindez-border);
     border-radius: 20px;
-    overflow: hidden; /* IMPORTANTE: Impede imagens de sair */
+    overflow: hidden; 
     transition: var(--transition-normal);
     position: relative;
 }
 
-/* Wrapper da Imagem - CENTRALIZADO E CONTROLADO */
+
 .packages-image .package-image-wrap {
     position: relative;
     width: 100%;
-    height: 300px; /* Reduzido de 420px para 300px */
+    height: 300px; 
     display: flex;
-    align-items: flex-end; /* ALTERADO: Imagens para baixo (era center) */
+    align-items: flex-end; 
     justify-content: center;
     margin-bottom: 20px;
-    padding: 30px 30px 40px 30px; /* Mais padding no fundo */
+    padding: 30px 30px 40px 30px; 
     overflow: hidden;
 }
 
-/* Imagens dos Rubis - TAMANHOS REDUZIDOS E VARIADOS */
+
 .packages-image .package-image-main,
 .packages-image .package-image-glow {
     width: auto;
-    height: 220px; /* Tamanho base reduzido de 320px para 220px */
-    max-width: 75%; /* Reduzido de 85% para 75% */
-    max-height: 90%; /* Limita altura */
+    height: 220px; 
+    max-width: 75%; 
+    max-height: 90%; 
     object-fit: contain;
     margin: 0 auto;
     display: block;
 }
 
-/* Tamanhos progressivos - REDUZIDOS */
+
 .rubis-size-small .package-image-main,
 .rubis-size-small .package-image-glow {
-    height: 180px; /* Reduzido de 260px */
+    height: 180px; 
 }
 
 .rubis-size-medium .package-image-main,
 .rubis-size-medium .package-image-glow {
-    height: 200px; /* Reduzido de 300px */
+    height: 200px; 
 }
 
 .rubis-size-large .package-image-main,
 .rubis-size-large .package-image-glow {
-    height: 220px; /* Reduzido de 340px */
+    height: 220px; 
 }
 
 .rubis-size-xlarge .package-image-main,
 .rubis-size-xlarge .package-image-glow {
-    height: 240px; /* Reduzido de 370px */
+    height: 240px; 
 }
 
 .rubis-size-huge .package-image-main,
 .rubis-size-huge .package-image-glow {
-    height: 260px; /* Reduzido de 400px */
+    height: 260px; 
 }
 
-/* Glow Effect para Rubis - DESATIVADO (causa lag) */
+
 .packages-image .rubis-glow {
-    display: none; /* Completamente desativado para performance */
+    display: none; 
 }
 
 .packages-image .package-image-main {
@@ -1400,13 +1400,13 @@ html {
                 filter 0.15s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Hover Effect - OTIMIZADO */
+
 .packages-image .package:hover .package-image-main {
     transform: scale(1.02) translateY(-3px) translateZ(0);
     filter: drop-shadow(0 10px 25px rgba(228, 0, 58, 0.4));
 }
 
-/* Card de Rubis - SIMPLIFICADO */
+
 .packages-image .package {
     background: var(--straindez-card);
     border: 2px solid var(--straindez-border);
@@ -1422,7 +1422,7 @@ html {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
-/* Badge de Bonus */
+
 .rubis-bonus-badge {
     position: absolute;
     top: 16px;
@@ -1446,7 +1446,7 @@ html {
     font-size: 14px;
 }
 
-/* Info Section */
+
 .packages-image .package .info {
     padding: 24px;
     text-align: center;
@@ -1480,7 +1480,7 @@ html {
     letter-spacing: 1px;
 }
 
-/* Price Section */
+
 .packages-image .package .price {
     display: flex;
     align-items: center;
@@ -1503,7 +1503,7 @@ html {
     text-shadow: 0 0 20px rgba(0, 217, 255, 0.4);
 }
 
-/* Button */
+
 .rubis-add-cart {
     width: 100%;
     padding: 16px 24px;
@@ -1534,7 +1534,7 @@ html {
     font-size: 16px;
 }
 
-/* Theme-specific glows */
+
 .package-ruby-small-card:hover {
     box-shadow: 0 20px 60px rgba(228, 0, 58, 0.3);
 }
@@ -1559,7 +1559,7 @@ html {
     box-shadow: 0 20px 60px rgba(255, 215, 0, 0.6);
 }
 
-/* Responsive para Rubis */
+
 @media (max-width: 1200px) {
     .category.packages-image {
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -1638,9 +1638,9 @@ html {
     .rubis-size-huge .package-image-glow { height: 210px; }
 }
 
-/* ==================== END OF STRAINDEZ STYLE ==================== */
 
-/* ==================== CHECKOUT PAGE - TEBEX SIMPLE ==================== */
+
+
 .checkout-container {
     display: grid;
     grid-template-columns: 1fr 400px;
@@ -1692,7 +1692,7 @@ html {
     padding: 32px;
 }
 
-/* Tebex Simple Box */
+
 .tebex-simple-box {
     text-align: center;
 }
@@ -1731,7 +1731,7 @@ html {
     margin-right: auto;
 }
 
-/* Cart Preview */
+
 .cart-items-preview {
     background: rgba(31, 35, 44, 0.4);
     border: 1px solid var(--straindez-border);
@@ -1787,7 +1787,7 @@ html {
     font-size: 24px;
 }
 
-/* Tebex Big Button */
+
 .btn-tebex-big {
     display: flex;
     flex-direction: column;
@@ -1848,7 +1848,7 @@ html {
     letter-spacing: 0.5px;
 }
 
-/* Tebex Features Simple */
+
 .tebex-features-simple {
     display: flex;
     justify-content: center;
@@ -1878,7 +1878,7 @@ html {
     letter-spacing: 0.5px;
 }
 
-/* Tebex Note */
+
 .tebex-note {
     display: flex;
     gap: 16px;
@@ -1907,7 +1907,7 @@ html {
     font-weight: 700;
 }
 
-/* Order Summary Sidebar */
+
 .checkout-summary {
     position: sticky;
     top: 120px;
@@ -2024,7 +2024,7 @@ html {
     margin: 0;
 }
 
-/* Title with Return Button */
+
 .title {
     display: flex;
     align-items: center;
@@ -2060,7 +2060,7 @@ html {
     color: var(--text-primary);
 }
 
-/* Responsive Checkout */
+
 @media (max-width: 1200px) {
     .checkout-container {
         grid-template-columns: 1fr;
@@ -2087,9 +2087,9 @@ html {
     }
 }
 
-/* ==================== KEYS SPECIFIC STYLES (from Straindez) ==================== */
 
-/* Package image styles */
+
+
 .package-image-main {
     position: relative;
     z-index: 3;
@@ -2170,7 +2170,7 @@ html {
     text-transform: uppercase;
 }
 
-/* Key card themes */
+
 #keys-container .package.package-magma-card,
 #keys-container .package.package-atlantic-card,
 #keys-container .package.package-dev-card,
@@ -2178,28 +2178,28 @@ html {
     border: 0 !important;
 }
 
-/* Magma Key Theme - VERMELHO */
+
 .package-magma-card {
     --key-card-glow: #FF3333;
     --key-button-bg: linear-gradient(135deg, #FF3333 0%, #CC0000 100%);
     --key-button-shadow: 0 8px 24px rgba(255, 51, 51, 0.4);
 }
 
-/* Atlantic Key Theme - AZUL */
+
 .package-atlantic-card {
     --key-card-glow: #00A3FF;
     --key-button-bg: linear-gradient(135deg, #00A3FF 0%, #0077CC 100%);
     --key-button-shadow: 0 8px 24px rgba(0, 163, 255, 0.4);
 }
 
-/* Dev Key Theme - VERDE */
+
 .package-dev-card {
     --key-card-glow: #00FF66;
     --key-button-bg: linear-gradient(135deg, #00FF66 0%, #00CC44 100%);
     --key-button-shadow: 0 8px 24px rgba(0, 255, 102, 0.4);
 }
 
-/* Keys Package Cards */
+
 .category.packages-image {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
@@ -2223,7 +2223,7 @@ html {
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 40px var(--key-card-glow);
 }
 
-/* Package Image Container */
+
 .package .image {
     position: relative;
     display: flex;
@@ -2270,7 +2270,7 @@ html {
     }
 }
 
-/* Package Info */
+
 .package .info {
     text-align: center;
 }
@@ -2306,7 +2306,7 @@ html {
     text-shadow: 0 0 20px var(--key-card-glow);
 }
 
-/* Quantity Options */
+
 .package-quantity-options {
     display: flex;
     gap: 8px;
@@ -2342,7 +2342,7 @@ html {
     box-shadow: var(--key-button-shadow);
 }
 
-/* Add to Cart Button */
+
 .package .button {
     width: 100%;
 }
@@ -2373,7 +2373,7 @@ html {
     transform: translateY(0);
 }
 
-/* ==================== PAGE TITLE ==================== */
+
 .title {
     display: flex;
     align-items: center;
@@ -2413,7 +2413,7 @@ html {
     background-clip: text;
 }
 
-/* ==================== RESPONSIVE FOR KEYS ==================== */
+
 @media (max-width: 768px) {
     .category.packages-image {
         grid-template-columns: 1fr;
@@ -2429,7 +2429,7 @@ html {
     }
 }
 
-/* Shared themed background for key packages */
+
 #keys-container .package {
     background:
         radial-gradient(circle at 50% 18%, var(--key-card-glow) 0%, rgba(255, 120, 24, 0) 34%),
@@ -2438,7 +2438,7 @@ html {
     box-shadow: 0 18px 30px rgba(0, 0, 0, 0.18);
 }
 
-/* Magma Key Theme - VERMELHO (Orange/Pink → Red) */
+
 #keys-container .package.package-magma-card {
     --key-border: rgba(255, 51, 51, 0.18);
     --key-card-glow: rgba(255, 30, 30, 0.18);
@@ -2459,7 +2459,7 @@ html {
     --key-image-filter: blur(22px) saturate(1.35) brightness(1.02) sepia(.22) hue-rotate(0deg);
 }
 
-/* Atlantic Key Theme - AZUL (Cyan/Turquoise → Blue) */
+
 #keys-container .package.package-atlantic-card {
     --key-border: rgba(0, 163, 255, 0.18);
     --key-card-glow: rgba(0, 140, 255, 0.17);
@@ -2480,7 +2480,7 @@ html {
     --key-image-filter: blur(22px) saturate(1.38) brightness(1.04) hue-rotate(0deg);
 }
 
-/* Dev Key Theme - VERDE (Yellow/Pink → Green) */
+
 #keys-container .package.package-dev-card {
     --key-border: rgba(0, 255, 102, 0.20);
     --key-card-glow: rgba(0, 230, 92, 0.15);
@@ -2501,7 +2501,7 @@ html {
     --key-image-filter: blur(22px) saturate(1.32) brightness(1.03) hue-rotate(80deg);
 }
 
-/* Apply colors to limited note */
+
 #keys-container .package.package-magma-card .package-limited-note,
 #keys-container .package.package-atlantic-card .package-limited-note,
 #keys-container .package.package-dev-card .package-limited-note {
@@ -2509,7 +2509,7 @@ html {
     text-shadow: 0 0 10px var(--key-note-shadow-a), 0 0 18px var(--key-note-shadow-b);
 }
 
-/* Apply filter to glow images */
+
 #keys-container .package.package-magma-card .package-image-glow,
 #keys-container .package.package-atlantic-card .package-image-glow,
 #keys-container .package.package-dev-card .package-image-glow {
@@ -2517,7 +2517,7 @@ html {
     filter: var(--key-image-filter);
 }
 
-/* Active quantity button */
+
 #keys-container .package.package-magma-card .package-quantity-option.is-active,
 #keys-container .package.package-atlantic-card .package-quantity-option.is-active,
 #keys-container .package.package-dev-card .package-quantity-option.is-active {
@@ -2530,7 +2530,7 @@ html {
     text-shadow: 0 1px 0 rgba(15, 24, 45, 0.36) !important;
 }
 
-/* Active button styling */
+
 #keys-container .package.package-magma-card .package-active-action,
 #keys-container .package.package-atlantic-card .package-active-action,
 #keys-container .package.package-dev-card .package-active-action {
@@ -2555,9 +2555,9 @@ html {
 }
 
 
-/* ==================== RANKS SPECIFIC STYLES ==================== */
 
-/* Rank Card Color Themes - SIMPLIFICADO */
+
+
 .package-vip-card {
     --rank-color: #8B7355;
     --rank-glow: rgba(139, 115, 85, 0.2);
@@ -2603,7 +2603,7 @@ html {
     --rank-glow: rgba(255, 107, 53, 0.2);
 }
 
-/* Rank cards hover - SIMPLIFICADO sem neon */
+
 .package-rank-card:hover {
     border-color: var(--rank-color);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
@@ -2620,7 +2620,7 @@ html {
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
 }
 
-/* Rank Modal Styles */
+
 .rank-modal {
     position: fixed;
     top: 0;
@@ -2698,7 +2698,7 @@ html {
     transform: rotate(90deg);
 }
 
-/* Modal Header */
+
 .rank-modal-header {
     margin-bottom: 32px;
     text-align: center;
@@ -2719,7 +2719,7 @@ html {
     line-height: 1.6;
 }
 
-/* Modal Body */
+
 .rank-modal-body {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -2727,7 +2727,7 @@ html {
     margin-bottom: 32px;
 }
 
-/* Features List */
+
 .rank-modal-features h3 {
     font-size: 20px;
     font-weight: 700;
@@ -2762,7 +2762,7 @@ html {
     font-size: 18px;
 }
 
-/* Kit Preview */
+
 .rank-modal-kit {
     display: flex;
     flex-direction: column;
@@ -2784,7 +2784,7 @@ html {
     text-transform: none;
 }
 
-/* Kit Image Wrapper */
+
 .rank-kit-image-wrap {
     width: 100%;
     border-radius: 12px;
@@ -2810,7 +2810,7 @@ html {
     max-height: 400px;
 }
 
-/* Modal Footer */
+
 .rank-modal-footer {
     display: flex;
     align-items: center;
@@ -2838,7 +2838,7 @@ html {
     letter-spacing: 1px;
 }
 
-/* Responsive for Ranks Modal */
+
 @media (max-width: 768px) {
     .rank-modal-content {
         padding: 24px;
@@ -2882,12 +2882,12 @@ html {
     }
 }
 
-/* ==================== END OF RANKS STYLES ==================== */
 
 
-/* ==================== RUBIS SPECIFIC STYLES ==================== */
 
-/* Rubis Theme Colors - Red/Ruby gradient */
+
+
+
 .package-ruby-small-card {
     --key-card-glow: #E4003A;
     --key-button-bg: linear-gradient(135deg, #E4003A 0%, #C00030 100%);
@@ -2924,13 +2924,13 @@ html {
     --key-button-shadow: 0 8px 32px rgba(255, 215, 0, 0.6);
 }
 
-/* Rubis Glow Effect */
+
 .rubis-glow {
     filter: blur(25px) brightness(1.5);
     opacity: 0.5;
 }
 
-/* Rubis Amount Display */
+
 .rubis-amount {
     display: flex;
     align-items: center;
@@ -2961,7 +2961,7 @@ html {
     }
 }
 
-/* Rubis Bonus Badge */
+
 .rubis-bonus-badge {
     position: absolute;
     top: 13px;
@@ -3006,7 +3006,7 @@ html {
     }
 }
 
-/* Rubis Card Name Override */
+
 [class*="ruby-"] .name {
     font-size: 16px;
     font-weight: 700;
@@ -3014,7 +3014,7 @@ html {
     letter-spacing: 1px;
 }
 
-/* Legendary Package Special Effects */
+
 .package-ruby-legendary-card {
     position: relative;
     overflow: hidden;
@@ -3052,12 +3052,12 @@ html {
                 inset 0 0 20px rgba(255, 215, 0, 0.1);
 }
 
-/* ==================== END OF RUBIS STYLES ==================== */
 
 
-/* ==================== CART/CHECKOUT STYLES ==================== */
 
-/* Cart Panel */
+
+
+
 .cart-panel {
     background: var(--straindez-card);
     border: 1px solid var(--straindez-border);
@@ -3104,7 +3104,7 @@ html {
     min-height: 300px;
 }
 
-/* Empty Cart Message */
+
 .empty-cart {
     display: flex;
     flex-direction: column;
@@ -3139,7 +3139,7 @@ html {
     padding: 14px 28px;
 }
 
-/* Cart Table */
+
 .cart-table {
     width: 100%;
     border-collapse: separate;
@@ -3180,7 +3180,7 @@ html {
     border-radius: 0 10px 10px 0;
 }
 
-/* Cart Item Image */
+
 .cart-item-image {
     width: 80px;
 }
@@ -3195,7 +3195,7 @@ html {
     background: rgba(0, 0, 0, 0.3);
 }
 
-/* Cart Item Name */
+
 .cart-item-name .item-name {
     font-size: 16px;
     font-weight: 700;
@@ -3212,7 +3212,7 @@ html {
     opacity: 0.7;
 }
 
-/* Cart Item Price */
+
 .cart-item-price {
     text-align: center;
 }
@@ -3230,7 +3230,7 @@ html {
     margin-left: 4px;
 }
 
-/* Quantity Controls */
+
 .quantity-controls {
     display: flex;
     align-items: center;
@@ -3276,7 +3276,7 @@ html {
     box-shadow: 0 0 10px rgba(0, 217, 255, 0.3);
 }
 
-/* Remove from input spinner arrows */
+
 .qty-input::-webkit-outer-spin-button,
 .qty-input::-webkit-inner-spin-button {
     -webkit-appearance: none;
@@ -3287,7 +3287,7 @@ html {
     -moz-appearance: textfield;
 }
 
-/* Cart Item Actions */
+
 .cart-item-actions {
     text-align: center;
 }
@@ -3313,7 +3313,7 @@ html {
     transform: scale(1.1);
 }
 
-/* Coupon Section */
+
 .cart-coupon {
     padding: 30px;
     border-top: 1px solid var(--straindez-border);
@@ -3381,7 +3381,7 @@ html {
     color: #ff6b6b;
 }
 
-/* Cart Footer */
+
 .cart-footer {
     display: flex;
     align-items: center;
@@ -3439,7 +3439,7 @@ html {
     font-size: 14px;
 }
 
-/* Responsive Cart */
+
 @media (max-width: 768px) {
     .cart-header {
         flex-direction: column;
@@ -3519,12 +3519,12 @@ html {
     }
 }
 
-/* ==================== END OF CART STYLES ==================== */
 
 
-/* ==================== BATTLE PASS (RANK UPGRADES) PAGE ==================== */
 
-/* Battle Pass Container */
+
+
+
 #battlepass-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
@@ -3532,7 +3532,7 @@ html {
     padding: 20px 0;
 }
 
-/* Battle Pass Card Base */
+
 .battlepass-card {
     position: relative;
     background: var(--straindez-card);
@@ -3550,7 +3550,7 @@ html {
                 0 0 40px var(--bp-color);
 }
 
-/* Special Badge */
+
 .battlepass-special-badge {
     position: absolute;
     top: 16px;
@@ -3580,7 +3580,7 @@ html {
     }
 }
 
-/* Battle Pass Subtitle */
+
 .battlepass-subtitle {
     text-align: center;
     font-size: 13px;
@@ -3592,7 +3592,7 @@ html {
     margin-bottom: 16px;
 }
 
-/* Benefits List */
+
 .battlepass-benefits {
     display: flex;
     flex-direction: column;
@@ -3623,7 +3623,7 @@ html {
     min-width: 14px;
 }
 
-/* Battle Pass Button */
+
 .battlepass-add-cart {
     width: 100%;
     padding: 16px;
@@ -3648,7 +3648,7 @@ html {
     transform: translateY(0);
 }
 
-/* Image Styles for Battle Pass */
+
 .battlepass-card .image {
     height: 240px;
     display: flex;
@@ -3698,7 +3698,7 @@ html {
     filter: blur(20px);
 }
 
-/* Info Section */
+
 .battlepass-card .info {
     padding: 24px;
 }
@@ -3712,7 +3712,7 @@ html {
     text-align: center;
 }
 
-/* Price Display */
+
 .battlepass-card .price {
     display: flex;
     align-items: center;
@@ -3729,7 +3729,7 @@ html {
     text-decoration: line-through;
 }
 
-/* Responsive Battle Pass */
+
 @media (max-width: 768px) {
     #battlepass-container {
         grid-template-columns: 1fr;
@@ -3745,7 +3745,7 @@ html {
     }
 }
 
-/* Title Section */
+
 .title {
     display: flex;
     align-items: center;
@@ -3789,12 +3789,12 @@ html {
     background-clip: text;
 }
 
-/* ==================== END BATTLE PASS STYLES ==================== */
 
 
-/* ==================== PAYMENT & CHECKOUT SYSTEM ==================== */
 
-/* Loading Overlay */
+
+
+
 #loading-overlay {
     position: fixed;
     top: 0;
@@ -3830,7 +3830,7 @@ html {
     font-weight: 600;
 }
 
-/* Payment Modal */
+
 .payment-modal {
     position: fixed;
     top: 0;
@@ -3893,7 +3893,7 @@ html {
     color: white;
 }
 
-/* Payment Summary */
+
 .payment-summary {
     background: rgba(0, 0, 0, 0.3);
     border-radius: 12px;
@@ -3912,7 +3912,7 @@ html {
     font-weight: 700;
 }
 
-/* PayPal Button Container */
+
 #paypal-button-container {
     margin: 20px 0;
 }
@@ -3924,7 +3924,7 @@ html {
     margin-top: 16px;
 }
 
-/* Payment Methods Selector */
+
 .payment-methods {
     display: flex;
     flex-direction: column;
@@ -3959,7 +3959,7 @@ html {
     color: var(--straindez-accent);
 }
 
-/* Custom Alert */
+
 .custom-alert {
     position: fixed;
     top: 0;
@@ -4039,7 +4039,7 @@ html {
     box-shadow: 0 6px 20px rgba(108, 92, 231, 0.4);
 }
 
-/* Checkout Button Loading State */
+
 #purchase-btn.loading {
     opacity: 0.7;
     pointer-events: none;
@@ -4057,7 +4057,7 @@ html {
     animation: spin 0.6s linear infinite;
 }
 
-/* Responsive */
+
 @media (max-width: 600px) {
     .payment-modal-content {
         padding: 30px 20px;
@@ -4072,12 +4072,12 @@ html {
     }
 }
 
-/* ==================== END PAYMENT SYSTEM ==================== */
 
 
-/* ==================== BATTLE PASS STYLES ==================== */
 
-/* Battle Pass Card */
+
+
+
 .battlepass-card {
     position: relative;
     overflow: hidden;
@@ -4103,7 +4103,7 @@ html {
     }
 }
 
-/* Special Badge */
+
 .battlepass-special-badge {
     position: absolute;
     top: 16px;
@@ -4128,7 +4128,7 @@ html {
     animation: starSpin 3s linear infinite;
 }
 
-/* Rank Progression */
+
 .battlepass-progression {
     display: flex;
     align-items: center;
@@ -4174,7 +4174,7 @@ html {
     }
 }
 
-/* Benefits List */
+
 .battlepass-benefits {
     display: flex;
     flex-direction: column;
@@ -4201,7 +4201,7 @@ html {
     flex-shrink: 0;
 }
 
-/* Battle Pass Button */
+
 .battlepass-add-cart {
     position: relative;
     overflow: hidden;
@@ -4225,7 +4225,7 @@ html {
     height: 300px;
 }
 
-/* Battle Pass Card Hover */
+
 .battlepass-card:hover {
     transform: translateY(-8px) scale(1.02);
 }
@@ -4234,7 +4234,7 @@ html {
     height: 4px;
 }
 
-/* Responsive Battle Pass */
+
 @media (max-width: 768px) {
     .battlepass-progression {
         flex-direction: column;
@@ -4254,10 +4254,10 @@ html {
     }
 }
 
-/* ==================== END OF BATTLE PASS STYLES ==================== */
 
 
-/* ==================== CHECKOUT PAGE STYLES ==================== */
+
+
 
 .checkout-container {
     display: grid;
@@ -4266,7 +4266,7 @@ html {
     margin-top: 40px;
 }
 
-/* Checkout Form */
+
 .checkout-form {
     display: flex;
     flex-direction: column;
@@ -4395,7 +4395,7 @@ html {
     background: linear-gradient(135deg, #00E676, #00C853) !important;
 }
 
-/* Payment Methods */
+
 .payment-methods {
     display: flex;
     flex-direction: column;
@@ -4457,7 +4457,7 @@ html {
     margin-top: 15px;
 }
 
-/* Checkout Summary */
+
 .checkout-summary {
     position: sticky;
     top: 100px;
@@ -4575,7 +4575,7 @@ html {
     line-height: 1.6;
 }
 
-/* Responsive */
+
 @media (max-width: 1200px) {
     .checkout-container {
         grid-template-columns: 1fr;
@@ -4597,12 +4597,12 @@ html {
     }
 }
 
-/* ==================== END CHECKOUT STYLES ==================== */
 
 
-/* ==================== RANKS PAGE IMPROVEMENTS ==================== */
 
-/* Ranks Container - Grid uniforme */
+
+
+
 #ranks-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -4610,7 +4610,7 @@ html {
     padding: 20px 0;
 }
 
-/* Rank Cards - Design MODERNO e BONITO - OTIMIZADO */
+
 #ranks-container .package {
     display: flex;
     flex-direction: column;
@@ -4626,14 +4626,14 @@ html {
     will-change: transform;
 }
 
-/* Brilho interno no card - REMOVIDO para melhor performance */
 
-/* Linha brilhante no topo - REMOVIDA */
+
+
 #ranks-container .package::after {
     display: none;
 }
 
-/* Cores das bordas - SIMPLES SEM LED */
+
 #ranks-container .package {
     border: 2px solid var(--straindez-border);
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
@@ -4647,7 +4647,7 @@ html {
 
 
 
-/* Imagem do rank - MAIS DESTAQUE */
+
 #ranks-container .package .image {
     height: 280px;
     min-height: 280px;
@@ -4664,7 +4664,7 @@ html {
     z-index: 5;
 }
 
-/* Glow atrás da imagem - REMOVIDO */
+
 #ranks-container .package .image::before {
     display: none;
 }
@@ -4700,7 +4700,7 @@ html {
 }
 
 #ranks-container .package .package-image-glow {
-    display: none; /* REMOVIDO - Sem glow */
+    display: none; 
 }
 
 #ranks-container .package .package-image-main {
@@ -4708,12 +4708,12 @@ html {
     z-index: 2;
 }
 
-/* Info section - Espaçamento ajustado */
+
 #ranks-container .package .info {
     flex: 1;
     display: flex;
     flex-direction: column;
-    padding: 20px; /* Reduzido de 24px para 20px */
+    padding: 20px; 
     gap: 12px;
     background: var(--straindez-card);
 }
@@ -4722,11 +4722,11 @@ html {
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 8px; /* Reduzido de 12px para 8px */
+    gap: 8px; 
     justify-content: center;
 }
 
-/* Nome do rank - SIMPLES */
+
 #ranks-container .package .name {
     font-size: 24px;
     font-weight: 900;
@@ -4738,7 +4738,7 @@ html {
     margin: 0;
 }
 
-/* Preço - SIMPLES */
+
 #ranks-container .package .price {
     text-align: center;
     margin: 0;
@@ -4751,15 +4751,15 @@ html {
     position: relative;
 }
 
-/* Linha decorativa removida */
+
 #ranks-container .package .price .package-active-price::before {
     display: none;
 }
 
-/* Botão - Tamanho fixo e cor correta - VISÍVEL */
+
 #ranks-container .package .button {
     margin-top: 0;
-    display: block !important; /* Força visibilidade */
+    display: block !important; 
     opacity: 1 !important;
     visibility: visible !important;
 }
@@ -4791,7 +4791,7 @@ html {
     filter: brightness(1.1);
 }
 
-/* Linha decorativa embaixo do card com a cor do rank */
+
 #ranks-container .package::after {
     content: '';
     position: absolute;
@@ -4802,7 +4802,7 @@ html {
     background: var(--rank-color);
 }
 
-/* Responsive - Mantém tamanho */
+
 @media (max-width: 1400px) {
     #ranks-container {
         grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -4815,13 +4815,13 @@ html {
     }
 
     #ranks-container .package {
-        height: 480px; /* Reduzido de 580px */
+        height: 480px; 
         min-height: 480px;
         max-height: 480px;
     }
 
     #ranks-container .package .image {
-        height: 240px; /* Reduzido */
+        height: 240px; 
         min-height: 240px;
         max-height: 240px;
         padding: 15px;
@@ -4829,8 +4829,8 @@ html {
 
     #ranks-container .package .package-image-main,
     #ranks-container .package .package-image-glow {
-        max-width: 180px; /* Reduzido */
-        max-height: 180px; /* Reduzido */
+        max-width: 180px; 
+        max-height: 180px; 
     }
 
     #ranks-container .package .name {
@@ -4842,10 +4842,10 @@ html {
     }
 }
 
-/* ==================== END RANKS IMPROVEMENTS ==================== */
 
 
-/* ==================== TEBEX INTEGRATION STYLES ==================== */
+
+
 
 .tebex-info-box {
     background: linear-gradient(135deg, rgba(108, 92, 231, 0.1), rgba(0, 217, 255, 0.1));
@@ -5001,11 +5001,11 @@ html {
     box-shadow: 0 4px 20px rgba(108, 92, 231, 0.4);
 }
 
-/* ==================== END TEBEX STYLES ==================== */
 
 
-/* ==================== KEY CARD THEMED BACKGROUNDS ==================== */
-/* Fundo temático dentro de cada card de key */
+
+
+
 .key-card-bg {
     position: absolute;
     width: 100%;
@@ -5017,7 +5017,7 @@ html {
     pointer-events: none;
 }
 
-/* Garante que o conteúdo do card fique acima do fundo */
+
 .package-bulk-card {
     position: relative;
     overflow: hidden;
@@ -5029,7 +5029,7 @@ html {
     z-index: 10;
 }
 
-/* ==================== MAGMA KEY CARD BACKGROUND ==================== */
+
 .package-magma-card {
     background: radial-gradient(ellipse at center, #1a0000 0%, #0d0000 100%) !important;
     border: 2px solid rgba(255, 51, 51, 0.4) !important;
@@ -5073,7 +5073,7 @@ html {
     background: radial-gradient(circle, rgba(255, 0, 0, 0.7) 0%, transparent 70%);
 }
 
-/* ==================== ATLANTIC KEY CARD BACKGROUND ==================== */
+
 .package-atlantic-card {
     background: linear-gradient(135deg, #001f3f 0%, #003d6b 100%) !important;
     border: 2px solid rgba(0, 163, 255, 0.4) !important;
@@ -5163,7 +5163,7 @@ html {
     100% { transform: translateY(-600px) scale(1.5); opacity: 0; }
 }
 
-/* ==================== DEV KEY CARD BACKGROUND ==================== */
+
 .package-dev-card {
     background: linear-gradient(135deg, #0a0e13 0%, #0d1117 50%, #161b22 100%) !important;
     border: 2px solid rgba(0, 255, 102, 0.5) !important;
@@ -5175,7 +5175,7 @@ html {
     box-shadow: 0 0 30px rgba(0, 255, 102, 0.2) !important;
 }
 
-/* Linhas de código scrollando */
+
 .dev-card-bg .dev-code-line {
     position: absolute;
     font-family: 'Courier New', monospace;
@@ -5238,7 +5238,7 @@ html {
     }
 }
 
-/* Código binário Matrix caindo */
+
 .dev-card-bg .dev-matrix {
     position: absolute;
     font-family: 'Courier New', monospace;
@@ -5293,7 +5293,7 @@ html {
     }
 }
 
-/* Grid de fundo estilo hacker */
+
 .dev-card-bg .dev-grid {
     position: absolute;
     width: 100%;
@@ -5336,7 +5336,7 @@ html {
 }
 
 
-/* ==================== BOOSTERS PAGE ==================== */
+
 .package-booster-card {
     position: relative;
     background: linear-gradient(135deg, #13161C 0%, #1a1d24 100%);
@@ -5353,7 +5353,7 @@ html {
     border-width: 3px;
 }
 
-/* Fundo animado dos boosters */
+
 .booster-card-bg {
     position: absolute;
     width: 100%;
@@ -5364,7 +5364,7 @@ html {
     overflow: hidden;
 }
 
-/* Partículas flutuando */
+
 .booster-particle {
     position: absolute;
     width: 4px;
@@ -5422,9 +5422,9 @@ html {
     }
 }
 
-/* Ondas de energia - REMOVIDAS */
 
-/* Ícone do booster */
+
+
 .booster-icon-wrap {
     position: relative;
     z-index: 10;
@@ -5449,7 +5449,7 @@ html {
     }
 }
 
-/* Info do booster */
+
 .package-booster-card .info {
     position: relative;
     z-index: 10;
@@ -5496,7 +5496,7 @@ html {
     text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
 }
 
-/* Botões de duração */
+
 .booster-duration-options {
     display: flex;
     gap: 8px;
@@ -5530,7 +5530,7 @@ html {
     color: white;
 }
 
-/* Botão add to cart */
+
 .package-booster-card .booster-active-action {
     width: 100%;
     padding: 16px 32px;
@@ -5583,7 +5583,7 @@ html {
     font-size: 16px;
 }
 
-/* Responsive */
+
 @media (max-width: 768px) {
     .booster-icon {
         font-size: 60px;
@@ -5604,9 +5604,9 @@ html {
 }
 
 
-/* ==================== FUNDOS TEMÁTICOS DOS BOOSTERS ==================== */
 
-/* XP Booster - Estrelas e constelações douradas */
+
+
 .booster-bg-xp-booster::before {
     content: '';
     position: absolute;
@@ -5627,7 +5627,7 @@ html {
     animation: twinkle 4s ease-in-out infinite;
 }
 
-/* Money Booster - Moedas flutuantes */
+
 .booster-bg-money-booster::before {
     content: '';
     position: absolute;
@@ -5649,7 +5649,7 @@ html {
     transform: translate(-50%, -50%);
 }
 
-/* Drop Booster - Caixas e itens */
+
 .booster-bg-drop-booster::before {
     content: '';
     position: absolute;
@@ -5680,7 +5680,7 @@ html {
     }
 }
 
-/* Speed Booster - Raios e relâmpagos */
+
 .booster-bg-speed-booster::before {
     content: '';
     position: absolute;
@@ -5713,7 +5713,7 @@ html {
     }
 }
 
-/* Strength Booster - Chamas e poder */
+
 .booster-bg-strength-booster::before {
     content: '';
     position: absolute;
@@ -5747,7 +5747,7 @@ html {
     }
 }
 
-/* Adicionar mais estrelas pequenas no XP booster */
+
 .booster-bg-xp-booster {
     background-image:
         radial-gradient(circle at 15% 20%, rgba(255, 215, 0, 0.3) 1px, transparent 1px),
@@ -5756,7 +5756,7 @@ html {
         radial-gradient(circle at 75% 85%, rgba(255, 215, 0, 0.3) 1px, transparent 1px);
 }
 
-/* Adicionar símbolos de dinheiro no Money booster */
+
 .booster-bg-money-booster {
     background-image:
         radial-gradient(circle at 10% 15%, rgba(0, 230, 118, 0.2) 2px, transparent 2px),
@@ -5766,8 +5766,8 @@ html {
 }
 
 
-/* ==================== FUNDOS TEMÁTICOS DOS VIPS - REMOVIDOS ==================== */
-/* Fundo temático dentro de cada card de VIP - DESATIVADO */
+
+
 .rank-card-bg {
     display: none;
 }
@@ -5778,7 +5778,7 @@ html {
     z-index: 10;
 }
 
-/* Todos os fundos temáticos removidos */
+
 .rank-bg-vip::before,
 .rank-bg-vip::after,
 .rank-bg-mvp::before,
@@ -5792,7 +5792,7 @@ html {
     display: none;
 }
 
-/* ==================== MELHORAR BOTÕES DOS VIPS ==================== */
+
 #ranks-container .package .rank-view-details {
     width: 100%;
     padding: 14px 28px;
@@ -5838,7 +5838,7 @@ html {
     margin-right: 6px;
 }
 
-/* ==================== MELHORAR MODAL DOS VIPS ==================== */
+
 .rank-modal {
     backdrop-filter: blur(8px);
 }
@@ -5912,7 +5912,7 @@ html {
     text-shadow: none;
 }
 
-/* Remover glows excessivos */
+
 .rank-modal-features li::before {
     color: var(--straindez-green);
     text-shadow: none;
@@ -5930,9 +5930,9 @@ html {
 }
 
 
-/* ============================================
-   MONEY PAGE STYLES
-   ============================================ */
+
+
+
 
 .money-amount {
     font-size: 2rem;
@@ -5978,7 +5978,7 @@ html {
     animation: pulse 2s infinite;
 }
 
-/* Money Banner for Index Page */
+
 .money-banner {
     background: linear-gradient(135deg, #1a472a 0%, #2d5016 100%);
     border: 2px solid #4CAF50;
@@ -6037,7 +6037,7 @@ html {
     box-shadow: 0 8px 25px rgba(76, 175, 80, 0.5);
 }
 
-/* Notification Styles */
+
 .notification {
     position: fixed;
     top: 20px;
@@ -6076,11 +6076,11 @@ html {
 }
 
 
-/* ============================================
-   RESPONSIVE DESIGN - MOBILE & TABLET
-   ============================================ */
 
-/* Tablet (768px - 1024px) */
+
+
+
+
 @media screen and (max-width: 1024px) {
     .container {
         max-width: 95%;
@@ -6108,13 +6108,13 @@ html {
         font-size: 0.7rem;
     }
 
-    /* Grid adjustments */
+    
     .products-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 15px;
     }
 
-    /* Banners */
+    
     .sdz-samurai-hero {
         height: 250px;
         padding: 20px;
@@ -6129,15 +6129,15 @@ html {
     }
 }
 
-/* Mobile (max 767px) */
+
 @media screen and (max-width: 767px) {
-    /* Reset container */
+    
     .container {
         max-width: 100%;
         padding: 0 10px;
     }
 
-    /* Header adjustments */
+    
     .header-main {
         flex-direction: column;
         padding: 10px;
@@ -6176,7 +6176,7 @@ html {
         font-size: 0.65rem;
     }
 
-    /* Logo */
+    
     .logo {
         text-align: center;
         margin: 10px 0;
@@ -6186,7 +6186,7 @@ html {
         max-height: 45px;
     }
 
-    /* Header bottom */
+    
     .header-bottom {
         padding: 15px 0;
     }
@@ -6227,12 +6227,12 @@ html {
         justify-content: center;
     }
 
-    /* Main content */
+    
     #main {
         padding: 20px 0;
     }
 
-    /* Products Grid - 1 column on mobile */
+    
     .products-grid {
         grid-template-columns: 1fr;
         gap: 15px;
@@ -6243,7 +6243,7 @@ html {
         max-width: 100%;
     }
 
-    /* Product images */
+    
     .product-image {
         height: 180px;
     }
@@ -6265,7 +6265,7 @@ html {
         font-size: 0.9rem;
     }
 
-    /* Banners */
+    
     .sdz-samurai-hero {
         height: 200px;
         padding: 15px;
@@ -6285,7 +6285,7 @@ html {
         font-size: 0.85rem;
     }
 
-    /* Magma banner specific */
+    
     .magma-banner {
         height: auto;
         min-height: 180px;
@@ -6304,7 +6304,7 @@ html {
         width: 100%;
     }
 
-    /* Category cards */
+    
     .category-grid {
         grid-template-columns: 1fr;
         gap: 15px;
@@ -6318,7 +6318,7 @@ html {
         font-size: 1.2rem;
     }
 
-    /* Cart page */
+    
     .cart-container {
         flex-direction: column;
     }
@@ -6347,7 +6347,7 @@ html {
         justify-content: center;
     }
 
-    /* Footer */
+    
     .footer-bottom {
         flex-direction: column;
         text-align: center;
@@ -6363,41 +6363,41 @@ html {
         justify-content: center;
     }
 
-    /* Section titles */
+    
     .section-title {
         font-size: 1.8rem;
     }
 
-    /* Hide unnecessary elements on mobile */
+    
     .hidden-xs {
         display: none !important;
     }
 
-    /* Particles background */
+    
     .hero-particles,
     .magma-galaxy-bg {
-        opacity: 0.3; /* Reduce on mobile for better readability */
+        opacity: 0.3; 
     }
 
-    /* Scrollbar mobile */
+    
     ::-webkit-scrollbar {
         width: 6px;
     }
 
-    /* Featured badge */
+    
     .featured-badge {
         font-size: 0.75rem;
         padding: 4px 10px;
     }
 
-    /* Best value badge */
+    
     .best-value-badge {
         font-size: 0.75rem;
         padding: 4px 10px;
     }
 }
 
-/* Small Mobile (max 480px) */
+
 @media screen and (max-width: 480px) {
     body {
         font-size: 14px;
@@ -6434,7 +6434,7 @@ html {
 
     .sdz-samurai-hero p {
         font-size: 0.75rem;
-        display: none; /* Hide description on very small screens */
+        display: none; 
     }
 
     .btn {
@@ -6446,7 +6446,7 @@ html {
         height: 150px;
     }
 
-    /* Simplify player wrap */
+    
     .player-wrap {
         padding: 10px;
     }
@@ -6466,7 +6466,7 @@ html {
     }
 }
 
-/* Landscape mobile */
+
 @media screen and (max-width: 767px) and (orientation: landscape) {
     .sdz-samurai-hero {
         height: 180px;
@@ -6477,7 +6477,7 @@ html {
     }
 }
 
-/* Ensure touch targets are big enough */
+
 @media (hover: none) and (pointer: coarse) {
     .btn,
     .btn-add-cart,
@@ -6493,13 +6493,13 @@ html {
     }
 }
 
-/* Fix image sizing on all devices */
+
 img {
     max-width: 100%;
     height: auto;
 }
 
-/* Prevent horizontal scroll */
+
 body {
     overflow-x: hidden;
 }

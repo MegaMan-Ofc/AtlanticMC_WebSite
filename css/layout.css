@@ -1,4 +1,4 @@
-/* Shared Atlantic Store layout */
+
 
 :root {
     --site-container: 1400px;
@@ -36,7 +36,7 @@ input:focus-visible {
     display: none;
 }
 
-/* Header */
+
 .site-header {
     position: sticky;
     top: 0;
@@ -149,7 +149,7 @@ button.user-card {
     position: relative;
 }
 
-/* Main */
+
 .main-content {
     flex: 1;
 }
@@ -158,7 +158,7 @@ button.user-card {
     margin: 0;
 }
 
-/* Footer */
+
 .site-footer {
     margin-top: auto;
 }
@@ -324,7 +324,7 @@ button.user-card {
     }
 }
 
-/* Compatibility overrides for the cleaned semantic markup */
+
 #wrap {
     display: flex;
     min-height: 100vh;

@@ -1,11 +1,11 @@
-/* Reset & Base */
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Straindez Color Palette */
+
 :root {
     --straindez-bg: #0B0E13;
     --straindez-card: #13161C;
@@ -24,7 +24,7 @@
     --border-color: #1F232C;
 }
 
-/* Straindez Font */
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 
 body {
@@ -38,7 +38,7 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
-/* Straindez Grid Background */
+
 body::before {
     content: '';
     position: fixed;
@@ -54,7 +54,7 @@ body::before {
     z-index: 0;
 }
 
-/* Straindez Gradient Overlay */
+
 body::after {
     content: '';
     position: fixed;
@@ -73,7 +73,7 @@ body::after {
     z-index: 10;
 }
 
-/* Glassmorphism Effect */
+
 .glass {
     background: rgba(19, 22, 28, 0.7);
     backdrop-filter: blur(20px);
@@ -81,7 +81,7 @@ body::after {
     border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-/* Floating particles */
+
 .particles {
     position: fixed;
     top: 0;
@@ -118,7 +118,7 @@ body::after {
     }
 }
 
-/* Ensure content is above background */
+
 .container, .header, .user-bar {
     position: relative;
     z-index: 10;
@@ -130,7 +130,7 @@ body::after {
     padding: 0 20px;
 }
 
-/* Straindez Header */
+
 .header {
     background: rgba(11, 14, 19, 0.95);
     backdrop-filter: blur(20px);
@@ -204,7 +204,7 @@ body::after {
     transform: scale(1.05);
 }
 
-/* Straindez Buttons */
+
 .btn-discord {
     background: linear-gradient(135deg, #5865F2 0%, #4752C4 100%);
     color: white;
@@ -243,7 +243,7 @@ body::after {
     box-shadow: 0 6px 20px rgba(88, 101, 242, 0.5);
 }
 
-/* Straindez User Bar */
+
 .user-bar {
     background: var(--straindez-card);
     padding: 12px 0;
@@ -324,12 +324,12 @@ body::after {
     box-shadow: 0 2px 8px rgba(233, 30, 99, 0.4);
 }
 
-/* Hero Banner */
+
 .hero-banner {
     padding: 30px 0;
 }
 
-/* Straindez Banner */
+
 .hero-banner {
     padding: 32px 0;
 }
@@ -423,12 +423,12 @@ body::after {
     transform: scale(1.05);
 }
 
-/* Atlantic Plus */
+
 .atlantic-plus {
     padding: 40px 0;
 }
 
-/* Straindez Plus Card */
+
 .atlantic-plus {
     padding: 48px 0;
 }
@@ -602,7 +602,7 @@ body::after {
     height: auto;
 }
 
-/* Categories */
+
 .categories {
     padding: 40px 0;
 }
@@ -613,7 +613,7 @@ body::after {
     gap: 20px;
 }
 
-/* Straindez Categories */
+
 .categories {
     padding: 48px 0;
 }
@@ -628,7 +628,7 @@ body::after {
     animation: fadeInUp 0.6s ease-out backwards;
 }
 
-/* Straindez Category Colors */
+
 .card-yellow {
     border-color: var(--straindez-yellow);
 }
@@ -669,7 +669,7 @@ body::after {
     z-index: 2;
 }
 
-/* Custom Rank */
+
 .custom-rank {
     padding: 40px 0;
 }
@@ -727,7 +727,7 @@ body::after {
     max-width: 300px;
 }
 
-/* Ranks Page */
+
 .breadcrumb {
     background: var(--bg-card);
     padding: 20px 0;
@@ -768,7 +768,7 @@ body::after {
     gap: 30px;
 }
 
-/* Straindez Cards */
+
 .category-card, .rank-card, .rubis-card, .key-card {
     background: var(--straindez-card);
     border-radius: 16px;
@@ -828,7 +828,7 @@ body::after {
         drop-shadow(0 0 30px rgba(0, 217, 255, 0.4));
 }
 
-/* Straindez Typography */
+
 .rank-name, .rubis-amount, .key-name {
     font-size: 20px;
     font-weight: 700;
@@ -850,7 +850,7 @@ body::after {
     z-index: 2;
 }
 
-/* Straindez Button Style */
+
 .btn-add-to-cart {
     background: linear-gradient(135deg, var(--straindez-accent) 0%, var(--straindez-accent-hover) 100%);
     color: white;
@@ -897,7 +897,7 @@ body::after {
     transform: translateY(0);
 }
 
-/* Modal */
+
 .modal {
     display: none;
     position: fixed;
@@ -946,7 +946,7 @@ body::after {
     cursor: pointer;
 }
 
-/* Minecraft Inventory */
+
 .minecraft-inventory {
     background: #8b8b8b;
     border: 2px solid #373737;
@@ -987,7 +987,7 @@ body::after {
     text-shadow: 2px 2px 0 #000;
 }
 
-/* Footer */
+
 .footer {
     background: var(--bg-card);
     border-top: 1px solid var(--border-color);
@@ -1027,7 +1027,7 @@ body::after {
     font-size: 24px;
 }
 
-/* Key Modal Styles */
+
 .key-badge {
     position: absolute;
     top: 10px;
@@ -1102,7 +1102,7 @@ body::after {
     font-weight: bold;
 }
 
-/* Cart Page Styles */
+
 .cart-container {
     display: grid;
     grid-template-columns: 2fr 1fr;
@@ -1388,7 +1388,7 @@ body::after {
     background: rgba(239, 68, 68, 0.1);
 }
 
-/* Responsive */
+
 @media (max-width: 1024px) {
     .cart-container {
         grid-template-columns: 1fr;
