@@ -185,22 +185,15 @@
     border: 1px solid #ef4444;
 }
 
-
-
-/* Styles moved from inline style attributes in admin.html. */
-
-html body .atlantic-admin-inline-001 {
-    color: var(--text-gray); margin-top: 10px;
+.admin-subtitle {
+    margin-top: 10px;
+    color: var(--text-gray);
 }
 
-html body .atlantic-admin-inline-002 {
-    display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;
-}
-
-html body .atlantic-admin-inline-003 {
-    display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;
-}
-
-html body .atlantic-admin-inline-004 {
-    display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;
+.section-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    gap: 16px;
 }
