@@ -172,42 +172,20 @@ body {
     margin-top: 10px;
 }
 
+.color-box--blue { background: linear-gradient(135deg, #3b82f6, #2563eb); }
+.color-box--cyan { background: linear-gradient(135deg, #06b6d4, #0891b2); }
+.color-box--yellow { background: linear-gradient(135deg, #fbbf24, #f59e0b); }
+.color-box--pink { background: linear-gradient(135deg, #ec4899, #db2777); }
+.color-box--purple { background: linear-gradient(135deg, #a855f7, #9333ea); }
+.color-box--green { background: linear-gradient(135deg, #10b981, #059669); }
 
+.demo-cta { margin-top: 60px; }
+.demo-cta__text { margin-bottom: 30px; }
+.demo-cta__button { width: auto; padding: 15px 40px; }
 
-/* Styles moved from inline style attributes in demo-efeitos.html. */
-
-html body .atlantic-demo-efeitos-inline-001 {
-    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-}
-
-html body .atlantic-demo-efeitos-inline-002 {
-    background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
-}
-
-html body .atlantic-demo-efeitos-inline-003 {
-    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
-}
-
-html body .atlantic-demo-efeitos-inline-004 {
-    background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);
-}
-
-html body .atlantic-demo-efeitos-inline-005 {
-    background: linear-gradient(135deg, #a855f7 0%, #9333ea 100%);
-}
-
-html body .atlantic-demo-efeitos-inline-006 {
-    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-}
-
-html body .atlantic-demo-efeitos-inline-007 {
-    margin-top: 60px;
-}
-
-html body .atlantic-demo-efeitos-inline-008 {
-    margin-bottom: 30px;
-}
-
-html body .atlantic-demo-efeitos-inline-009 {
-    width: auto; padding: 15px 40px;
+.demo-cta__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
 }
