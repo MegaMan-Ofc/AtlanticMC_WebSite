@@ -177,10 +177,16 @@
     }
 }
 
+.page-success .success-main {
+    display: flex;
+    min-height: 70vh;
+    align-items: center;
+}
 
-
-/* Styles moved from inline style attributes in success.html. */
-
-html body #main.atlantic-success-inline-001 {
-    min-height: 70vh; display: flex; align-items: center;
+button.server-ip-box {
+    width: 100%;
+    border: 0;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
 }
