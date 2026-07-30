@@ -187,7 +187,7 @@
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
     }
-    
+
     .sdz-samurai-key,
     .sdz-plus-right img,
     .sdz-rank-art img,
@@ -195,7 +195,7 @@
     .package-image-glow {
         animation: none !important;
     }
-    
+
     .sdz-samurai-petals {
         display: none !important;
     }
@@ -207,22 +207,22 @@
     .sdz-samurai-petals span:nth-child(n+4) {
         display: none;
     }
-    
+
     /* Simplify backgrounds */
     body::before {
         background-size: 100px 100px;
         opacity: 0.5;
     }
-    
+
     body::after {
         opacity: 0.5;
     }
-    
+
     /* Reduce blur effects */
     .package-image-glow {
         filter: blur(10px);
     }
-    
+
     /* Disable some animations on mobile */
     .sdz-plus-card::before,
     .sdz-rank-bg {
@@ -236,17 +236,17 @@
     .sdz-samurai-petals {
         display: none;
     }
-    
+
     /* Remove glow images */
     .package-image-glow {
         display: none;
     }
-    
+
     /* Simplify shadows */
     .package:hover {
         box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
     }
-    
+
     /* Disable heavy animations */
     .sdz-samurai-key,
     .package-image-main {
