@@ -66,8 +66,8 @@ input:focus-visible {
 
 .site-logo img {
     width: auto;
-    height: clamp(72px, 7vw, 112px);
-    max-width: min(360px, 32vw);
+    height: clamp(120px, 12vw, 180px);
+    max-width: min(520px, 50vw);
     object-fit: contain;
 }
 
@@ -139,7 +139,7 @@ button.user-card {
     min-height: 44px;
 }
 
-.currency-button {
+.language-button {
     cursor: default;
 }
 
@@ -272,8 +272,8 @@ button.user-card {
     }
 
     .site-logo img {
-        height: 72px;
-        max-width: 250px;
+        height: 120px;
+        max-width: 90vw;
     }
 
     .header-action {
@@ -318,20 +318,10 @@ button.user-card {
     }
 }
 
-
 #wrap {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
-}
-
-.header-toolbar > a[href*="discord.gg"] {
-    background: linear-gradient(135deg, var(--straindez-discord), #4752c4);
-    box-shadow: 0 4px 15px rgba(88, 101, 242, 0.3);
-}
-
-.header-toolbar > a[href*="discord.gg"]:hover {
-    box-shadow: 0 6px 20px rgba(88, 101, 242, 0.5);
 }
 
 .footer-column strong {
