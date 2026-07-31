@@ -34,11 +34,10 @@ input:focus-visible {
     display: none;
 }
 
-
 .site-header {
     position: relative;
-    top: 0;
-    z-index: 999;
+    top: auto;
+    z-index: 20;
 }
 
 .site-header .header-main {
@@ -48,7 +47,6 @@ input:focus-visible {
     background:
         radial-gradient(circle at 50% -100%, rgba(108, 92, 231, 0.28), transparent 58%),
         var(--site-header-bg);
-    backdrop-filter: blur(18px);
 }
 
 .header-main__inner {
@@ -60,21 +58,26 @@ input:focus-visible {
 
 .site-logo {
     display: inline-flex;
-    justify-self: center;
     align-items: center;
+    justify-self: center;
+    margin: 0;
 }
 
 .site-logo img {
+    display: block;
     width: auto;
-    height: clamp(72px, 7vw, 112px);
-    max-width: min(360px, 32vw);
+    height: clamp(140px, 11vw, 190px);
+    max-width: min(560px, 42vw);
+    max-height: none;
     object-fit: contain;
 }
 
 .header-action {
-    width: fit-content;
+    width: min(100%, 330px);
+    min-width: 0;
     max-width: 100%;
     margin: 0;
+    padding: 14px 18px;
     color: inherit;
     text-align: left;
     text-decoration: none;
@@ -86,19 +89,38 @@ button.user-card {
     border: 1px solid var(--straindez-border);
 }
 
+.header-action--discord {
+    justify-self: start;
+}
+
 .header-action--server {
     justify-self: end;
 }
 
-.header-action--discord .pw-icon {
+.site-header .header-action--discord .pw-icon {
     background: linear-gradient(135deg, var(--straindez-discord), #4752c4);
 }
 
-.header-action--server .pw-icon {
+.site-header .header-action--server .pw-icon {
     background: linear-gradient(135deg, var(--straindez-cyan), var(--straindez-accent));
 }
 
-.pw-text strong {
+.header-action .pw-icon {
+    flex: 0 0 46px;
+    width: 46px;
+    height: 46px;
+}
+
+.header-action .pw-text {
+    min-width: 0;
+}
+
+.header-action .pw-text small {
+    display: block;
+    font-size: 0.7rem;
+}
+
+.header-action .pw-text strong {
     display: block;
     overflow: hidden;
     max-width: 240px;
@@ -111,42 +133,81 @@ button.user-card {
     white-space: nowrap;
 }
 
+.site-header .header-bottom {
+    padding-block: 14px;
+}
+
 .header-bottom__inner {
-    display: flex;
+    display: flex !important;
     align-items: center;
     justify-content: space-between;
     gap: 24px;
 }
 
-.user-card {
+.site-header .user-card {
+    display: flex;
+    width: auto;
+    min-width: 0;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 12px;
+    margin: 0;
+    padding: 9px 14px;
     color: inherit;
     text-align: left;
 }
 
-.user-card .text strong {
+.site-header .user-card .avatar {
+    flex: 0 0 46px;
+    width: 46px;
+    height: 46px;
+    margin: 0;
+}
+
+.site-header .user-card .text {
+    min-width: 0;
+    text-align: left;
+}
+
+.site-header .user-card .text small {
+    font-size: 0.65rem;
+}
+
+.site-header .user-card .text strong {
     display: block;
+    overflow: hidden;
+    max-width: 180px;
     color: var(--text-primary);
-    font-size: 1rem;
+    font-size: 0.95rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .header-toolbar {
     display: flex;
+    width: auto;
     align-items: center;
-    gap: 12px;
+    justify-content: flex-end;
+    gap: 10px;
 }
 
 .header-toolbar .btn {
+    width: auto;
+    min-width: 44px;
     min-height: 44px;
+    margin: 0;
 }
 
-.currency-button {
+.language-button {
     cursor: default;
+    white-space: nowrap;
 }
 
 .cart-button {
     position: relative;
+    justify-content: center;
 }
-
 
 .main-content {
     flex: 1;
@@ -155,7 +216,6 @@ button.user-card {
 .title [id='page-title'] {
     margin: 0;
 }
-
 
 .site-footer {
     margin-top: auto;
@@ -227,14 +287,45 @@ button.user-card {
     transform: translateY(-2px);
 }
 
+#wrap {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+.footer-column strong {
+    color: var(--straindez-cyan);
+}
+
+.footer-actions .footer-btn {
+    margin-top: 0;
+}
+
+.footer-legal p {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    line-height: 1.6;
+}
+
 @media (max-width: 900px) {
     .header-main__inner {
-        grid-template-columns: 1fr auto;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        gap: 14px;
     }
 
     .site-logo {
         grid-column: 1 / -1;
         grid-row: 1;
+    }
+
+    .site-logo img {
+        height: 150px;
+        max-width: min(520px, 80vw);
+    }
+
+    .header-action {
+        width: 100%;
     }
 
     .header-action--discord {
@@ -261,10 +352,14 @@ button.user-card {
         --site-gutter: 16px;
     }
 
+    .site-header .header-main {
+        padding-block: 12px;
+    }
+
     .header-main__inner {
         display: flex !important;
         flex-direction: column;
-        gap: 12px;
+        gap: 10px;
     }
 
     .site-logo {
@@ -272,36 +367,83 @@ button.user-card {
     }
 
     .site-logo img {
-        height: 72px;
-        max-width: 250px;
+        width: auto;
+        height: 130px;
+        max-width: 92vw;
+        max-height: none;
     }
 
     .header-action {
         width: 100%;
-        justify-content: center;
+        padding: 11px 14px;
+        justify-content: flex-start;
     }
 
-    .header-action--server {
-        justify-self: auto;
+    .header-action .pw-icon {
+        flex-basis: 42px;
+        width: 42px;
+        height: 42px;
+        font-size: 1.15rem;
     }
 
-    .pw-text strong {
-        max-width: min(230px, 62vw);
-        font-size: 0.8rem;
+    .header-action .pw-text small {
+        font-size: 0.62rem;
+    }
+
+    .header-action .pw-text strong {
+        max-width: min(250px, 70vw);
+        font-size: 0.78rem;
+    }
+
+    .site-header .header-bottom {
+        padding-block: 10px;
     }
 
     .header-bottom__inner {
         flex-direction: column;
         align-items: stretch;
+        gap: 10px;
     }
 
-    .user-card {
-        justify-content: center;
+    .site-header .user-card {
+        width: 100%;
+        padding: 9px 12px;
+    }
+
+    .site-header .user-card .avatar {
+        flex-basis: 42px;
+        width: 42px;
+        height: 42px;
+    }
+
+    .site-header .user-card .text strong {
+        max-width: 220px;
+        font-size: 0.88rem;
     }
 
     .header-toolbar {
-        justify-content: center;
-        flex-wrap: wrap;
+        display: grid;
+        width: 100%;
+        grid-template-columns: minmax(0, 1fr) 52px;
+        gap: 8px;
+    }
+
+    .header-toolbar .btn {
+        min-height: 46px;
+        padding: 10px 12px;
+    }
+
+    .language-button {
+        width: 100% !important;
+        min-width: 0;
+        overflow: hidden;
+        font-size: 0.78rem;
+        text-overflow: ellipsis;
+    }
+
+    .cart-button {
+        width: 52px !important;
+        padding-inline: 0 !important;
     }
 
     .footer-grid {
@@ -318,35 +460,39 @@ button.user-card {
     }
 }
 
+@media (max-width: 380px) {
+    .site-logo img {
+        height: 116px;
+    }
 
-#wrap {
-    display: flex;
-    min-height: 100vh;
-    flex-direction: column;
+    .header-action {
+        padding-inline: 11px;
+    }
+
+    .header-action .pw-icon {
+        flex-basis: 38px;
+        width: 38px;
+        height: 38px;
+        font-size: 1rem;
+    }
+
+    .header-action .pw-text strong {
+        font-size: 0.72rem;
+    }
+
+    .site-header .user-card .text strong {
+        max-width: 180px;
+    }
+
+    .language-button {
+        font-size: 0.72rem;
+    }
 }
 
-.header-toolbar > a[href*="discord.gg"] {
-    background: linear-gradient(135deg, var(--straindez-discord), #4752c4);
-    box-shadow: 0 4px 15px rgba(88, 101, 242, 0.3);
-}
-
-.header-toolbar > a[href*="discord.gg"]:hover {
-    box-shadow: 0 6px 20px rgba(88, 101, 242, 0.5);
-}
-
-.footer-column strong {
-    color: var(--straindez-cyan);
-}
-
-.footer-actions .footer-btn {
-    margin-top: 0;
-}
-
-.footer-legal p {
-    margin: 0;
-    color: var(--text-muted);
-    font-size: 0.75rem;
-    line-height: 1.6;
+@supports (padding: max(0px)) {
+    .site-header {
+        padding-top: env(safe-area-inset-top);
+    }
 }
 
 @media (hover: none) and (pointer: coarse) {

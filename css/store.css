@@ -64,11 +64,6 @@ body::after {
     gap: 24px;
 }
 
-#top {
-    top: 0;
-    z-index: 999;
-}
-
 .header-bg {
     position: absolute;
     width: 100%;
@@ -162,10 +157,6 @@ body::after {
     border-radius: 10px;
     font-size: 22px;
     color: white;
-}
-
-.player-wrap:last-child .pw-icon {
-    background: linear-gradient(135deg, var(--straindez-discord), #4752C4);
 }
 
 .pw-text {
@@ -1115,15 +1106,6 @@ body::after {
 }
 
 @media (max-width: 768px) {
-    .header-main .right {
-        flex-direction: column;
-        gap: 12px;
-    }
-
-    .player-wrap {
-        width: 100%;
-    }
-
     .sdz-samurai-word {
         font-size: 48px;
     }
@@ -5853,27 +5835,6 @@ html {
         padding: 0 15px;
     }
 
-    .header-main {
-        padding: 10px 0;
-    }
-
-    .logo img {
-        max-height: 50px;
-    }
-
-    .player-wrap {
-        padding: 8px 15px;
-        font-size: 0.9rem;
-    }
-
-    .pw-text h4 {
-        font-size: 0.9rem;
-    }
-
-    .pw-text small {
-        font-size: 0.7rem;
-    }
-
     .products-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 15px;
@@ -5897,86 +5858,6 @@ html {
     .container {
         max-width: 100%;
         padding: 0 10px;
-    }
-
-    .header-main {
-        flex-direction: column;
-        padding: 10px;
-    }
-
-    .header-main .right {
-        flex-direction: column;
-        width: 100%;
-        gap: 10px;
-        padding: 0 !important;
-        border: none !important;
-    }
-
-    .player-wrap {
-        width: 100%;
-        justify-content: center;
-        margin: 5px 0 !important;
-        padding: 12px;
-    }
-
-    .pw-icon {
-        width: 35px;
-        height: 35px;
-        font-size: 1.2rem;
-    }
-
-    .pw-text {
-        font-size: 0.85rem;
-    }
-
-    .pw-text h4 {
-        font-size: 0.85rem;
-    }
-
-    .pw-text small {
-        font-size: 0.65rem;
-    }
-
-    .logo {
-        text-align: center;
-        margin: 10px 0;
-    }
-
-    .logo img {
-        max-height: 45px;
-    }
-
-    .header-bottom {
-        padding: 15px 0;
-    }
-
-    .user-card {
-        flex-direction: column;
-        text-align: center;
-        padding: 15px;
-    }
-
-    .user-card .avatar {
-        margin-bottom: 10px;
-    }
-
-    .user-card .text {
-        text-align: center;
-    }
-
-    .header .buttons {
-        flex-direction: column;
-        width: 100%;
-    }
-
-    .toolbar {
-        flex-direction: column;
-        width: 100%;
-        gap: 10px;
-    }
-
-    .discord-nav-button, .currency, .basket {
-        width: 100%;
     }
 
     .btn {
@@ -6185,23 +6066,6 @@ html {
         height: 150px;
     }
 
-    .player-wrap {
-        padding: 10px;
-    }
-
-    .pw-icon {
-        width: 30px;
-        height: 30px;
-        font-size: 1rem;
-    }
-
-    .pw-text h4 {
-        font-size: 0.75rem;
-    }
-
-    .pw-text small {
-        font-size: 0.6rem;
-    }
 }
 
 @media screen and (max-width: 767px) and (orientation: landscape) {
