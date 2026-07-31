@@ -1,0 +1,174 @@
+.page-keys .package {
+    --card-accent: #ff4a3d;
+}
+
+.page-rubis .package {
+    --card-accent: #e73f71;
+}
+
+.page-battlepass .package {
+    --card-accent: var(--bp-color, #f0b84d);
+}
+
+.page-boosters .package {
+    --card-accent: var(--booster-color, #ff4369);
+}
+
+.package-quantity-options {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin: 16px 0 20px;
+}
+
+.package-quantity-option {
+    min-height: 40px;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    background: var(--surface-2);
+    color: var(--muted);
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.package-quantity-option:hover,
+.package-quantity-option.is-active {
+    border-color: var(--card-accent);
+    background: color-mix(in srgb, var(--card-accent) 24%, var(--surface-2));
+    color: #fff;
+}
+
+.package-bonus-badge,
+.rubis-bonus-badge,
+.battlepass-special-badge {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    z-index: 5;
+    padding: 7px 11px;
+    border-radius: 9px;
+    background: #9d572b;
+    color: #fff2c7;
+    font-size: .68rem;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.rubis-bonus-badge {
+    right: 14px;
+    left: auto;
+    background: linear-gradient(135deg, #d5af43, #ce6b39);
+    color: #17130c;
+}
+
+.package-limited-note {
+    margin: -8px 0 12px;
+    color: #ffbd88;
+    font-size: .68rem;
+    font-weight: 800;
+    letter-spacing: .12em;
+}
+
+.rubis-amount {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    margin-bottom: 4px;
+    color: #ef4b7d;
+    font-size: 1.65rem;
+    font-weight: 900;
+}
+
+.booster-icon-wrap {
+    position: relative;
+    display: grid;
+    min-height: 220px;
+    place-items: center;
+}
+
+.booster-icon-img {
+    position: relative;
+    z-index: 1;
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    filter: drop-shadow(0 15px 28px rgba(0,0,0,.45));
+}
+
+.booster-card-bg,
+.key-card-bg,
+.rank-card-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: .6;
+}
+
+.booster-description {
+    color: var(--muted);
+}
+
+.booster-multiplier {
+    margin: 12px 0 18px;
+    color: #ff8da8;
+    font-size: 1.25rem;
+    font-weight: 900;
+}
+
+.battlepass-subtitle {
+    margin-bottom: 14px;
+    color: var(--muted);
+}
+
+.battlepass-benefits {
+    display: grid;
+    gap: 7px;
+    margin-bottom: 18px;
+    text-align: left;
+}
+
+.benefit-item {
+    color: var(--muted);
+    font-size: .86rem;
+}
+
+.benefit-item i {
+    color: var(--success);
+}
+
+.package-magma-card {
+    --card-accent: #ff3b31;
+    background: radial-gradient(circle at 50% 20%, rgba(255,50,40,.23), transparent 38%), var(--surface);
+}
+
+.package-atlantic-card {
+    --card-accent: #22a6d6;
+    background: radial-gradient(circle at 50% 20%, rgba(30,150,210,.23), transparent 38%), var(--surface);
+}
+
+.package-dev-card {
+    --card-accent: #36d875;
+    background: radial-gradient(circle at 50% 20%, rgba(40,220,110,.18), transparent 38%), var(--surface);
+}
+
+.atlantic-fish,
+.dev-code-line,
+.dev-matrix,
+.dev-grid,
+.magma-star,
+.magma-nebula,
+.atlantic-wave,
+.atlantic-bubble {
+    display: none;
+}
+
+@media (max-width: 430px) {
+    .package {
+        padding: 18px;
+    }
+
+    .package-quantity-options {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
