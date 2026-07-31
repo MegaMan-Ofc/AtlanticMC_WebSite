@@ -5857,10 +5857,6 @@ html {
         padding: 10px 0;
     }
 
-    .logo img {
-        max-height: 50px;
-    }
-
     .player-wrap {
         padding: 8px 15px;
         font-size: 0.9rem;
@@ -5940,10 +5936,6 @@ html {
     .logo {
         text-align: center;
         margin: 10px 0;
-    }
-
-    .logo img {
-        max-height: 45px;
     }
 
     .header-bottom {

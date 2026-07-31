@@ -37,7 +37,7 @@ input:focus-visible {
 
 .site-header {
     position: relative;
-    top: 0;
+    top: auto;
     z-index: 999;
 }
 
@@ -66,8 +66,9 @@ input:focus-visible {
 
 .site-logo img {
     width: auto;
-    height: clamp(120px, 12vw, 180px);
-    max-width: min(520px, 50vw);
+    height: clamp(130px, 12vw, 190px);
+    max-width: min(560px, 60vw);
+    max-height: none;
     object-fit: contain;
 }
 
@@ -237,6 +238,11 @@ button.user-card {
         grid-row: 1;
     }
 
+    .site-logo img {
+        height: 150px;
+        max-width: min(520px, 80vw);
+    }
+
     .header-action--discord {
         grid-column: 1;
         grid-row: 2;
@@ -272,8 +278,10 @@ button.user-card {
     }
 
     .site-logo img {
-        height: 120px;
-        max-width: 90vw;
+        width: auto;
+        height: 130px;
+        max-width: 92vw;
+        max-height: none;
     }
 
     .header-action {
