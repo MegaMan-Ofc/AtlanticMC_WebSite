@@ -1,5 +1,3 @@
-
-
 :root {
     --site-container: 1400px;
     --site-gutter: 24px;
@@ -38,7 +36,7 @@ input:focus-visible {
 
 
 .site-header {
-    position: sticky;
+    position: relative;
     top: 0;
     z-index: 999;
 }
@@ -261,10 +259,6 @@ button.user-card {
 @media (max-width: 680px) {
     :root {
         --site-gutter: 16px;
-    }
-
-    .site-header {
-        position: relative;
     }
 
     .header-main__inner {
