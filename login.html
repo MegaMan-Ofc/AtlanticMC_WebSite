@@ -1,157 +1,211 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="theme-color" content="#0B0E13">
-        <title>Atlantic Anarchy - Login</title>
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&amp;display=swap">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-        <link rel="stylesheet" href="css/store.css">
-        <link rel="stylesheet" href="css/performance.css">
-        <link rel="stylesheet" href="css/responsive.css">
-        <link rel="stylesheet" href="css/layout.css">
-        <link rel="stylesheet" href="css/login.css">
+        <meta charset="utf-8"/>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+        <meta content="#0b0e13" name="theme-color"/>
+        <title>
+            Atlantic Anarchy - Login
+        </title>
+        <link href="assets/logo1.png" rel="icon" type="image/png"/>
+        <link href="https://fonts.googleapis.com" rel="preconnect"/>
+        <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+        <link href="css/base.css" rel="stylesheet"/>
+        <link href="css/components.css" rel="stylesheet"/>
+        <link href="css/pages/auth.css" rel="stylesheet"/>
     </head>
     <body class="page-login">
         <div id="wrap">
-            
-            <header id="top" class="header-content site-header">
-                <div class="header-main">
-                    <div class="container header-main__inner">
-                        <a class="player-wrap header-action header-action--discord" href="https://discord.gg/atlanticnetwork" target="_blank" rel="noopener noreferrer" aria-label="Join the Atlantic Anarchy Discord server">
-                            <span class="pw-icon" aria-hidden="true">
-                                <i class="fa-brands fa-discord"></i>
-                            </span>
-                            <span class="pw-text">
-                                <small>JOIN OUR</small>
-                                <strong>DISCORD</strong>
+            <header class="site-header" id="top">
+                <div class="header-primary">
+                    <div class="container header-grid">
+                        <a aria-label="Join our Discord server" class="header-link header-link--discord" href="https://discord.gg/atlanticnetwork" rel="noopener noreferrer" target="_blank">
+                            <i aria-hidden="true" class="fa-brands fa-discord">
+                            </i>
+                            <span>
+                                <small>
+                                    Join our
+                                </small>
+                                <strong>
+                                    Discord
+                                </strong>
                             </span>
                         </a>
-                        <a class="logo site-logo" href="index.html" aria-label="Atlantic Anarchy store home">
-                            <img class="desktop" src="assets/logo1.png" alt="Atlantic Anarchy">
+                        <a aria-label="Atlantic Anarchy store home" class="brand" href="index.html">
+                            <img alt="Atlantic Anarchy" src="assets/logo1.png"/>
                         </a>
-                        <button id="copy" class="player-wrap toggle-tooltip ip-address-element header-action header-action--server" type="button" title="Click to copy" aria-label="Copy the Minecraft server address">
-                            <span class="pw-icon" aria-hidden="true">
-                                <i class="fa-solid fa-server"></i>
-                            </span>
-                            <span class="pw-text">
-                                <small>SERVER IP</small>
-                                <strong>atlanticmc.secure.pebble.host</strong>
+                        <button aria-label="Copy the Minecraft server address" class="header-link header-link--server" id="copy" title="Click to copy" type="button">
+                            <i aria-hidden="true" class="fa-solid fa-server">
+                            </i>
+                            <span>
+                                <small>
+                                    Server IP
+                                </small>
+                                <strong>
+                                    atlanticmc.secure.pebble.host
+                                </strong>
                             </span>
                         </button>
                     </div>
                 </div>
-                <div class="header-bottom">
-                    <div class="container header-bottom__inner">
-                        <button class="user-card" type="button" onclick="location.href='login.html'" aria-label="Open Minecraft account login">
-                            <span class="avatar">
-                                <img id="user-avatar" src="https://mc-heads.net/avatar/steve" alt="Minecraft avatar">
-                            </span>
-                            <span class="text">
-                                <small>Logged in as</small>
-                                <strong id="username">Guest</strong>
+                <div class="header-secondary">
+                    <div class="container header-row">
+                        <button aria-label="Open Minecraft account login" class="user-card" onclick="location.href='login.html'" type="button">
+                            <img alt="Minecraft avatar" id="user-avatar" src="https://mc-heads.net/avatar/steve"/>
+                            <span>
+                                <small>
+                                    Logged in as
+                                </small>
+                                <strong id="username">
+                                    Guest
+                                </strong>
                             </span>
                         </button>
-                        <nav class="header-toolbar" aria-label="Store actions">
-                            <button type="button" class="btn btn-default dropdown-toggle language-button" aria-label="Select language: Portuguese or English">
-                                Português / English <span class="fa fa-caret-down" aria-hidden="true"></span>
+                        <nav aria-label="Store actions" class="toolbar">
+                            <button aria-label="Select language: Portuguese or English" class="button button--ghost language-button" type="button">
+                                Português / English
+                                <i aria-hidden="true" class="fa-solid fa-caret-down">
+                                </i>
                             </button>
-                            <a href="cart.html" class="btn btn-info empty cart-button" aria-label="Open shopping cart">
-                                <i class="fa-solid fa-cart-shopping" aria-hidden="true"></i>
-                                <span id="cart-count">0</span>
+                            <a aria-label="Open shopping cart" class="button button--primary cart-button" href="cart.html">
+                                <i aria-hidden="true" class="fa-solid fa-cart-shopping">
+                                </i>
+                                <span id="cart-count">
+                                    0
+                                </span>
                             </a>
                         </nav>
                     </div>
                 </div>
             </header>
-            
-            <main id="main" class="main-content">
+            <main class="main-content" id="main">
                 <div class="container">
-                    <div class="title" aria-labelledby="page-title">
-                        <a class="return" href="index.html" aria-label="Back to store home">
-                            <i class="fa-solid fa-house"></i>
+                    <header class="page-title">
+                        <a aria-label="Go back" href="index.html">
+                            <i class="fa-solid fa-house">
+                            </i>
                         </a>
-                        <h2 id="page-title">Login</h2>
-                    </div>
-                    <div class="login-container">
-                        <div class="login-box">
-                            <div class="mc-avatar-wrapper">
-                                <div class="mc-avatar">
-                                    <img id="skin-head" src="https://mc-heads.net/avatar/steve/150" alt="150">
-                                </div>
-                                <i class="info fa-regular fa-circle-question" title="Click for help"></i>
+                        <h1 id="page-title">
+                            Login
+                        </h1>
+                    </header>
+                    <div class="login-shell">
+                        <section class="login-card">
+                            <div class="login-avatar">
+                                <img alt="Minecraft avatar" id="skin-head" src="https://mc-heads.net/avatar/steve/150"/>
+                                <i class="fa-regular fa-circle-question" title="Click for help">
+                                </i>
                             </div>
-                            <h1 class="login-title">Minecraft Account</h1>
+                            <h1>
+                                Minecraft account
+                            </h1>
                             <div class="platform-selector">
-                                <button type="button" class="platform-btn selected" id="javaButton" onclick="selectPlatform('java')">
-                                    <img src="https://i.imgur.com/fxrAUbr.png" alt="Java">
-                                    <span>JAVA</span>
+                                <button class="platform-btn selected" id="javaButton" onclick="selectPlatform('java')" type="button">
+                                    <img alt="Java" src="https://i.imgur.com/fxrAUbr.png"/>
+                                    <span>
+                                        Java
+                                    </span>
                                 </button>
-                                <button type="button" class="platform-btn" id="bedrockButton" onclick="selectPlatform('bedrock')">
-                                    <img src="https://i.imgur.com/QhSBfj6.png" alt="Bedrock">
-                                    <span>BEDROCK</span>
+                                <button class="platform-btn" id="bedrockButton" onclick="selectPlatform('bedrock')" type="button">
+                                    <img alt="Bedrock" src="https://i.imgur.com/QhSBfj6.png"/>
+                                    <span>
+                                        Bedrock
+                                    </span>
                                 </button>
                             </div>
                             <form class="login-form" onsubmit="return handleLogin(event)">
-                                <input type="text" id="username-input" class="form-control" placeholder="Enter your username" pattern="[a-zA-Z0-9_.]{3,16}" title="Only letters, numbers, dots, and underscores allowed (3-16 characters)" maxlength="17" required>
+                                <label class="sr-only" for="username-input">
+                                    Minecraft username
+                                </label>
+                                <input class="field" id="username-input" maxlength="17" pattern="[a-zA-Z0-9_.]{3,16}" placeholder="Enter your username" required="" type="text"/>
                                 <button type="submit">
-                                CONTINUE
-                                <i class="fa fa-chevron-right"></i>
+                                    Continue
+                                    <i class="fa-solid fa-chevron-right">
+                                    </i>
                                 </button>
                             </form>
-                        </div>
+                        </section>
                     </div>
                 </div>
             </main>
-            
-            <footer class="bottom-content site-footer">
-                <div class="footer-top">
+            <footer class="site-footer">
+                <div class="footer-main">
                     <div class="container footer-grid">
-                        <section class="footer-column footer-column--about">
-                            <h2>About Us</h2>
+                        <section class="footer-about">
+                            <h2>
+                                About us
+                            </h2>
                             <p>
-                    Atlantic Anarchy is a public Minecraft anarchy server for Java and Bedrock players.
-                    Join us at <strong>atlanticmc.secure.pebble.host</strong>.
-                </p>
+                                Atlantic Anarchy is a public Minecraft anarchy server for Java and Bedrock players. Join us at
+                                <strong>
+                                    atlanticmc.secure.pebble.host
+                                </strong>
+                                .
+                            </p>
                         </section>
-                        <nav class="footer-column" aria-label="Store links">
-                            <h2>Store</h2>
-                            <div class="link-list">
-                                <a href="index.html">Home</a>
-                                <a href="ranks.html">VIPs</a>
-                                <a href="rubis.html">Rubis</a>
-                                <a href="keys.html">Keys</a>
+                        <nav aria-label="Store links">
+                            <h2>
+                                Store
+                            </h2>
+                            <div class="footer-links">
+                                <a href="index.html">
+                                    Home
+                                </a>
+                                <a href="ranks.html">
+                                    VIPs
+                                </a>
+                                <a href="rubis.html">
+                                    Rubis
+                                </a>
+                                <a href="keys.html">
+                                    Keys
+                                </a>
                             </div>
                         </nav>
-                        <section class="footer-column">
-                            <h2>Support</h2>
-                            <p>Questions before purchasing? Contact us through Discord or email.</p>
+                        <section>
+                            <h2>
+                                Support
+                            </h2>
+                            <p>
+                                Questions before purchasing? Contact us through Discord or email.
+                            </p>
                             <div class="footer-actions">
-                                <a class="footer-btn" href="https://discord.gg/atlanticnetwork" target="_blank" rel="noopener noreferrer">Discord</a>
-                                <a class="footer-btn footer-btn--secondary" href="mailto:support@atlantic.net">Email</a>
+                                <a class="button button--primary" href="https://discord.gg/atlanticnetwork" rel="noopener noreferrer" target="_blank">
+                                    Discord
+                                </a>
+                                <a class="button button--ghost" href="mailto:support@atlantic.net">
+                                    Email
+                                </a>
                             </div>
                         </section>
                     </div>
                 </div>
                 <div class="footer-bottom">
-                    <div class="container footer-bottom__inner">
+                    <div class="container footer-row">
                         <div class="footer-legal">
-                            <p class="footer-brand">2026 © <strong>Atlantic Anarchy</strong>
+                            <p>
+                                2026 ©
+                                <strong>
+                                    Atlantic Anarchy
+                                </strong>
                             </p>
-                            <p>We are not affiliated with or endorsed by Mojang, AB.</p>
+                            <p>
+                                We are not affiliated with or endorsed by Mojang, AB.
+                            </p>
                         </div>
-                        <ul class="footer-socials" aria-label="Social links">
+                        <ul aria-label="Social links" class="footer-socials">
                             <li>
-                                <a href="https://discord.gg/atlanticnetwork" target="_blank" rel="noopener noreferrer" aria-label="Discord">
-                                    <i class="fa-brands fa-discord" aria-hidden="true"></i>
+                                <a aria-label="Discord" href="https://discord.gg/atlanticnetwork" rel="noopener noreferrer" target="_blank">
+                                    <i class="fa-brands fa-discord">
+                                    </i>
                                 </a>
                             </li>
                             <li>
-                                <a href="#top" aria-label="Back to top">
-                                    <i class="fa-solid fa-arrow-turn-up" aria-hidden="true"></i>
+                                <a aria-label="Back to top" href="#top">
+                                    <i class="fa-solid fa-arrow-up">
+                                    </i>
                                 </a>
                             </li>
                         </ul>
@@ -159,8 +213,11 @@
                 </div>
             </footer>
         </div>
-        <script src="js/main.js"></script>
-        <script src="js/straindez.js"></script>
-        <script src="js/login.js"></script>
+        <script src="js/main.js">
+        </script>
+        <script src="js/straindez.js">
+        </script>
+        <script src="js/login.js">
+        </script>
     </body>
 </html>
