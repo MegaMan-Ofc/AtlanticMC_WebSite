@@ -6,19 +6,19 @@
 
 .main-content {
     flex: 1;
-    padding-block: clamp(32px, 5vw, 72px);
+    padding-block: clamp(2rem, 5vw, 4.5rem);
 }
 
 .button,
 .btn {
     display: inline-flex;
-    min-height: 44px;
+    min-height: 2.75rem;
     align-items: center;
     justify-content: center;
-    gap: 9px;
-    padding: 11px 20px;
+    gap: 0.5625rem;
+    padding: 0.6875rem 1.25rem;
     border: 1px solid transparent;
-    border-radius: 11px;
+    border-radius: 0.6875rem;
     font-weight: 700;
     text-decoration: none;
     cursor: pointer;
@@ -27,7 +27,7 @@
 
 .button:hover,
 .btn:hover { 
-    transform: translateY(-2px); 
+    transform: translateY(-0.125rem); 
 }
 
 .button--primary,
@@ -57,18 +57,18 @@
 
 .button--large,
 .btn-lg { 
-    min-height: 52px; 
-    padding-inline: 28px; 
+    min-height: 3.25rem; 
+    padding-inline: 1.75rem; 
 }
 
 .field,
 .form-control,
 .config-form input {
     width: 100%;
-    min-height: 48px;
-    padding: 12px 15px;
+    min-height: 3rem;
+    padding: 0.75rem 0.9375rem;
     border: 1px solid var(--border);
-    border-radius: 11px;
+    border-radius: 0.6875rem;
     background: var(--surface-2);
     color: var(--text);
 }
@@ -84,15 +84,15 @@
 }
 
 .header-primary {
-    padding-block: 18px;
+    padding-block: 1.125rem;
     border-bottom: 1px solid var(--border);
     background: radial-gradient(circle at 50% -110%, rgba(108, 92, 231, .3), transparent 60%), rgba(11, 14, 19, .97);
 }
 .header-grid {
     display: grid;
-    grid-template-columns: minmax(230px, 1fr) auto minmax(230px, 1fr);
+    grid-template-columns: minmax(14.375rem, 1fr) auto minmax(14.375rem, 1fr);
     align-items: center;
-    gap: 24px;
+    gap: 1.5rem;
 }
 
 .brand { 
@@ -101,8 +101,8 @@
 
 .brand img {
     width: auto;
-    height: clamp(130px, 12vw, 190px);
-    max-width: min(560px, 60vw);
+    height: clamp(8.125rem, 12vw, 11.875rem);
+    max-width: min(35rem, 60vw);
     object-fit: contain;
     filter: drop-shadow(0 0 24px rgba(108, 92, 231, .55));
 }
@@ -111,11 +111,11 @@
 .user-card {
     display: flex;
     align-items: center;
-    gap: 13px;
+    gap: 0.8125rem;
     min-width: 0;
-    padding: 13px 17px;
+    padding: 0.8125rem 1.0625rem;
     border: 1px solid var(--border);
-    border-radius: 13px;
+    border-radius: 0.8125rem;
     background: rgba(255, 255, 255, .04);
     color: var(--text);
     text-align: left;
@@ -128,7 +128,7 @@
 .user-card:hover { 
     border-color: var(--primary); 
     background: rgba(255, 255, 255, .07); 
-    transform: translateY(-2px); 
+    transform: translateY(-0.125rem); 
 }
 
 .header-link--server { 
@@ -138,11 +138,11 @@
 .header-link > i,
 .header-link .icon {
     display: grid;
-    width: 46px;
-    height: 46px;
-    flex: 0 0 46px;
+    width: 2.875rem;
+    height: 2.875rem;
+    flex: 0 0 2.875rem;
     place-items: center;
-    border-radius: 11px;
+    border-radius: 0.6875rem;
     background: linear-gradient(135deg, var(--primary), var(--primary-dark));
     font-size: 1.25rem;
 }
@@ -181,7 +181,7 @@
 }
 
 .header-secondary {
-    padding-block: 12px;
+    padding-block: 0.75rem;
     border-bottom: 1px solid var(--border);
     background: rgba(19, 22, 28, .96);
 }
@@ -190,7 +190,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 20px;
+    gap: 1.25rem;
 }
 
 .user-card {
@@ -198,18 +198,18 @@
 }
 
 .user-card img {
-    width: 44px;
-    height: 44px;
-    flex: 0 0 44px;
+    width: 2.75rem;
+    height: 2.75rem;
+    flex: 0 0 2.75rem;
     border: 2px solid var(--primary);
-    border-radius: 10px;
+    border-radius: 0.625rem;
     object-fit: cover;
 }
 
 .toolbar {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 0.625rem;
 }
 
 .language-button {
@@ -217,13 +217,13 @@
 }
 
 .cart-button {
-    min-width: 60px;
+    min-width: 3.75rem;
 }
 
 #cart-count {
-    min-width: 22px;
-    padding: 2px 7px;
-    border-radius: 999px;
+    min-width: 1.375rem;
+    padding: 0.125rem 0.4375rem;
+    border-radius: 999rem;
     background: #b8658f;
     font-size: .72rem;
     text-align: center;
@@ -233,8 +233,8 @@
 .page-title {
     display: flex;
     align-items: center;
-    gap: 15px;
-    margin-bottom: 30px;
+    gap: 0.9375rem;
+    margin-bottom: 1.875rem;
 }
 
 .page-title h1 {
@@ -244,12 +244,12 @@
 
 .page-title a {
     display: grid;
-    width: 46px;
-    height: 46px;
-    flex: 0 0 46px;
+    width: 2.875rem;
+    height: 2.875rem;
+    flex: 0 0 2.875rem;
     place-items: center;
     border: 1px solid var(--border);
-    border-radius: 12px;
+    border-radius: 0.75rem;
     background: var(--surface);
     text-decoration: none;
     transition: background .2s ease, transform .2s ease;
@@ -257,20 +257,20 @@
 
 .page-title a:hover {
     background: var(--primary);
-    transform: translateX(-3px);
+    transform: translateX(-0.1875rem);
 }
 
 .catalog-grid,
 .category.packages-image {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
-    gap: 24px;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+    gap: 1.5rem;
 }
 
 .package {
     position: relative;
     overflow: hidden;
-    padding: 24px;
+    padding: 1.5rem;
     border: 1px solid var(--border);
     border-radius: var(--radius);
     background: var(--surface);
@@ -279,7 +279,7 @@
 }
 
 .package:hover {
-    transform: translateY(-5px);
+    transform: translateY(-0.3125rem);
     border-color: var(--card-accent, var(--primary));
     box-shadow: var(--shadow);
 }
@@ -287,15 +287,15 @@
 .package > .image {
     position: relative;
     display: grid;
-    min-height: 220px;
+    min-height: 13.75rem;
     place-items: center;
-    margin-bottom: 18px;
+    margin-bottom: 1.125rem;
 }
 
 .package-image-wrap {
     position: relative;
-    width: min(230px, 80%);
-    height: 210px;
+    width: min(14.375rem, 80%);
+    height: 13.125rem;
 }
 
 .package-image-wrap img {
@@ -323,7 +323,7 @@
 }
 
 .package .name {
-    margin-bottom: 9px;
+    margin-bottom: 0.5625rem;
     font-size: 1.2rem;
     font-weight: 800;
     letter-spacing: .06em;
@@ -334,8 +334,8 @@
     display: flex;
     align-items: baseline;
     justify-content: center;
-    gap: 10px;
-    margin-bottom: 18px;
+    gap: 0.625rem;
+    margin-bottom: 1.125rem;
 }
 
 .package .discount {
@@ -364,7 +364,7 @@
     z-index: 1000;
     display: none;
     place-items: center;
-    padding: 20px;
+    padding: 1.25rem;
 }
 
 .rank-modal.active {
@@ -381,23 +381,23 @@
 .rank-modal-content {
     position: relative;
     z-index: 1;
-    width: min(760px, 100%);
-    max-height: min(88vh, 900px);
+    width: min(47.5rem, 100%);
+    max-height: min(88vh, 56.25rem);
     overflow: auto;
     border: 1px solid var(--border);
-    border-radius: 20px;
+    border-radius: 1.25rem;
     background: var(--surface);
     box-shadow: var(--shadow);
 }
 
 .rank-modal-close {
     position: absolute;
-    top: 14px;
-    right: 14px;
-    width: 40px;
-    height: 40px;
+    top: 0.875rem;
+    right: 0.875rem;
+    width: 2.5rem;
+    height: 2.5rem;
     border: 1px solid var(--border);
-    border-radius: 10px;
+    border-radius: 0.625rem;
     background: var(--surface-2);
     cursor: pointer;
 }
@@ -405,36 +405,36 @@
 .rank-modal-header,
 .rank-modal-body,
 .rank-modal-footer {
-    padding: 28px;
+    padding: 1.75rem;
 }
 
 .rank-modal-header {
-    padding-right: 70px;
+    padding-right: 4.375rem;
     border-bottom: 1px solid var(--border);
 }
 
 .rank-modal-body {
     display: grid;
-    gap: 24px;
+    gap: 1.5rem;
 }
 
 .rank-modal-features ul {
     display: grid;
-    gap: 8px;
-    padding-left: 20px;
+    gap: 0.5rem;
+    padding-left: 1.25rem;
     color: var(--muted);
 }
 
 .rank-kit-image-wrap {
     overflow: hidden;
     border: 1px solid var(--border);
-    border-radius: 12px;
+    border-radius: 0.75rem;
     background: var(--surface-2);
 }
 
 .rank-kit-image-wrap img {
     width: 100%;
-    max-height: 260px;
+    max-height: 16.25rem;
     object-fit: contain;
 }
 
@@ -442,7 +442,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 20px;
+    gap: 1.25rem;
     border-top: 1px solid var(--border);
 }
 
@@ -458,17 +458,17 @@
 }
 
 .footer-main {
-    padding-block: 52px 38px;
+    padding-block: 3.25rem 2.375rem;
 }
 
 .footer-grid {
     display: grid;
-    grid-template-columns: minmax(0, 1.5fr) repeat(2, minmax(180px, 1fr));
-    gap: clamp(30px, 5vw, 70px);
+    grid-template-columns: minmax(0, 1.5fr) repeat(2, minmax(11.25rem, 1fr));
+    gap: clamp(1.875rem, 5vw, 4.375rem);
 }
 
 .footer-grid h2 {
-    margin-bottom: 14px;
+    margin-bottom: 0.875rem;
     font-size: 1.08rem;
 }
 
@@ -484,7 +484,7 @@
 
 .footer-links {
     display: grid;
-    gap: 7px;
+    gap: 0.4375rem;
 }
 
 .footer-links a {
@@ -500,12 +500,12 @@
 .footer-actions {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 17px;
+    gap: 0.625rem;
+    margin-top: 1.0625rem;
 }
 
 .footer-bottom {
-    padding-block: 22px;
+    padding-block: 1.375rem;
     border-top: 1px solid var(--border);
     background: rgba(0, 0, 0, .14);
 }
@@ -514,7 +514,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 24px;
+    gap: 1.5rem;
 }
 
 .footer-legal p {
@@ -530,7 +530,7 @@
 
 .footer-socials {
     display: flex;
-    gap: 9px;
+    gap: 0.5625rem;
     margin: 0;
     padding: 0;
     list-style: none;
@@ -538,11 +538,11 @@
 
 .footer-socials a {
     display: grid;
-    width: 42px;
-    height: 42px;
+    width: 2.625rem;
+    height: 2.625rem;
     place-items: center;
     border: 1px solid var(--border);
-    border-radius: 10px;
+    border-radius: 0.625rem;
     text-decoration: none;
 }
 
@@ -554,10 +554,10 @@
 .notification,
 .copy-notification {
     position: fixed;
-    top: 20px;
-    right: 20px;
+    top: 1.25rem;
+    right: 1.25rem;
     z-index: 9999;
-    border-radius: 12px;
+    border-radius: 0.75rem;
 }
 
 @media (max-width: 900px) {
@@ -571,8 +571,8 @@
     }
 
     .brand img {
-        height: 150px;
-        max-width: min(520px, 80vw);
+        height: 9.375rem;
+        max-width: min(32.5rem, 80vw);
     }
 
     .header-link--discord {
@@ -594,12 +594,12 @@
 
 @media (max-width: 680px) {
     .header-primary {
-        padding-block: 12px;
+        padding-block: 0.75rem;
     }
 
     .header-grid {
         grid-template-columns: 1fr;
-        gap: 10px;
+        gap: 0.625rem;
     }
 
     .brand,
@@ -609,19 +609,19 @@
     }
 
     .brand img {
-        height: 130px;
+        height: 8.125rem;
         max-width: 92vw;
     }
 
     .header-link {
         width: 100%;
-        padding: 10px 12px;
+        padding: 0.625rem 0.75rem;
     }
 
     .header-link > i {
-        width: 40px;
-        height: 40px;
-        flex-basis: 40px;
+        width: 2.5rem;
+        height: 2.5rem;
+        flex-basis: 2.5rem;
     }
 
     .header-link small {
@@ -630,37 +630,37 @@
 
     .header-row {
         align-items: stretch;
-        gap: 9px;
+        gap: 0.5625rem;
     }
 
     .user-card {
         flex: 1;
-        padding: 8px 10px;
+        padding: 0.5rem 0.625rem;
     }
 
     .user-card img {
-        width: 40px;
-        height: 40px;
-        flex-basis: 40px;
+        width: 2.5rem;
+        height: 2.5rem;
+        flex-basis: 2.5rem;
     }
 
     .toolbar {
         flex: 0 0 auto;
-        gap: 7px;
+        gap: 0.4375rem;
     }
 
     .language-button {
-        max-width: 132px;
+        max-width: 8.25rem;
         overflow: hidden;
-        padding-inline: 11px;
+        padding-inline: 0.6875rem;
         font-size: .72rem;
         text-overflow: ellipsis;
         white-space: nowrap;
     }
 
     .cart-button {
-        min-width: 48px;
-        padding-inline: 10px;
+        min-width: 3rem;
+        padding-inline: 0.625rem;
     }
 
     .footer-grid {
@@ -679,7 +679,7 @@
     .rank-modal-header,
     .rank-modal-body,
     .rank-modal-footer {
-        padding: 22px;
+        padding: 1.375rem;
     }
 
     .rank-modal-footer {
@@ -694,21 +694,21 @@
     }
 
     .user-card strong {
-        max-width: 82px;
+        max-width: 5.125rem;
         font-size: .78rem;
     }
 
     .language-button {
-        max-width: 108px;
+        max-width: 6.75rem;
     }
 }
 
 .prose {
-    width: min(820px, 100%);
+    width: min(51.25rem, 100%);
     margin-inline: auto;
-    padding: clamp(24px, 5vw, 48px);
+    padding: clamp(1.5rem, 5vw, 3rem);
     border: 1px solid var(--border);
-    border-radius: 18px;
+    border-radius: 1.125rem;
     background: var(--surface);
 }
 

@@ -1,13 +1,13 @@
 .home-hero {
     position: relative;
     display: grid;
-    min-height: clamp(330px, 48vw, 470px);
+    min-height: clamp(20.625rem, 48vw, 29.375rem);
     place-items: center;
     overflow: hidden;
-    margin-bottom: 30px;
-    padding: 38px;
+    margin-bottom: 1.875rem;
+    padding: 2.375rem;
     border: 1px solid rgba(255, 70, 40, .45);
-    border-radius: 22px;
+    border-radius: 1.375rem;
     background: radial-gradient(circle at 50% 35%, rgba(255, 80, 20, .38), transparent 34%), linear-gradient(135deg, #150000, #3a0505 56%, #120000);
     text-align: center;
     text-decoration: none;
@@ -26,21 +26,21 @@
 .home-hero img {
     position: relative;
     z-index: 1;
-    width: min(360px, 65vw);
+    width: min(22.5rem, 65vw);
     filter: drop-shadow(0 0 45px rgba(255, 90, 20, .8));
     transition: transform .25s ease;
 }
 
 .home-hero:hover img {
-    transform: translateY(-8px) rotate(4deg) scale(1.05);
+    transform: translateY(-0.5rem) rotate(4deg) scale(1.05);
 }
 
 .home-hero div {
     position: absolute;
     z-index: 2;
-    bottom: 28px;
+    bottom: 1.75rem;
     display: grid;
-    gap: 5px;
+    gap: 0.3125rem;
 }
 
 .home-hero strong {
@@ -56,19 +56,19 @@
 .category-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    margin-bottom: 30px;
+    gap: 1.25rem;
+    margin-bottom: 1.875rem;
 }
 
 .category-card {
     position: relative;
     display: grid;
-    min-height: 250px;
+    min-height: 15.625rem;
     place-items: center;
     overflow: hidden;
-    padding: 25px;
+    padding: 1.5625rem;
     border: 1px solid rgba(255,255,255,.1);
-    border-radius: 18px;
+    border-radius: 1.125rem;
     background: var(--card-bg, linear-gradient(135deg, #253067, #593b82));
     text-align: center;
     text-decoration: none;
@@ -76,13 +76,13 @@
 }
 
 .category-card:hover {
-    transform: translateY(-6px);
+    transform: translateY(-0.375rem);
     box-shadow: var(--shadow);
 }
 
 .category-card img {
-    width: 160px;
-    height: 155px;
+    width: 10rem;
+    height: 9.6875rem;
     object-fit: contain;
     filter: drop-shadow(0 14px 25px rgba(0,0,0,.4));
 }
@@ -121,18 +121,18 @@
 .promo-card {
     position: relative;
     display: grid;
-    grid-template-columns: 1fr minmax(240px, 390px);
+    grid-template-columns: 1fr minmax(15rem, 24.375rem);
     align-items: center;
     overflow: hidden;
-    min-height: 280px;
-    padding: clamp(30px, 6vw, 60px);
-    border-radius: 20px;
+    min-height: 17.5rem;
+    padding: clamp(1.875rem, 6vw, 3.75rem);
+    border-radius: 1.25rem;
     background: linear-gradient(135deg, #d11745, #8f153f);
     text-decoration: none;
 }
 
 .promo-card h2 {
-    margin-bottom: 12px;
+    margin-bottom: 0.75rem;
     font-size: clamp(2rem, 6vw, 3.5rem);
     line-height: 1.05;
 }
@@ -143,7 +143,7 @@
 
 .promo-card img {
     justify-self: center;
-    max-height: 280px;
+    max-height: 17.5rem;
     filter: drop-shadow(0 18px 40px rgba(0,0,0,.4));
 }
 
@@ -155,8 +155,8 @@
 
 @media (max-width: 680px) {
     .home-hero {
-        min-height: 330px;
-        padding: 20px;
+        min-height: 20.625rem;
+        padding: 1.25rem;
     }
 
     .category-grid {
@@ -164,7 +164,7 @@
     }
 
     .category-card {
-        min-height: 210px;
+        min-height: 13.125rem;
     }
 
     .promo-card {
@@ -173,6 +173,6 @@
     }
 
     .promo-card img {
-        max-height: 210px;
+        max-height: 13.125rem;
     }
 }

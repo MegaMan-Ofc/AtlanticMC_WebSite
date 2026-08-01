@@ -17,14 +17,14 @@
 .package-quantity-options {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
-    margin: 16px 0 20px;
+    gap: 0.5rem;
+    margin: 1rem 0 1.25rem;
 }
 
 .package-quantity-option {
-    min-height: 40px;
+    min-height: 2.5rem;
     border: 1px solid var(--border);
-    border-radius: 9px;
+    border-radius: 0.5625rem;
     background: var(--surface-2);
     color: var(--muted);
     font-weight: 800;
@@ -42,11 +42,11 @@
 .rubis-bonus-badge,
 .battlepass-special-badge {
     position: absolute;
-    top: 14px;
-    left: 14px;
+    top: 0.875rem;
+    left: 0.875rem;
     z-index: 5;
-    padding: 7px 11px;
-    border-radius: 9px;
+    padding: 0.4375rem 0.6875rem;
+    border-radius: 0.5625rem;
     background: #9d572b;
     color: #fff2c7;
     font-size: .68rem;
@@ -55,14 +55,14 @@
 }
 
 .rubis-bonus-badge {
-    right: 14px;
+    right: 0.875rem;
     left: auto;
     background: linear-gradient(135deg, #d5af43, #ce6b39);
     color: #17130c;
 }
 
 .package-limited-note {
-    margin: -8px 0 12px;
+    margin: -0.5rem 0 0.75rem;
     color: #ffbd88;
     font-size: .68rem;
     font-weight: 800;
@@ -73,8 +73,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 9px;
-    margin-bottom: 4px;
+    gap: 0.5625rem;
+    margin-bottom: 0.25rem;
     color: #ef4b7d;
     font-size: 1.65rem;
     font-weight: 900;
@@ -83,15 +83,15 @@
 .booster-icon-wrap {
     position: relative;
     display: grid;
-    min-height: 220px;
+    min-height: 13.75rem;
     place-items: center;
 }
 
 .booster-icon-img {
     position: relative;
     z-index: 1;
-    width: 80px;
-    height: 80px;
+    width: 5rem;
+    height: 5rem;
     object-fit: contain;
     filter: drop-shadow(0 15px 28px rgba(0,0,0,.45));
 }
@@ -110,21 +110,21 @@
 }
 
 .booster-multiplier {
-    margin: 12px 0 18px;
+    margin: 0.75rem 0 1.125rem;
     color: #ff8da8;
     font-size: 1.25rem;
     font-weight: 900;
 }
 
 .battlepass-subtitle {
-    margin-bottom: 14px;
+    margin-bottom: 0.875rem;
     color: var(--muted);
 }
 
 .battlepass-benefits {
     display: grid;
-    gap: 7px;
-    margin-bottom: 18px;
+    gap: 0.4375rem;
+    margin-bottom: 1.125rem;
     text-align: left;
 }
 
@@ -165,7 +165,7 @@
 
 @media (max-width: 430px) {
     .package {
-        padding: 18px;
+        padding: 1.125rem;
     }
 
     .package-quantity-options {

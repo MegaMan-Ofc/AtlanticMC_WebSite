@@ -1,7 +1,7 @@
 .cart-panel {
     overflow: hidden;
     border: 1px solid var(--border);
-    border-radius: 20px;
+    border-radius: 1.25rem;
     background: var(--surface);
     box-shadow: var(--shadow);
 }
@@ -10,8 +10,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 20px;
-    padding: 24px 28px;
+    gap: 1.25rem;
+    padding: 1.5rem 1.75rem;
     border-bottom: 1px solid var(--border);
     background: var(--surface-2);
 }
@@ -33,16 +33,16 @@
 
 .empty-cart {
     display: flex;
-    min-height: 360px;
+    min-height: 22.5rem;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    padding: 40px;
+    padding: 2.5rem;
     text-align: center;
 }
 
 .empty-cart > i {
-    margin-bottom: 15px;
+    margin-bottom: 0.9375rem;
     color: var(--subtle);
     font-size: 4rem;
 }
@@ -58,7 +58,7 @@
 
 .cart-table th,
 .cart-table td {
-    padding: 17px;
+    padding: 1.0625rem;
     border-bottom: 1px solid var(--border);
     text-align: left;
 }
@@ -71,9 +71,9 @@
 }
 
 .cart-item-image img {
-    width: 70px;
-    height: 70px;
-    border-radius: 10px;
+    width: 4.375rem;
+    height: 4.375rem;
+    border-radius: 0.625rem;
     object-fit: contain;
 }
 
@@ -94,26 +94,26 @@
 .quantity-controls {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: 0.375rem;
 }
 
 .qty-btn,
 .btn-icon {
     display: grid;
-    width: 36px;
-    height: 36px;
+    width: 2.25rem;
+    height: 2.25rem;
     place-items: center;
     border: 1px solid var(--border);
-    border-radius: 8px;
+    border-radius: 0.5rem;
     background: var(--surface-2);
     cursor: pointer;
 }
 
 .qty-input {
-    width: 48px;
-    height: 36px;
+    width: 3rem;
+    height: 2.25rem;
     border: 1px solid var(--border);
-    border-radius: 8px;
+    border-radius: 0.5rem;
     background: var(--bg);
     text-align: center;
 }
@@ -123,17 +123,17 @@
 }
 
 .cart-coupon {
-    padding: 24px 28px;
+    padding: 1.5rem 1.75rem;
     border-top: 1px solid var(--border);
 }
 
 .coupon-input-group {
     display: flex;
-    gap: 10px;
+    gap: 0.625rem;
 }
 
 .coupon-message {
-    margin-top: 10px;
+    margin-top: 0.625rem;
     font-size: .85rem;
 }
 
@@ -149,13 +149,13 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 24px;
-    padding: 24px 28px;
+    gap: 1.5rem;
+    padding: 1.5rem 1.75rem;
     border-top: 1px solid var(--border);
 }
 
 .cart-footer-info {
-    max-width: 700px;
+    max-width: 43.75rem;
     color: var(--muted);
     font-size: .85rem;
 }
@@ -182,6 +182,6 @@
 
     .cart-table th,
     .cart-table td {
-        padding: 12px 8px;
+        padding: 0.75rem 0.5rem;
     }
 }
