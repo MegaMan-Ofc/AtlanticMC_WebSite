@@ -36,7 +36,7 @@
                         <a aria-label="Atlantic Anarchy store home" class="brand" href="index.html">
                             <img alt="Atlantic Anarchy" src="assets/logo1.png"/>
                         </a>
-                        <button aria-label="Copy the Minecraft server address" class="header-link header-link--server" id="copy" title="Click to copy" type="button">
+                        <button aria-label="Copy the Minecraft server address" class="header-link header-link--server" data-copy-value="atlanticmc.secure.pebble.host" title="Click to copy" type="button">
                             <i aria-hidden="true" class="fa-solid fa-server">
                             </i>
                             <span>
@@ -52,30 +52,21 @@
                 </div>
                 <div class="header-secondary">
                     <div class="container header-row">
-                        <button aria-label="Open Minecraft account login" class="user-card" onclick="location.href='login.html'" type="button">
-                            <img alt="Minecraft avatar" id="user-avatar" src="https://mc-heads.net/avatar/steve"/>
+                        <a aria-label="Open Minecraft account login" class="user-card" href="login.html">
+                            <img alt="Minecraft avatar" src="https://mc-heads.net/avatar/steve"/>
                             <span>
                                 <small>
                                     Logged in as
                                 </small>
-                                <strong id="username">
+                                <strong>
                                     Guest
                                 </strong>
                             </span>
-                        </button>
-                        <nav aria-label="Store actions" class="toolbar">
-                            <button aria-label="Select language: Portuguese or English" class="button button--ghost language-button" type="button">
+                        </a>
+                        <nav aria-label="Store language" class="toolbar">
+                            <span class="button button--ghost language-button">
                                 Português / English
-                                <i aria-hidden="true" class="fa-solid fa-caret-down">
-                                </i>
-                            </button>
-                            <a aria-label="Open shopping cart" class="button button--primary cart-button" href="cart.html">
-                                <i aria-hidden="true" class="fa-solid fa-cart-shopping">
-                                </i>
-                                <span id="cart-count">
-                                    0
-                                </span>
-                            </a>
+                            </span>
                         </nav>
                     </div>
                 </div>
@@ -83,122 +74,27 @@
             <main class="main-content" id="main">
                 <div class="container">
                     <header class="page-title">
-                        <a aria-label="Go back" href="cart.html">
-                            <i class="fa-solid fa-arrow-left">
+                        <a aria-label="Go back" href="index.html">
+                            <i class="fa-solid fa-house">
                             </i>
                         </a>
                         <h1 id="page-title">
                             Checkout
                         </h1>
                     </header>
-                    <div class="checkout-grid">
-                        <section class="checkout-card" id="section-tebex">
-                            <header>
-                                <span>
-                                    1
-                                </span>
-                                <h2>
-                                    Complete your purchase
-                                </h2>
-                            </header>
-                            <div class="checkout-body">
-                                <div class="checkout-icon">
-                                    <i class="fa-solid fa-cart-shopping">
-                                    </i>
-                                </div>
-                                <h2>
-                                    Checkout with Tebex
-                                </h2>
-                                <p>
-                                    Complete your purchase securely through Tebex, a payment platform built for game servers.
-                                </p>
-                                <div class="cart-items-preview" id="cart-preview">
-                                </div>
-                                <button class="button button--primary button--wide button--large" onclick="goToTebexStore()">
-                                    <i class="fa-solid fa-arrow-up-right-from-square">
-                                    </i>
-                                    Open Tebex store
-                                </button>
-                                <div class="checkout-features">
-                                    <div class="checkout-feature">
-                                        <i class="fa-solid fa-shield-halved">
-                                        </i>
-                                        <span>
-                                            Secure payment
-                                        </span>
-                                    </div>
-                                    <div class="checkout-feature">
-                                        <i class="fa-solid fa-bolt">
-                                        </i>
-                                        <span>
-                                            Instant delivery
-                                        </span>
-                                    </div>
-                                    <div class="checkout-feature">
-                                        <i class="fa-solid fa-envelope">
-                                        </i>
-                                        <span>
-                                            Email receipt
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="checkout-note">
-                                    <i class="fa-solid fa-circle-info">
-                                    </i>
-                                    <p>
-                                        <strong>
-                                            How it works:
-                                        </strong>
-                                        Tebex asks for your Minecraft username and payment details, then delivers the items automatically.
-                                    </p>
-                                </div>
-                            </div>
-                        </section>
-                        <aside class="checkout-summary">
-                            <section class="summary-card">
-                                <h2>
-                                    Order summary
-                                </h2>
-                                <div class="summary-items" id="summary-items">
-                                </div>
-                                <div class="summary-divider">
-                                </div>
-                                <div class="summary-row">
-                                    <span>
-                                        Subtotal
-                                    </span>
-                                    <span id="summary-subtotal">
-                                        €0.00
-                                    </span>
-                                </div>
-                                <div class="summary-row">
-                                    <span>
-                                        IVA (23%)
-                                    </span>
-                                    <span id="summary-tax">
-                                        €0.00
-                                    </span>
-                                </div>
-                                <div class="summary-divider">
-                                </div>
-                                <div class="summary-row summary-total">
-                                    <span>
-                                        Total
-                                    </span>
-                                    <span id="summary-total">
-                                        €0.00
-                                    </span>
-                                </div>
-                                <div class="summary-note">
-                                    <i class="fa-solid fa-lock">
-                                    </i>
-                                    <p>
-                                        Your payment information is encrypted.
-                                    </p>
-                                </div>
-                            </section>
-                        </aside>
-                    </div>
+                    <section aria-labelledby="page-title" class="prose">
+                        <h2>
+                            Checkout temporarily unavailable
+                        </h2>
+                        <p>
+                            Purchases are temporarily paused while we complete a secure checkout update.
+                        </p>
+                        <p>
+                            <a class="button button--primary" href="index.html">
+                                Back to store
+                            </a>
+                        </p>
+                    </section>
                 </div>
             </main>
             <footer class="site-footer">
@@ -316,13 +212,6 @@
                 </div>
             </footer>
         </div>
-        <script src="js/main.js">
-        </script>
-        <script src="js/straindez.js">
-        </script>
-        <script src="js/tebex-integration.js">
-        </script>
-        <script src="js/checkout.js">
-        </script>
+        <script defer src="js/main.js"></script>
     </body>
 </html>
