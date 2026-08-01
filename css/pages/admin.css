@@ -1,18 +1,18 @@
 .admin-page {
-    padding-block: 40px;
+    padding-block: 2.5rem;
 }
 
 .admin-shell {
-    width: min(calc(100% - 32px), 1100px);
+    width: min(calc(100% - 2rem), 68.75rem);
     margin-inline: auto;
 }
 
 .admin-header {
-    margin-bottom: 24px;
+    margin-bottom: 1.5rem;
 }
 
 .admin-header h1 {
-    margin-bottom: 5px;
+    margin-bottom: 0.3125rem;
 }
 
 .admin-header p {
@@ -22,15 +22,15 @@
 .admin-tabs {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 20px;
+    gap: 0.5rem;
+    margin-top: 1.25rem;
 }
 
 .tab-btn {
-    min-height: 42px;
-    padding: 9px 16px;
+    min-height: 2.625rem;
+    padding: 0.5625rem 1rem;
     border: 1px solid var(--border);
-    border-radius: 10px;
+    border-radius: 0.625rem;
     background: var(--surface);
     cursor: pointer;
 }
@@ -49,26 +49,26 @@
 }
 
 .config-section {
-    padding: 26px;
+    padding: 1.625rem;
     border: 1px solid var(--border);
-    border-radius: 18px;
+    border-radius: 1.125rem;
     background: var(--surface);
 }
 
 .config-form {
     display: grid;
-    gap: 18px;
+    gap: 1.125rem;
 }
 
 .form-row {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
+    gap: 1rem;
 }
 
 .form-group {
     display: grid;
-    gap: 7px;
+    gap: 0.4375rem;
 }
 
 .form-group label {
@@ -81,15 +81,15 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 16px;
+    gap: 1rem;
 }
 
 .btn-save,
 .btn-add-new {
-    min-height: 44px;
-    padding: 10px 17px;
+    min-height: 2.75rem;
+    padding: 0.625rem 1.0625rem;
     border: 0;
-    border-radius: 10px;
+    border-radius: 0.625rem;
     background: var(--primary);
     color: #fff;
     font-weight: 800;
@@ -98,25 +98,25 @@
 
 .item-list {
     display: grid;
-    gap: 12px;
-    margin-top: 20px;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
 }
 
 .item-card {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 16px;
-    padding: 16px;
+    gap: 1rem;
+    padding: 1rem;
     border: 1px solid var(--border);
-    border-radius: 12px;
+    border-radius: 0.75rem;
     background: var(--surface-2);
 }
 
 .item-card > img {
-    width: 72px;
-    height: 72px;
-    border-radius: 10px;
+    width: 4.5rem;
+    height: 4.5rem;
+    border-radius: 0.625rem;
     object-fit: contain;
     background: var(--bg);
 }
@@ -127,20 +127,20 @@
 
 .item-card h3,
 .item-card p {
-    margin-bottom: 4px;
+    margin-bottom: 0.25rem;
 }
 
 .item-actions {
     display: flex;
-    gap: 7px;
+    gap: 0.4375rem;
 }
 
 .btn-edit,
 .btn-delete {
-    min-height: 38px;
-    padding: 8px 12px;
+    min-height: 2.375rem;
+    padding: 0.5rem 0.75rem;
     border: 0;
-    border-radius: 8px;
+    border-radius: 0.5rem;
     cursor: pointer;
 }
 
@@ -153,9 +153,9 @@
 }
 
 .alert {
-    margin-bottom: 16px;
-    padding: 13px 16px;
-    border-radius: 10px;
+    margin-bottom: 1rem;
+    padding: 0.8125rem 1rem;
+    border-radius: 0.625rem;
 }
 
 @media (max-width: 680px) {

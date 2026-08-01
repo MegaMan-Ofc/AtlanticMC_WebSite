@@ -4,10 +4,10 @@
 }
 
 .success-card {
-    width: min(780px, 100%);
-    padding: clamp(28px, 6vw, 55px);
+    width: min(48.75rem, 100%);
+    padding: clamp(1.75rem, 6vw, 3.4375rem);
     border: 1px solid var(--border);
-    border-radius: 24px;
+    border-radius: 1.5rem;
     background: var(--surface);
     box-shadow: var(--shadow);
     text-align: center;
@@ -15,10 +15,10 @@
 
 .success-icon {
     display: grid;
-    width: 94px;
-    height: 94px;
+    width: 5.875rem;
+    height: 5.875rem;
     place-items: center;
-    margin: 0 auto 20px;
+    margin: 0 auto 1.25rem;
     border-radius: 50%;
     background: rgba(76,175,126,.12);
     color: var(--success);
@@ -31,23 +31,23 @@
 
 .success-details {
     display: grid;
-    gap: 12px;
-    margin: 30px 0;
+    gap: 0.75rem;
+    margin: 1.875rem 0;
     text-align: left;
 }
 
 .success-detail {
     display: flex;
     align-items: flex-start;
-    gap: 14px;
-    padding: 16px;
+    gap: 0.875rem;
+    padding: 1rem;
     border: 1px solid var(--border);
-    border-radius: 12px;
+    border-radius: 0.75rem;
     background: var(--surface-2);
 }
 
 .success-detail > i {
-    margin-top: 4px;
+    margin-top: 0.25rem;
     color: var(--primary);
 }
 
@@ -62,20 +62,20 @@
 }
 
 .success-server {
-    margin: 26px 0;
-    padding: 22px;
-    border-radius: 14px;
+    margin: 1.625rem 0;
+    padding: 1.375rem;
+    border-radius: 0.875rem;
     background: rgba(108,92,231,.08);
 }
 
 .server-ip-box {
     display: inline-flex;
     align-items: center;
-    gap: 12px;
+    gap: 0.75rem;
     max-width: 100%;
-    padding: 13px 18px;
+    padding: 0.8125rem 1.125rem;
     border: 1px solid var(--primary);
-    border-radius: 11px;
+    border-radius: 0.6875rem;
     background: var(--surface-2);
     cursor: pointer;
 }
@@ -90,15 +90,15 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 12px;
+    gap: 0.75rem;
 }
 
 .success-note {
     display: flex;
-    gap: 10px;
-    margin-top: 26px;
-    padding: 14px;
-    border-radius: 10px;
+    gap: 0.625rem;
+    margin-top: 1.625rem;
+    padding: 0.875rem;
+    border-radius: 0.625rem;
     background: rgba(74,159,181,.07);
     color: var(--muted);
     text-align: left;
