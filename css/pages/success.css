@@ -1,0 +1,105 @@
+.success-main {
+    display: grid;
+    place-items: center;
+}
+
+.success-card {
+    width: min(780px, 100%);
+    padding: clamp(28px, 6vw, 55px);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    background: var(--surface);
+    box-shadow: var(--shadow);
+    text-align: center;
+}
+
+.success-icon {
+    display: grid;
+    width: 94px;
+    height: 94px;
+    place-items: center;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    background: rgba(76,175,126,.12);
+    color: var(--success);
+    font-size: 3rem;
+}
+
+.success-card > p {
+    color: var(--muted);
+}
+
+.success-details {
+    display: grid;
+    gap: 12px;
+    margin: 30px 0;
+    text-align: left;
+}
+
+.success-detail {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 16px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--surface-2);
+}
+
+.success-detail > i {
+    margin-top: 4px;
+    color: var(--primary);
+}
+
+.success-detail strong,
+.success-detail span {
+    display: block;
+}
+
+.success-detail span {
+    color: var(--muted);
+    font-size: .86rem;
+}
+
+.success-server {
+    margin: 26px 0;
+    padding: 22px;
+    border-radius: 14px;
+    background: rgba(108,92,231,.08);
+}
+
+.server-ip-box {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    max-width: 100%;
+    padding: 13px 18px;
+    border: 1px solid var(--primary);
+    border-radius: 11px;
+    background: var(--surface-2);
+    cursor: pointer;
+}
+
+.server-ip-box span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.success-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+}
+
+.success-note {
+    display: flex;
+    gap: 10px;
+    margin-top: 26px;
+    padding: 14px;
+    border-radius: 10px;
+    background: rgba(74,159,181,.07);
+    color: var(--muted);
+    text-align: left;
+}
