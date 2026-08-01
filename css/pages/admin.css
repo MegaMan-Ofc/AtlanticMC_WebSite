@@ -1,0 +1,171 @@
+.admin-page {
+    padding-block: 40px;
+}
+
+.admin-shell {
+    width: min(calc(100% - 32px), 1100px);
+    margin-inline: auto;
+}
+
+.admin-header {
+    margin-bottom: 24px;
+}
+
+.admin-header h1 {
+    margin-bottom: 5px;
+}
+
+.admin-header p {
+    color: var(--muted);
+}
+
+.admin-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 20px;
+}
+
+.tab-btn {
+    min-height: 42px;
+    padding: 9px 16px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--surface);
+    cursor: pointer;
+}
+
+.tab-btn.active {
+    border-color: var(--primary);
+    background: var(--primary);
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.config-section {
+    padding: 26px;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    background: var(--surface);
+}
+
+.config-form {
+    display: grid;
+    gap: 18px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+.form-group {
+    display: grid;
+    gap: 7px;
+}
+
+.form-group label {
+    color: var(--muted);
+    font-size: .82rem;
+    font-weight: 700;
+}
+
+.section-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.btn-save,
+.btn-add-new {
+    min-height: 44px;
+    padding: 10px 17px;
+    border: 0;
+    border-radius: 10px;
+    background: var(--primary);
+    color: #fff;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.item-list {
+    display: grid;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.item-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 16px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--surface-2);
+}
+
+.item-card > img {
+    width: 72px;
+    height: 72px;
+    border-radius: 10px;
+    object-fit: contain;
+    background: var(--bg);
+}
+
+.item-card > div:not(.item-actions) {
+    flex: 1;
+}
+
+.item-card h3,
+.item-card p {
+    margin-bottom: 4px;
+}
+
+.item-actions {
+    display: flex;
+    gap: 7px;
+}
+
+.btn-edit,
+.btn-delete {
+    min-height: 38px;
+    padding: 8px 12px;
+    border: 0;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.btn-edit {
+    background: var(--accent);
+}
+
+.btn-delete {
+    background: var(--danger);
+}
+
+.alert {
+    margin-bottom: 16px;
+    padding: 13px 16px;
+    border-radius: 10px;
+}
+
+@media (max-width: 680px) {
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .section-heading,
+    .item-card {
+        align-items: stretch;
+        flex-direction: column;
+    }
+}
