@@ -1,0 +1,90 @@
+.login-shell {
+    display: grid;
+    min-height: 540px;
+    place-items: center;
+}
+
+.login-card {
+    width: min(500px, 100%);
+    padding: clamp(26px, 6vw, 46px);
+    border: 1px solid var(--border);
+    border-radius: 22px;
+    background: var(--surface);
+    box-shadow: var(--shadow);
+    text-align: center;
+}
+
+.login-avatar {
+    position: relative;
+    width: 116px;
+    margin: 0 auto 20px;
+}
+
+.login-avatar img {
+    width: 116px;
+    height: 116px;
+    border: 3px solid var(--primary);
+    border-radius: 18px;
+    object-fit: cover;
+}
+
+.login-avatar i {
+    position: absolute;
+    right: -7px;
+    bottom: -7px;
+    display: grid;
+    width: 35px;
+    height: 35px;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--surface-2);
+    color: var(--muted);
+}
+
+.login-card h1 {
+    margin-bottom: 22px;
+}
+
+.platform-selector {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.platform-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    min-height: 52px;
+    border: 1px solid var(--border);
+    border-radius: 11px;
+    background: var(--surface-2);
+    cursor: pointer;
+}
+
+.platform-btn.selected {
+    border-color: var(--primary);
+    background: rgba(108,92,231,.15);
+}
+
+.platform-btn img {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+}
+
+.login-form {
+    display: grid;
+    gap: 12px;
+}
+
+.login-form button {
+    min-height: 50px;
+    border: 0;
+    border-radius: 11px;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    font-weight: 800;
+    cursor: pointer;
+}

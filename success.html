@@ -1,174 +1,251 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="theme-color" content="#0B0E13">
-        <title>Atlantic Anarchy - Order Successful</title>
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&amp;display=swap">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-        <link rel="stylesheet" href="css/store.css">
-        <link rel="stylesheet" href="css/performance.css">
-        <link rel="stylesheet" href="css/responsive.css">
-        <link rel="stylesheet" href="css/layout.css">
-        <link rel="stylesheet" href="css/success.css">
+        <meta charset="utf-8"/>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+        <meta content="#0b0e13" name="theme-color"/>
+        <title>
+            Atlantic Anarchy - Payment successful
+        </title>
+        <link href="assets/logo1.png" rel="icon" type="image/png"/>
+        <link href="https://fonts.googleapis.com" rel="preconnect"/>
+        <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+        <link href="css/base.css" rel="stylesheet"/>
+        <link href="css/components.css" rel="stylesheet"/>
+        <link href="css/pages/success.css" rel="stylesheet"/>
     </head>
-    <body class="page-success">
+    <body class="page-success success-main">
         <div id="wrap">
-            
-            <header id="top" class="header-content site-header">
-                <div class="header-main">
-                    <div class="container header-main__inner">
-                        <a class="player-wrap header-action header-action--discord" href="https://discord.gg/atlanticnetwork" target="_blank" rel="noopener noreferrer" aria-label="Join the Atlantic Anarchy Discord server">
-                            <span class="pw-icon" aria-hidden="true">
-                                <i class="fa-brands fa-discord"></i>
-                            </span>
-                            <span class="pw-text">
-                                <small>JOIN OUR</small>
-                                <strong>DISCORD</strong>
+            <header class="site-header" id="top">
+                <div class="header-primary">
+                    <div class="container header-grid">
+                        <a aria-label="Join our Discord server" class="header-link header-link--discord" href="https://discord.gg/atlanticnetwork" rel="noopener noreferrer" target="_blank">
+                            <i aria-hidden="true" class="fa-brands fa-discord">
+                            </i>
+                            <span>
+                                <small>
+                                    Join our
+                                </small>
+                                <strong>
+                                    Discord
+                                </strong>
                             </span>
                         </a>
-                        <a class="logo site-logo" href="index.html" aria-label="Atlantic Anarchy store home">
-                            <img class="desktop" src="assets/logo1.png" alt="Atlantic Anarchy">
+                        <a aria-label="Atlantic Anarchy store home" class="brand" href="index.html">
+                            <img alt="Atlantic Anarchy" src="assets/logo1.png"/>
                         </a>
-                        <button id="copy" class="player-wrap toggle-tooltip ip-address-element header-action header-action--server" type="button" title="Click to copy" aria-label="Copy the Minecraft server address">
-                            <span class="pw-icon" aria-hidden="true">
-                                <i class="fa-solid fa-server"></i>
-                            </span>
-                            <span class="pw-text">
-                                <small>SERVER IP</small>
-                                <strong>atlanticmc.secure.pebble.host</strong>
+                        <button aria-label="Copy the Minecraft server address" class="header-link header-link--server" id="copy" title="Click to copy" type="button">
+                            <i aria-hidden="true" class="fa-solid fa-server">
+                            </i>
+                            <span>
+                                <small>
+                                    Server IP
+                                </small>
+                                <strong>
+                                    atlanticmc.secure.pebble.host
+                                </strong>
                             </span>
                         </button>
                     </div>
                 </div>
-                <div class="header-bottom">
-                    <div class="container header-bottom__inner">
-                        <button class="user-card" type="button" onclick="location.href='login.html'" aria-label="Open Minecraft account login">
-                            <span class="avatar">
-                                <img id="user-avatar" src="https://mc-heads.net/avatar/steve" alt="Minecraft avatar">
-                            </span>
-                            <span class="text">
-                                <small>Logged in as</small>
-                                <strong id="username">Guest</strong>
+                <div class="header-secondary">
+                    <div class="container header-row">
+                        <button aria-label="Open Minecraft account login" class="user-card" onclick="location.href='login.html'" type="button">
+                            <img alt="Minecraft avatar" id="user-avatar" src="https://mc-heads.net/avatar/steve"/>
+                            <span>
+                                <small>
+                                    Logged in as
+                                </small>
+                                <strong id="username">
+                                    Guest
+                                </strong>
                             </span>
                         </button>
-                        <nav class="header-toolbar" aria-label="Store actions">
-                            <button type="button" class="btn btn-default dropdown-toggle language-button" aria-label="Select language: Portuguese or English">
-                                Português / English <span class="fa fa-caret-down" aria-hidden="true"></span>
+                        <nav aria-label="Store actions" class="toolbar">
+                            <button aria-label="Select language: Portuguese or English" class="button button--ghost language-button" type="button">
+                                Português / English
+                                <i aria-hidden="true" class="fa-solid fa-caret-down">
+                                </i>
                             </button>
-                            <a href="cart.html" class="btn btn-info empty cart-button" aria-label="Open shopping cart">
-                                <i class="fa-solid fa-cart-shopping" aria-hidden="true"></i>
-                                <span id="cart-count">0</span>
+                            <a aria-label="Open shopping cart" class="button button--primary cart-button" href="cart.html">
+                                <i aria-hidden="true" class="fa-solid fa-cart-shopping">
+                                </i>
+                                <span id="cart-count">
+                                    0
+                                </span>
                             </a>
                         </nav>
                     </div>
                 </div>
             </header>
-            
-            <main id="main" class="main-content success-main">
+            <main class="main-content" id="main">
                 <div class="container">
-                    <div class="success-container">
+                    <section class="success-card">
                         <div class="success-icon">
-                            <i class="fa-solid fa-circle-check"></i>
+                            <i class="fa-solid fa-circle-check">
+                            </i>
                         </div>
-                        <h1 class="success-title">Payment Successful!</h1>
-                        <p class="success-subtitle">Thank you for your purchase</p>
+                        <h1>
+                            Payment successful
+                        </h1>
+                        <p>
+                            Thank you for your purchase.
+                        </p>
                         <div class="success-details">
                             <div class="success-detail">
-                                <i class="fa-solid fa-box"></i>
+                                <i class="fa-solid fa-box">
+                                </i>
                                 <div>
-                                    <strong>Order ID</strong>
-                                    <span id="order-id">Loading...</span>
+                                    <strong>
+                                        Order ID
+                                    </strong>
+                                    <span id="order-id">
+                                        Loading...
+                                    </span>
                                 </div>
                             </div>
                             <div class="success-detail">
-                                <i class="fa-solid fa-gamepad"></i>
+                                <i class="fa-solid fa-gamepad">
+                                </i>
                                 <div>
-                                    <strong>Delivery</strong>
-                                    <span>Items will be delivered in-game when you log in to the server</span>
+                                    <strong>
+                                        Delivery
+                                    </strong>
+                                    <span>
+                                        Items will be delivered in-game when you join the server.
+                                    </span>
                                 </div>
                             </div>
                             <div class="success-detail">
-                                <i class="fa-solid fa-envelope"></i>
+                                <i class="fa-solid fa-envelope">
+                                </i>
                                 <div>
-                                    <strong>Receipt</strong>
-                                    <span>A receipt has been sent to your email</span>
+                                    <strong>
+                                        Receipt
+                                    </strong>
+                                    <span>
+                                        A receipt has been sent to your email.
+                                    </span>
                                 </div>
                             </div>
                         </div>
-                        <div class="success-server-info">
-                            <h3>Join the Server Now!</h3>
-                            <button class="server-ip-box" onclick="copyServerIP()" type="button" aria-label="Copy the Minecraft server address">
-                                <i class="fa-solid fa-server"></i>
-                                <span>atlanticmc.secure.pebble.host</span>
-                                <i class="fa-solid fa-copy"></i>
+                        <div class="success-server">
+                            <h2>
+                                Join the server
+                            </h2>
+                            <button class="server-ip-box" onclick="copyServerIP()" type="button">
+                                <i class="fa-solid fa-server">
+                                </i>
+                                <span>
+                                    atlanticmc.secure.pebble.host
+                                </span>
+                                <i class="fa-solid fa-copy">
+                                </i>
                             </button>
-                            <p>Click to copy the server IP</p>
+                            <p>
+                                Click to copy the server IP.
+                            </p>
                         </div>
                         <div class="success-actions">
-                            <a href="index.html" class="btn btn-info btn-lg">
-                                <i class="fa-solid fa-house"></i> Back to Store
-                        </a>
-                            <a href="https://discord.gg/atlanticnetwork" target="_blank" class="btn btn-default btn-lg" rel="noopener noreferrer">
-                                <i class="fa-brands fa-discord"></i> Join Discord
-                        </a>
+                            <a class="button button--primary button--large" href="index.html">
+                                <i class="fa-solid fa-house">
+                                </i>
+                                Back to store
+                            </a>
+                            <a class="button button--ghost button--large" href="https://discord.gg/atlanticnetwork" rel="noopener noreferrer" target="_blank">
+                                <i class="fa-brands fa-discord">
+                                </i>
+                                Join Discord
+                            </a>
                         </div>
                         <div class="success-note">
-                            <i class="fa-solid fa-info-circle"></i>
-                            <p>If you don't receive your items within 5 minutes, please contact support on Discord.</p>
+                            <i class="fa-solid fa-circle-info">
+                            </i>
+                            <p>
+                                If your items do not arrive within five minutes, contact support on Discord.
+                            </p>
                         </div>
-                    </div>
+                    </section>
                 </div>
             </main>
-            
-            <footer class="bottom-content site-footer">
-                <div class="footer-top">
+            <footer class="site-footer">
+                <div class="footer-main">
                     <div class="container footer-grid">
-                        <section class="footer-column footer-column--about">
-                            <h2>About Us</h2>
+                        <section class="footer-about">
+                            <h2>
+                                About us
+                            </h2>
                             <p>
-                    Atlantic Anarchy is a public Minecraft anarchy server for Java and Bedrock players.
-                    Join us at <strong>atlanticmc.secure.pebble.host</strong>.
-                </p>
+                                Atlantic Anarchy is a public Minecraft anarchy server for Java and Bedrock players. Join us at
+                                <strong>
+                                    atlanticmc.secure.pebble.host
+                                </strong>
+                                .
+                            </p>
                         </section>
-                        <nav class="footer-column" aria-label="Store links">
-                            <h2>Store</h2>
-                            <div class="link-list">
-                                <a href="index.html">Home</a>
-                                <a href="ranks.html">VIPs</a>
-                                <a href="rubis.html">Rubis</a>
-                                <a href="keys.html">Keys</a>
+                        <nav aria-label="Store links">
+                            <h2>
+                                Store
+                            </h2>
+                            <div class="footer-links">
+                                <a href="index.html">
+                                    Home
+                                </a>
+                                <a href="ranks.html">
+                                    VIPs
+                                </a>
+                                <a href="rubis.html">
+                                    Rubis
+                                </a>
+                                <a href="keys.html">
+                                    Keys
+                                </a>
                             </div>
                         </nav>
-                        <section class="footer-column">
-                            <h2>Support</h2>
-                            <p>Questions before purchasing? Contact us through Discord or email.</p>
+                        <section>
+                            <h2>
+                                Support
+                            </h2>
+                            <p>
+                                Questions before purchasing? Contact us through Discord or email.
+                            </p>
                             <div class="footer-actions">
-                                <a class="footer-btn" href="https://discord.gg/atlanticnetwork" target="_blank" rel="noopener noreferrer">Discord</a>
-                                <a class="footer-btn footer-btn--secondary" href="mailto:support@atlantic.net">Email</a>
+                                <a class="button button--primary" href="https://discord.gg/atlanticnetwork" rel="noopener noreferrer" target="_blank">
+                                    Discord
+                                </a>
+                                <a class="button button--ghost" href="mailto:support@atlantic.net">
+                                    Email
+                                </a>
                             </div>
                         </section>
                     </div>
                 </div>
                 <div class="footer-bottom">
-                    <div class="container footer-bottom__inner">
+                    <div class="container footer-row">
                         <div class="footer-legal">
-                            <p class="footer-brand">2026 © <strong>Atlantic Anarchy</strong>
+                            <p>
+                                2026 ©
+                                <strong>
+                                    Atlantic Anarchy
+                                </strong>
                             </p>
-                            <p>We are not affiliated with or endorsed by Mojang, AB.</p>
+                            <p>
+                                We are not affiliated with or endorsed by Mojang, AB.
+                            </p>
                         </div>
-                        <ul class="footer-socials" aria-label="Social links">
+                        <ul aria-label="Social links" class="footer-socials">
                             <li>
-                                <a href="https://discord.gg/atlanticnetwork" target="_blank" rel="noopener noreferrer" aria-label="Discord">
-                                    <i class="fa-brands fa-discord" aria-hidden="true"></i>
+                                <a aria-label="Discord" href="https://discord.gg/atlanticnetwork" rel="noopener noreferrer" target="_blank">
+                                    <i class="fa-brands fa-discord">
+                                    </i>
                                 </a>
                             </li>
                             <li>
-                                <a href="#top" aria-label="Back to top">
-                                    <i class="fa-solid fa-arrow-turn-up" aria-hidden="true"></i>
+                                <a aria-label="Back to top" href="#top">
+                                    <i class="fa-solid fa-arrow-up">
+                                    </i>
                                 </a>
                             </li>
                         </ul>
@@ -176,29 +253,25 @@
                 </div>
             </footer>
         </div>
-        <script src="js/main.js"></script>
-        <script src="js/straindez.js"></script>
+        <script src="js/main.js">
+        </script>
+        <script src="js/straindez.js">
+        </script>
         <script>
-        // Get order ID from URL
-        const urlParams = new URLSearchParams(window.location.search);
-        const orderId = urlParams.get('order') || 'N/A';
-        document.getElementById('order-id').textContent = orderId;
+            const orderId = new URLSearchParams(window.location.search).get('order') || 'N/A';
+            document.getElementById('order-id').textContent = orderId;
 
-        // Copy server IP function
-        function copyServerIP() {
-            const ip = 'atlanticmc.secure.pebble.host';
-            navigator.clipboard.writeText(ip).then(() => {
-                const box = document.querySelector('.server-ip-box');
-                const originalText = box.innerHTML;
-                box.innerHTML = '<i class="fa-solid fa-check"></i><span>Copied!</span><i class="fa-solid fa-check"></i>';
-                box.style.background = 'linear-gradient(135deg, #00E676, #00C853)';
-
-                setTimeout(() => {
-                    box.innerHTML = originalText;
-                    box.style.background = '';
-                }, 2000);
-            });
-        }
-    </script>
+            function copyServerIP() {
+                const ip = 'atlanticmc.secure.pebble.host';
+                navigator.clipboard.writeText(ip).then(() => {
+                    const box = document.querySelector('.server-ip-box');
+                    const original = box.innerHTML;
+                    box.innerHTML = '<i class="fa-solid fa-check"></i><span>Copied!</span><i class="fa-solid fa-check"></i>';
+                    setTimeout(() => {
+                        box.innerHTML = original;
+                    }, 2000);
+                });
+            }
+        </script>
     </body>
 </html>

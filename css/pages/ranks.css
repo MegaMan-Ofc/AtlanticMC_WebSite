@@ -1,0 +1,13 @@
+.page-ranks .package {
+    --card-accent: var(--rank-color, var(--primary));
+    background: radial-gradient(circle at 50% 18%, color-mix(in srgb, var(--rank-color, var(--primary)) 28%, transparent), transparent 42%), var(--surface);
+}
+
+.page-ranks .rank-view-details {
+    background: var(--rank-color, var(--primary));
+}
+
+.page-ranks .rank-card-bg {
+    opacity: .15;
+    background: radial-gradient(circle at top, var(--rank-color, var(--primary)), transparent 60%);
+}

@@ -1,203 +1,282 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="theme-color" content="#0B0E13">
-        <title>Atlantic Anarchy - Checkout</title>
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&amp;display=swap">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-        <link rel="stylesheet" href="css/store.css">
-        <link rel="stylesheet" href="css/performance.css">
-        <link rel="stylesheet" href="css/responsive.css">
-        <link rel="stylesheet" href="css/layout.css">
+        <meta charset="utf-8"/>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+        <meta content="#0b0e13" name="theme-color"/>
+        <title>
+            Atlantic Anarchy - Checkout
+        </title>
+        <link href="assets/logo1.png" rel="icon" type="image/png"/>
+        <link href="https://fonts.googleapis.com" rel="preconnect"/>
+        <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+        <link href="css/base.css" rel="stylesheet"/>
+        <link href="css/components.css" rel="stylesheet"/>
+        <link href="css/pages/checkout.css" rel="stylesheet"/>
     </head>
     <body class="page-checkout">
         <div id="wrap">
-            
-            <header id="top" class="header-content site-header">
-                <div class="header-main">
-                    <div class="container header-main__inner">
-                        <a class="player-wrap header-action header-action--discord" href="https://discord.gg/atlanticnetwork" target="_blank" rel="noopener noreferrer" aria-label="Join the Atlantic Anarchy Discord server">
-                            <span class="pw-icon" aria-hidden="true">
-                                <i class="fa-brands fa-discord"></i>
-                            </span>
-                            <span class="pw-text">
-                                <small>JOIN OUR</small>
-                                <strong>DISCORD</strong>
+            <header class="site-header" id="top">
+                <div class="header-primary">
+                    <div class="container header-grid">
+                        <a aria-label="Join our Discord server" class="header-link header-link--discord" href="https://discord.gg/atlanticnetwork" rel="noopener noreferrer" target="_blank">
+                            <i aria-hidden="true" class="fa-brands fa-discord">
+                            </i>
+                            <span>
+                                <small>
+                                    Join our
+                                </small>
+                                <strong>
+                                    Discord
+                                </strong>
                             </span>
                         </a>
-                        <a class="logo site-logo" href="index.html" aria-label="Atlantic Anarchy store home">
-                            <img class="desktop" src="assets/logo1.png" alt="Atlantic Anarchy">
+                        <a aria-label="Atlantic Anarchy store home" class="brand" href="index.html">
+                            <img alt="Atlantic Anarchy" src="assets/logo1.png"/>
                         </a>
-                        <button id="copy" class="player-wrap toggle-tooltip ip-address-element header-action header-action--server" type="button" title="Click to copy" aria-label="Copy the Minecraft server address">
-                            <span class="pw-icon" aria-hidden="true">
-                                <i class="fa-solid fa-server"></i>
-                            </span>
-                            <span class="pw-text">
-                                <small>SERVER IP</small>
-                                <strong>atlanticmc.secure.pebble.host</strong>
+                        <button aria-label="Copy the Minecraft server address" class="header-link header-link--server" id="copy" title="Click to copy" type="button">
+                            <i aria-hidden="true" class="fa-solid fa-server">
+                            </i>
+                            <span>
+                                <small>
+                                    Server IP
+                                </small>
+                                <strong>
+                                    atlanticmc.secure.pebble.host
+                                </strong>
                             </span>
                         </button>
                     </div>
                 </div>
-                <div class="header-bottom">
-                    <div class="container header-bottom__inner">
-                        <button class="user-card" type="button" onclick="location.href='login.html'" aria-label="Open Minecraft account login">
-                            <span class="avatar">
-                                <img id="user-avatar" src="https://mc-heads.net/avatar/steve" alt="Minecraft avatar">
-                            </span>
-                            <span class="text">
-                                <small>Logged in as</small>
-                                <strong id="username">Guest</strong>
+                <div class="header-secondary">
+                    <div class="container header-row">
+                        <button aria-label="Open Minecraft account login" class="user-card" onclick="location.href='login.html'" type="button">
+                            <img alt="Minecraft avatar" id="user-avatar" src="https://mc-heads.net/avatar/steve"/>
+                            <span>
+                                <small>
+                                    Logged in as
+                                </small>
+                                <strong id="username">
+                                    Guest
+                                </strong>
                             </span>
                         </button>
-                        <nav class="header-toolbar" aria-label="Store actions">
-                            <button type="button" class="btn btn-default dropdown-toggle language-button" aria-label="Select language: Portuguese or English">
-                                Português / English <span class="fa fa-caret-down" aria-hidden="true"></span>
+                        <nav aria-label="Store actions" class="toolbar">
+                            <button aria-label="Select language: Portuguese or English" class="button button--ghost language-button" type="button">
+                                Português / English
+                                <i aria-hidden="true" class="fa-solid fa-caret-down">
+                                </i>
                             </button>
-                            <a href="cart.html" class="btn btn-info empty cart-button" aria-label="Open shopping cart">
-                                <i class="fa-solid fa-cart-shopping" aria-hidden="true"></i>
-                                <span id="cart-count">0</span>
+                            <a aria-label="Open shopping cart" class="button button--primary cart-button" href="cart.html">
+                                <i aria-hidden="true" class="fa-solid fa-cart-shopping">
+                                </i>
+                                <span id="cart-count">
+                                    0
+                                </span>
                             </a>
                         </nav>
                     </div>
                 </div>
             </header>
-            
-            <main id="main" class="main-content">
+            <main class="main-content" id="main">
                 <div class="container">
-                    <div class="title" aria-labelledby="page-title">
-                        <a class="return" href="cart.html" aria-label="Back to store home">
-                            <i class="fa-solid fa-arrow-left"></i>
+                    <header class="page-title">
+                        <a aria-label="Go back" href="cart.html">
+                            <i class="fa-solid fa-arrow-left">
+                            </i>
                         </a>
-                        <h2 id="page-title">Checkout</h2>
-                    </div>
-                    <div class="checkout-container">
-                        
-                        <div class="checkout-form">
-                            
-                            <div class="checkout-section" id="section-tebex">
-                                <div class="section-header">
-                                    <div class="step-number">1</div>
-                                    <h3>Complete Your Purchase</h3>
+                        <h1 id="page-title">
+                            Checkout
+                        </h1>
+                    </header>
+                    <div class="checkout-grid">
+                        <section class="checkout-card" id="section-tebex">
+                            <header>
+                                <span>
+                                    1
+                                </span>
+                                <h2>
+                                    Complete your purchase
+                                </h2>
+                            </header>
+                            <div class="checkout-body">
+                                <div class="checkout-icon">
+                                    <i class="fa-solid fa-cart-shopping">
+                                    </i>
                                 </div>
-                                <div class="section-body">
-                                    <div class="tebex-simple-box">
-                                        <div class="tebex-icon-big">
-                                            <i class="fa-solid fa-shopping-cart"></i>
-                                        </div>
-                                        <h2>Checkout with Tebex</h2>
-                                        <p>Click the button below to complete your purchase securely through Tebex - the #1 payment platform for Minecraft servers.</p>
-                                        <div class="cart-items-preview" id="cart-preview">
-                                            
-                                        </div>
-                                        <button class="btn btn-primary btn-full btn-tebex-big" onclick="goToTebexStore()">
-                                            <i class="fa-solid fa-external-link-alt"></i>
-                                            <span>OPEN TEBEX STORE</span>
-                                            <small>Secure checkout • Multiple payment methods</small>
-                                        </button>
-                                        <div class="tebex-features-simple">
-                                            <div class="feature-item">
-                                                <i class="fa-solid fa-shield-alt"></i>
-                                                <span>Secure Payment</span>
-                                            </div>
-                                            <div class="feature-item">
-                                                <i class="fa-solid fa-bolt"></i>
-                                                <span>Instant Delivery</span>
-                                            </div>
-                                            <div class="feature-item">
-                                                <i class="fa-solid fa-envelope"></i>
-                                                <span>Email Receipt</span>
-                                            </div>
-                                        </div>
+                                <h2>
+                                    Checkout with Tebex
+                                </h2>
+                                <p>
+                                    Complete your purchase securely through Tebex, a payment platform built for game servers.
+                                </p>
+                                <div class="cart-items-preview" id="cart-preview">
+                                </div>
+                                <button class="button button--primary button--wide button--large" onclick="goToTebexStore()">
+                                    <i class="fa-solid fa-arrow-up-right-from-square">
+                                    </i>
+                                    Open Tebex store
+                                </button>
+                                <div class="checkout-features">
+                                    <div class="checkout-feature">
+                                        <i class="fa-solid fa-shield-halved">
+                                        </i>
+                                        <span>
+                                            Secure payment
+                                        </span>
                                     </div>
-                                    <div class="tebex-note">
-                                        <i class="fa-solid fa-info-circle"></i>
-                                        <p>
-                                            <strong>How it works:</strong> You'll be redirected to our secure Tebex store where you can browse all items, enter your Minecraft username, and complete payment. Items are delivered automatically when you join the server!</p>
+                                    <div class="checkout-feature">
+                                        <i class="fa-solid fa-bolt">
+                                        </i>
+                                        <span>
+                                            Instant delivery
+                                        </span>
                                     </div>
+                                    <div class="checkout-feature">
+                                        <i class="fa-solid fa-envelope">
+                                        </i>
+                                        <span>
+                                            Email receipt
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="checkout-note">
+                                    <i class="fa-solid fa-circle-info">
+                                    </i>
+                                    <p>
+                                        <strong>
+                                            How it works:
+                                        </strong>
+                                        Tebex asks for your Minecraft username and payment details, then delivers the items automatically.
+                                    </p>
                                 </div>
                             </div>
-                        </div>
-                        
-                        <div class="checkout-summary">
-                            <div class="summary-card">
-                                <h3>Order Summary</h3>
+                        </section>
+                        <aside class="checkout-summary">
+                            <section class="summary-card">
+                                <h2>
+                                    Order summary
+                                </h2>
                                 <div class="summary-items" id="summary-items">
-                                    
                                 </div>
-                                <div class="summary-divider"></div>
-                                <div class="summary-row">
-                                    <span>Subtotal</span>
-                                    <span id="summary-subtotal">€0.00</span>
+                                <div class="summary-divider">
                                 </div>
                                 <div class="summary-row">
-                                    <span>IVA (23%)</span>
-                                    <span id="summary-tax">€0.00</span>
+                                    <span>
+                                        Subtotal
+                                    </span>
+                                    <span id="summary-subtotal">
+                                        €0.00
+                                    </span>
                                 </div>
-                                <div class="summary-divider"></div>
+                                <div class="summary-row">
+                                    <span>
+                                        IVA (23%)
+                                    </span>
+                                    <span id="summary-tax">
+                                        €0.00
+                                    </span>
+                                </div>
+                                <div class="summary-divider">
+                                </div>
                                 <div class="summary-row summary-total">
-                                    <span>Total</span>
-                                    <span id="summary-total">€0.00</span>
+                                    <span>
+                                        Total
+                                    </span>
+                                    <span id="summary-total">
+                                        €0.00
+                                    </span>
                                 </div>
                                 <div class="summary-note">
-                                    <i class="fa-solid fa-shield-halved"></i>
-                                    <p>Secure payment - Your payment information is encrypted</p>
+                                    <i class="fa-solid fa-lock">
+                                    </i>
+                                    <p>
+                                        Your payment information is encrypted.
+                                    </p>
                                 </div>
-                            </div>
-                        </div>
+                            </section>
+                        </aside>
                     </div>
                 </div>
             </main>
-            
-            <footer class="bottom-content site-footer">
-                <div class="footer-top">
+            <footer class="site-footer">
+                <div class="footer-main">
                     <div class="container footer-grid">
-                        <section class="footer-column footer-column--about">
-                            <h2>About Us</h2>
+                        <section class="footer-about">
+                            <h2>
+                                About us
+                            </h2>
                             <p>
-                    Atlantic Anarchy is a public Minecraft anarchy server for Java and Bedrock players.
-                    Join us at <strong>atlanticmc.secure.pebble.host</strong>.
-                </p>
+                                Atlantic Anarchy is a public Minecraft anarchy server for Java and Bedrock players. Join us at
+                                <strong>
+                                    atlanticmc.secure.pebble.host
+                                </strong>
+                                .
+                            </p>
                         </section>
-                        <nav class="footer-column" aria-label="Store links">
-                            <h2>Store</h2>
-                            <div class="link-list">
-                                <a href="index.html">Home</a>
-                                <a href="ranks.html">VIPs</a>
-                                <a href="rubis.html">Rubis</a>
-                                <a href="keys.html">Keys</a>
+                        <nav aria-label="Store links">
+                            <h2>
+                                Store
+                            </h2>
+                            <div class="footer-links">
+                                <a href="index.html">
+                                    Home
+                                </a>
+                                <a href="ranks.html">
+                                    VIPs
+                                </a>
+                                <a href="rubis.html">
+                                    Rubis
+                                </a>
+                                <a href="keys.html">
+                                    Keys
+                                </a>
                             </div>
                         </nav>
-                        <section class="footer-column">
-                            <h2>Support</h2>
-                            <p>Questions before purchasing? Contact us through Discord or email.</p>
+                        <section>
+                            <h2>
+                                Support
+                            </h2>
+                            <p>
+                                Questions before purchasing? Contact us through Discord or email.
+                            </p>
                             <div class="footer-actions">
-                                <a class="footer-btn" href="https://discord.gg/atlanticnetwork" target="_blank" rel="noopener noreferrer">Discord</a>
-                                <a class="footer-btn footer-btn--secondary" href="mailto:support@atlantic.net">Email</a>
+                                <a class="button button--primary" href="https://discord.gg/atlanticnetwork" rel="noopener noreferrer" target="_blank">
+                                    Discord
+                                </a>
+                                <a class="button button--ghost" href="mailto:support@atlantic.net">
+                                    Email
+                                </a>
                             </div>
                         </section>
                     </div>
                 </div>
                 <div class="footer-bottom">
-                    <div class="container footer-bottom__inner">
+                    <div class="container footer-row">
                         <div class="footer-legal">
-                            <p class="footer-brand">2026 © <strong>Atlantic Anarchy</strong>
+                            <p>
+                                2026 ©
+                                <strong>
+                                    Atlantic Anarchy
+                                </strong>
                             </p>
-                            <p>We are not affiliated with or endorsed by Mojang, AB.</p>
+                            <p>
+                                We are not affiliated with or endorsed by Mojang, AB.
+                            </p>
                         </div>
-                        <ul class="footer-socials" aria-label="Social links">
+                        <ul aria-label="Social links" class="footer-socials">
                             <li>
-                                <a href="https://discord.gg/atlanticnetwork" target="_blank" rel="noopener noreferrer" aria-label="Discord">
-                                    <i class="fa-brands fa-discord" aria-hidden="true"></i>
+                                <a aria-label="Discord" href="https://discord.gg/atlanticnetwork" rel="noopener noreferrer" target="_blank">
+                                    <i class="fa-brands fa-discord">
+                                    </i>
                                 </a>
                             </li>
                             <li>
-                                <a href="#top" aria-label="Back to top">
-                                    <i class="fa-solid fa-arrow-turn-up" aria-hidden="true"></i>
+                                <a aria-label="Back to top" href="#top">
+                                    <i class="fa-solid fa-arrow-up">
+                                    </i>
                                 </a>
                             </li>
                         </ul>
@@ -205,9 +284,13 @@
                 </div>
             </footer>
         </div>
-        <script src="js/main.js"></script>
-        <script src="js/straindez.js"></script>
-        <script src="js/tebex-integration.js"></script>
-        <script src="js/checkout.js"></script>
+        <script src="js/main.js">
+        </script>
+        <script src="js/straindez.js">
+        </script>
+        <script src="js/tebex-integration.js">
+        </script>
+        <script src="js/checkout.js">
+        </script>
     </body>
 </html>

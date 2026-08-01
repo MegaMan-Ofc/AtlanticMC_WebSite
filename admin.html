@@ -1,127 +1,165 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Admin Panel - Atlantic Anarchy</title>
-        <script> window.location.replace('index.html'); </script>
-        <link rel="stylesheet" href="css/classic-theme.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-        <link rel="stylesheet" href="css/admin.css">
+        <meta charset="utf-8"/>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+        <meta content="#0b0e13" name="theme-color"/>
+        <title>
+            Admin Panel - Atlantic Anarchy
+        </title>
+        <link href="assets/logo1.png" rel="icon" type="image/png"/>
+        <link href="https://fonts.googleapis.com" rel="preconnect"/>
+        <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+        <link href="css/base.css" rel="stylesheet"/>
+        <link href="css/components.css" rel="stylesheet"/>
+        <link href="css/pages/admin.css" rel="stylesheet"/>
     </head>
     <body>
-        <div class="admin-container">
-            <div class="admin-header">
-                <h1>
-                    <i class="fas fa-cog"></i> Admin Panel</h1>
-                <p class="admin-subtitle">Manage store configuration, prices, and content</p>
-                <div class="admin-tabs">
-                    <button class="tab-btn active" onclick="switchTab('general')">General</button>
-                    <button class="tab-btn" onclick="switchTab('ranks')">Ranks</button>
-                    <button class="tab-btn" onclick="switchTab('rubis')">Rubis</button>
-                    <button class="tab-btn" onclick="switchTab('keys')">Keys</button>
-                    <button class="tab-btn" onclick="switchTab('discord')">Discord</button>
+        <script>
+            window.location.replace('index.html');
+        </script>
+        <main class="admin-page">
+            <div class="admin-shell">
+                <header class="admin-header">
+                    <h1>
+                        <i class="fa-solid fa-gear">
+                        </i>
+                        Admin panel
+                    </h1>
+                    <p>
+                        Manage store configuration, prices and content.
+                    </p>
+                    <nav aria-label="Admin sections" class="admin-tabs">
+                        <button class="tab-btn active" onclick="switchTab('general')">
+                            General
+                        </button>
+                        <button class="tab-btn" onclick="switchTab('ranks')">
+                            Ranks
+                        </button>
+                        <button class="tab-btn" onclick="switchTab('rubis')">
+                            Rubis
+                        </button>
+                        <button class="tab-btn" onclick="switchTab('keys')">
+                            Keys
+                        </button>
+                        <button class="tab-btn" onclick="switchTab('discord')">
+                            Discord
+                        </button>
+                    </nav>
+                </header>
+                <div id="alert-container">
                 </div>
-            </div>
-            <div id="alert-container"></div>
-            
-            <div id="tab-general" class="tab-content active">
-                <div class="config-section">
-                    <h2>General Settings</h2>
-                    <form class="config-form" id="form-general">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Server Name</label>
-                                <input type="text" id="server-name" placeholder="Atlantic Anarchy">
+                <section class="tab-content active" id="tab-general">
+                    <div class="config-section">
+                        <h2>
+                            General settings
+                        </h2>
+                        <form class="config-form" id="form-general">
+                            <div class="form-row">
+                                <label class="form-group">
+                                    Server name
+                                    <input id="server-name" placeholder="Atlantic Anarchy" type="text"/>
+                                </label>
+                                <label class="form-group">
+                                    Server IP
+                                    <input id="server-ip" placeholder="atlantic.net" type="text"/>
+                                </label>
                             </div>
-                            <div class="form-group">
-                                <label>Server IP</label>
-                                <input type="text" id="server-ip" placeholder="atlantic.net">
-                            </div>
+                            <label class="form-group">
+                                Checkout payment link
+                                <input id="payment-link" placeholder="https://example.com/checkout" type="url"/>
+                            </label>
+                            <button class="btn-save" type="submit">
+                                <i class="fa-solid fa-floppy-disk">
+                                </i>
+                                Save changes
+                            </button>
+                        </form>
+                    </div>
+                </section>
+                <section class="tab-content" id="tab-ranks">
+                    <div class="config-section">
+                        <div class="section-heading">
+                            <h2>
+                                Manage ranks
+                            </h2>
+                            <button class="btn-add-new" onclick="addNewRank()">
+                                <i class="fa-solid fa-plus">
+                                </i>
+                                Add rank
+                            </button>
                         </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Checkout Payment Link</label>
-                                <input type="url" id="payment-link" placeholder="https://your-payment-gateway.com/checkout">
-                            </div>
+                        <div class="item-list" id="ranks-list">
                         </div>
-                        <button type="submit" class="btn-save">
-                            <i class="fas fa-save"></i> Save Changes
-                    </button>
-                    </form>
-                </div>
-            </div>
-            
-            <div id="tab-ranks" class="tab-content">
-                <div class="config-section">
-                    <div class="section-heading">
-                        <h2>Manage Ranks</h2>
-                        <button class="btn-add-new" onclick="addNewRank()">
-                            <i class="fas fa-plus"></i> Add New Rank
-                    </button>
                     </div>
-                    <div class="item-list" id="ranks-list">
-                        
-                    </div>
-                </div>
-            </div>
-            
-            <div id="tab-rubis" class="tab-content">
-                <div class="config-section">
-                    <div class="section-heading">
-                        <h2>Manage Rubis Packages</h2>
-                        <button class="btn-add-new" onclick="addNewRubis()">
-                            <i class="fas fa-plus"></i> Add New Package
-                    </button>
-                    </div>
-                    <div class="item-list" id="rubis-list">
-                        
-                    </div>
-                </div>
-            </div>
-            
-            <div id="tab-keys" class="tab-content">
-                <div class="config-section">
-                    <div class="section-heading">
-                        <h2>Manage Keys</h2>
-                        <button class="btn-add-new" onclick="addNewKey()">
-                            <i class="fas fa-plus"></i> Add New Key
-                    </button>
-                    </div>
-                    <div class="item-list" id="keys-list">
-                        
-                    </div>
-                </div>
-            </div>
-            
-            <div id="tab-discord" class="tab-content">
-                <div class="config-section">
-                    <h2>Discord Integration</h2>
-                    <form class="config-form" id="form-discord">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Discord Client ID</label>
-                                <input type="text" id="discord-client-id" placeholder="Your Discord Application Client ID">
-                            </div>
-                            <div class="form-group">
-                                <label>Discord Guild ID</label>
-                                <input type="text" id="discord-guild-id" placeholder="Your Discord Server ID">
-                            </div>
+                </section>
+                <section class="tab-content" id="tab-rubis">
+                    <div class="config-section">
+                        <div class="section-heading">
+                            <h2>
+                                Manage Rubis
+                            </h2>
+                            <button class="btn-add-new" onclick="addNewRubis()">
+                                <i class="fa-solid fa-plus">
+                                </i>
+                                Add package
+                            </button>
                         </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Discord Invite Link</label>
-                                <input type="url" id="discord-invite" placeholder="https://discord.gg/yourserver">
-                            </div>
+                        <div class="item-list" id="rubis-list">
                         </div>
-                        <button type="submit" class="btn-save">
-                            <i class="fas fa-save"></i> Save Changes
-                    </button>
-                    </form>
-                </div>
+                    </div>
+                </section>
+                <section class="tab-content" id="tab-keys">
+                    <div class="config-section">
+                        <div class="section-heading">
+                            <h2>
+                                Manage keys
+                            </h2>
+                            <button class="btn-add-new" onclick="addNewKey()">
+                                <i class="fa-solid fa-plus">
+                                </i>
+                                Add key
+                            </button>
+                        </div>
+                        <div class="item-list" id="keys-list">
+                        </div>
+                    </div>
+                </section>
+                <section class="tab-content" id="tab-discord">
+                    <div class="config-section">
+                        <h2>
+                            Discord integration
+                        </h2>
+                        <form class="config-form" id="form-discord">
+                            <div class="form-row">
+                                <label class="form-group">
+                                    Client ID
+                                    <input id="discord-client-id" type="text"/>
+                                </label>
+                                <label class="form-group">
+                                    Guild ID
+                                    <input id="discord-guild-id" type="text"/>
+                                </label>
+                            </div>
+                            <label class="form-group">
+                                Invite link
+                                <input id="discord-invite" type="url"/>
+                            </label>
+                            <button class="btn-save" type="submit">
+                                <i class="fa-solid fa-floppy-disk">
+                                </i>
+                                Save changes
+                            </button>
+                        </form>
+                    </div>
+                </section>
             </div>
-        </div>
-        <script src="js/main.js"></script>
-        <script src="js/admin.js"></script>
+        </main>
+        <script src="js/main.js">
+        </script>
+        <script src="js/admin.js">
+        </script>
     </body>
 </html>
