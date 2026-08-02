@@ -218,7 +218,7 @@
 }
 
 .language-button {
-    cursor: default;
+    min-width: 5.5rem;
 }
 
 .cart-button {
