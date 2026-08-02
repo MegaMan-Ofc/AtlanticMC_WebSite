@@ -23,19 +23,41 @@ async function copyText(value) {
 }
 
 document.addEventListener("click", async (event) => {
-    const trigger = event.target.closest("[data-copy-value]");
+    const languageButton = event.target.closest("[data-language-toggle]");
 
-    if (!trigger) {
+    if (languageButton) {
+        const label = languageButton.querySelector("[data-language-label]");
+        const flag = languageButton.querySelector("[data-language-flag]");
+        const isPortuguese = label?.textContent.trim() === "PT";
+
+        if (label) {
+            label.textContent = isPortuguese ? "ENG" : "PT";
+        }
+
+        if (flag) {
+            flag.textContent = isPortuguese ? "🇬🇧" : "🇵🇹";
+        }
+
+        languageButton.setAttribute(
+            "aria-label",
+            isPortuguese ? "Change language to Portuguese" : "Change language to English"
+        );
         return;
     }
 
-    const value = trigger.dataset.copyValue?.trim();
+    const copyButton = event.target.closest("[data-copy-value]");
+
+    if (!copyButton) {
+        return;
+    }
+
+    const value = copyButton.dataset.copyValue?.trim();
 
     if (!value) {
         return;
     }
 
-    const label = trigger.querySelector("strong") ?? trigger.querySelector("span");
+    const label = copyButton.querySelector("strong") ?? copyButton.querySelector("span");
     const originalLabel = label?.textContent;
 
     try {
@@ -45,14 +67,14 @@ document.addEventListener("click", async (event) => {
             label.textContent = "Copied!";
         }
 
-        trigger.setAttribute("aria-label", "Server address copied");
+        copyButton.setAttribute("aria-label", "Server address copied");
 
         window.setTimeout(() => {
             if (label && originalLabel !== undefined) {
                 label.textContent = originalLabel;
             }
 
-            trigger.setAttribute("aria-label", "Copy the Minecraft server address");
+            copyButton.setAttribute("aria-label", "Copy the Minecraft server address");
         }, 1200);
     } catch (error) {
         console.error(error);
