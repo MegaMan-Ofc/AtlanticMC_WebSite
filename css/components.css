@@ -501,18 +501,18 @@
 }
 
 .footer-link--disabled {
-    color: var(--text-muted);
+    color: var(--subtle);
     cursor: default;
 }
 
 .footer-legal-links a {
-    color: var(--text-secondary);
+    color: var(--muted);
     text-decoration: none;
-    transition: color var(--transition-fast);
+    transition: color 0.2s ease;
 }
 
 .footer-legal-links a:hover {
-    color: var(--straindez-cyan);
+    color: var(--accent);
 }
 
 .footer-grid h2 {
