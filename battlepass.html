@@ -16,7 +16,7 @@
         <link href="css/components.css" rel="stylesheet"/>
         <link href="css/pages/catalog.css" rel="stylesheet"/>
     </head>
-    <body class="page-boosters">
+    <body class="page-battlepass">
         <div id="wrap">
             <header class="site-header" id="top">
                 <div class="header-primary">
@@ -36,7 +36,7 @@
                         <a aria-label="Atlantic Anarchy store home" class="brand" href="index.html">
                             <img alt="Atlantic Anarchy" src="assets/logo1.png"/>
                         </a>
-                        <button aria-label="Copy the Minecraft server address" class="header-link header-link--server" id="copy" title="Click to copy" type="button">
+                        <button aria-label="Copy the Minecraft server address" class="header-link header-link--server" data-copy-value="atlanticmc.secure.pebble.host" title="Click to copy" type="button">
                             <i aria-hidden="true" class="fa-solid fa-server">
                             </i>
                             <span>
@@ -52,30 +52,34 @@
                 </div>
                 <div class="header-secondary">
                     <div class="container header-row">
-                        <button aria-label="Open Minecraft account login" class="user-card" onclick="location.href='login.html'" type="button">
-                            <img alt="Minecraft avatar" id="user-avatar" src="https://mc-heads.net/avatar/steve"/>
+                        <a aria-label="Open Minecraft account login" class="user-card" href="login.html">
+                            <img alt="Minecraft avatar" src="https://mc-heads.net/avatar/steve"/>
                             <span>
                                 <small>
                                     Logged in as
                                 </small>
-                                <strong id="username">
+                                <strong>
                                     Guest
                                 </strong>
                             </span>
-                        </button>
+                        </a>
                         <nav aria-label="Store actions" class="toolbar">
-                            <button aria-label="Select language: Portuguese or English" class="button button--ghost language-button" type="button">
-                                Português / English
-                                <i aria-hidden="true" class="fa-solid fa-caret-down">
-                                </i>
+                            <button
+                                class="button button--ghost language-button"
+                                type="button"
+                                aria-label="Switch language to English"
+                            >
+                                <img
+                                    class="language-flag"
+                                    src="assets/flag-pt.png"
+                                    alt=""
+                                    aria-hidden="true"
+                                >
+                                <span class="language-code">PT</span>
                             </button>
-                            <a aria-label="Open shopping cart" class="button button--primary cart-button" href="cart.html">
-                                <i aria-hidden="true" class="fa-solid fa-cart-shopping">
-                                </i>
-                                <span id="cart-count">
-                                    0
-                                </span>
-                            </a>
+                            <button aria-label="Shopping cart temporarily unavailable" class="button button--primary cart-button" title="Shopping cart temporarily unavailable" type="button">
+                                <i aria-hidden="true" class="fa-solid fa-cart-shopping"></i>
+                            </button>
                         </nav>
                     </div>
                 </div>
@@ -88,10 +92,21 @@
                             </i>
                         </a>
                         <h1 id="page-title">
-                            Hearts
+                            Battle pass
                         </h1>
                     </header>
-                    <section aria-labelledby="page-title" class="catalog-grid category packages-image" id="boosters-container">
+                    <section aria-labelledby="page-title" class="prose">
+                        <h2>
+                            Store update in progress
+                        </h2>
+                        <p>
+                            Battle pass packages are temporarily unavailable while we complete a secure store update.
+                        </p>
+                        <p>
+                            <a class="button button--primary" href="index.html">
+                                Back to store
+                            </a>
+                        </p>
                     </section>
                 </div>
             </main>
@@ -210,11 +225,6 @@
                 </div>
             </footer>
         </div>
-        <script src="js/main.js">
-        </script>
-        <script src="js/straindez.js">
-        </script>
-        <script src="js/boosters.js">
-        </script>
+        <script defer src="js/main.js"></script>
     </body>
 </html>

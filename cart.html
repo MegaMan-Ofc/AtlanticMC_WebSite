@@ -36,7 +36,7 @@
                         <a aria-label="Atlantic Anarchy store home" class="brand" href="index.html">
                             <img alt="Atlantic Anarchy" src="assets/logo1.png"/>
                         </a>
-                        <button aria-label="Copy the Minecraft server address" class="header-link header-link--server" id="copy" title="Click to copy" type="button">
+                        <button aria-label="Copy the Minecraft server address" class="header-link header-link--server" data-copy-value="atlanticmc.secure.pebble.host" title="Click to copy" type="button">
                             <i aria-hidden="true" class="fa-solid fa-server">
                             </i>
                             <span>
@@ -52,30 +52,34 @@
                 </div>
                 <div class="header-secondary">
                     <div class="container header-row">
-                        <button aria-label="Open Minecraft account login" class="user-card" onclick="location.href='login.html'" type="button">
-                            <img alt="Minecraft avatar" id="user-avatar" src="https://mc-heads.net/avatar/steve"/>
+                        <a aria-label="Open Minecraft account login" class="user-card" href="login.html">
+                            <img alt="Minecraft avatar" src="https://mc-heads.net/avatar/steve"/>
                             <span>
                                 <small>
                                     Logged in as
                                 </small>
-                                <strong id="username">
+                                <strong>
                                     Guest
                                 </strong>
                             </span>
-                        </button>
+                        </a>
                         <nav aria-label="Store actions" class="toolbar">
-                            <button aria-label="Select language: Portuguese or English" class="button button--ghost language-button" type="button">
-                                Português / English
-                                <i aria-hidden="true" class="fa-solid fa-caret-down">
-                                </i>
+                            <button
+                                class="button button--ghost language-button"
+                                type="button"
+                                aria-label="Switch language to English"
+                            >
+                                <img
+                                    class="language-flag"
+                                    src="assets/flag-pt.png"
+                                    alt=""
+                                    aria-hidden="true"
+                                >
+                                <span class="language-code">PT</span>
                             </button>
-                            <a aria-label="Open shopping cart" class="button button--primary cart-button" href="cart.html">
-                                <i aria-hidden="true" class="fa-solid fa-cart-shopping">
-                                </i>
-                                <span id="cart-count">
-                                    0
-                                </span>
-                            </a>
+                            <button aria-label="Shopping cart temporarily unavailable" class="button button--primary cart-button" title="Shopping cart temporarily unavailable" type="button">
+                                <i aria-hidden="true" class="fa-solid fa-cart-shopping"></i>
+                            </button>
                         </nav>
                     </div>
                 </div>
@@ -91,96 +95,18 @@
                             Shopping cart
                         </h1>
                     </header>
-                    <section class="cart-panel">
-                        <header class="cart-header">
-                            <div class="cart-title">
-                                Shopping cart
-                            </div>
-                            <div class="cart-total-header">
-                                <span id="cart-total-amount">
-                                    0.00
-                                </span>
-                                <small>
-                                    EUR
-                                </small>
-                            </div>
-                        </header>
-                        <div class="cart-body" id="cart-items-container">
-                            <div class="empty-cart" id="empty-cart-message">
-                                <i class="fa-solid fa-cart-shopping">
-                                </i>
-                                <h2>
-                                    Your cart is empty
-                                </h2>
-                                <p>
-                                    Add some items to continue.
-                                </p>
-                                <a class="button button--primary" href="index.html">
-                                    <i class="fa-solid fa-shop">
-                                    </i>
-                                    Browse store
-                                </a>
-                            </div>
-                            <table class="cart-table is-hidden" id="cart-table">
-                                <thead>
-                                    <tr>
-                                        <th>
-                                        </th>
-                                        <th>
-                                            Name
-                                        </th>
-                                        <th>
-                                            Price
-                                        </th>
-                                        <th>
-                                            Qty
-                                        </th>
-                                        <th>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody id="cart-items-list">
-                                </tbody>
-                            </table>
-                        </div>
-                        <section class="cart-coupon is-hidden" id="cart-coupon-section">
-                            <h2>
-                                Redeem coupon or gift card
-                            </h2>
-                            <div class="coupon-input-group">
-                                <label class="sr-only" for="coupon-input">
-                                    Coupon code
-                                </label>
-                                <input class="field" id="coupon-input" placeholder="Enter coupon code" type="text"/>
-                                <button class="button button--primary" id="redeem-coupon-btn">
-                                    <i class="fa-solid fa-ticket">
-                                    </i>
-                                    Redeem
-                                </button>
-                            </div>
-                            <div class="coupon-message" id="coupon-message">
-                            </div>
-                        </section>
-                        <footer class="cart-footer is-hidden" id="cart-footer-section">
-                            <div class="cart-footer-info">
-                                <p>
-                                    You will be directed to our payment gateway to complete your purchase.
-                                </p>
-                                <p>
-                                    <strong>
-                                        Note:
-                                    </strong>
-                                    All purchases are final.
-                                </p>
-                            </div>
-                            <button class="button button--primary button--large" id="purchase-btn">
-                                <i class="fa-solid fa-credit-card">
-                                </i>
-                                Proceed to checkout
-                                <i class="fa-solid fa-arrow-right">
-                                </i>
-                            </button>
-                        </footer>
+                    <section aria-labelledby="page-title" class="prose">
+                        <h2>
+                            Shopping cart temporarily unavailable
+                        </h2>
+                        <p>
+                            Purchases are temporarily paused while we complete a secure checkout update.
+                        </p>
+                        <p>
+                            <a class="button button--primary" href="index.html">
+                                Browse store
+                            </a>
+                        </p>
                     </section>
                 </div>
             </main>
@@ -299,11 +225,6 @@
                 </div>
             </footer>
         </div>
-        <script src="js/main.js">
-        </script>
-        <script src="js/straindez.js">
-        </script>
-        <script src="js/cart.js">
-        </script>
+        <script defer src="js/main.js"></script>
     </body>
 </html>

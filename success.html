@@ -36,7 +36,7 @@
                         <a aria-label="Atlantic Anarchy store home" class="brand" href="index.html">
                             <img alt="Atlantic Anarchy" src="assets/logo1.png"/>
                         </a>
-                        <button aria-label="Copy the Minecraft server address" class="header-link header-link--server" id="copy" title="Click to copy" type="button">
+                        <button aria-label="Copy the Minecraft server address" class="header-link header-link--server" data-copy-value="atlanticmc.secure.pebble.host" title="Click to copy" type="button">
                             <i aria-hidden="true" class="fa-solid fa-server">
                             </i>
                             <span>
@@ -52,121 +52,61 @@
                 </div>
                 <div class="header-secondary">
                     <div class="container header-row">
-                        <button aria-label="Open Minecraft account login" class="user-card" onclick="location.href='login.html'" type="button">
-                            <img alt="Minecraft avatar" id="user-avatar" src="https://mc-heads.net/avatar/steve"/>
+                        <a aria-label="Open Minecraft account login" class="user-card" href="login.html">
+                            <img alt="Minecraft avatar" src="https://mc-heads.net/avatar/steve"/>
                             <span>
                                 <small>
                                     Logged in as
                                 </small>
-                                <strong id="username">
+                                <strong>
                                     Guest
                                 </strong>
                             </span>
-                        </button>
+                        </a>
                         <nav aria-label="Store actions" class="toolbar">
-                            <button aria-label="Select language: Portuguese or English" class="button button--ghost language-button" type="button">
-                                Português / English
-                                <i aria-hidden="true" class="fa-solid fa-caret-down">
-                                </i>
+                            <button
+                                class="button button--ghost language-button"
+                                type="button"
+                                aria-label="Switch language to English"
+                            >
+                                <img
+                                    class="language-flag"
+                                    src="assets/flag-pt.png"
+                                    alt=""
+                                    aria-hidden="true"
+                                >
+                                <span class="language-code">PT</span>
                             </button>
-                            <a aria-label="Open shopping cart" class="button button--primary cart-button" href="cart.html">
-                                <i aria-hidden="true" class="fa-solid fa-cart-shopping">
-                                </i>
-                                <span id="cart-count">
-                                    0
-                                </span>
-                            </a>
+                            <button aria-label="Shopping cart temporarily unavailable" class="button button--primary cart-button" title="Shopping cart temporarily unavailable" type="button">
+                                <i aria-hidden="true" class="fa-solid fa-cart-shopping"></i>
+                            </button>
                         </nav>
                     </div>
                 </div>
             </header>
             <main class="main-content" id="main">
                 <div class="container">
-                    <section class="success-card">
-                        <div class="success-icon">
-                            <i class="fa-solid fa-circle-check">
+                    <header class="page-title">
+                        <a aria-label="Go back" href="index.html">
+                            <i class="fa-solid fa-house">
                             </i>
-                        </div>
-                        <h1>
-                            Payment successful
+                        </a>
+                        <h1 id="page-title">
+                            Payment confirmation
                         </h1>
+                    </header>
+                    <section aria-labelledby="page-title" class="prose">
+                        <h2>
+                            Secure confirmation pending
+                        </h2>
                         <p>
-                            Thank you for your purchase.
+                            Payment confirmation will be available when secure checkout is enabled.
                         </p>
-                        <div class="success-details">
-                            <div class="success-detail">
-                                <i class="fa-solid fa-box">
-                                </i>
-                                <div>
-                                    <strong>
-                                        Order ID
-                                    </strong>
-                                    <span id="order-id">
-                                        Loading...
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="success-detail">
-                                <i class="fa-solid fa-gamepad">
-                                </i>
-                                <div>
-                                    <strong>
-                                        Delivery
-                                    </strong>
-                                    <span>
-                                        Items will be delivered in-game when you join the server.
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="success-detail">
-                                <i class="fa-solid fa-envelope">
-                                </i>
-                                <div>
-                                    <strong>
-                                        Receipt
-                                    </strong>
-                                    <span>
-                                        A receipt has been sent to your email.
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="success-server">
-                            <h2>
-                                Join the server
-                            </h2>
-                            <button class="server-ip-box" onclick="copyServerIP()" type="button">
-                                <i class="fa-solid fa-server">
-                                </i>
-                                <span>
-                                    atlanticmc.secure.pebble.host
-                                </span>
-                                <i class="fa-solid fa-copy">
-                                </i>
-                            </button>
-                            <p>
-                                Click to copy the server IP.
-                            </p>
-                        </div>
-                        <div class="success-actions">
-                            <a class="button button--primary button--large" href="index.html">
-                                <i class="fa-solid fa-house">
-                                </i>
+                        <p>
+                            <a class="button button--primary" href="index.html">
                                 Back to store
                             </a>
-                            <a class="button button--ghost button--large" href="https://discord.gg/atlanticnetwork" rel="noopener noreferrer" target="_blank">
-                                <i class="fa-brands fa-discord">
-                                </i>
-                                Join Discord
-                            </a>
-                        </div>
-                        <div class="success-note">
-                            <i class="fa-solid fa-circle-info">
-                            </i>
-                            <p>
-                                If your items do not arrive within five minutes, contact support on Discord.
-                            </p>
-                        </div>
+                        </p>
                     </section>
                 </div>
             </main>
@@ -285,25 +225,6 @@
                 </div>
             </footer>
         </div>
-        <script src="js/main.js">
-        </script>
-        <script src="js/straindez.js">
-        </script>
-        <script>
-            const orderId = new URLSearchParams(window.location.search).get('order') || 'N/A';
-            document.getElementById('order-id').textContent = orderId;
-
-            function copyServerIP() {
-                const ip = 'atlanticmc.secure.pebble.host';
-                navigator.clipboard.writeText(ip).then(() => {
-                    const box = document.querySelector('.server-ip-box');
-                    const original = box.innerHTML;
-                    box.innerHTML = '<i class="fa-solid fa-check"></i><span>Copied!</span><i class="fa-solid fa-check"></i>';
-                    setTimeout(() => {
-                        box.innerHTML = original;
-                    }, 2000);
-                });
-            }
-        </script>
+        <script defer src="js/main.js"></script>
     </body>
 </html>
