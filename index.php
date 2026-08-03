@@ -5,7 +5,7 @@
         <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
         <meta content="#0b0e13" name="theme-color"/>
         <title>
-            Atlantic Anarchy - Cart
+            Atlantic Anarchy - Store
         </title>
         <link href="assets/logo1.png" rel="icon" type="image/png"/>
         <link href="https://fonts.googleapis.com" rel="preconnect"/>
@@ -14,9 +14,9 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
         <link href="css/base.css" rel="stylesheet"/>
         <link href="css/components.css" rel="stylesheet"/>
-        <link href="css/pages/cart.css" rel="stylesheet"/>
+        <link href="css/pages/home.css" rel="stylesheet"/>
     </head>
-    <body class="page-cart">
+    <body class="page-home">
         <div id="wrap">
             <header class="site-header" id="top">
                 <div class="header-primary">
@@ -33,7 +33,7 @@
                                 </strong>
                             </span>
                         </a>
-                        <a aria-label="Atlantic Anarchy store home" class="brand" href="index.html">
+                        <a aria-label="Atlantic Anarchy store home" class="brand" href="index.php">
                             <img alt="Atlantic Anarchy" src="assets/logo1.png"/>
                         </a>
                         <button aria-label="Copy the Minecraft server address" class="header-link header-link--server" data-copy-value="atlanticmc.secure.pebble.host" title="Click to copy" type="button">
@@ -52,7 +52,7 @@
                 </div>
                 <div class="header-secondary">
                     <div class="container header-row">
-                        <a aria-label="Open Minecraft account login" class="user-card" href="login.html">
+                        <a aria-label="Open Minecraft account login" class="user-card" href="login.php">
                             <img alt="Minecraft avatar" src="https://mc-heads.net/avatar/steve"/>
                             <span>
                                 <small>
@@ -86,28 +86,68 @@
             </header>
             <main class="main-content" id="main">
                 <div class="container">
-                    <header class="page-title">
-                        <a aria-label="Go back" href="index.html">
-                            <i class="fa-solid fa-house">
-                            </i>
+                    <h1 class="sr-only">
+                        Atlantic Anarchy Store
+                    </h1>
+                    <a class="home-hero" href="keys.php">
+                        <img alt="Magma crate key" src="assets/magma-key.png"/>
+                        <div>
+                            <strong>
+                                Order now →
+                            </strong>
+                            <small>
+                                LIMITED TIME ONLY
+                            </small>
+                        </div>
+                    </a>
+                    <section aria-label="Store categories" class="category-grid">
+                        <a class="category-card" data-theme="vips" href="ranks.php">
+                            <img alt="Diamond" src="assets/diamante.png"/>
+                            <h2>
+                                VIPs
+                            </h2>
                         </a>
-                        <h1 id="page-title">
-                            Shopping cart
-                        </h1>
-                    </header>
-                    <section aria-labelledby="page-title" class="prose">
-                        <h2>
-                            Shopping cart temporarily unavailable
-                        </h2>
-                        <p>
-                            Purchases are temporarily paused while we complete a secure checkout update.
-                        </p>
-                        <p>
-                            <a class="button button--primary" href="index.html">
-                                Browse store
-                            </a>
-                        </p>
+                        <a class="category-card" data-theme="rubis" href="rubis.php">
+                            <img alt="Bag of Rubis" src="assets/rubis-saco-pequeno.png.png"/>
+                            <h2>
+                                Rubis
+                            </h2>
+                        </a>
+                        <a class="category-card" data-theme="keys" href="keys.php">
+                            <img alt="Atlantic key" src="assets/atlantic-key.png"/>
+                            <h2>
+                                Keys
+                            </h2>
+                        </a>
+                        <div aria-disabled="true" class="category-card" data-theme="money">
+                            <i aria-hidden="true" class="fa-solid fa-coins">
+                            </i>
+                            <h2>
+                                Money
+                            </h2>
+                            <small>
+                                Coming soon
+                            </small>
+                        </div>
                     </section>
+                    <a class="promo-card sdz-rank-card" href="boosters.php">
+                        <div>
+                            <p>
+                                Power up your game
+                            </p>
+                            <h2>
+                                Hearts
+                                <br/>
+                                <small>
+                                    Extra life
+                                </small>
+                            </h2>
+                            <span class="button button--ghost">
+                                View hearts →
+                            </span>
+                        </div>
+                        <img alt="Extra life heart" src="assets/heart%20(2).png"/>
+                    </a>
                 </div>
             </main>
             <footer class="site-footer">
@@ -127,10 +167,10 @@
                             <h2>Store</h2>
 
                             <div class="footer-links">
-                                <a href="index.html">Home</a>
-                                <a href="ranks.html">VIPs</a>
-                                <a href="rubis.html">Rubis</a>
-                                <a href="keys.html">Keys</a>
+                                <a href="index.php">Home</a>
+                                <a href="ranks.php">VIPs</a>
+                                <a href="rubis.php">Rubis</a>
+                                <a href="keys.php">Keys</a>
                             </div>
                         </nav>
 
