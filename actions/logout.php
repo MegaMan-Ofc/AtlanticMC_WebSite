@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
-function logoutUser(): void
-{
-    throw new LogicException('Logout action is not implemented yet.');
-}
+require_once __DIR__ . '/../includes/bootstrap.php';
+require_post();
+verify_csrf();
+clear_minecraft_recipient();
+flash('success', 'Nome Minecraft removido da sessão.');
+redirect('login.php');

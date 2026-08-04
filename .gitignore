@@ -1,1 +1,11 @@
-/doc/
+doc/
+.env
+.env.local
+.env.*.local
+storage/*.sqlite
+storage/*.sqlite-*
+storage/*.sqlite3
+storage/*.db
+storage/*.log
+!storage/.gitignore
+!storage/.htaccess

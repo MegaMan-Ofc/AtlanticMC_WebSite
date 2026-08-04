@@ -7,17 +7,14 @@ async function copyText(value) {
     }
 
     const input = document.createElement("textarea");
-
     input.value = value;
     input.setAttribute("readonly", "");
     input.style.position = "fixed";
     input.style.opacity = "0";
-
     document.body.appendChild(input);
     input.select();
 
     const copied = document.execCommand("copy");
-
     input.remove();
 
     if (!copied) {
@@ -37,20 +34,12 @@ document.addEventListener("click", async (event) => {
         }
 
         const isPortuguese = code.textContent.trim() === "PT";
-
         code.textContent = isPortuguese ? "ENG" : "PT";
-
-        flag.src = isPortuguese
-            ? "assets/flag-en.png"
-            : "assets/flag-pt.png";
-
+        flag.src = isPortuguese ? flag.dataset.enSrc : flag.dataset.ptSrc;
         languageButton.setAttribute(
             "aria-label",
-            isPortuguese
-                ? "Mudar idioma para Português"
-                : "Switch language to English"
+            isPortuguese ? "Mudar idioma para Português" : "Switch language to English"
         );
-
         return;
     }
 
@@ -66,10 +55,7 @@ document.addEventListener("click", async (event) => {
         return;
     }
 
-    const label =
-        copyButton.querySelector("strong")
-        ?? copyButton.querySelector("span");
-
+    const label = copyButton.querySelector("strong") ?? copyButton.querySelector("span");
     const originalLabel = label?.textContent;
 
     try {
@@ -79,20 +65,14 @@ document.addEventListener("click", async (event) => {
             label.textContent = "Copied!";
         }
 
-        copyButton.setAttribute(
-            "aria-label",
-            "Server address copied"
-        );
+        copyButton.setAttribute("aria-label", "Server address copied");
 
         window.setTimeout(() => {
             if (label && originalLabel !== undefined) {
                 label.textContent = originalLabel;
             }
 
-            copyButton.setAttribute(
-                "aria-label",
-                "Copy the Minecraft server address"
-            );
+            copyButton.setAttribute("aria-label", "Copy the Minecraft server address");
         }, 1200);
     } catch (error) {
         console.error(error);

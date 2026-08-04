@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-function updateCartQuantity(string $productId, int $quantity): void
-{
-    throw new LogicException('Cart update action is not implemented yet.');
-}
+require_once __DIR__ . '/../includes/bootstrap.php';
+require_post();
+verify_csrf();
+
+$quantities = $_POST['quantities'] ?? [];
+cart_update(is_array($quantities) ? $quantities : []);
+flash('success', 'Carrinho atualizado.');
+redirect('cart.php');

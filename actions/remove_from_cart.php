@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
-function removeFromCart(string $productId): void
-{
-    throw new LogicException('Remove-from-cart action is not implemented yet.');
-}
+require_once __DIR__ . '/../includes/bootstrap.php';
+require_post();
+verify_csrf();
+cart_remove(request_int('product_id'));
+flash('success', 'Produto removido do carrinho.');
+redirect('cart.php');
