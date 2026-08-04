@@ -101,11 +101,6 @@ function config(?string $key = null, mixed $default = null): mixed
                 'password' => (string) env_value('DB_PASSWORD', ''),
                 'charset' => (string) env_value('DB_CHARSET', 'utf8mb4'),
             ],
-            'minecraft' => [
-                'client_id' => (string) env_value('MINECRAFT_CLIENT_ID', ''),
-                'client_secret' => (string) env_value('MINECRAFT_CLIENT_SECRET', ''),
-                'redirect_uri' => (string) env_value('MINECRAFT_REDIRECT_URI', ''),
-            ],
             'tebex' => [
                 'public_token' => (string) env_value('TEBEX_PUBLIC_TOKEN', ''),
                 'webhook_secret' => (string) env_value('TEBEX_WEBHOOK_SECRET', ''),

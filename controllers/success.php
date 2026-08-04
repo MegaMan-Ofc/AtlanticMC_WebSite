@@ -12,9 +12,8 @@ $pageStyles = ['css/pages/success.css'];
 $orderToken = is_string($_GET['order'] ?? null)
     ? trim($_GET['order'])
     : (string) ($_SESSION['last_order_token'] ?? '');
-$successUser = current_user();
 $order = null;
 
-if ($successUser !== null && preg_match('/^[a-f0-9]{48}$/', $orderToken)) {
-    $order = order_by_token($orderToken, (int) $successUser['id']);
+if (preg_match('/^[a-f0-9]{48}$/', $orderToken)) {
+    $order = order_by_token($orderToken);
 }

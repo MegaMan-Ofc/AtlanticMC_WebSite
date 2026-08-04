@@ -1,4 +1,4 @@
-<?php $headerUser = current_user(); ?>
+<?php $headerRecipient = current_minecraft_recipient(); ?>
 <header class="site-header" id="top">
     <div class="header-primary">
         <div class="container header-grid">
@@ -17,26 +17,16 @@
     </div>
     <div class="header-secondary">
         <div class="container header-row">
-            <?php if ($headerUser === null): ?>
-                <a aria-label="Open Minecraft account login" class="user-card" href="<?= e(url('login.php')) ?>">
+            <a aria-label="Choose Minecraft purchase recipient" class="user-card" href="<?= e(url('login.php')) ?>">
+                <?php if ($headerRecipient === null): ?>
                     <img alt="Minecraft avatar" src="<?= e(url('assets/steve.png')) ?>">
                     <span><small>Logged in as</small><strong>Guest</strong></span>
-                </a>
-            <?php else: ?>
-                <div class="user-card">
-                    <img alt="<?= e($headerUser['minecraft_name']) ?> Minecraft avatar" src="<?= e($headerUser['avatar_url']) ?>">
-                    <span><small>Logged in as</small><strong><?= e($headerUser['minecraft_name']) ?></strong></span>
-                </div>
-            <?php endif; ?>
-            <nav aria-label="Store actions" class="toolbar">
-                <?php if ($headerUser !== null): ?>
-                    <form action="<?= e(url('actions/logout.php')) ?>" method="post" class="header-inline-form">
-                        <?= csrf_field() ?>
-                        <button class="button button--ghost" type="submit" aria-label="Logout">
-                            <i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i>
-                        </button>
-                    </form>
+                <?php else: ?>
+                    <img alt="<?= e($headerRecipient['username']) ?> Minecraft avatar" src="<?= e($headerRecipient['avatar_url']) ?>">
+                    <span><small>Logged in as</small><strong><?= e($headerRecipient['username']) ?></strong></span>
                 <?php endif; ?>
+            </a>
+            <nav aria-label="Store actions" class="toolbar">
                 <button class="button button--ghost language-button" type="button" aria-label="Switch language to English">
                     <img class="language-flag" src="<?= e(url('assets/flag-pt.png')) ?>" data-pt-src="<?= e(url('assets/flag-pt.png')) ?>" data-en-src="<?= e(url('assets/flag-en.png')) ?>" alt="" aria-hidden="true">
                     <span class="language-code">PT</span>

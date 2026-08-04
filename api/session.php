@@ -6,13 +6,9 @@ define('ATLANTIC_JSON', true);
 require_once __DIR__ . '/../includes/bootstrap.php';
 require_get();
 
-$user = current_user();
+$recipient = current_minecraft_recipient();
 json_response(['data' => [
-    'authenticated' => $user !== null,
-    'user' => $user === null ? null : [
-        'minecraft_uuid' => $user['minecraft_uuid'],
-        'minecraft_name' => $user['minecraft_name'],
-        'avatar_url' => $user['avatar_url'],
-    ],
+    'recipient_selected' => $recipient !== null,
+    'recipient' => $recipient,
     'cart_count' => cart_count(),
 ]]);

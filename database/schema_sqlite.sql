@@ -3,15 +3,6 @@ CREATE TABLE IF NOT EXISTS app_meta (
     meta_value TEXT NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS users (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    minecraft_uuid TEXT NOT NULL UNIQUE,
-    minecraft_name TEXT NOT NULL,
-    avatar_url TEXT NOT NULL,
-    created_at TEXT NOT NULL,
-    last_login_at TEXT NOT NULL
-);
-
 CREATE TABLE IF NOT EXISTS products (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     slug TEXT NOT NULL UNIQUE,
@@ -49,9 +40,8 @@ CREATE TABLE IF NOT EXISTS coupons (
 CREATE TABLE IF NOT EXISTS orders (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     public_token TEXT NOT NULL UNIQUE,
-    user_id INTEGER NOT NULL,
-    minecraft_uuid TEXT NOT NULL,
     minecraft_name TEXT NOT NULL,
+    minecraft_platform TEXT NOT NULL CHECK (minecraft_platform IN ('java', 'bedrock')),
     subtotal_cents INTEGER NOT NULL,
     discount_cents INTEGER NOT NULL DEFAULT 0,
     total_cents INTEGER NOT NULL,
@@ -62,12 +52,11 @@ CREATE TABLE IF NOT EXISTS orders (
     provider_reference TEXT NULL,
     provider_checkout_url TEXT NULL,
     created_at TEXT NOT NULL,
-    updated_at TEXT NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users(id)
+    updated_at TEXT NOT NULL
 );
 
-CREATE INDEX IF NOT EXISTS idx_orders_user_created
-    ON orders(user_id, created_at);
+CREATE INDEX IF NOT EXISTS idx_orders_recipient_created
+    ON orders(minecraft_name, created_at);
 
 CREATE TABLE IF NOT EXISTS order_items (
     id INTEGER PRIMARY KEY AUTOINCREMENT,

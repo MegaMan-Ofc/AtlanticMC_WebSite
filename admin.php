@@ -125,7 +125,7 @@
                         <?php foreach ($adminOrders as $adminOrder): ?>
                             <tr>
                                 <td><code><?= e($adminOrder['public_token']) ?></code></td>
-                                <td><?= e($adminOrder['minecraft_name']) ?></td>
+                                <td><?= e($adminOrder['minecraft_name']) ?> <small>(<?= e(ucfirst($adminOrder['minecraft_platform'])) ?>)</small></td>
                                 <td><?= e(format_money((int) $adminOrder['total_cents'], $adminOrder['currency'])) ?></td>
                                 <td><?= e($adminOrder['coupon_code'] ?? '—') ?></td>
                                 <td><?= e($adminOrder['provider']) ?></td>

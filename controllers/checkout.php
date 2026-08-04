@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/../includes/bootstrap.php';
 
-require_authentication('checkout.php');
+require_minecraft_recipient('checkout.php');
 
 $cart = cart_summary();
 
@@ -17,4 +17,4 @@ $pageTitle = 'Atlantic Anarchy - Checkout';
 $pageDescription = 'Confirm your Atlantic Anarchy order.';
 $bodyClass = 'page-checkout';
 $pageStyles = ['css/pages/checkout.css'];
-$checkoutUser = current_user();
+$checkoutRecipient = current_minecraft_recipient();

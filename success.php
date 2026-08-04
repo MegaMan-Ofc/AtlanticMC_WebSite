@@ -10,14 +10,14 @@
             <?php if ($order === null): ?>
                 <div class="success-icon"><i class="fa-solid fa-circle-exclamation"></i></div>
                 <h1>Order not found</h1>
-                <p>The order is unavailable or does not belong to the current account.</p>
+                <p>The order is unavailable or the order token is invalid.</p>
             <?php else: ?>
                 <div class="success-icon"><i class="fa-solid <?= $order['status'] === 'paid' ? 'fa-check' : 'fa-clock' ?>"></i></div>
                 <h1><?= $order['status'] === 'paid' ? 'Payment completed' : 'Order created' ?></h1>
                 <p>Status: <strong><?= e(str_replace('_', ' ', ucfirst($order['status']))) ?></strong></p>
                 <div class="success-details">
                     <div class="success-detail"><i class="fa-solid fa-hashtag"></i><div><strong>Order</strong><span><?= e($order['public_token']) ?></span></div></div>
-                    <div class="success-detail"><i class="fa-solid fa-user"></i><div><strong>Minecraft account</strong><span><?= e($order['minecraft_name']) ?></span></div></div>
+                    <div class="success-detail"><i class="fa-solid fa-user"></i><div><strong>Minecraft recipient</strong><span><?= e($order['minecraft_name']) ?> (<?= e(ucfirst($order['minecraft_platform'])) ?>)</span></div></div>
                     <div class="success-detail"><i class="fa-solid fa-euro-sign"></i><div><strong>Total</strong><span><?= e(format_money((int) $order['total_cents'], $order['currency'])) ?></span></div></div>
                 </div>
                 <?php if ($order['status'] !== 'paid'): ?>

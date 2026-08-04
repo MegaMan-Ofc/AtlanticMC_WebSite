@@ -37,8 +37,8 @@ function tebex_create_checkout(array $order, array $items): array
             'username' => (string) $order['minecraft_name'],
             'custom' => [
                 'order_token' => (string) $order['public_token'],
-                'minecraft_uuid' => (string) $order['minecraft_uuid'],
                 'minecraft_name' => (string) $order['minecraft_name'],
+                'minecraft_platform' => (string) $order['minecraft_platform'],
             ],
         ]
     );

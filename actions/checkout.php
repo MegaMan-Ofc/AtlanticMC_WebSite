@@ -6,7 +6,7 @@ require_once __DIR__ . '/../includes/bootstrap.php';
 require_post();
 verify_csrf();
 enforce_rate_limit('checkout', 10, 60);
-require_authentication('checkout.php');
+require_minecraft_recipient('checkout.php');
 
 try {
     $summary = cart_summary();
@@ -15,13 +15,14 @@ try {
         throw new InvalidArgumentException('O carrinho está vazio.');
     }
 
-    $user = current_user() ?? throw new RuntimeException('Authentication required.');
+    $recipient = current_minecraft_recipient()
+        ?? throw new RuntimeException('Minecraft recipient is required.');
 
     if (!tebex_is_configured() && !(bool) config('app.allow_test_orders', false)) {
         throw new RuntimeException('Payments are temporarily unavailable.');
     }
 
-    $order = create_order($user, $summary);
+    $order = create_order($recipient, $summary);
     $_SESSION['last_order_token'] = $order['public_token'];
 
     if (tebex_is_configured()) {

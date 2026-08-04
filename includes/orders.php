@@ -2,12 +2,17 @@
 
 declare(strict_types=1);
 
-function create_order(array $user, array $summary): array
+function create_order(array $recipient, array $summary): array
 {
     if ($summary['items'] === [] || (int) $summary['total_cents'] < 0) {
         throw new InvalidArgumentException('The cart is empty or invalid.');
     }
 
+    $username = normalize_minecraft_username(
+        (string) ($recipient['username'] ?? ''),
+        (string) ($recipient['platform'] ?? '')
+    );
+    $platform = strtolower((string) $recipient['platform']);
     $pdo = db();
     $pdo->beginTransaction();
 
@@ -16,17 +21,16 @@ function create_order(array $user, array $summary): array
         $now = now_sql();
         $statement = $pdo->prepare(
             'INSERT INTO orders
-             (public_token, user_id, minecraft_uuid, minecraft_name, subtotal_cents, discount_cents, total_cents,
+             (public_token, minecraft_name, minecraft_platform, subtotal_cents, discount_cents, total_cents,
               currency, coupon_code, status, provider, created_at, updated_at)
              VALUES
-             (:public_token, :user_id, :minecraft_uuid, :minecraft_name, :subtotal_cents, :discount_cents, :total_cents,
+             (:public_token, :minecraft_name, :minecraft_platform, :subtotal_cents, :discount_cents, :total_cents,
               :currency, :coupon_code, :status, :provider, :created_at, :updated_at)'
         );
         $statement->execute([
             'public_token' => $token,
-            'user_id' => (int) $user['id'],
-            'minecraft_uuid' => (string) $user['minecraft_uuid'],
-            'minecraft_name' => (string) $user['minecraft_name'],
+            'minecraft_name' => $username,
+            'minecraft_platform' => $platform,
             'subtotal_cents' => (int) $summary['subtotal_cents'],
             'discount_cents' => (int) $summary['discount_cents'],
             'total_cents' => (int) $summary['total_cents'],
@@ -59,7 +63,7 @@ function create_order(array $user, array $summary): array
 
         $pdo->commit();
 
-        return order_by_token($token, (int) $user['id']) ?? throw new RuntimeException('Unable to reload the order.');
+        return order_by_token($token) ?? throw new RuntimeException('Unable to reload the order.');
     } catch (Throwable $error) {
         if ($pdo->inTransaction()) {
             $pdo->rollBack();
@@ -85,18 +89,10 @@ function update_order_provider(int $orderId, string $reference, string $checkout
     ]);
 }
 
-function order_by_token(string $token, ?int $userId = null): ?array
+function order_by_token(string $token): ?array
 {
-    $sql = 'SELECT * FROM orders WHERE public_token = :token';
-    $parameters = ['token' => $token];
-
-    if ($userId !== null) {
-        $sql .= ' AND user_id = :user_id';
-        $parameters['user_id'] = $userId;
-    }
-
-    $statement = db()->prepare($sql);
-    $statement->execute($parameters);
+    $statement = db()->prepare('SELECT * FROM orders WHERE public_token = :token');
+    $statement->execute(['token' => $token]);
     $order = $statement->fetch();
 
     if (!is_array($order)) {
@@ -167,7 +163,7 @@ function recent_orders_admin(int $limit = 50): array
 {
     $limit = max(1, min(200, $limit));
     $statement = db()->query(
-        'SELECT id, public_token, minecraft_name, subtotal_cents, discount_cents, total_cents,
+        'SELECT id, public_token, minecraft_name, minecraft_platform, subtotal_cents, discount_cents, total_cents,
                 currency, coupon_code, status, provider, provider_reference, created_at
          FROM orders ORDER BY id DESC LIMIT ' . $limit
     );

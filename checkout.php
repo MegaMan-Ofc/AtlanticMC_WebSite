@@ -13,8 +13,8 @@
                     <header><span>1</span><h2>Confirm the purchase</h2></header>
                     <div class="checkout-body">
                         <div class="checkout-icon"><i class="fa-solid fa-shield-halved"></i></div>
-                        <h2>Purchase for <?= e($checkoutUser['minecraft_name']) ?></h2>
-                        <p>The server validates the account, product IDs, quantities, coupon and prices before creating the order.</p>
+                        <h2>Purchase for <?= e($checkoutRecipient['username']) ?></h2>
+                        <p>The server validates the recipient name, platform, product IDs, quantities, coupon and prices before creating the order.</p>
                         <div class="cart-items-preview">
                             <div class="cart-preview-items">
                                 <?php foreach ($cart['items'] as $item): ?>
@@ -31,7 +31,7 @@
                             </button>
                         </form>
                         <div class="checkout-features">
-                            <div class="checkout-feature"><i class="fa-solid fa-user-shield"></i><span>Minecraft account verified</span></div>
+                            <div class="checkout-feature"><i class="fa-solid fa-user-shield"></i><span>Minecraft recipient selected</span></div>
                             <div class="checkout-feature"><i class="fa-solid fa-database"></i><span>Server-side prices</span></div>
                             <div class="checkout-feature"><i class="fa-solid fa-receipt"></i><span>Order recorded</span></div>
                         </div>

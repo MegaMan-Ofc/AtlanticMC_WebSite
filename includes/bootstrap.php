@@ -11,8 +11,8 @@ require_once __DIR__ . '/catalog.php';
 require_once __DIR__ . '/coupons.php';
 require_once __DIR__ . '/cart.php';
 require_once __DIR__ . '/auth.php';
+require_once __DIR__ . '/minecraft_recipient.php';
 require_once __DIR__ . '/http.php';
-require_once __DIR__ . '/minecraft_auth.php';
 require_once __DIR__ . '/tebex.php';
 require_once __DIR__ . '/orders.php';
 

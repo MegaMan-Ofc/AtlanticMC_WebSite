@@ -3,15 +3,6 @@ CREATE TABLE IF NOT EXISTS app_meta (
     meta_value TEXT NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-CREATE TABLE IF NOT EXISTS users (
-    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    minecraft_uuid VARCHAR(64) NOT NULL UNIQUE,
-    minecraft_name VARCHAR(32) NOT NULL,
-    avatar_url VARCHAR(255) NOT NULL,
-    created_at DATETIME NOT NULL,
-    last_login_at DATETIME NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
 CREATE TABLE IF NOT EXISTS products (
     id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     slug VARCHAR(100) NOT NULL UNIQUE,
@@ -47,9 +38,8 @@ CREATE TABLE IF NOT EXISTS coupons (
 CREATE TABLE IF NOT EXISTS orders (
     id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     public_token VARCHAR(64) NOT NULL UNIQUE,
-    user_id BIGINT UNSIGNED NOT NULL,
-    minecraft_uuid VARCHAR(64) NOT NULL,
     minecraft_name VARCHAR(32) NOT NULL,
+    minecraft_platform ENUM('java', 'bedrock') NOT NULL,
     subtotal_cents INT UNSIGNED NOT NULL,
     discount_cents INT UNSIGNED NOT NULL DEFAULT 0,
     total_cents INT UNSIGNED NOT NULL,
@@ -61,8 +51,7 @@ CREATE TABLE IF NOT EXISTS orders (
     provider_checkout_url TEXT NULL,
     created_at DATETIME NOT NULL,
     updated_at DATETIME NOT NULL,
-    INDEX idx_orders_user_created (user_id, created_at),
-    CONSTRAINT fk_orders_user FOREIGN KEY (user_id) REFERENCES users(id)
+    INDEX idx_orders_recipient_created (minecraft_name, created_at)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS order_items (

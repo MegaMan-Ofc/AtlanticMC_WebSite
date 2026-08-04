@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 function seed_store_database(PDO $pdo): void
 {
-    $seedVersion = '1';
+    $seedVersion = '2';
     $versionStatement = $pdo->prepare('SELECT meta_value FROM app_meta WHERE meta_key = :key');
     $versionStatement->execute(['key' => 'seed_version']);
 
