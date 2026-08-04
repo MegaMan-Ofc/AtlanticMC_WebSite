@@ -1,3 +1,4 @@
+<?php require_once __DIR__ . '/controller/boosters.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -33,7 +34,7 @@
                                 </strong>
                             </span>
                         </a>
-                        <a aria-label="Atlantic Anarchy store home" class="brand" href="index.html">
+                        <a aria-label="Atlantic Anarchy store home" class="brand" href="index.php">
                             <img alt="Atlantic Anarchy" src="assets/logo1.png"/>
                         </a>
                         <button aria-label="Copy the Minecraft server address" class="header-link header-link--server" data-copy-value="atlanticmc.secure.pebble.host" title="Click to copy" type="button">
@@ -52,7 +53,7 @@
                 </div>
                 <div class="header-secondary">
                     <div class="container header-row">
-                        <a aria-label="Open Minecraft account login" class="user-card" href="login.html">
+                        <a aria-label="Open Minecraft account login" class="user-card" href="login.php">
                             <img alt="Minecraft avatar" src="https://mc-heads.net/avatar/steve"/>
                             <span>
                                 <small>
@@ -87,7 +88,7 @@
             <main class="main-content" id="main">
                 <div class="container">
                     <header class="page-title">
-                        <a aria-label="Go back" href="index.html">
+                        <a aria-label="Go back" href="index.php">
                             <i class="fa-solid fa-house">
                             </i>
                         </a>
@@ -103,7 +104,7 @@
                             Extra-life packages are temporarily unavailable while we complete a secure store update.
                         </p>
                         <p>
-                            <a class="button button--primary" href="index.html">
+                            <a class="button button--primary" href="index.php">
                                 Back to store
                             </a>
                         </p>
@@ -127,10 +128,10 @@
                             <h2>Store</h2>
 
                             <div class="footer-links">
-                                <a href="index.html">Home</a>
-                                <a href="ranks.html">VIPs</a>
-                                <a href="rubis.html">Rubis</a>
-                                <a href="keys.html">Keys</a>
+                                <a href="index.php">Home</a>
+                                <a href="ranks.php">VIPs</a>
+                                <a href="rubis.php">Rubis</a>
+                                <a href="keys.php">Keys</a>
                             </div>
                         </nav>
 

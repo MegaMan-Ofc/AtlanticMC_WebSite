@@ -1,3 +1,4 @@
+<?php require_once __DIR__ . '/controller/cart.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -5,7 +6,7 @@
         <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
         <meta content="#0b0e13" name="theme-color"/>
         <title>
-            Atlantic Anarchy - Login
+            Atlantic Anarchy - Cart
         </title>
         <link href="assets/logo1.png" rel="icon" type="image/png"/>
         <link href="https://fonts.googleapis.com" rel="preconnect"/>
@@ -14,9 +15,9 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
         <link href="css/base.css" rel="stylesheet"/>
         <link href="css/components.css" rel="stylesheet"/>
-        <link href="css/pages/auth.css" rel="stylesheet"/>
+        <link href="css/pages/cart.css" rel="stylesheet"/>
     </head>
-    <body class="page-login">
+    <body class="page-cart">
         <div id="wrap">
             <header class="site-header" id="top">
                 <div class="header-primary">
@@ -33,7 +34,7 @@
                                 </strong>
                             </span>
                         </a>
-                        <a aria-label="Atlantic Anarchy store home" class="brand" href="index.html">
+                        <a aria-label="Atlantic Anarchy store home" class="brand" href="index.php">
                             <img alt="Atlantic Anarchy" src="assets/logo1.png"/>
                         </a>
                         <button aria-label="Copy the Minecraft server address" class="header-link header-link--server" data-copy-value="atlanticmc.secure.pebble.host" title="Click to copy" type="button">
@@ -52,7 +53,7 @@
                 </div>
                 <div class="header-secondary">
                     <div class="container header-row">
-                        <a aria-label="Open Minecraft account login" class="user-card" href="login.html">
+                        <a aria-label="Open Minecraft account login" class="user-card" href="login.php">
                             <img alt="Minecraft avatar" src="https://mc-heads.net/avatar/steve"/>
                             <span>
                                 <small>
@@ -87,24 +88,24 @@
             <main class="main-content" id="main">
                 <div class="container">
                     <header class="page-title">
-                        <a aria-label="Go back" href="index.html">
+                        <a aria-label="Go back" href="index.php">
                             <i class="fa-solid fa-house">
                             </i>
                         </a>
                         <h1 id="page-title">
-                            Login
+                            Shopping cart
                         </h1>
                     </header>
                     <section aria-labelledby="page-title" class="prose">
                         <h2>
-                            Login temporarily unavailable
+                            Shopping cart temporarily unavailable
                         </h2>
                         <p>
-                            Account login is temporarily unavailable while we complete a secure authentication update.
+                            Purchases are temporarily paused while we complete a secure checkout update.
                         </p>
                         <p>
-                            <a class="button button--primary" href="https://discord.gg/atlanticnetwork">
-                                Contact support on Discord
+                            <a class="button button--primary" href="index.php">
+                                Browse store
                             </a>
                         </p>
                     </section>
@@ -127,10 +128,10 @@
                             <h2>Store</h2>
 
                             <div class="footer-links">
-                                <a href="index.html">Home</a>
-                                <a href="ranks.html">VIPs</a>
-                                <a href="rubis.html">Rubis</a>
-                                <a href="keys.html">Keys</a>
+                                <a href="index.php">Home</a>
+                                <a href="ranks.php">VIPs</a>
+                                <a href="rubis.php">Rubis</a>
+                                <a href="keys.php">Keys</a>
                             </div>
                         </nav>
 

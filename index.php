@@ -1,3 +1,4 @@
+<?php require_once __DIR__ . '/controller/index.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -33,7 +34,7 @@
                                 </strong>
                             </span>
                         </a>
-                        <a aria-label="Atlantic Anarchy store home" class="brand" href="index.html">
+                        <a aria-label="Atlantic Anarchy store home" class="brand" href="index.php">
                             <img alt="Atlantic Anarchy" src="assets/logo1.png"/>
                         </a>
                         <button aria-label="Copy the Minecraft server address" class="header-link header-link--server" data-copy-value="atlanticmc.secure.pebble.host" title="Click to copy" type="button">
@@ -52,7 +53,7 @@
                 </div>
                 <div class="header-secondary">
                     <div class="container header-row">
-                        <a aria-label="Open Minecraft account login" class="user-card" href="login.html">
+                        <a aria-label="Open Minecraft account login" class="user-card" href="login.php">
                             <img alt="Minecraft avatar" src="https://mc-heads.net/avatar/steve"/>
                             <span>
                                 <small>
@@ -89,7 +90,7 @@
                     <h1 class="sr-only">
                         Atlantic Anarchy Store
                     </h1>
-                    <a class="home-hero" href="keys.html">
+                    <a class="home-hero" href="keys.php">
                         <img alt="Magma crate key" src="assets/magma-key.png"/>
                         <div>
                             <strong>
@@ -101,19 +102,19 @@
                         </div>
                     </a>
                     <section aria-label="Store categories" class="category-grid">
-                        <a class="category-card" data-theme="vips" href="ranks.html">
+                        <a class="category-card" data-theme="vips" href="ranks.php">
                             <img alt="Diamond" src="assets/diamante.png"/>
                             <h2>
                                 VIPs
                             </h2>
                         </a>
-                        <a class="category-card" data-theme="rubis" href="rubis.html">
+                        <a class="category-card" data-theme="rubis" href="rubis.php">
                             <img alt="Bag of Rubis" src="assets/rubis-saco-pequeno.png.png"/>
                             <h2>
                                 Rubis
                             </h2>
                         </a>
-                        <a class="category-card" data-theme="keys" href="keys.html">
+                        <a class="category-card" data-theme="keys" href="keys.php">
                             <img alt="Atlantic key" src="assets/atlantic-key.png"/>
                             <h2>
                                 Keys
@@ -130,7 +131,7 @@
                             </small>
                         </div>
                     </section>
-                    <a class="promo-card sdz-rank-card" href="boosters.html">
+                    <a class="promo-card sdz-rank-card" href="boosters.php">
                         <div>
                             <p>
                                 Power up your game
@@ -167,10 +168,10 @@
                             <h2>Store</h2>
 
                             <div class="footer-links">
-                                <a href="index.html">Home</a>
-                                <a href="ranks.html">VIPs</a>
-                                <a href="rubis.html">Rubis</a>
-                                <a href="keys.html">Keys</a>
+                                <a href="index.php">Home</a>
+                                <a href="ranks.php">VIPs</a>
+                                <a href="rubis.php">Rubis</a>
+                                <a href="keys.php">Keys</a>
                             </div>
                         </nav>
 
