@@ -1,1 +1,6 @@
-/doc/
+doc/
+.env
+storage/*.sqlite
+storage/*.sqlite-*
+storage/*.log
+!storage/.gitignore
