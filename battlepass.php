@@ -1,3 +1,4 @@
+<?php require_once __DIR__ . '/controller/battlepass.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
