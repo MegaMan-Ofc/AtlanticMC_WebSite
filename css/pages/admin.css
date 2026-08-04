@@ -169,3 +169,105 @@
         flex-direction: column;
     }
 }
+
+.admin-section-gap {
+    margin-top: 1.5rem;
+}
+
+.admin-logout-form {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1rem;
+}
+
+.admin-product-card,
+.admin-coupon-card {
+    align-items: flex-start;
+}
+
+.admin-product-fields {
+    display: grid;
+    flex: 1;
+    gap: 0.75rem;
+}
+
+.admin-product-fields input,
+.admin-product-fields select,
+.admin-product-fields textarea,
+.config-form select,
+.config-form textarea {
+    width: 100%;
+    min-height: 2.75rem;
+    padding: 0.625rem 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: 0.625rem;
+    background: var(--surface-2);
+    color: var(--text);
+}
+
+.admin-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--muted);
+}
+
+.admin-checkbox input {
+    width: auto;
+    min-height: auto;
+}
+
+.admin-coupon-new {
+    margin-block: 1rem 1.5rem;
+    padding: 1rem;
+    border: 1px solid var(--border);
+    border-radius: 0.75rem;
+    background: var(--surface-2);
+}
+
+
+
+.admin-table-wrap {
+    overflow-x: auto;
+}
+
+.admin-orders-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.82rem;
+}
+
+.admin-orders-table th,
+.admin-orders-table td {
+    padding: 0.75rem;
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+    white-space: nowrap;
+}
+
+.admin-orders-table code {
+    color: var(--accent);
+}
+
+.admin-status {
+    display: inline-flex;
+    padding: 0.25rem 0.55rem;
+    border-radius: 999rem;
+    background: rgba(255, 255, 255, 0.08);
+    text-transform: capitalize;
+}
+
+.admin-status--paid {
+    background: rgba(60, 190, 120, 0.18);
+}
+
+.admin-status--declined,
+.admin-status--disputed,
+.admin-status--checkout_failed {
+    background: rgba(230, 80, 100, 0.18);
+}
+
+.admin-product-new,
+.admin-coupon-new {
+    margin-bottom: 1.5rem;
+}

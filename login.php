@@ -1,231 +1,40 @@
-<?php require_once __DIR__ . '/controller/login.php'; ?>
+<?php require_once __DIR__ . '/controllers/login.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8"/>
-        <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-        <meta content="#0b0e13" name="theme-color"/>
-        <title>
-            Atlantic Anarchy - Login
-        </title>
-        <link href="assets/logo1.png" rel="icon" type="image/png"/>
-        <link href="https://fonts.googleapis.com" rel="preconnect"/>
-        <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
-        <link href="css/base.css" rel="stylesheet"/>
-        <link href="css/components.css" rel="stylesheet"/>
-        <link href="css/pages/auth.css" rel="stylesheet"/>
-    </head>
-    <body class="page-login">
-        <div id="wrap">
-            <header class="site-header" id="top">
-                <div class="header-primary">
-                    <div class="container header-grid">
-                        <a aria-label="Join our Discord server" class="header-link header-link--discord" href="https://discord.gg/atlanticnetwork" rel="noopener noreferrer" target="_blank">
-                            <i aria-hidden="true" class="fa-brands fa-discord">
-                            </i>
-                            <span>
-                                <small>
-                                    Join our
-                                </small>
-                                <strong>
-                                    Discord
-                                </strong>
-                            </span>
-                        </a>
-                        <a aria-label="Atlantic Anarchy store home" class="brand" href="index.php">
-                            <img alt="Atlantic Anarchy" src="assets/logo1.png"/>
-                        </a>
-                        <button aria-label="Copy the Minecraft server address" class="header-link header-link--server" data-copy-value="atlanticmc.secure.pebble.host" title="Click to copy" type="button">
-                            <i aria-hidden="true" class="fa-solid fa-server">
-                            </i>
-                            <span>
-                                <small>
-                                    Server IP
-                                </small>
-                                <strong>
-                                    atlanticmc.secure.pebble.host
-                                </strong>
-                            </span>
-                        </button>
+<?php require __DIR__ . '/includes/head.php'; ?>
+<body class="<?= e($bodyClass) ?>">
+<div id="wrap">
+    <?php require __DIR__ . '/includes/header.php'; ?>
+    <main class="main-content login-main" id="main">
+        <section class="login-card">
+            <a class="login-back" href="<?= e(url('index.php')) ?>" aria-label="Back to store"><i class="fa-solid fa-arrow-left"></i></a>
+            <?php if ($loginUser !== null): ?>
+                <img class="login-avatar" src="<?= e($loginUser['avatar_url']) ?>" alt="<?= e($loginUser['minecraft_name']) ?>">
+                <h1>Logged in as <?= e($loginUser['minecraft_name']) ?></h1>
+                <p>Your Minecraft identity is stored in the server session.</p>
+                <form action="<?= e(url('actions/logout.php')) ?>" method="post" class="login-form">
+                    <?= csrf_field() ?>
+                    <button type="submit">Logout</button>
+                </form>
+            <?php else: ?>
+                <i class="fa-brands fa-microsoft login-provider-icon" aria-hidden="true"></i>
+                <h1>Minecraft Login</h1>
+                <p>Use the Microsoft account that owns Minecraft. The site never receives your Microsoft password.</p>
+                <?php if ($loginConfigured): ?>
+                    <form action="<?= e(url('actions/login.php')) ?>" method="post" class="login-form">
+                        <?= csrf_field() ?>
+                        <button type="submit"><i class="fa-brands fa-microsoft"></i> Continue with Microsoft</button>
+                    </form>
+                <?php else: ?>
+                    <div class="login-config-warning">
+                        <strong>Login configuration required</strong>
+                        <p>Set MINECRAFT_CLIENT_ID, MINECRAFT_CLIENT_SECRET and MINECRAFT_REDIRECT_URI in the private .env file.</p>
                     </div>
-                </div>
-                <div class="header-secondary">
-                    <div class="container header-row">
-                        <a aria-label="Open Minecraft account login" class="user-card" href="login.php">
-                            <img alt="Minecraft avatar" src="https://mc-heads.net/avatar/steve"/>
-                            <span>
-                                <small>
-                                    Logged in as
-                                </small>
-                                <strong>
-                                    Guest
-                                </strong>
-                            </span>
-                        </a>
-                        <nav aria-label="Store actions" class="toolbar">
-                            <button
-                                class="button button--ghost language-button"
-                                type="button"
-                                aria-label="Switch language to English"
-                            >
-                                <img
-                                    class="language-flag"
-                                    src="assets/flag-pt.png"
-                                    alt=""
-                                    aria-hidden="true"
-                                >
-                                <span class="language-code">PT</span>
-                            </button>
-                            <button aria-label="Shopping cart temporarily unavailable" class="button button--primary cart-button" title="Shopping cart temporarily unavailable" type="button">
-                                <i aria-hidden="true" class="fa-solid fa-cart-shopping"></i>
-                            </button>
-                        </nav>
-                    </div>
-                </div>
-            </header>
-            <main class="main-content" id="main">
-                <div class="container">
-                    <header class="page-title">
-                        <a aria-label="Go back" href="index.php">
-                            <i class="fa-solid fa-house">
-                            </i>
-                        </a>
-                        <h1 id="page-title">
-                            Login
-                        </h1>
-                    </header>
-                    <section aria-labelledby="page-title" class="prose">
-                        <h2>
-                            Login temporarily unavailable
-                        </h2>
-                        <p>
-                            Account login is temporarily unavailable while we complete a secure authentication update.
-                        </p>
-                        <p>
-                            <a class="button button--primary" href="https://discord.gg/atlanticnetwork">
-                                Contact support on Discord
-                            </a>
-                        </p>
-                    </section>
-                </div>
-            </main>
-            <footer class="site-footer">
-                <div class="footer-main">
-                    <div class="container footer-grid">
-                        <section class="footer-about">
-                            <h2>About us</h2>
-
-                            <p>
-                                Atlantic Anarchy is a public Minecraft anarchy server
-                                for Java and Bedrock players. Join us at
-                                <strong>atlanticmc.secure.pebble.host</strong>.
-                            </p>
-                        </section>
-
-                        <nav aria-label="Store links">
-                            <h2>Store</h2>
-
-                            <div class="footer-links">
-                                <a href="index.php">Home</a>
-                                <a href="ranks.php">VIPs</a>
-                                <a href="rubis.php">Rubis</a>
-                                <a href="keys.php">Keys</a>
-                            </div>
-                        </nav>
-
-                        <section>
-                            <h2>Support</h2>
-
-                            <p>
-                                Questions before purchasing? Contact us through
-                                Discord or email.
-                            </p>
-
-                            <div class="footer-actions">
-                                <a
-                                    class="button button--primary"
-                                    href="https://discord.gg/atlanticnetwork"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                >
-                                    Discord
-                                </a>
-
-                                <a
-                                    class="button button--ghost"
-                                    href="mailto:support@atlantic.net"
-                                >
-                                    Email
-                                </a>
-                            </div>
-                        </section>
-
-                        <nav class="footer-legal-links" aria-label="Legal information">
-                            <h2>Legal</h2>
-
-                            <div class="footer-links">
-                                <span class="footer-link--disabled">
-                                    Privacy Policy
-                                </span>
-
-                                <span class="footer-link--disabled">
-                                    Terms of Service
-                                </span>
-
-                                <a
-                                    href="https://www.livroreclamacoes.pt/Inicio/"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                >
-                                    Book of Complaints
-                                </a>
-                            </div>
-                        </nav>
-                    </div>
-                </div>
-
-                <div class="footer-bottom">
-                    <div class="container footer-row">
-                        <div class="footer-legal">
-                            <p>
-                                2026 © <strong>Atlantic Anarchy</strong>
-                            </p>
-
-                            <p>
-                                We are not affiliated with or endorsed by Mojang, AB.
-                            </p>
-                        </div>
-
-                        <ul class="footer-socials" aria-label="Social links">
-                            <li>
-                                <a
-                                    href="https://discord.gg/atlanticnetwork"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    aria-label="Discord"
-                                >
-                                    <i
-                                        class="fa-brands fa-discord"
-                                        aria-hidden="true"
-                                    ></i>
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="#top" aria-label="Back to top">
-                                    <i
-                                        class="fa-solid fa-arrow-up"
-                                        aria-hidden="true"
-                                    ></i>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </footer>
-        </div>
-        <script defer src="js/main.js"></script>
-    </body>
+                <?php endif; ?>
+            <?php endif; ?>
+        </section>
+    </main>
+    <?php require __DIR__ . '/includes/footer.php'; ?>
+</div>
+</body>
 </html>
