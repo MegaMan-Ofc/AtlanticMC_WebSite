@@ -1,6 +1,6 @@
 <?php require_once __DIR__ . '/controllers/login.php'; ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?= e(current_language()) ?>">
 <?php require __DIR__ . '/includes/head.php'; ?>
 <body class="<?= e($bodyClass) ?>">
 <div id="wrap">
@@ -8,27 +8,24 @@
     <main class="main-content login-main" id="main">
         <div class="container login-shell">
             <section class="login-card">
-                <a class="login-back" href="<?= e(url('index.php')) ?>" aria-label="Back to store">
+                <a class="login-back" href="<?= e(url('index.php')) ?>" aria-label="<?= e(t('login.back_aria')) ?>">
                     <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
                 </a>
 
                 <?php if ($loginRecipient !== null): ?>
                     <div class="login-avatar">
-                        <img src="<?= e($loginRecipient['avatar_url']) ?>" alt="<?= e($loginRecipient['username']) ?> Minecraft avatar">
+                        <img src="<?= e($loginRecipient['avatar_url']) ?>" alt="<?= e(t('login.avatar_alt', ['username' => $loginRecipient['username']])) ?>">
                         <i class="fa-solid <?= $loginRecipient['platform'] === 'bedrock' ? 'fa-mobile-screen' : 'fa-cube' ?>" aria-hidden="true"></i>
                     </div>
-                    <h1>Logged in as <?= e($loginRecipient['username']) ?></h1>
-                    <p>
-                        This Minecraft account will receive the products purchased in the store.
-                        It does not need to belong to the person making the payment.
-                    </p>
+                    <h1><?= e(t('login.logged_as', ['username' => $loginRecipient['username']])) ?></h1>
+                    <p><?= e(t('login.recipient_explanation')) ?></p>
                     <dl class="login-details">
                         <div>
-                            <dt>Platform</dt>
-                            <dd><?= e(ucfirst($loginRecipient['platform'])) ?></dd>
+                            <dt><?= e(t('common.platform')) ?></dt>
+                            <dd><?= e(localized_platform($loginRecipient['platform'])) ?></dd>
                         </div>
                         <div>
-                            <dt>Recipient</dt>
+                            <dt><?= e(t('common.recipient')) ?></dt>
                             <dd><?= e($loginRecipient['username']) ?></dd>
                         </div>
                     </dl>
@@ -36,43 +33,34 @@
                         <?= csrf_field() ?>
                         <button class="button button--danger button--wide" type="submit">
                             <i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i>
-                            Logout
+                            <?= e(t('common.logout')) ?>
                         </button>
                     </form>
                 <?php else: ?>
                     <div class="login-avatar">
-                        <img src="<?= e(url('assets/steve.png')) ?>" alt="Default Minecraft avatar">
+                        <img src="<?= e(url('assets/steve.png')) ?>" alt="<?= e(t('login.default_avatar_alt')) ?>">
                         <i class="fa-solid fa-user-plus" aria-hidden="true"></i>
                     </div>
-                    <h1>Choose a Minecraft account</h1>
-                    <p>
-                        Enter the name of the account that should receive the purchase.
-                        You can also use another player's name to send a gift.
-                    </p>
+                    <h1><?= e(t('login.choose_title')) ?></h1>
+                    <p><?= e(t('login.choose_text')) ?></p>
                     <form action="<?= e(url('actions/login.php')) ?>" method="post" class="login-form">
                         <?= csrf_field() ?>
                         <input type="hidden" name="return_to" value="<?= e($returnTo) ?>">
 
                         <fieldset class="platform-selector">
-                            <legend class="sr-only">Minecraft platform</legend>
+                            <legend class="sr-only"><?= e(t('login.platform_legend')) ?></legend>
                             <label class="platform-option">
                                 <input type="radio" name="platform" value="java" checked>
-                                <span class="platform-btn">
-                                    <i class="fa-solid fa-cube" aria-hidden="true"></i>
-                                    Java
-                                </span>
+                                <span class="platform-btn"><i class="fa-solid fa-cube" aria-hidden="true"></i>Java</span>
                             </label>
                             <label class="platform-option">
                                 <input type="radio" name="platform" value="bedrock">
-                                <span class="platform-btn">
-                                    <i class="fa-solid fa-mobile-screen" aria-hidden="true"></i>
-                                    Bedrock
-                                </span>
+                                <span class="platform-btn"><i class="fa-solid fa-mobile-screen" aria-hidden="true"></i>Bedrock</span>
                             </label>
                         </fieldset>
 
                         <label class="login-field" for="username-input">
-                            <span>Minecraft username</span>
+                            <span><?= e(t('login.username_label')) ?></span>
                             <input
                                 class="field"
                                 id="username-input"
@@ -81,18 +69,16 @@
                                 minlength="2"
                                 maxlength="16"
                                 autocomplete="off"
-                                placeholder="Enter the Minecraft username"
+                                placeholder="<?= e(t('login.username_placeholder')) ?>"
                                 pattern="[A-Za-z0-9_.]+"
                                 required
                             >
                         </label>
-                        <small class="login-help">
-                            For Bedrock, the initial dot is added automatically when it is missing.
-                        </small>
+                        <small class="login-help"><?= e(t('login.bedrock_help')) ?></small>
 
                         <button class="button button--primary button--wide" type="submit">
                             <i class="fa-solid fa-check" aria-hidden="true"></i>
-                            Continue
+                            <?= e(t('common.continue')) ?>
                         </button>
                     </form>
                 <?php endif; ?>

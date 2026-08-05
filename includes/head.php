@@ -2,7 +2,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#0b0e13">
-    <meta name="description" content="<?= e($pageDescription ?? 'Atlantic Anarchy Minecraft Store') ?>">
+    <meta name="description" content="<?= e($pageDescription ?? t('head.default_description')) ?>">
     <title><?= e($pageTitle ?? config('app.name')) ?></title>
     <link href="<?= e(url('assets/logo1.png')) ?>" rel="icon" type="image/png">
     <link href="https://fonts.googleapis.com" rel="preconnect">

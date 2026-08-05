@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/../includes/bootstrap.php';
 
-$pageTitle = 'Atlantic Anarchy - Order';
-$pageDescription = 'Atlantic Anarchy order status.';
+$pageTitle = t('success.page_title');
+$pageDescription = t('success.page_description');
 $bodyClass = 'page-success success-main';
 $pageStyles = ['css/pages/success.css'];
 

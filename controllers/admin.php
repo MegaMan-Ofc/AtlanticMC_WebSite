@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/../includes/bootstrap.php';
 
-$pageTitle = 'Atlantic Anarchy - Admin';
-$pageDescription = 'Private Atlantic Anarchy store administration.';
+$pageTitle = t('admin.page_title');
+$pageDescription = t('admin.page_description');
 $bodyClass = 'admin-page';
 $pageStyles = ['css/pages/admin.css'];
 $adminConfigured = config('admin.password_hash', '') !== '';
