@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 function seed_store_database(PDO $pdo): void
 {
-    $seedVersion = '2';
+    $seedVersion = '3';
     $versionStatement = $pdo->prepare('SELECT meta_value FROM app_meta WHERE meta_key = :key');
     $versionStatement->execute(['key' => 'seed_version']);
 
@@ -44,26 +44,19 @@ function seed_store_database(PDO $pdo): void
         ]);
     }
 
-    $coupons = [
-        ['code' => 'WELCOME10', 'discount_type' => 'percentage', 'discount_value' => 10, 'min_subtotal_cents' => 500, 'max_uses' => 100],
-        ['code' => 'ATLANTIC5', 'discount_type' => 'fixed', 'discount_value' => 500, 'min_subtotal_cents' => 2500, 'max_uses' => 50],
-    ];
 
-    $selectCoupon = $pdo->prepare('SELECT id FROM coupons WHERE code = :code');
-    $insertCoupon = $pdo->prepare(
-        'INSERT INTO coupons (code, discount_type, discount_value, min_subtotal_cents, max_uses, used_count, active, expires_at, created_at, updated_at)
-         VALUES (:code, :discount_type, :discount_value, :min_subtotal_cents, :max_uses, 0, 1, NULL, :created_at, :updated_at)'
+    $deactivateTestCoupons = $pdo->prepare(
+        'UPDATE coupons
+         SET active = 0,
+             updated_at = :updated_at
+         WHERE code IN (:welcome_code, :atlantic_code)'
     );
 
-    foreach ($coupons as $coupon) {
-        $selectCoupon->execute(['code' => $coupon['code']]);
-
-        if ($selectCoupon->fetchColumn() !== false) {
-            continue;
-        }
-
-        $insertCoupon->execute($coupon + ['created_at' => $now, 'updated_at' => $now]);
-    }
+    $deactivateTestCoupons->execute([
+        'updated_at' => $now,
+        'welcome_code' => 'WELCOME10',
+        'atlantic_code' => 'ATLANTIC5',
+    ]);
 
     if ((string) config('database.driver') === 'mysql') {
         $saveVersion = $pdo->prepare(
