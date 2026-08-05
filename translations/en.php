@@ -196,6 +196,8 @@ return [
     'admin.login_security_server' => 'Credentials verified only by PHP',
     'admin.login_security_session' => 'Session with automatic expiry',
     'admin.login_security_limit' => 'Access attempts limited by origin',
+    'admin.show_password' => 'Show password',
+    'admin.hide_password' => 'Hide password',
     'admin.logout' => 'Log out',
     'admin.navigation' => 'Administration navigation',
     'admin.section_overview' => 'Overview',

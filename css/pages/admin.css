@@ -149,6 +149,42 @@
     gap: 1rem;
 }
 
+.admin-password-control {
+    position: relative;
+}
+
+.admin-password-control input {
+    padding-right: 3.25rem;
+}
+
+.admin-password-toggle {
+    position: absolute;
+    top: 50%;
+    right: .5rem;
+    display: grid;
+    width: 2.25rem;
+    height: 2.25rem;
+    padding: 0;
+    place-items: center;
+    transform: translateY(-50%);
+    border: 0;
+    border-radius: .5rem;
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+}
+
+.admin-password-toggle:hover,
+.admin-password-toggle:focus-visible {
+    background: var(--surface-2);
+    color: var(--text);
+}
+
+.admin-password-toggle:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
 .admin-login-submit {
     width: 100%;
     margin-top: .25rem;

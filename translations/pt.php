@@ -196,6 +196,8 @@ return [
     'admin.login_security_server' => 'Credenciais verificadas apenas pelo PHP',
     'admin.login_security_session' => 'Sessão com expiração automática',
     'admin.login_security_limit' => 'Tentativas de acesso limitadas por origem',
+    'admin.show_password' => 'Mostrar palavra-passe',
+    'admin.hide_password' => 'Ocultar palavra-passe',
     'admin.logout' => 'Terminar sessão',
     'admin.navigation' => 'Navegação da administração',
     'admin.section_overview' => 'Resumo',
