@@ -495,10 +495,6 @@
     min-width: 0;
 }
 
-.footer-link--disabled {
-    color: var(--subtle);
-    cursor: default;
-}
 
 .footer-legal-links a {
     color: var(--muted);
