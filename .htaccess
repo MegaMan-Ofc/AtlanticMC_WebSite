@@ -34,7 +34,7 @@ DirectoryIndex index.php
     RewriteRule ^(ranks|rubis|keys|boosters|battlepass|cart|checkout|login|success|privacy|terms|purchase-policy|rules|admin)$ $1.php [END,QSA]
 </IfModule>
 
-<FilesMatch "^(?:\.env|\.env\.example|README-PHP\.md|CLEAN-URLS\.md)$">
+<FilesMatch "^(?:\.env|\.env\.example|README-PHP\.md|CLEAN-URLS\.md|ADMIN-SETUP\.md)$">
     Require all denied
 </FilesMatch>
 

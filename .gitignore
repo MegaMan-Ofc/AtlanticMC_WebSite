@@ -9,3 +9,7 @@ storage/*.db
 storage/*.log
 !storage/.gitignore
 !storage/.htaccess
+*.sql.gz
+*.sql.zip
+*.dump
+*.backup
