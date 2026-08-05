@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/../includes/bootstrap.php';
 
-$pageTitle = 'Atlantic Anarchy - Minecraft Recipient';
-$pageDescription = 'Choose the Minecraft account that will receive the purchase.';
+$pageTitle = t('login.page_title');
+$pageDescription = t('login.page_description');
 $bodyClass = 'page-login';
 $pageStyles = ['css/pages/auth.css'];
 $loginRecipient = current_minecraft_recipient();

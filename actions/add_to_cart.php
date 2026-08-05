@@ -10,7 +10,7 @@ $returnTo = safe_return_path(request_string('return_to'), 'index.php');
 
 try {
     cart_add(request_int('product_id'), max(1, request_int('quantity', 1)));
-    flash('success', 'Produto adicionado ao carrinho.');
+    flash('success', t('messages.cart_added'));
 } catch (InvalidArgumentException $error) {
     flash('error', $error->getMessage());
 }

@@ -36,7 +36,7 @@ function normalize_minecraft_username(string $username, string $platform): strin
     $platform = strtolower(trim($platform));
 
     if (!in_array($platform, ['java', 'bedrock'], true)) {
-        throw new InvalidArgumentException('Seleciona Java ou Bedrock.');
+        throw new InvalidArgumentException(t('validation.platform'));
     }
 
     if ($platform === 'bedrock') {
@@ -44,7 +44,7 @@ function normalize_minecraft_username(string $username, string $platform): strin
 
         if (!preg_match('/^[A-Za-z0-9_]{2,15}$/', $cleanUsername)) {
             throw new InvalidArgumentException(
-                'O nome Bedrock deve ter entre 2 e 15 letras, números ou underscores.'
+                t('validation.bedrock_username')
             );
         }
 
@@ -53,7 +53,7 @@ function normalize_minecraft_username(string $username, string $platform): strin
 
     if (!preg_match('/^[A-Za-z0-9_]{3,16}$/', $username)) {
         throw new InvalidArgumentException(
-            'O nome Java deve ter entre 3 e 16 letras, números ou underscores.'
+            t('validation.java_username')
         );
     }
 
@@ -105,6 +105,6 @@ function require_minecraft_recipient(string $returnTo = 'checkout.php'): void
     }
 
     $_SESSION['recipient_return_to'] = safe_return_path($returnTo, 'index.php');
-    flash('info', 'Escolhe o nome Minecraft que vai receber a compra.');
+    flash('info', t('messages.recipient_required'));
     redirect('login.php');
 }

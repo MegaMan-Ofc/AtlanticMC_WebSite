@@ -6,5 +6,5 @@ require_once __DIR__ . '/../includes/bootstrap.php';
 require_post();
 verify_csrf();
 cart_remove(request_int('product_id'));
-flash('success', 'Produto removido do carrinho.');
+flash('success', t('messages.cart_removed'));
 redirect('cart.php');

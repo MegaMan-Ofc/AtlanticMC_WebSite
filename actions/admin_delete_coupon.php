@@ -9,5 +9,5 @@ require_admin();
 
 $statement = db()->prepare('DELETE FROM coupons WHERE id = :id');
 $statement->execute(['id' => request_int('id')]);
-flash('success', 'Coupon deleted.');
+flash('success', t('messages.admin_coupon_deleted'));
 redirect('admin.php');

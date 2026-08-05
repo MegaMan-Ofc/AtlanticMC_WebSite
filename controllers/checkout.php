@@ -9,12 +9,12 @@ require_minecraft_recipient('checkout.php');
 $cart = cart_summary();
 
 if ($cart['items'] === []) {
-    flash('info', 'O carrinho está vazio.');
+    flash('info', t('messages.cart_empty'));
     redirect('cart.php');
 }
 
-$pageTitle = 'Atlantic Anarchy - Checkout';
-$pageDescription = 'Confirm your Atlantic Anarchy order.';
+$pageTitle = t('checkout.page_title');
+$pageDescription = t('checkout.page_description');
 $bodyClass = 'page-checkout';
 $pageStyles = ['css/pages/checkout.css'];
 $checkoutRecipient = current_minecraft_recipient();

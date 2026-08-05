@@ -74,44 +74,44 @@ function category_configuration(string $category): array
 {
     $configurations = [
         'ranks' => [
-            'title' => 'Atlantic Anarchy - VIPs',
-            'heading' => 'VIP Ranks',
-            'description' => 'Choose a permanent rank and add it securely to your server-side cart.',
+            'title' => t('catalog.ranks.title'),
+            'heading' => t('catalog.ranks.heading'),
+            'description' => t('catalog.ranks.description'),
             'bodyClass' => 'page-ranks',
             'styles' => ['css/pages/catalog.css', 'css/pages/ranks.css'],
         ],
         'rubis' => [
-            'title' => 'Atlantic Anarchy - Rubis',
-            'heading' => 'Rubis',
-            'description' => 'Rubis packages with prices validated on the server.',
+            'title' => t('catalog.rubis.title'),
+            'heading' => t('catalog.rubis.heading'),
+            'description' => t('catalog.rubis.description'),
             'bodyClass' => 'page-rubis',
             'styles' => ['css/pages/catalog.css'],
         ],
         'keys' => [
-            'title' => 'Atlantic Anarchy - Keys',
-            'heading' => 'Crate Keys',
-            'description' => 'Choose a key package for the Atlantic server.',
+            'title' => t('catalog.keys.title'),
+            'heading' => t('catalog.keys.heading'),
+            'description' => t('catalog.keys.description'),
             'bodyClass' => 'page-keys',
             'styles' => ['css/pages/catalog.css'],
         ],
         'battlepass' => [
-            'title' => 'Atlantic Anarchy - Battle Pass',
-            'heading' => 'Battle Pass',
-            'description' => 'Unlock seasonal progression and premium rewards.',
+            'title' => t('catalog.battlepass.title'),
+            'heading' => t('catalog.battlepass.heading'),
+            'description' => t('catalog.battlepass.description'),
             'bodyClass' => 'page-battlepass',
             'styles' => ['css/pages/catalog.css'],
         ],
         'boosters' => [
-            'title' => 'Atlantic Anarchy - Hearts',
-            'heading' => 'Extra Hearts',
-            'description' => 'Add extra-life heart bundles to your account.',
+            'title' => t('catalog.boosters.title'),
+            'heading' => t('catalog.boosters.heading'),
+            'description' => t('catalog.boosters.description'),
             'bodyClass' => 'page-boosters',
             'styles' => ['css/pages/catalog.css'],
         ],
     ];
 
     if (!isset($configurations[$category])) {
-        throw new InvalidArgumentException('Unknown catalogue category.');
+        throw new InvalidArgumentException(t('catalog.unknown_category'));
     }
 
     return $configurations[$category];
@@ -125,41 +125,41 @@ function save_product_from_admin(array $input): int
     $slug = strtolower(trim((string) ($input['slug'] ?? '')));
     $description = trim((string) ($input['description'] ?? ''));
     $image = trim((string) ($input['image'] ?? ''));
-    $priceCents = parse_money_to_cents((string) ($input['price'] ?? '0'), 'Product price');
+    $priceCents = parse_money_to_cents((string) ($input['price'] ?? '0'), t('field.product_price'));
     $sortOrder = (int) ($input['sort_order'] ?? 0);
     $active = isset($input['active']) ? 1 : 0;
     $tebexPackageId = trim((string) ($input['tebex_package_id'] ?? ''));
 
     if (!in_array($category, STORE_CATEGORIES, true)) {
-        throw new InvalidArgumentException('Invalid product category.');
+        throw new InvalidArgumentException(t('validation.product_category'));
     }
 
     if ($name === '' || strlen($name) > 120) {
-        throw new InvalidArgumentException('Product name is required and must be at most 120 characters.');
+        throw new InvalidArgumentException(t('validation.product_name'));
     }
 
     if (!preg_match('/^[a-z0-9]+(?:-[a-z0-9]+)*$/', $slug)) {
-        throw new InvalidArgumentException('Slug may only contain lowercase letters, numbers and hyphens.');
+        throw new InvalidArgumentException(t('validation.product_slug'));
     }
 
     if ($priceCents > 1_000_000) {
-        throw new InvalidArgumentException('Invalid product price.');
+        throw new InvalidArgumentException(t('validation.product_price'));
     }
 
     if ($image !== '' && (!str_starts_with($image, 'assets/') || str_contains($image, '..'))) {
-        throw new InvalidArgumentException('Product image must be inside the assets folder.');
+        throw new InvalidArgumentException(t('validation.product_image'));
     }
 
     if (strlen($description) > 1000) {
-        throw new InvalidArgumentException('Product description must be at most 1000 characters.');
+        throw new InvalidArgumentException(t('validation.product_description'));
     }
 
     if ($tebexPackageId !== '' && !preg_match('/^[A-Za-z0-9_-]{1,64}$/', $tebexPackageId)) {
-        throw new InvalidArgumentException('Invalid Tebex package ID.');
+        throw new InvalidArgumentException(t('validation.tebex_package'));
     }
 
     if ($sortOrder < -10000 || $sortOrder > 10000) {
-        throw new InvalidArgumentException('Invalid product sort order.');
+        throw new InvalidArgumentException(t('validation.product_sort'));
     }
 
     $now = now_sql();

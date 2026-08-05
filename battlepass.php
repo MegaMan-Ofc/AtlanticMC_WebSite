@@ -1,6 +1,6 @@
 <?php require_once __DIR__ . '/controllers/battlepass.php'; ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?= e(current_language()) ?>">
 <?php require __DIR__ . '/includes/head.php'; ?>
 <body class="<?= e($bodyClass) ?>">
 <div id="wrap">

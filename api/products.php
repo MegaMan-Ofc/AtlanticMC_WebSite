@@ -9,21 +9,24 @@ require_get();
 $category = is_string($_GET['category'] ?? null) ? strtolower(trim($_GET['category'])) : '';
 
 if (!in_array($category, STORE_CATEGORIES, true)) {
-    json_response(['error' => 'Invalid category.'], 422);
+    json_response(['error' => t('validation.invalid_category')], 422);
 }
 
 $products = array_map(static function (array $product): array {
+    $localizedProduct = localized_product($product);
+
     return [
         'id' => (int) $product['id'],
         'slug' => $product['slug'],
         'category' => $product['category'],
-        'name' => $product['name'],
-        'description' => $product['description'],
+        'category_label' => localized_category((string) $product['category']),
+        'name' => $localizedProduct['name'],
+        'description' => $localizedProduct['description'],
         'image' => url($product['image']),
         'price_cents' => (int) $product['price_cents'],
         'currency' => $product['currency'],
-        'metadata' => product_metadata($product),
+        'metadata' => localized_product_metadata($product),
     ];
 }, products_by_category($category));
 
-json_response(['data' => $products]);
+json_response(['data' => $products, 'language' => current_language()]);

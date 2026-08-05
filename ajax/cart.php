@@ -15,34 +15,34 @@ try {
     switch ($operation) {
         case 'add':
             cart_add(request_int('product_id'), max(1, request_int('quantity', 1)));
-            $message = 'Produto adicionado ao carrinho.';
+            $message = t('messages.cart_added');
             break;
 
         case 'update':
             $quantities = $_POST['quantities'] ?? [];
             cart_update(is_array($quantities) ? $quantities : []);
-            $message = 'Carrinho atualizado.';
+            $message = t('messages.cart_updated');
             break;
 
         case 'remove':
             cart_remove(request_int('product_id'));
-            $message = 'Produto removido do carrinho.';
+            $message = t('messages.cart_removed');
             break;
 
         case 'apply_coupon':
             $summary = cart_summary();
             $coupon = validate_coupon(request_string('coupon_code'), (int) $summary['subtotal_cents']);
             $_SESSION['coupon_code'] = (string) $coupon['code'];
-            $message = 'Cupão aplicado com sucesso.';
+            $message = t('messages.coupon_applied');
             break;
 
         case 'remove_coupon':
             unset($_SESSION['coupon_code']);
-            $message = 'Cupão removido.';
+            $message = t('messages.coupon_removed');
             break;
 
         default:
-            throw new InvalidArgumentException('Operação de carrinho inválida.');
+            throw new InvalidArgumentException(t('validation.invalid_cart_operation'));
     }
 
     $cart = cart_summary();

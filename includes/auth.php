@@ -33,6 +33,6 @@ function require_admin(): void
 {
     if (!admin_is_authenticated()) {
         http_response_code(403);
-        exit('Administrator authentication required.');
+        exit(t('validation.admin_required'));
     }
 }

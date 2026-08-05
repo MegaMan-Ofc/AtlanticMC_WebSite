@@ -6,5 +6,5 @@ require_once __DIR__ . '/../includes/bootstrap.php';
 require_post();
 verify_csrf();
 admin_logout();
-flash('success', 'Administrator session ended.');
+flash('success', t('messages.admin_session_ended'));
 redirect('admin.php');

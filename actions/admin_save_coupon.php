@@ -9,7 +9,7 @@ require_admin();
 
 try {
     save_coupon_from_admin($_POST);
-    flash('success', 'Coupon saved.');
+    flash('success', t('messages.admin_coupon_saved'));
 } catch (Throwable $error) {
     flash('error', $error->getMessage());
 }

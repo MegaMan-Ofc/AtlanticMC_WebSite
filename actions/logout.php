@@ -6,5 +6,5 @@ require_once __DIR__ . '/../includes/bootstrap.php';
 require_post();
 verify_csrf();
 clear_minecraft_recipient();
-flash('success', 'Nome Minecraft removido da sessão.');
+flash('success', t('messages.recipient_removed'));
 redirect('login.php');

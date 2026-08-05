@@ -9,7 +9,7 @@ require_admin();
 
 try {
     save_product_from_admin($_POST);
-    flash('success', 'Product saved.');
+    flash('success', t('messages.admin_product_saved'));
 } catch (Throwable $error) {
     flash('error', $error->getMessage());
 }

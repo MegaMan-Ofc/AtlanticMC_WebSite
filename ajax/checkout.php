@@ -11,7 +11,7 @@ enforce_rate_limit('checkout', 10, 60);
 try {
     if (current_minecraft_recipient() === null) {
         json_response([
-            'error' => 'Escolhe primeiro a conta Minecraft que vai receber a compra.',
+            'error' => t('messages.recipient_required_first'),
             'data' => ['redirect_url' => url('login.php?return_to=checkout.php')],
         ], 401);
     }
@@ -37,7 +37,7 @@ try {
     json_response([
         'error' => public_error_message(
             $error,
-            'Não foi possível iniciar o pagamento. Tenta novamente.'
+            t('messages.payment_failed')
         ),
     ], 500);
 }

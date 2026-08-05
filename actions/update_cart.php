@@ -8,5 +8,5 @@ verify_csrf();
 
 $quantities = $_POST['quantities'] ?? [];
 cart_update(is_array($quantities) ? $quantities : []);
-flash('success', 'Carrinho atualizado.');
+flash('success', t('messages.cart_updated'));
 redirect('cart.php');

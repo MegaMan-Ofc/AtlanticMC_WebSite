@@ -23,7 +23,7 @@ function verify_csrf(): void
 
     if (!is_string($stored) || $submitted === '' || !hash_equals($stored, $submitted)) {
         http_response_code(419);
-        exit('Invalid or expired form token. Refresh the page and try again.');
+        exit(t('validation.csrf'));
     }
 }
 
@@ -63,7 +63,7 @@ function enforce_rate_limit(string $key, int $maximumAttempts, int $windowSecond
     if (count($attempts) >= $maximumAttempts) {
         http_response_code(429);
         header('Retry-After: ' . $windowSeconds);
-        exit('Too many attempts. Try again later.');
+        exit(t('validation.rate_limit'));
     }
 
     $attempts[] = $now;

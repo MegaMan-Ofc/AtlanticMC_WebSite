@@ -161,7 +161,7 @@ function parse_money_to_cents(string $value, string $fieldName = 'Amount'): int
     $normalized = str_replace(',', '.', trim($value));
 
     if (!preg_match('/^\d{1,7}(?:\.\d{1,2})?$/', $normalized)) {
-        throw new InvalidArgumentException($fieldName . ' must be a valid positive amount with at most two decimal places.');
+        throw new InvalidArgumentException(t('validation.amount', ['field' => $fieldName]));
     }
 
     [$whole, $decimal] = array_pad(explode('.', $normalized, 2), 2, '');
@@ -182,7 +182,7 @@ function parse_optional_datetime(string $value, string $fieldName = 'Date'): ?st
     $errors = DateTimeImmutable::getLastErrors();
 
     if ($date === false || (is_array($errors) && ($errors['warning_count'] > 0 || $errors['error_count'] > 0))) {
-        throw new InvalidArgumentException($fieldName . ' is invalid.');
+        throw new InvalidArgumentException(t('validation.datetime', ['field' => $fieldName]));
     }
 
     return $date->format('Y-m-d H:i:s');

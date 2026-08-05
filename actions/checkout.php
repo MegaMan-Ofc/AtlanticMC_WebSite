@@ -21,6 +21,6 @@ try {
 
     redirect($checkout['redirect_url']);
 } catch (Throwable $error) {
-    flash('error', public_error_message($error, 'Não foi possível iniciar o pagamento. Tenta novamente.'));
+    flash('error', public_error_message($error, t('messages.payment_failed')));
     redirect('checkout.php');
 }

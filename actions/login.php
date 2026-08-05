@@ -17,7 +17,7 @@ try {
     );
 
     unset($_SESSION['recipient_return_to']);
-    flash('success', 'Compra associada a ' . $recipient['username'] . '.');
+    flash('success', t('messages.recipient_selected', ['username' => $recipient['username']]));
     redirect($returnTo);
 } catch (InvalidArgumentException $error) {
     flash('error', $error->getMessage());

@@ -15,17 +15,17 @@ function start_checkout(): array
     $summary = cart_summary();
 
     if ($summary['items'] === []) {
-        throw new InvalidArgumentException('O carrinho está vazio.');
+        throw new InvalidArgumentException(t('messages.cart_empty'));
     }
 
     $recipient = current_minecraft_recipient();
 
     if ($recipient === null) {
-        throw new RuntimeException('Escolhe primeiro a conta Minecraft que vai receber a compra.');
+        throw new RuntimeException(t('messages.recipient_required_first'));
     }
 
     if (!tebex_is_configured() && !(bool) config('app.allow_test_orders', false)) {
-        throw new RuntimeException('Os pagamentos estão temporariamente indisponíveis.');
+        throw new RuntimeException(t('messages.payment_unavailable'));
     }
 
     $order = create_order($recipient, $summary);
@@ -56,7 +56,7 @@ function start_checkout(): array
     return [
         'redirect_url' => 'success.php?order=' . rawurlencode($orderToken),
         'external' => false,
-        'message' => 'Pedido local criado. Nenhum pagamento foi efetuado porque o modo de teste está ativo.',
+        'message' => t('messages.test_order_created'),
         'order_token' => $orderToken,
     ];
 }

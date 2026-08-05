@@ -8,9 +8,9 @@ verify_csrf();
 enforce_rate_limit('admin_login', 5, 300);
 
 if (admin_login(request_string('username'), request_string('password'))) {
-    flash('success', 'Administrator session started.');
+    flash('success', t('messages.admin_session_started'));
 } else {
-    flash('error', 'Invalid administrator credentials.');
+    flash('error', t('messages.admin_invalid_credentials'));
 }
 
 redirect('admin.php');
