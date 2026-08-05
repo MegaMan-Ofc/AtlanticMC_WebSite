@@ -300,68 +300,228 @@
     height: 1.05rem;
 }
 
-.admin-create-panel summary,
 .admin-order-details summary {
     cursor: pointer;
     font-weight: 800;
 }
 
-.admin-product-list,
-.admin-coupon-list,
+.admin-entity-grid,
 .admin-order-list {
     display: grid;
     gap: 1rem;
 }
 
-.admin-product-card,
-.admin-coupon-card {
-    display: grid;
-    gap: 1rem;
+.admin-entity-grid {
+    grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
 }
 
-.admin-product-preview {
+.admin-entity-card {
     display: flex;
+    min-height: 12rem;
+    appearance: none;
     align-items: center;
+    justify-content: center;
+    flex-direction: column;
     gap: 1rem;
+    padding: 1.25rem;
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    background: linear-gradient(145deg, rgba(255, 255, 255, .055), rgba(255, 255, 255, .02));
+    color: var(--text);
+    text-align: center;
+    cursor: pointer;
+    box-shadow: 0 .75rem 2rem rgba(0, 0, 0, .14);
+    transition: transform .2s ease, border-color .2s ease, background .2s ease, box-shadow .2s ease, opacity .2s ease;
 }
 
-.admin-product-preview img {
-    width: 4.5rem;
-    height: 4.5rem;
-    object-fit: contain;
-    border-radius: .75rem;
+.admin-entity-card:hover {
+    border-color: var(--primary);
+    background: rgba(108, 92, 231, .12);
+    box-shadow: 0 1rem 2.5rem rgba(0, 0, 0, .22);
+    transform: translateY(-.25rem);
+}
+
+.admin-entity-card.is-inactive {
+    opacity: .48;
+}
+
+.admin-entity-card.is-inactive:hover {
+    opacity: .75;
+}
+
+.admin-entity-card--create {
+    border-style: dashed;
+    color: var(--muted);
+}
+
+.admin-entity-card strong {
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.admin-entity-icon,
+.admin-product-tile-image {
+    display: grid;
+    width: 6rem;
+    height: 6rem;
+    place-items: center;
+    border-radius: 1rem;
     background: var(--bg);
 }
 
-.admin-product-preview div,
-.admin-coupon-heading {
+.admin-entity-icon {
+    color: var(--accent);
+    font-size: 2rem;
+}
+
+.admin-product-tile-image img {
+    width: 100%;
+    height: 100%;
+    padding: .65rem;
+    object-fit: contain;
+}
+
+.admin-product-tile-image i {
+    color: var(--subtle);
+    font-size: 2.25rem;
+}
+
+.admin-coupon-grid {
+    grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+}
+
+.admin-coupon-tile {
+    min-height: 9.5rem;
+    gap: .45rem;
+}
+
+.admin-coupon-tile strong {
+    font-size: 1.15rem;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+}
+
+.admin-coupon-tile span {
+    color: var(--accent);
+    font-size: 1.35rem;
+    font-weight: 900;
+}
+
+html.admin-dialog-open {
+    overflow: hidden;
+}
+
+.admin-dialog {
+    width: min(58rem, calc(100% - 2rem));
+    max-width: none;
+    max-height: min(52rem, calc(100vh - 2rem));
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: 1.15rem;
+    background: var(--surface);
+    color: var(--text);
+    box-shadow: 0 2rem 6rem rgba(0, 0, 0, .62);
+}
+
+.admin-dialog::backdrop {
+    background: rgba(4, 6, 10, .78);
+    backdrop-filter: blur(.35rem);
+}
+
+.admin-dialog[open] {
+    animation: admin-dialog-enter .18s ease-out;
+}
+
+.admin-dialog-form {
     display: grid;
-    gap: .15rem;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    max-height: min(52rem, calc(100vh - 2rem));
 }
 
-.admin-product-preview span,
-.admin-coupon-heading span {
-    color: var(--muted);
-    font-size: .85rem;
-}
-
-.admin-coupon-heading {
-    grid-template-columns: 1fr auto;
-    align-items: center;
-}
-
-.admin-card-actions,
-.admin-filter-actions {
+.admin-dialog-header,
+.admin-dialog-actions {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-    gap: .625rem;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.2rem 1.4rem;
 }
 
-.admin-danger-button {
-    border: 1px solid rgba(225, 85, 103, .5);
-    background: rgba(225, 85, 103, .12);
-    color: #ff9ba8;
+.admin-dialog-header {
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+}
+
+.admin-dialog-header h3,
+.admin-dialog-header p {
+    margin-bottom: 0;
+}
+
+.admin-dialog-header p {
+    margin-top: .25rem;
+    color: var(--muted);
+    font-size: .82rem;
+}
+
+.admin-dialog-kicker {
+    display: block;
+    margin-bottom: .15rem;
+    color: var(--accent);
+    font-size: .7rem;
+    font-weight: 800;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+}
+
+.admin-dialog-close {
+    display: grid;
+    width: 2.75rem;
+    height: 2.75rem;
+    flex: 0 0 2.75rem;
+    appearance: none;
+    place-items: center;
+    border: 1px solid var(--border);
+    border-radius: .75rem;
+    background: rgba(255, 255, 255, .04);
+    color: var(--muted);
+    cursor: pointer;
+    transition: border-color .2s ease, background .2s ease, color .2s ease;
+}
+
+.admin-dialog-close:hover {
+    border-color: var(--primary);
+    background: rgba(108, 92, 231, .13);
+    color: var(--text);
+}
+
+.admin-dialog-body {
+    padding: 1.4rem;
+    overflow-y: auto;
+}
+
+.admin-dialog-actions {
+    flex-wrap: wrap;
+    border-top: 1px solid var(--border);
+    background: rgba(11, 14, 19, .58);
+}
+
+.admin-dialog-actions-spacer {
+    flex: 1;
+}
+
+@keyframes admin-dialog-enter {
+    from {
+        opacity: 0;
+        transform: translateY(.75rem) scale(.985);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }
 
 .admin-filter-form {
@@ -550,6 +710,25 @@
     .admin-field--full {
         grid-column: auto;
     }
+
+    .admin-entity-grid,
+    .admin-coupon-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .admin-dialog-header,
+    .admin-dialog-body,
+    .admin-dialog-actions {
+        padding: 1rem;
+    }
+
+    .admin-dialog-actions-spacer {
+        display: none;
+    }
+
+    .admin-dialog-actions .button {
+        flex: 1 1 auto;
+    }
 }
 
 @media (max-width: 480px) {
@@ -568,5 +747,19 @@
     .admin-topbar-actions .button,
     .admin-topbar-actions form {
         width: 100%;
+    }
+
+    .admin-entity-grid,
+    .admin-coupon-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-dialog {
+        width: calc(100% - 1rem);
+        max-height: calc(100vh - 1rem);
+    }
+
+    .admin-dialog-form {
+        max-height: calc(100vh - 1rem);
     }
 }

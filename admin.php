@@ -4,5 +4,6 @@
 <?php require __DIR__ . '/includes/head.php'; ?>
 <body class="<?= e($bodyClass) ?>">
 <?php require __DIR__ . '/templates/admin/page.php'; ?>
+<script defer src="<?= e(url('js/admin.js')) ?>"></script>
 </body>
 </html>

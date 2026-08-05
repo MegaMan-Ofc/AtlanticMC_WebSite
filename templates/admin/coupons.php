@@ -5,46 +5,35 @@
     </div>
 </section>
 
-<details class="admin-panel admin-create-panel">
-    <summary><?= e(t('admin.create_coupon')) ?></summary>
-    <form class="admin-form" action="<?= e(url('actions/admin_save_coupon.php')) ?>" method="post">
-        <?= csrf_field() ?>
-        <input type="hidden" name="id" value="0">
-        <div class="admin-form-grid">
-            <div class="admin-field"><label><?= e(t('common.code')) ?></label><input name="code" maxlength="50" required></div>
-            <div class="admin-field"><label><?= e(t('common.type')) ?></label><select name="discount_type"><option value="percentage"><?= e(t('admin.percentage')) ?></option><option value="fixed"><?= e(t('admin.fixed_eur')) ?></option></select></div>
-            <div class="admin-field"><label><?= e(t('common.value')) ?></label><input name="discount_value" inputmode="decimal" required></div>
-            <div class="admin-field"><label><?= e(t('admin.minimum_subtotal')) ?></label><input name="min_subtotal" value="0" inputmode="decimal"></div>
-            <div class="admin-field"><label><?= e(t('admin.maximum_uses')) ?></label><input name="max_uses" type="number" min="1"></div>
-            <div class="admin-field"><label><?= e(t('admin.expires_at')) ?></label><input name="expires_at" type="datetime-local"></div>
-            <label class="admin-check"><input name="active" type="checkbox" value="1" checked><span><?= e(t('common.active')) ?></span></label>
-        </div>
-        <button class="button button--primary" type="submit"><?= e(t('admin.create_coupon')) ?></button>
-    </form>
-</details>
+<?php
+$newCoupon = [
+    'id' => 0,
+    'code' => '',
+    'discount_type' => 'percentage',
+    'discount_value' => 10,
+    'min_subtotal_cents' => 0,
+    'max_uses' => null,
+    'used_count' => 0,
+    'active' => 1,
+    'expires_at' => null,
+];
+?>
 
-<div class="admin-coupon-list">
+<div class="admin-entity-grid admin-coupon-grid" aria-label="<?= e(t('admin.coupons')) ?>">
+    <button class="admin-entity-card admin-entity-card--create" type="button" data-dialog-open="admin-coupon-dialog-new" aria-haspopup="dialog" aria-controls="admin-coupon-dialog-new">
+        <span class="admin-entity-icon"><i class="fa-solid fa-plus" aria-hidden="true"></i></span>
+        <strong><?= e(t('admin.create_coupon')) ?></strong>
+    </button>
+
     <?php foreach ($adminCoupons as $coupon): ?>
-        <form class="admin-panel admin-coupon-card" action="<?= e(url('actions/admin_save_coupon.php')) ?>" method="post">
-            <?= csrf_field() ?>
-            <input type="hidden" name="id" value="<?= (int) $coupon['id'] ?>">
-            <div class="admin-coupon-heading">
-                <strong><?= e($coupon['code']) ?></strong>
-                <span><?= e(t('admin.used_count', ['count' => (int) $coupon['used_count']])) ?></span>
-            </div>
-            <div class="admin-form-grid">
-                <div class="admin-field"><label><?= e(t('common.code')) ?></label><input name="code" value="<?= e($coupon['code']) ?>" maxlength="50" required></div>
-                <div class="admin-field"><label><?= e(t('common.type')) ?></label><select name="discount_type"><option value="percentage" <?= $coupon['discount_type'] === 'percentage' ? 'selected' : '' ?>><?= e(t('admin.percentage')) ?></option><option value="fixed" <?= $coupon['discount_type'] === 'fixed' ? 'selected' : '' ?>><?= e(t('admin.fixed_eur')) ?></option></select></div>
-                <div class="admin-field"><label><?= e(t('common.value')) ?></label><input name="discount_value" value="<?= e($coupon['discount_type'] === 'fixed' ? number_format((int) $coupon['discount_value'] / 100, 2, '.', '') : $coupon['discount_value']) ?>"></div>
-                <div class="admin-field"><label><?= e(t('admin.minimum_subtotal')) ?></label><input name="min_subtotal" value="<?= e(number_format((int) $coupon['min_subtotal_cents'] / 100, 2, '.', '')) ?>"></div>
-                <div class="admin-field"><label><?= e(t('admin.maximum_uses')) ?></label><input name="max_uses" value="<?= e($coupon['max_uses'] ?? '') ?>" type="number" min="1"></div>
-                <div class="admin-field"><label><?= e(t('admin.expires_at')) ?></label><input name="expires_at" value="<?= e($coupon['expires_at'] ? date('Y-m-d\\TH:i', strtotime($coupon['expires_at'])) : '') ?>" type="datetime-local"></div>
-                <label class="admin-check"><input name="active" type="checkbox" value="1" <?= (bool) $coupon['active'] ? 'checked' : '' ?>><span><?= e(t('common.active')) ?></span></label>
-            </div>
-            <div class="admin-card-actions">
-                <button class="button button--primary" type="submit"><?= e(t('common.save')) ?></button>
-                <button class="button admin-danger-button" type="submit" formaction="<?= e(url('actions/admin_delete_coupon.php')) ?>"><?= e(t('common.delete')) ?></button>
-            </div>
-        </form>
+        <button class="admin-entity-card admin-coupon-tile <?= (bool) $coupon['active'] ? '' : 'is-inactive' ?>" type="button" data-dialog-open="admin-coupon-dialog-<?= (int) $coupon['id'] ?>" aria-haspopup="dialog" aria-controls="admin-coupon-dialog-<?= (int) $coupon['id'] ?>" aria-label="<?= e(t('admin.edit_coupon', ['code' => (string) $coupon['code']])) ?>">
+            <strong><?= e((string) $coupon['code']) ?></strong>
+            <span><?= e(format_admin_coupon_discount($coupon)) ?></span>
+        </button>
     <?php endforeach; ?>
 </div>
+
+<?php $couponForm = $newCoupon; require BASE_PATH . '/templates/admin/coupon-dialog.php'; ?>
+<?php foreach ($adminCoupons as $couponForm): ?>
+    <?php require BASE_PATH . '/templates/admin/coupon-dialog.php'; ?>
+<?php endforeach; ?>
