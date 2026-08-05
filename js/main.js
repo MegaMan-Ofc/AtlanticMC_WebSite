@@ -11,6 +11,13 @@ class RequestError extends Error {
     }
 }
 
+function siteMessage(name, fallback) {
+    const notice = document.querySelector("[data-site-notice]");
+    const value = notice?.dataset?.[name];
+
+    return typeof value === "string" && value !== "" ? value : fallback;
+}
+
 async function copyText(value) {
     if (navigator.clipboard && window.isSecureContext) {
         await navigator.clipboard.writeText(value);
@@ -100,17 +107,48 @@ async function requestJson(url, formData) {
     try {
         payload = await response.json();
     } catch {
-        throw new RequestError("O servidor devolveu uma resposta inválida.");
+        throw new RequestError(
+            siteMessage("messageInvalidResponse", "The server returned an invalid response.")
+        );
     }
 
     if (!response.ok) {
         throw new RequestError(
-            payload?.error || "Não foi possível concluir o pedido.",
+            payload?.error || siteMessage("messageRequestFailed", "Unable to complete the request."),
             payload
         );
     }
 
     return payload;
+}
+
+async function handleLanguageSubmit(event, form) {
+    event.preventDefault();
+
+    const submitter = event.submitter instanceof HTMLButtonElement
+        ? event.submitter
+        : form.querySelector('button[type="submit"]');
+    const endpoint = form.dataset.ajaxUrl;
+
+    if (!endpoint) {
+        form.submit();
+        return;
+    }
+
+    setButtonBusy(submitter, true);
+
+    try {
+        await requestJson(endpoint, new FormData(form));
+        window.location.reload();
+    } catch (error) {
+        showNotice(
+            error instanceof Error
+                ? error.message
+                : siteMessage("messageLanguageFailed", "Unable to change the language."),
+            "error"
+        );
+        setButtonBusy(submitter, false);
+    }
 }
 
 async function handleCartSubmit(event, form) {
@@ -142,10 +180,15 @@ async function handleCartSubmit(event, form) {
         const payload = await requestJson(endpoint, formData);
         updateCartCount(payload.data?.cart_count);
         replaceCartPanel(payload.data?.cart_html);
-        showNotice(payload.message || "Carrinho atualizado.", "success");
+        showNotice(
+            payload.message || siteMessage("messageCartUpdated", "Cart updated."),
+            "success"
+        );
     } catch (error) {
         showNotice(
-            error instanceof Error ? error.message : "Não foi possível atualizar o carrinho.",
+            error instanceof Error
+                ? error.message
+                : siteMessage("messageCartFailed", "Unable to update the cart."),
             "error"
         );
     } finally {
@@ -174,7 +217,9 @@ async function handleCheckoutSubmit(event, form) {
         const redirectUrl = payload.data?.redirect_url;
 
         if (typeof redirectUrl !== "string" || redirectUrl === "") {
-            throw new RequestError("O servidor não devolveu o endereço de pagamento.");
+            throw new RequestError(
+                siteMessage("messageCheckoutUrlMissing", "The server did not return the payment address.")
+            );
         }
 
         window.location.assign(redirectUrl);
@@ -189,7 +234,9 @@ async function handleCheckoutSubmit(event, form) {
         }
 
         showNotice(
-            error instanceof Error ? error.message : "Não foi possível iniciar o pagamento.",
+            error instanceof Error
+                ? error.message
+                : siteMessage("messageCheckoutFailed", "Unable to start the payment."),
             "error"
         );
         setButtonBusy(submitter, false);
@@ -197,26 +244,6 @@ async function handleCheckoutSubmit(event, form) {
 }
 
 document.addEventListener("click", async (event) => {
-    const languageButton = event.target.closest(".language-button");
-
-    if (languageButton) {
-        const flag = languageButton.querySelector(".language-flag");
-        const code = languageButton.querySelector(".language-code");
-
-        if (!flag || !code) {
-            return;
-        }
-
-        const isPortuguese = code.textContent.trim() === "PT";
-        code.textContent = isPortuguese ? "ENG" : "PT";
-        flag.src = isPortuguese ? flag.dataset.enSrc : flag.dataset.ptSrc;
-        languageButton.setAttribute(
-            "aria-label",
-            isPortuguese ? "Mudar idioma para Português" : "Switch language to English"
-        );
-        return;
-    }
-
     const copyButton = event.target.closest("[data-copy-value]");
 
     if (!copyButton) {
@@ -236,7 +263,7 @@ document.addEventListener("click", async (event) => {
         await copyText(value);
 
         if (label) {
-            label.textContent = "Copied!";
+            label.textContent = siteMessage("messageCopied", "Copied!");
         }
 
         window.setTimeout(() => {
@@ -245,7 +272,10 @@ document.addEventListener("click", async (event) => {
             }
         }, 1200);
     } catch {
-        showNotice("Não foi possível copiar o endereço do servidor.", "error");
+        showNotice(
+            siteMessage("messageCopyFailed", "Unable to copy the server address."),
+            "error"
+        );
     }
 });
 
@@ -257,6 +287,11 @@ document.addEventListener("submit", (event) => {
     const form = event.target;
 
     if (!(form instanceof HTMLFormElement)) {
+        return;
+    }
+
+    if (form.matches("[data-ajax-language]")) {
+        void handleLanguageSubmit(event, form);
         return;
     }
 

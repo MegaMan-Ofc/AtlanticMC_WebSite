@@ -217,6 +217,11 @@
     gap: 0.625rem;
 }
 
+.toolbar > form {
+    display: flex;
+    margin: 0;
+}
+
 .language-button {
     display: inline-flex;
     align-items: center;

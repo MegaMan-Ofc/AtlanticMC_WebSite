@@ -2,32 +2,32 @@
     <div class="footer-main">
         <div class="container footer-grid">
             <section class="footer-about">
-                <h2>About us</h2>
-                <p>Atlantic Anarchy is a public Minecraft anarchy server for Java and Bedrock players. Join us at <strong><?= e(config('app.server_ip')) ?></strong>.</p>
+                <h2><?= e(t('footer.about_title')) ?></h2>
+                <p><?= e(t('footer.about_text', ['server' => (string) config('app.server_ip')])) ?></p>
             </section>
-            <nav aria-label="Store links">
-                <h2>Store</h2>
+            <nav aria-label="<?= e(t('footer.store_links_aria')) ?>">
+                <h2><?= e(t('common.store')) ?></h2>
                 <div class="footer-links">
-                    <a href="<?= e(url('index.php')) ?>">Home</a>
+                    <a href="<?= e(url('index.php')) ?>"><?= e(t('common.home')) ?></a>
                     <a href="<?= e(url('ranks.php')) ?>">VIPs</a>
                     <a href="<?= e(url('rubis.php')) ?>">Rubis</a>
-                    <a href="<?= e(url('keys.php')) ?>">Keys</a>
+                    <a href="<?= e(url('keys.php')) ?>"><?= e(t('category.keys')) ?></a>
                 </div>
             </nav>
             <section>
-                <h2>Support</h2>
-                <p>Questions before purchasing? Contact us through Discord or email.</p>
+                <h2><?= e(t('common.support')) ?></h2>
+                <p><?= e(t('footer.questions')) ?></p>
                 <div class="footer-actions">
                     <a class="button button--primary" href="<?= e(config('app.discord_url')) ?>" target="_blank" rel="noopener noreferrer">Discord</a>
-                    <a class="button button--ghost" href="mailto:<?= e(config('app.support_email')) ?>">Email</a>
+                    <a class="button button--ghost" href="mailto:<?= e(config('app.support_email')) ?>"><?= e(t('common.email')) ?></a>
                 </div>
             </section>
-            <nav class="footer-legal-links" aria-label="Legal information">
-                <h2>Legal</h2>
+            <nav class="footer-legal-links" aria-label="<?= e(t('footer.legal_aria')) ?>">
+                <h2><?= e(t('common.legal')) ?></h2>
                 <div class="footer-links">
-                    <span class="footer-link--disabled">Privacy Policy</span>
-                    <span class="footer-link--disabled">Terms of Service</span>
-                    <a href="https://www.livroreclamacoes.pt/Inicio/" target="_blank" rel="noopener noreferrer">Book of Complaints</a>
+                    <span class="footer-link--disabled"><?= e(t('footer.privacy')) ?></span>
+                    <span class="footer-link--disabled"><?= e(t('footer.terms')) ?></span>
+                    <a href="https://www.livroreclamacoes.pt/Inicio/" target="_blank" rel="noopener noreferrer"><?= e(t('footer.complaints')) ?></a>
                 </div>
             </nav>
         </div>
@@ -36,14 +36,29 @@
         <div class="container footer-row">
             <div class="footer-legal">
                 <p><?= date('Y') ?> © <strong>Atlantic Anarchy</strong></p>
-                <p>We are not affiliated with or endorsed by Mojang, AB.</p>
+                <p><?= e(t('footer.disclaimer')) ?></p>
             </div>
-            <ul class="footer-socials" aria-label="Social links">
+            <ul class="footer-socials" aria-label="<?= e(t('footer.social_aria')) ?>">
                 <li><a href="<?= e(config('app.discord_url')) ?>" target="_blank" rel="noopener noreferrer" aria-label="Discord"><i class="fa-brands fa-discord" aria-hidden="true"></i></a></li>
-                <li><a href="#top" aria-label="Back to top"><i class="fa-solid fa-arrow-up" aria-hidden="true"></i></a></li>
+                <li><a href="#top" aria-label="<?= e(t('footer.back_to_top')) ?>"><i class="fa-solid fa-arrow-up" aria-hidden="true"></i></a></li>
             </ul>
         </div>
     </div>
 </footer>
-<div class="site-notice" data-site-notice role="status" aria-live="polite" hidden></div>
+<div
+    class="site-notice"
+    data-site-notice
+    data-message-invalid-response="<?= e(t('js.invalid_response')) ?>"
+    data-message-request-failed="<?= e(t('js.request_failed')) ?>"
+    data-message-cart-updated="<?= e(t('js.cart_updated')) ?>"
+    data-message-cart-failed="<?= e(t('js.cart_failed')) ?>"
+    data-message-checkout-url-missing="<?= e(t('js.checkout_url_missing')) ?>"
+    data-message-checkout-failed="<?= e(t('js.checkout_failed')) ?>"
+    data-message-copy-failed="<?= e(t('js.copy_failed')) ?>"
+    data-message-copied="<?= e(t('js.copied')) ?>"
+    data-message-language-failed="<?= e(t('js.language_failed')) ?>"
+    role="status"
+    aria-live="polite"
+    hidden
+></div>
 <script defer src="<?= e(url('js/main.js')) ?>"></script>
