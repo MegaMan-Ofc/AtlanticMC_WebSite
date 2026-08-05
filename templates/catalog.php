@@ -48,7 +48,13 @@
                                 </div>
                             <?php endif; ?>
                             <div class="price"><span class="package-active-price"><?= e(format_money((int) $product['price_cents'], $product['currency'])) ?></span></div>
-                            <form action="<?= e(url('actions/add_to_cart.php')) ?>" method="post">
+                            <form
+                                action="<?= e(url('actions/add_to_cart.php')) ?>"
+                                method="post"
+                                data-ajax-cart
+                                data-ajax-url="<?= e(url('ajax/cart.php')) ?>"
+                                data-cart-operation="add"
+                            >
                                 <?= csrf_field() ?>
                                 <input type="hidden" name="product_id" value="<?= (int) $product['id'] ?>">
                                 <input type="hidden" name="return_to" value="<?= e(basename(current_request_path())) ?>">

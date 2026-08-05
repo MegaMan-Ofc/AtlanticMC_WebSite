@@ -45,4 +45,5 @@
         </div>
     </div>
 </footer>
+<div class="site-notice" data-site-notice role="status" aria-live="polite" hidden></div>
 <script defer src="<?= e(url('js/main.js')) ?>"></script>
