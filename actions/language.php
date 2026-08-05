@@ -13,4 +13,4 @@ try {
     flash('error', $error->getMessage());
 }
 
-redirect(safe_return_path(request_string('return_to'), 'index.php'));
+redirect(safe_return_path(request_string('return_to'), route_path('home')));

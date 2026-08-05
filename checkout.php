@@ -7,7 +7,7 @@
     <?php require __DIR__ . '/includes/header.php'; ?>
     <main class="main-content" id="main">
         <div class="container">
-            <header class="page-title"><a aria-label="<?= e(t('common.back')) ?>" href="<?= e(url('cart.php')) ?>"><i class="fa-solid fa-arrow-left"></i></a><h1><?= e(t('checkout.heading')) ?></h1></header>
+            <header class="page-title"><a aria-label="<?= e(t('common.back')) ?>" href="<?= e(route_url('cart')) ?>"><i class="fa-solid fa-arrow-left"></i></a><h1><?= e(t('checkout.heading')) ?></h1></header>
             <div class="checkout-grid">
                 <section class="checkout-card">
                     <header><span>1</span><h2><?= e(t('checkout.confirm_purchase')) ?></h2></header>

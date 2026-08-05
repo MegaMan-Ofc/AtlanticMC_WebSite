@@ -24,7 +24,7 @@
                     <div class="success-note"><i class="fa-solid fa-circle-info"></i><span><?= e(t('success.webhook_note')) ?></span></div>
                 <?php endif; ?>
             <?php endif; ?>
-            <div class="success-actions"><a class="button button--primary" href="<?= e(url('index.php')) ?>"><?= e(t('common.back_to_store')) ?></a><a class="button button--ghost" href="<?= e(config('app.discord_url')) ?>" target="_blank" rel="noopener noreferrer"><?= e(t('common.support')) ?></a></div>
+            <div class="success-actions"><a class="button button--primary" href="<?= e(route_url('home')) ?>"><?= e(t('common.back_to_store')) ?></a><a class="button button--ghost" href="<?= e(config('app.discord_url')) ?>" target="_blank" rel="noopener noreferrer"><?= e(t('common.support')) ?></a></div>
         </section>
     </main>
     <?php require __DIR__ . '/includes/footer.php'; ?>

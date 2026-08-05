@@ -98,13 +98,13 @@ function clear_minecraft_recipient(): void
     session_regenerate_id(true);
 }
 
-function require_minecraft_recipient(string $returnTo = 'checkout.php'): void
+function require_minecraft_recipient(string $returnTo = 'checkout'): void
 {
     if (has_minecraft_recipient()) {
         return;
     }
 
-    $_SESSION['recipient_return_to'] = safe_return_path($returnTo, 'index.php');
+    $_SESSION['recipient_return_to'] = safe_return_path($returnTo, route_path('home'));
     flash('info', t('messages.recipient_required'));
-    redirect('login.php');
+    redirect_route('login');
 }

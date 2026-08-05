@@ -54,7 +54,7 @@ function start_checkout(): array
     cart_clear();
 
     return [
-        'redirect_url' => 'success.php?order=' . rawurlencode($orderToken),
+        'redirect_url' => route_path('success', ['order' => $orderToken]),
         'external' => false,
         'message' => t('messages.test_order_created'),
         'order_token' => $orderToken,

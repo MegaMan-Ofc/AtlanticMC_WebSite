@@ -9,7 +9,7 @@
             <i class="fa-solid fa-cart-shopping" aria-hidden="true"></i>
             <h2><?= e(t('cart.empty_title')) ?></h2>
             <p><?= e(t('cart.empty_text')) ?></p>
-            <a class="button button--primary" href="<?= e(url('index.php')) ?>"><?= e(t('cart.browse_store')) ?></a>
+            <a class="button button--primary" href="<?= e(route_url('home')) ?>"><?= e(t('cart.browse_store')) ?></a>
         </div>
     <?php else: ?>
         <form
@@ -122,8 +122,8 @@
         </div>
 
         <div class="cart-footer">
-            <a class="button button--ghost" href="<?= e(url('index.php')) ?>"><?= e(t('cart.continue_shopping')) ?></a>
-            <a class="button button--primary" href="<?= e(url('checkout.php')) ?>"><?= e(t('cart.checkout', ['amount' => format_money((int) $cart['total_cents'])])) ?></a>
+            <a class="button button--ghost" href="<?= e(route_url('home')) ?>"><?= e(t('cart.continue_shopping')) ?></a>
+            <a class="button button--primary" href="<?= e(route_url('checkout')) ?>"><?= e(t('cart.checkout', ['amount' => format_money((int) $cart['total_cents'])])) ?></a>
         </div>
     <?php endif; ?>
 </section>

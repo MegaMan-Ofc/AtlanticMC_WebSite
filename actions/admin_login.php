@@ -13,4 +13,4 @@ if (admin_login(request_string('username'), request_string('password'))) {
     flash('error', t('messages.admin_invalid_credentials'));
 }
 
-redirect('admin.php');
+redirect_route('admin');

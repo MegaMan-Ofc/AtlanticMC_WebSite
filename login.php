@@ -8,7 +8,7 @@
     <main class="main-content login-main" id="main">
         <div class="container login-shell">
             <section class="login-card">
-                <a class="login-back" href="<?= e(url('index.php')) ?>" aria-label="<?= e(t('login.back_aria')) ?>">
+                <a class="login-back" href="<?= e(route_url('home')) ?>" aria-label="<?= e(t('login.back_aria')) ?>">
                     <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
                 </a>
 

@@ -7,4 +7,4 @@ require_post();
 verify_csrf();
 admin_logout();
 flash('success', t('messages.admin_session_ended'));
-redirect('admin.php');
+redirect_route('admin');

@@ -19,8 +19,8 @@ function tebex_create_checkout(array $order, array $items): array
         }
     }
 
-    $completeUrl = url('success.php?order=' . rawurlencode((string) $order['public_token']));
-    $cancelUrl = url('cart.php');
+    $completeUrl = route_url('success', ['order' => (string) $order['public_token']]);
+    $cancelUrl = route_url('cart');
 
     if (!filter_var($completeUrl, FILTER_VALIDATE_URL) || !filter_var($cancelUrl, FILTER_VALIDATE_URL)) {
         throw new RuntimeException(t('tebex.app_url'));

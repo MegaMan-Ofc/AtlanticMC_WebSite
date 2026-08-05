@@ -8,7 +8,7 @@
     <main class="main-content" id="main">
         <div class="container">
             <header class="page-title">
-                <a aria-label="<?= e(t('common.back')) ?>" href="<?= e(url('index.php')) ?>">
+                <a aria-label="<?= e(t('common.back')) ?>" href="<?= e(route_url('home')) ?>">
                     <i class="fa-solid fa-house" aria-hidden="true"></i>
                 </a>
                 <h1><?= e(t('cart.heading')) ?></h1>

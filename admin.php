@@ -7,7 +7,7 @@
     <header class="admin-header">
         <h1><?= e(t('admin.title')) ?></h1>
         <p><?= e(t('admin.subtitle')) ?></p>
-        <a class="button button--ghost" href="<?= e(url('index.php')) ?>"><?= e(t('common.back_to_store')) ?></a>
+        <a class="button button--ghost" href="<?= e(route_url('home')) ?>"><?= e(t('common.back_to_store')) ?></a>
     </header>
     <?php require __DIR__ . '/templates/flash.php'; ?>
     <?php if (!$adminConfigured): ?>
