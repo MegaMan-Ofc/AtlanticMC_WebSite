@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 require_once __DIR__ . '/config.php';
+require_once __DIR__ . '/routes.php';
 require_once __DIR__ . '/helpers.php';
 require_once __DIR__ . '/session.php';
 require_once __DIR__ . '/i18n.php';
@@ -58,7 +59,7 @@ set_exception_handler(static function (Throwable $error): void {
     echo '<!doctype html><html lang="' . e(current_language()) . '"><meta charset="utf-8"><title>' . e(t('common.error', [], 'Error')) . '</title>'
         . '<body style="font-family:sans-serif;padding:2rem;background:#0b0e13;color:#fff">'
         . '<h1>Atlantic Anarchy</h1><p>' . e($plainMessage) . '</p>'
-        . '<p><a style="color:#8fd3ff" href="' . e(url('index.php')) . '">' . e(t('messages.back_to_store')) . '</a></p></body></html>';
+        . '<p><a style="color:#8fd3ff" href="' . e(route_url('home')) . '">' . e(t('messages.back_to_store')) . '</a></p></body></html>';
 });
 
 initialize_database();
