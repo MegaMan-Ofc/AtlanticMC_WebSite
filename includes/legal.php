@@ -69,10 +69,10 @@ function legal_configuration_complete(): bool
 function legal_navigation(): array
 {
     return [
-        ['slug' => 'privacy', 'label' => t('footer.privacy'), 'url' => url('privacy.php')],
-        ['slug' => 'terms', 'label' => t('footer.terms'), 'url' => url('terms.php')],
-        ['slug' => 'purchase-policy', 'label' => t('footer.purchase_policy'), 'url' => url('purchase-policy.php')],
-        ['slug' => 'rules', 'label' => t('footer.rules'), 'url' => url('rules.php')],
+        ['slug' => 'privacy', 'label' => t('footer.privacy'), 'url' => route_url('privacy')],
+        ['slug' => 'terms', 'label' => t('footer.terms'), 'url' => route_url('terms')],
+        ['slug' => 'purchase-policy', 'label' => t('footer.purchase_policy'), 'url' => route_url('purchase-policy')],
+        ['slug' => 'rules', 'label' => t('footer.rules'), 'url' => route_url('rules')],
     ];
 }
 

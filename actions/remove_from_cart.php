@@ -7,4 +7,4 @@ require_post();
 verify_csrf();
 cart_remove(request_int('product_id'));
 flash('success', t('messages.cart_removed'));
-redirect('cart.php');
+redirect_route('cart');

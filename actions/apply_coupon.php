@@ -16,4 +16,4 @@ try {
     flash('error', $error->getMessage());
 }
 
-redirect('cart.php');
+redirect_route('cart');

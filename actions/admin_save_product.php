@@ -14,4 +14,4 @@ try {
     flash('error', $error->getMessage());
 }
 
-redirect('admin.php');
+redirect_route('admin');

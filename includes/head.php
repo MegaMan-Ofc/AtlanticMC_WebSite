@@ -4,6 +4,9 @@
     <meta name="theme-color" content="#0b0e13">
     <meta name="description" content="<?= e($pageDescription ?? t('head.default_description')) ?>">
     <title><?= e($pageTitle ?? config('app.name')) ?></title>
+    <?php if (($canonicalUrl = current_canonical_url()) !== null): ?>
+        <link rel="canonical" href="<?= e($canonicalUrl) ?>">
+    <?php endif; ?>
     <link href="<?= e(url('assets/logo1.png')) ?>" rel="icon" type="image/png">
     <link href="https://fonts.googleapis.com" rel="preconnect">
     <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>

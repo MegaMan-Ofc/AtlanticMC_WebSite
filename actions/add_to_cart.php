@@ -6,7 +6,7 @@ require_once __DIR__ . '/../includes/bootstrap.php';
 require_post();
 verify_csrf();
 
-$returnTo = safe_return_path(request_string('return_to'), 'index.php');
+$returnTo = safe_return_path(request_string('return_to'), route_path('home'));
 
 try {
     cart_add(request_int('product_id'), max(1, request_int('quantity', 1)));

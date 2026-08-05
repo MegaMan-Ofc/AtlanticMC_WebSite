@@ -8,10 +8,10 @@
             <nav aria-label="<?= e(t('footer.store_links_aria')) ?>">
                 <h2><?= e(t('common.store')) ?></h2>
                 <div class="footer-links">
-                    <a href="<?= e(url('index.php')) ?>"><?= e(t('common.home')) ?></a>
-                    <a href="<?= e(url('ranks.php')) ?>">VIPs</a>
-                    <a href="<?= e(url('rubis.php')) ?>">Rubis</a>
-                    <a href="<?= e(url('keys.php')) ?>"><?= e(t('category.keys')) ?></a>
+                    <a href="<?= e(route_url('home')) ?>"><?= e(t('common.home')) ?></a>
+                    <a href="<?= e(route_url('ranks')) ?>">VIPs</a>
+                    <a href="<?= e(route_url('rubis')) ?>">Rubis</a>
+                    <a href="<?= e(route_url('keys')) ?>"><?= e(t('category.keys')) ?></a>
                 </div>
             </nav>
             <section>
@@ -25,10 +25,10 @@
             <nav class="footer-legal-links" aria-label="<?= e(t('footer.legal_aria')) ?>">
                 <h2><?= e(t('common.legal')) ?></h2>
                 <div class="footer-links">
-                    <a href="<?= e(url('privacy.php')) ?>"><?= e(t('footer.privacy')) ?></a>
-                    <a href="<?= e(url('terms.php')) ?>"><?= e(t('footer.terms')) ?></a>
-                    <a href="<?= e(url('purchase-policy.php')) ?>"><?= e(t('footer.purchase_policy')) ?></a>
-                    <a href="<?= e(url('rules.php')) ?>"><?= e(t('footer.rules')) ?></a>
+                    <a href="<?= e(route_url('privacy')) ?>"><?= e(t('footer.privacy')) ?></a>
+                    <a href="<?= e(route_url('terms')) ?>"><?= e(t('footer.terms')) ?></a>
+                    <a href="<?= e(route_url('purchase-policy')) ?>"><?= e(t('footer.purchase_policy')) ?></a>
+                    <a href="<?= e(route_url('rules')) ?>"><?= e(t('footer.rules')) ?></a>
                     <a href="https://www.livroreclamacoes.pt/Inicio/" target="_blank" rel="noopener noreferrer"><?= e(t('footer.complaints')) ?></a>
                 </div>
             </nav>

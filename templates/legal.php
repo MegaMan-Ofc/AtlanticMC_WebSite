@@ -3,7 +3,7 @@ $legalSections = is_array($legalPage['sections'] ?? null) ? $legalPage['sections
 $legalNavigation = is_array($legalPage['navigation'] ?? null) ? $legalPage['navigation'] : [];
 ?>
 <header class="page-title legal-page-title">
-    <a aria-label="<?= e(t('common.back')) ?>" href="<?= e(url('index.php')) ?>">
+    <a aria-label="<?= e(t('common.back')) ?>" href="<?= e(route_url('home')) ?>">
         <i class="fa-solid fa-house" aria-hidden="true"></i>
     </a>
     <div>

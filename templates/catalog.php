@@ -1,7 +1,7 @@
 <main class="main-content" id="main">
     <div class="container">
         <header class="page-title">
-            <a aria-label="<?= e(t('catalog.go_back')) ?>" href="<?= e(url('index.php')) ?>"><i class="fa-solid fa-house" aria-hidden="true"></i></a>
+            <a aria-label="<?= e(t('catalog.go_back')) ?>" href="<?= e(route_url('home')) ?>"><i class="fa-solid fa-house" aria-hidden="true"></i></a>
             <div>
                 <h1 id="page-title"><?= e($pageHeading) ?></h1>
                 <p class="page-subtitle"><?= e($pageDescription) ?></p>
@@ -58,7 +58,7 @@
                             >
                                 <?= csrf_field() ?>
                                 <input type="hidden" name="product_id" value="<?= (int) $product['id'] ?>">
-                                <input type="hidden" name="return_to" value="<?= e(basename(current_request_path())) ?>">
+                                <input type="hidden" name="return_to" value="<?= e(current_public_return_path()) ?>">
                                 <label class="sr-only" for="quantity-<?= (int) $product['id'] ?>"><?= e(t('catalog.quantity')) ?></label>
                                 <select class="field product-quantity" id="quantity-<?= (int) $product['id'] ?>" name="quantity">
                                     <?php for ($quantity = 1; $quantity <= min(5, (int) config('app.max_cart_quantity')); $quantity++): ?>

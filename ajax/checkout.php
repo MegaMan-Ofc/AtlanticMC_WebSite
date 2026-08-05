@@ -12,7 +12,7 @@ try {
     if (current_minecraft_recipient() === null) {
         json_response([
             'error' => t('messages.recipient_required_first'),
-            'data' => ['redirect_url' => url('login.php?return_to=checkout.php')],
+            'data' => ['redirect_url' => route_url('login', ['return_to' => route_path('checkout')])],
         ], 401);
     }
 

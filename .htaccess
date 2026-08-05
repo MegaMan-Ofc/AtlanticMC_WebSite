@@ -1,11 +1,40 @@
 Options -Indexes
+DirectoryIndex index.php
 
 <IfModule mod_rewrite.c>
     RewriteEngine On
-    RewriteRule ^(?:includes|controllers|templates|translations|database|storage)/ - [F,L]
+
+    # Never expose dotfiles (except ACME's .well-known directory).
+    RewriteRule (^|/)\.(?!well-known(?:/|$)) - [F,L]
+
+    # Internal application directories are not public pages.
+    RewriteRule ^(?:includes|controllers|templates|translations|database|storage)(?:/|$) - [F,L,NC]
+
+    # Redirect direct requests for legacy root-level PHP pages to clean URLs.
+    # THE_REQUEST prevents loops after the internal rewrite below.
+    RewriteCond %{THE_REQUEST} \s/+(.*/)?index\.php(?:[?\s]) [NC]
+    RewriteRule ^index\.php$ /%1 [R=301,L,NE]
+
+    RewriteCond %{THE_REQUEST} \s/+(.*/)?(ranks|rubis|keys|boosters|battlepass|cart|checkout|login|success|privacy|terms|purchase-policy|rules|admin)\.php(?:[?\s]) [NC]
+    RewriteRule ^(ranks|rubis|keys|boosters|battlepass|cart|checkout|login|success|privacy|terms|purchase-policy|rules|admin)\.php$ /%1%2 [R=301,L,NE]
+
+    # Home aliases and trailing slashes use one canonical URL.
+    RewriteCond %{THE_REQUEST} \s/+(.*/)?index/?(?:[?\s]) [NC]
+    RewriteRule ^index/?$ /%1 [R=301,L,NE]
+
+    RewriteCond %{THE_REQUEST} \s/+(.*/)?(ranks|rubis|keys|boosters|battlepass|cart|checkout|login|success|privacy|terms|purchase-policy|rules|admin)/+(?:[?\s]) [NC]
+    RewriteRule ^(ranks|rubis|keys|boosters|battlepass|cart|checkout|login|success|privacy|terms|purchase-policy|rules|admin)/$ /%1%2 [R=301,L,NE]
+
+    # Existing assets and real endpoint files continue to work normally.
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+
+    # Route extensionless public URLs to their PHP page scripts.
+    RewriteRule ^(ranks|rubis|keys|boosters|battlepass|cart|checkout|login|success|privacy|terms|purchase-policy|rules|admin)$ $1.php [END,QSA]
 </IfModule>
 
-<FilesMatch "^(?:\.env|\.env\.example|README-PHP\.md)$">
+<FilesMatch "^(?:\.env|\.env\.example|README-PHP\.md|CLEAN-URLS\.md)$">
     Require all denied
 </FilesMatch>
 

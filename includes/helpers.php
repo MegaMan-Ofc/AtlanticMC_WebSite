@@ -7,88 +7,6 @@ function e(mixed $value): string
     return htmlspecialchars((string) $value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 }
 
-function request_base_path(): string
-{
-    $scriptName = str_replace('\\', '/', (string) ($_SERVER['SCRIPT_NAME'] ?? ''));
-
-    foreach (['/actions/', '/api/', '/ajax/'] as $marker) {
-        $position = strpos($scriptName, $marker);
-
-        if ($position !== false) {
-            return rtrim(substr($scriptName, 0, $position), '/');
-        }
-    }
-
-    $directory = str_replace('\\', '/', dirname($scriptName));
-
-    return $directory === '/' ? '' : rtrim($directory, '/');
-}
-
-function url(string $path = ''): string
-{
-    $path = ltrim($path, '/');
-    $configuredUrl = (string) config('app.url', '');
-
-    if ($configuredUrl !== '') {
-        return $path === '' ? $configuredUrl : $configuredUrl . '/' . $path;
-    }
-
-    $basePath = request_base_path();
-
-    return ($basePath === '' ? '' : $basePath) . '/' . $path;
-}
-
-function redirect(string $path, int $status = 303): never
-{
-    header('Location: ' . url($path), true, $status);
-    exit;
-}
-
-function redirect_external(string $url, int $status = 303): never
-{
-    if (!filter_var($url, FILTER_VALIDATE_URL)) {
-        throw new InvalidArgumentException('Invalid redirect URL.');
-    }
-
-    header('Location: ' . $url, true, $status);
-    exit;
-}
-
-function current_request_path(): string
-{
-    $uri = (string) ($_SERVER['REQUEST_URI'] ?? '/');
-    $path = parse_url($uri, PHP_URL_PATH);
-
-    return is_string($path) ? $path : '/';
-}
-
-function safe_return_path(?string $path, string $fallback = 'index.php'): string
-{
-    if ($path === null || $path === '') {
-        return $fallback;
-    }
-
-    $decoded = rawurldecode($path);
-
-    if (
-        str_contains($decoded, '://')
-        || str_starts_with($decoded, '//')
-        || str_contains($decoded, "\r")
-        || str_contains($decoded, "\n")
-    ) {
-        return $fallback;
-    }
-
-    $base = basename(parse_url($decoded, PHP_URL_PATH) ?: '');
-    $allowed = [
-        'index.php', 'ranks.php', 'rubis.php', 'keys.php', 'boosters.php',
-        'battlepass.php', 'cart.php', 'checkout.php', 'login.php', 'success.php',
-        'privacy.php', 'terms.php', 'purchase-policy.php', 'rules.php',
-    ];
-
-    return in_array($base, $allowed, true) ? $base : $fallback;
-}
-
 function require_get(): void
 {
     if (strtoupper((string) ($_SERVER['REQUEST_METHOD'] ?? 'GET')) !== 'GET') {
@@ -156,7 +74,6 @@ function now_sql(): string
     return date('Y-m-d H:i:s');
 }
 
-
 function parse_money_to_cents(string $value, string $fieldName = 'Amount'): int
 {
     $normalized = str_replace(',', '.', trim($value));
@@ -188,7 +105,6 @@ function parse_optional_datetime(string $value, string $fieldName = 'Date'): ?st
 
     return $date->format('Y-m-d H:i:s');
 }
-
 
 function public_error_message(Throwable $error, string $fallback): string
 {

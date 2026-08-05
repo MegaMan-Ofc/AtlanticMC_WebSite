@@ -12,8 +12,8 @@ try {
     $platform = request_string('platform', 'java');
     $recipient = select_minecraft_recipient($username, $platform);
     $returnTo = safe_return_path(
-        request_string('return_to', (string) ($_SESSION['recipient_return_to'] ?? 'index.php')),
-        'index.php'
+        request_string('return_to', (string) ($_SESSION['recipient_return_to'] ?? route_path('home'))),
+        route_path('home')
     );
 
     unset($_SESSION['recipient_return_to']);
@@ -21,5 +21,5 @@ try {
     redirect($returnTo);
 } catch (InvalidArgumentException $error) {
     flash('error', $error->getMessage());
-    redirect('login.php');
+    redirect_route('login');
 }

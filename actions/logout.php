@@ -7,4 +7,4 @@ require_post();
 verify_csrf();
 clear_minecraft_recipient();
 flash('success', t('messages.recipient_removed'));
-redirect('login.php');
+redirect_route('login');

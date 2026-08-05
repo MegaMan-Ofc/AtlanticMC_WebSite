@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/../includes/bootstrap.php';
 
-require_minecraft_recipient('checkout.php');
+require_minecraft_recipient(route_path('checkout'));
 
 $cart = cart_summary();
 
 if ($cart['items'] === []) {
     flash('info', t('messages.cart_empty'));
-    redirect('cart.php');
+    redirect_route('cart');
 }
 
 $pageTitle = t('checkout.page_title');

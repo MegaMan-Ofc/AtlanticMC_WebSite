@@ -3,7 +3,7 @@ $headerRecipient = current_minecraft_recipient();
 $headerCartCount = cart_count();
 $headerLanguage = current_language();
 $nextLanguage = alternate_language();
-$languageReturnTo = basename(current_request_path());
+$languageReturnTo = current_public_return_path();
 ?>
 <header class="site-header" id="top">
     <div class="header-primary">
@@ -12,7 +12,7 @@ $languageReturnTo = basename(current_request_path());
                 <i aria-hidden="true" class="fa-brands fa-discord"></i>
                 <span><small><?= e(t('header.join_our')) ?></small><strong>Discord</strong></span>
             </a>
-            <a aria-label="<?= e(t('header.store_home_aria')) ?>" class="brand" href="<?= e(url('index.php')) ?>">
+            <a aria-label="<?= e(t('header.store_home_aria')) ?>" class="brand" href="<?= e(route_url('home')) ?>">
                 <img alt="Atlantic Anarchy" src="<?= e(url('assets/logo1.png')) ?>">
             </a>
             <button aria-label="<?= e(t('header.copy_server_aria')) ?>" class="header-link header-link--server" data-copy-value="<?= e(config('app.server_ip')) ?>" title="<?= e(t('header.click_to_copy')) ?>" type="button">
@@ -23,7 +23,7 @@ $languageReturnTo = basename(current_request_path());
     </div>
     <div class="header-secondary">
         <div class="container header-row">
-            <a aria-label="<?= e(t('header.choose_recipient_aria')) ?>" class="user-card" href="<?= e(url('login.php')) ?>">
+            <a aria-label="<?= e(t('header.choose_recipient_aria')) ?>" class="user-card" href="<?= e(route_url('login')) ?>">
                 <?php if ($headerRecipient === null): ?>
                     <img alt="<?= e(t('header.minecraft_avatar')) ?>" src="<?= e(url('assets/steve.png')) ?>">
                     <span><small><?= e(t('header.logged_in_as')) ?></small><strong><?= e(t('header.guest')) ?></strong></span>
@@ -56,7 +56,7 @@ $languageReturnTo = basename(current_request_path());
                         <span class="language-code"><?= e(language_label($headerLanguage)) ?></span>
                     </button>
                 </form>
-                <a aria-label="<?= e(t('header.open_cart')) ?>" class="button button--primary cart-button" href="<?= e(url('cart.php')) ?>">
+                <a aria-label="<?= e(t('header.open_cart')) ?>" class="button button--primary cart-button" href="<?= e(route_url('cart')) ?>">
                     <i aria-hidden="true" class="fa-solid fa-cart-shopping"></i>
                     <span class="cart-count" data-cart-count<?= $headerCartCount === 0 ? ' hidden' : '' ?>><?= $headerCartCount ?></span>
                 </a>
