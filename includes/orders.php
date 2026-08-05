@@ -5,7 +5,7 @@ declare(strict_types=1);
 function create_order(array $recipient, array $summary): array
 {
     if ($summary['items'] === [] || (int) $summary['total_cents'] < 0) {
-        throw new InvalidArgumentException('The cart is empty or invalid.');
+        throw new InvalidArgumentException(t('validation.order_invalid'));
     }
 
     $username = normalize_minecraft_username(
@@ -63,7 +63,7 @@ function create_order(array $recipient, array $summary): array
 
         $pdo->commit();
 
-        return order_by_token($token) ?? throw new RuntimeException('Unable to reload the order.');
+        return order_by_token($token) ?? throw new RuntimeException(t('validation.order_reload'));
     } catch (Throwable $error) {
         if ($pdo->inTransaction()) {
             $pdo->rollBack();
@@ -111,7 +111,7 @@ function mark_order_status_by_token(string $token, string $status, ?string $prov
     $allowed = ['pending', 'awaiting_payment', 'checkout_failed', 'paid', 'declined', 'refunded', 'disputed'];
 
     if (!in_array($status, $allowed, true)) {
-        throw new InvalidArgumentException('Invalid order status.');
+        throw new InvalidArgumentException(t('validation.order_status'));
     }
 
     $pdo = db();
@@ -123,7 +123,7 @@ function mark_order_status_by_token(string $token, string $status, ?string $prov
         $order = $select->fetch();
 
         if (!is_array($order)) {
-            throw new RuntimeException('Order not found for webhook.');
+            throw new RuntimeException(t('validation.order_not_found'));
         }
 
         $statement = $pdo->prepare(
@@ -218,7 +218,7 @@ function process_order_webhook(
         $order = $select->fetch();
 
         if (!is_array($order)) {
-            throw new RuntimeException('Order not found for webhook.');
+            throw new RuntimeException(t('validation.order_not_found'));
         }
 
         $update = $pdo->prepare(

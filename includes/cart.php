@@ -12,7 +12,7 @@ function cart_raw(): array
 function cart_add(int $productId, int $quantity = 1): void
 {
     if (product_by_id($productId) === null) {
-        throw new InvalidArgumentException('Produto inválido ou indisponível.');
+        throw new InvalidArgumentException(t('validation.invalid_product'));
     }
 
     $max = (int) config('app.max_cart_quantity', 20);

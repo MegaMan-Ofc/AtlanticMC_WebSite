@@ -10,12 +10,12 @@ function tebex_is_configured(): bool
 function tebex_create_checkout(array $order, array $items): array
 {
     if (!tebex_is_configured()) {
-        throw new RuntimeException('Tebex is not configured.');
+        throw new RuntimeException(t('tebex.not_configured'));
     }
 
     foreach ($items as $item) {
         if (trim((string) ($item['product']['tebex_package_id'] ?? '')) === '') {
-            throw new RuntimeException('One or more products do not have a Tebex package ID.');
+            throw new RuntimeException(t('tebex.missing_package'));
         }
     }
 
@@ -23,7 +23,7 @@ function tebex_create_checkout(array $order, array $items): array
     $cancelUrl = url('cart.php');
 
     if (!filter_var($completeUrl, FILTER_VALIDATE_URL) || !filter_var($cancelUrl, FILTER_VALIDATE_URL)) {
-        throw new RuntimeException('APP_URL must contain the full public store URL before Tebex checkout can be used.');
+        throw new RuntimeException(t('tebex.app_url'));
     }
 
     $token = rawurlencode((string) config('tebex.public_token'));
@@ -48,7 +48,7 @@ function tebex_create_checkout(array $order, array $items): array
     $usernameId = trim((string) ($basket['username_id'] ?? ''));
 
     if ($ident === '') {
-        throw new RuntimeException('Tebex did not return a basket identifier.');
+        throw new RuntimeException(t('tebex.basket_missing'));
     }
 
     foreach ($items as $item) {
@@ -87,7 +87,7 @@ function tebex_create_checkout(array $order, array $items): array
     $checkoutUrl = (string) ($basket['links']['checkout'] ?? '');
 
     if ($checkoutUrl === '' || !filter_var($checkoutUrl, FILTER_VALIDATE_URL)) {
-        throw new RuntimeException('Tebex did not return a valid checkout URL.');
+        throw new RuntimeException(t('tebex.checkout_url_missing'));
     }
 
     return [

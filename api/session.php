@@ -11,4 +11,5 @@ json_response(['data' => [
     'recipient_selected' => $recipient !== null,
     'recipient' => $recipient,
     'cart_count' => cart_count(),
+    'language' => current_language(),
 ]]);

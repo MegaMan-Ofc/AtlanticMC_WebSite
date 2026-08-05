@@ -11,7 +11,7 @@ try {
     $summary = cart_summary();
     $coupon = validate_coupon($code, (int) $summary['subtotal_cents']);
     $_SESSION['coupon_code'] = (string) $coupon['code'];
-    flash('success', 'Cupão aplicado com sucesso.');
+    flash('success', t('messages.coupon_applied'));
 } catch (InvalidArgumentException $error) {
     flash('error', $error->getMessage());
 }
