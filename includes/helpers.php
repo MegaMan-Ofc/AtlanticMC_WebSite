@@ -83,6 +83,7 @@ function safe_return_path(?string $path, string $fallback = 'index.php'): string
     $allowed = [
         'index.php', 'ranks.php', 'rubis.php', 'keys.php', 'boosters.php',
         'battlepass.php', 'cart.php', 'checkout.php', 'login.php', 'success.php',
+        'privacy.php', 'terms.php', 'purchase-policy.php', 'rules.php',
     ];
 
     return in_array($base, $allowed, true) ? $base : $fallback;
