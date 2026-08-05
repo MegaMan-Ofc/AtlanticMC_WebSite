@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 function all_products_admin(): array
 {
-    return db()->query('SELECT * FROM products ORDER BY category ASC, sort_order ASC, id ASC')->fetchAll();
+    return db()->query(
+        'SELECT * FROM products ORDER BY category ASC, sort_order ASC, id ASC'
+    )->fetchAll();
 }
 
 function save_product_from_admin(array $input): int
@@ -15,7 +17,10 @@ function save_product_from_admin(array $input): int
     $slug = strtolower(trim((string) ($input['slug'] ?? '')));
     $description = trim((string) ($input['description'] ?? ''));
     $image = trim((string) ($input['image'] ?? ''));
-    $priceCents = parse_money_to_cents((string) ($input['price'] ?? '0'), t('field.product_price'));
+    $priceCents = parse_money_to_cents(
+        (string) ($input['price'] ?? '0'),
+        t('field.product_price')
+    );
     $sortOrder = (int) ($input['sort_order'] ?? 0);
     $active = isset($input['active']) ? 1 : 0;
     $tebexPackageId = trim((string) ($input['tebex_package_id'] ?? ''));
@@ -36,7 +41,10 @@ function save_product_from_admin(array $input): int
         throw new InvalidArgumentException(t('validation.product_price'));
     }
 
-    if ($image !== '' && (!str_starts_with($image, 'assets/') || str_contains($image, '..'))) {
+    if (
+        $image !== ''
+        && (!str_starts_with($image, 'assets/') || str_contains($image, '..'))
+    ) {
         throw new InvalidArgumentException(t('validation.product_image'));
     }
 
@@ -44,7 +52,10 @@ function save_product_from_admin(array $input): int
         throw new InvalidArgumentException(t('validation.product_description'));
     }
 
-    if ($tebexPackageId !== '' && !preg_match('/^[A-Za-z0-9_-]{1,64}$/', $tebexPackageId)) {
+    if (
+        $tebexPackageId !== ''
+        && !preg_match('/^[A-Za-z0-9_-]{1,64}$/', $tebexPackageId)
+    ) {
         throw new InvalidArgumentException(t('validation.tebex_package'));
     }
 
@@ -69,13 +80,23 @@ function save_product_from_admin(array $input): int
 
     if ($id > 0) {
         $parameters['id'] = $id;
+
         $statement = db()->prepare(
             'UPDATE products
-             SET slug = :slug, category = :category, name = :name, description = :description,
-                 image = :image, price_cents = :price_cents, currency = :currency, active = :active,
-                 sort_order = :sort_order, tebex_package_id = :tebex_package_id, updated_at = :updated_at
+             SET slug = :slug,
+                 category = :category,
+                 name = :name,
+                 description = :description,
+                 image = :image,
+                 price_cents = :price_cents,
+                 currency = :currency,
+                 active = :active,
+                 sort_order = :sort_order,
+                 tebex_package_id = :tebex_package_id,
+                 updated_at = :updated_at
              WHERE id = :id'
         );
+
         $statement->execute($parameters);
 
         if ($statement->rowCount() === 0 && product_by_id($id, true) === null) {
@@ -87,13 +108,92 @@ function save_product_from_admin(array $input): int
 
     $parameters['metadata'] = '{}';
     $parameters['created_at'] = $now;
+
     $statement = db()->prepare(
         'INSERT INTO products
-         (slug, category, name, description, image, price_cents, currency, active, sort_order, tebex_package_id, metadata, created_at, updated_at)
+         (
+             slug,
+             category,
+             name,
+             description,
+             image,
+             price_cents,
+             currency,
+             active,
+             sort_order,
+             tebex_package_id,
+             metadata,
+             created_at,
+             updated_at
+         )
          VALUES
-         (:slug, :category, :name, :description, :image, :price_cents, :currency, :active, :sort_order, :tebex_package_id, :metadata, :created_at, :updated_at)'
+         (
+             :slug,
+             :category,
+             :name,
+             :description,
+             :image,
+             :price_cents,
+             :currency,
+             :active,
+             :sort_order,
+             :tebex_package_id,
+             :metadata,
+             :created_at,
+             :updated_at
+         )'
     );
+
     $statement->execute($parameters);
 
     return (int) db()->lastInsertId();
+}
+
+function delete_product_from_admin(int $id): void
+{
+    if ($id < 1) {
+        throw new InvalidArgumentException(t('validation.product_not_found'));
+    }
+
+    $database = db();
+    $database->beginTransaction();
+
+    try {
+        $statement = $database->prepare(
+            'SELECT COUNT(*)
+             FROM order_items
+             WHERE product_id = :id'
+        );
+
+        $statement->execute([
+            'id' => $id,
+        ]);
+
+        if ((int) $statement->fetchColumn() > 0) {
+            throw new InvalidArgumentException(t('validation.product_has_orders'));
+        }
+
+        $statement = $database->prepare(
+            'DELETE FROM products
+             WHERE id = :id'
+        );
+
+        $statement->execute([
+            'id' => $id,
+        ]);
+
+        if ($statement->rowCount() === 0) {
+            throw new InvalidArgumentException(t('validation.product_not_found'));
+        }
+
+        $database->commit();
+    } catch (Throwable $error) {
+        if ($database->inTransaction()) {
+            $database->rollBack();
+        }
+
+        throw $error;
+    }
+
+    cart_remove($id);
 }

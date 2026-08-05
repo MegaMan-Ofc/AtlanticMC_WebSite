@@ -1,14 +1,20 @@
 'use strict';
 
 const syncAdminDialogState = () => {
-    document.documentElement.classList.toggle('admin-dialog-open', Boolean(document.querySelector('.admin-dialog[open]')));
+    const openDialog = document.querySelector('.admin-dialog[open]');
+
+    document.documentElement.classList.toggle(
+        'admin-dialog-open',
+        Boolean(openDialog)
+    );
 };
 
 document.addEventListener('click', event => {
     const opener = event.target.closest('[data-dialog-open]');
 
     if (opener) {
-        const dialog = document.getElementById(opener.dataset.dialogOpen);
+        const dialogId = opener.dataset.dialogOpen;
+        const dialog = document.getElementById(dialogId);
 
         if (dialog instanceof HTMLDialogElement) {
             dialog.showModal();
@@ -20,12 +26,14 @@ document.addEventListener('click', event => {
 
     const closer = event.target.closest('[data-dialog-close]');
 
-    if (closer) {
-        const dialog = closer.closest('dialog');
+    if (!closer) {
+        return;
+    }
 
-        if (dialog instanceof HTMLDialogElement) {
-            dialog.close();
-        }
+    const dialog = closer.closest('dialog');
+
+    if (dialog instanceof HTMLDialogElement) {
+        dialog.close();
     }
 });
 
@@ -42,14 +50,20 @@ document.querySelectorAll('.admin-dialog').forEach(dialog => {
 document.addEventListener('submit', event => {
     const submitter = event.submitter;
 
-    if (!(submitter instanceof HTMLElement) || !submitter.matches('[data-delete-coupon]')) {
+    if (
+        !(submitter instanceof HTMLElement)
+        || !submitter.matches('[data-delete-coupon], [data-delete-product]')
+    ) {
         return;
     }
 
     const form = submitter.closest('form');
-    const message = form?.dataset.confirmDelete;
+    const confirmationMessage = form?.dataset.confirmDelete;
 
-    if (message && !window.confirm(message)) {
+    if (
+        confirmationMessage
+        && !window.confirm(confirmationMessage)
+    ) {
         event.preventDefault();
     }
 });
