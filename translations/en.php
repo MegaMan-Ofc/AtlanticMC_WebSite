@@ -349,4 +349,342 @@ return [
     'products.hearts-25.name' => '25 Extra Hearts',
     'products.hearts-25.description' => 'Large heart bundle for long sessions.',
     'products.hearts-25.badge' => 'Best value',
+
+
+    'footer.purchase_policy' => 'Purchase and Refund Policy',
+    'footer.rules' => 'Rules',
+
+    'legal.navigation_aria' => 'Legal pages',
+    'legal.contents_aria' => 'Page contents',
+    'legal.contents_title' => 'On this page',
+    'legal.last_updated' => 'Last updated: :date',
+    'legal.setup_warning_title' => 'Incomplete legal configuration',
+    'legal.setup_warning_text' => 'Complete LEGAL_OPERATOR_ADDRESS and LEGAL_OPERATOR_TAX_ID in the .env file and review these texts before putting the store into production.',
+    'legal.operator_title' => 'Store operator',
+    'legal.operator_intro' => 'These details identify the store operator and the contact for legal or privacy matters.',
+    'legal.operator_name' => 'Operator',
+    'legal.operator_email' => 'Contact',
+    'legal.operator_country' => 'Country',
+    'legal.operator_address' => 'Address',
+    'legal.operator_tax_id' => 'Tax identification',
+    'legal.mandatory_rights' => 'Nothing on these pages limits mandatory consumer rights granted by applicable law.',
+    'legal.contact_us' => 'Contact us',
+
+    'legal.privacy.page_title' => 'Atlantic Anarchy - Privacy Policy',
+    'legal.privacy.title' => 'Privacy Policy',
+    'legal.privacy.description' => 'How the store collects, uses and protects personal data.',
+    'legal.privacy.intro' => 'This policy describes the data processing needed to provide the store, keep the cart, process orders and provide support.',
+    'legal.privacy.sections' => [
+        [
+            'title' => '1. Scope and controller',
+            'paragraphs' => [
+                ':store is responsible for processing carried out directly through this store. For privacy questions, contact :privacy_email.',
+                'External providers used for payments, hosting or resource delivery may act as independent controllers or processors under their own terms.',
+            ],
+        ],
+        [
+            'title' => '2. Data we process',
+            'paragraphs' => [
+                'The store aims to collect only the data required for its operation.',
+            ],
+            'items' => [
+                'Minecraft name and Java or Bedrock platform selected as the purchase recipient.',
+                'Cart contents, applied coupon, language and technical session identifiers.',
+                'Products, quantities, amounts, currency, order status and references returned by the payment provider.',
+                'Messages sent to support and information required to answer the request.',
+                'Technical security data such as IP address, date, browser and server logs when produced by the host or required to prevent abuse.',
+            ],
+            'note' => 'The store does not request the password for a Minecraft, Microsoft or Xbox account.',
+        ],
+        [
+            'title' => '3. Purposes and legal grounds',
+            'items' => [
+                'Fulfil the order, validate prices, create the order and deliver products to the chosen Minecraft recipient.',
+                'Maintain the session, cart and essential preferences selected by the visitor.',
+                'Provide support, resolve delivery failures and manage payment-related requests.',
+                'Prevent fraud, coupon abuse, attacks and misuse of the store.',
+                'Comply with legal, accounting and tax duties and defend complaints or disputes where applicable.',
+            ],
+            'paragraphs' => [
+                'Depending on the operation, processing is based on contract performance, legal obligations, the legitimate interest in protecting the store or consent where consent is required.',
+            ],
+        ],
+        [
+            'title' => '4. External services and recipients',
+            'paragraphs' => [
+                'Some data may be disclosed or technically sent to services required to provide the store.',
+            ],
+            'items' => [
+                'Tebex, to create checkout, process payment and deliver the order.',
+                'Hosting and database providers, to run, secure and back up the website.',
+                'MC-Heads, when the avatar associated with the submitted Minecraft name is requested.',
+                'Google Fonts, CDNJS/Cloudflare and Font Awesome while resources are loaded from those platforms.',
+                'Discord, when the visitor opens community or support links.',
+                'Authorities or competent bodies where disclosure is legally required.',
+            ],
+            'note' => 'External services may process technical data under their own policies. Visitors should review the information made available by each provider.',
+        ],
+        [
+            'title' => '5. Cookies and sessions',
+            'paragraphs' => [
+                'The store uses a strictly necessary session cookie to keep the cart, language, Minecraft recipient, CSRF protection and temporary messages.',
+                'The current store code does not set first-party advertising or behavioural analytics cookies. This information must be updated before adding analytics, marketing or advertising services.',
+            ],
+        ],
+        [
+            'title' => '6. Retention',
+            'paragraphs' => [
+                'Temporary session data is removed when the session expires or is cleared. Order, payment, coupon and webhook data is kept for the period needed for delivery, support, fraud prevention, accounting, legal compliance and dispute resolution.',
+                'Specific periods may vary according to the applicable obligation and hosting configuration. Data is no longer retained when it is no longer required, unless the law requires otherwise.',
+            ],
+        ],
+        [
+            'title' => '7. Data-subject rights',
+            'paragraphs' => [
+                'Where applicable, individuals may request access, rectification, erasure, restriction, objection or portability and may withdraw consent where processing depends on consent.',
+                'Individuals may also complain to the competent data protection authority. To exercise rights, contact :privacy_email and provide enough information to locate the request without sending passwords.',
+            ],
+        ],
+        [
+            'title' => '8. Security and changes',
+            'paragraphs' => [
+                'The store uses HttpOnly sessions, CSRF protection, server-side validation, prepared queries and access restrictions for private files. No Internet-connected system can guarantee absolute security.',
+                'This policy may be updated when features, providers or legal duties change. The date shown at the top identifies the current version.',
+            ],
+        ],
+    ],
+
+    'legal.terms.page_title' => 'Atlantic Anarchy - Terms and Conditions',
+    'legal.terms.title' => 'Terms and Conditions',
+    'legal.terms.description' => 'Terms applying to use of the store and purchase of digital products.',
+    'legal.terms.intro' => 'By using the store or completing a purchase, the visitor accepts these terms and the conditions shown by the payment provider at checkout.',
+    'legal.terms.sections' => [
+        [
+            'title' => '1. Store and acceptance',
+            'paragraphs' => [
+                'The :store store provides digital products for the Minecraft server available at :server.',
+                'Users must have legal capacity to contract or permission from their legal representative. Anyone who does not agree with these terms should not complete a purchase.',
+            ],
+        ],
+        [
+            'title' => '2. Minecraft recipient and gifts',
+            'paragraphs' => [
+                'The name entered on the login page only identifies the purchase recipient. It does not prove that the visitor owns that account and does not grant access to the Minecraft account.',
+                'Purchases may be made for another person as a gift. The buyer is responsible for selecting the correct platform and entering the exact name that should receive the product.',
+            ],
+            'note' => 'Check the name before payment. After delivery, transferring the product to another player may not be technically possible.',
+        ],
+        [
+            'title' => '3. Products, prices and availability',
+            'paragraphs' => [
+                'Descriptions, benefits, duration and limitations are those displayed by the store at the time of purchase. Prices are validated by the server and shown in :currency, including or identifying taxes and charges where applicable.',
+                'Products may be changed, suspended or removed. A later change does not alter an already completed order, except where required for legal, technical or server-balance reasons and without affecting mandatory rights.',
+            ],
+        ],
+        [
+            'title' => '4. Orders and payment',
+            'paragraphs' => [
+                'An order is completed only after payment is confirmed by the provider shown at checkout. The buyer must review products, quantities, recipient and total amount before paying.',
+                'Payment is processed by Tebex under the terms and methods shown in its checkout. The store does not receive the buyer’s password or full card details.',
+            ],
+        ],
+        [
+            'title' => '5. Digital delivery',
+            'paragraphs' => [
+                'After payment confirmation, delivery is sent to the selected Minecraft name. Delivery may depend on the server and Tebex service being available.',
+                'If a product does not arrive within a reasonable time, contact :support_email with the order reference and recipient name.',
+            ],
+        ],
+        [
+            'title' => '6. Rules and moderation measures',
+            'paragraphs' => [
+                'Purchases do not provide immunity from store, community or server rules. Digital products do not authorise attacks, fraud, system abuse or unlawful conduct.',
+                'A sanction applied because of player conduct does not remove mandatory consumer rights, but it also does not automatically make a correctly delivered purchase defective.',
+            ],
+        ],
+        [
+            'title' => '7. Cancellations, refunds and disputes',
+            'paragraphs' => [
+                'Cancellation and refund requests are handled under the Purchase and Refund Policy, applicable Tebex terms and mandatory law.',
+                'The buyer should contact support before initiating a chargeback, unless doing so would be unreasonable or prejudice a legal right.',
+            ],
+        ],
+        [
+            'title' => '8. Misuse',
+            'items' => [
+                'Requests, prices, quantities, coupons or server responses must not be manipulated.',
+                'Store defects must not be exploited, abusive purchases must not be automated, limits must not be bypassed and the service must not be disrupted.',
+                'Payment details must not be used without authorisation, false information must not be provided to support and chargebacks must not be used fraudulently.',
+            ],
+        ],
+        [
+            'title' => '9. Intellectual property and trademarks',
+            'paragraphs' => [
+                'Atlantic Anarchy visual content, text and identity may not be reused deceptively or to claim a non-existent association.',
+                'Minecraft, Mojang and Microsoft belong to their respective owners. :store is not affiliated with or endorsed by Mojang or Microsoft.',
+            ],
+        ],
+        [
+            'title' => '10. Liability, changes and applicable law',
+            'paragraphs' => [
+                'The store aims to maintain accurate information and reasonable availability, but maintenance, third-party failures and technical interruptions may occur. Nothing in these terms excludes liability that cannot lawfully be excluded.',
+                'These terms may be updated to reflect technical, commercial or legal changes. Applicable law and dispute-resolution methods are determined by mandatory rules applying to the operator and consumer.',
+            ],
+        ],
+    ],
+
+    'legal.purchase-policy.page_title' => 'Atlantic Anarchy - Purchase and Refund Policy',
+    'legal.purchase-policy.title' => 'Purchase and Refund Policy',
+    'legal.purchase-policy.description' => 'Payment, digital delivery, corrections and handling of refund requests.',
+    'legal.purchase-policy.intro' => 'This policy explains what happens before and after payment and how to request help for delivery or billing problems.',
+    'legal.purchase-policy.sections' => [
+        [
+            'title' => '1. Nature of the products',
+            'paragraphs' => [
+                'Products sold are digital content or benefits for the :store Minecraft server. No physical goods are shipped.',
+                'A purchase may be made for the buyer or gifted to another Minecraft name.',
+            ],
+        ],
+        [
+            'title' => '2. Checks before payment',
+            'items' => [
+                'Confirm whether the recipient uses Java or Bedrock.',
+                'Confirm the exact Minecraft-name spelling and the leading dot used for Bedrock names on this network.',
+                'Review product, quantity, price, discount and total amount.',
+                'Read the stated benefits, duration and limitations of the product.',
+            ],
+        ],
+        [
+            'title' => '3. Payment',
+            'paragraphs' => [
+                'The final price and available methods are displayed in Tebex checkout. Payment is considered completed only after confirmation.',
+                'The store records the reference, items, amounts and status required to track the order, but does not store full card details.',
+            ],
+        ],
+        [
+            'title' => '4. Delivery',
+            'paragraphs' => [
+                'Delivery normally starts after payment confirmation and is directed to the selected Minecraft name. Maintenance, server unavailability or third-party failure may cause a delay.',
+                'If delivery does not occur, contact :support_email with the order reference, product and recipient. Do not send passwords.',
+            ],
+        ],
+        [
+            'title' => '5. Incorrect name or platform',
+            'paragraphs' => [
+                'Contact support immediately after discovering an error. Before delivery it may be possible to correct the order. After the product has been assigned, transfer or reversal may be impossible.',
+                'Entering another person’s name is treated as a gift and does not provide access to that player’s account.',
+            ],
+        ],
+        [
+            'title' => '6. Withdrawal rights and digital content',
+            'paragraphs' => [
+                'Cancellation rights depend on applicable law and when digital delivery starts. Where allowed by law, the withdrawal right for immediately supplied digital content may cease only after the consumer’s prior express consent and acknowledgement of the consequences.',
+                'Options, confirmations and terms shown in Tebex checkout form part of the purchase process. This policy does not replace or reduce mandatory legal rights.',
+            ],
+        ],
+        [
+            'title' => '7. Situations reviewed for refund or correction',
+            'items' => [
+                'A confirmed duplicate charge.',
+                'A product not delivered and an inability to complete delivery within a reasonable time.',
+                'A product or quantity different from the confirmed order because of a store or delivery-system error.',
+                'Digital content that does not match its description or another case required by applicable law.',
+            ],
+            'paragraphs' => [
+                'The remedy may be redelivery, correction, credit, price reduction or refund, depending on the issue, technical possibility and applicable rights.',
+            ],
+        ],
+        [
+            'title' => '8. Situations that normally do not justify a refund after correct delivery',
+            'items' => [
+                'A change of mind after the digital benefit has been delivered, without prejudice to legal rights.',
+                'A buyer error in the name or platform where delivery exactly matched the confirmed details.',
+                'Loss of access following a sanction for breaking the rules, unless the law requires a different remedy.',
+                'An attempt to manipulate prices, coupons, quantities, payments or the support process.',
+            ],
+        ],
+        [
+            'title' => '9. How to request help',
+            'paragraphs' => [
+                'Send the request to :support_email or through the official Discord. Include the order reference, Minecraft name, approximate date, product and an objective description of the problem.',
+                'Do not post receipts containing sensitive data in public channels. Support may request additional information strictly required to confirm the payment.',
+            ],
+        ],
+        [
+            'title' => '10. Chargebacks and fraud',
+            'paragraphs' => [
+                'A chargeback should not be used instead of contacting support for a correctable issue. The store and payment provider may contest fraudulent requests using order and delivery records.',
+                'Nothing prevents a buyer from legitimately exercising rights through the payment provider, a competent authority or a dispute-resolution mechanism.',
+            ],
+        ],
+    ],
+
+    'legal.rules.page_title' => 'Atlantic Anarchy - Rules',
+    'legal.rules.title' => 'Store and Community Rules',
+    'legal.rules.description' => 'Minimum security, purchase and community-participation rules for Atlantic.',
+    'legal.rules.intro' => 'Gameplay may be anarchic, but the store, infrastructure and community remain subject to security, payment and legal rules.',
+    'legal.rules.sections' => [
+        [
+            'title' => '1. Scope',
+            'paragraphs' => [
+                'These rules apply to the store, checkout, support, official Discord and Atlantic Anarchy technical services.',
+                'Specific gameplay rules may be published on Discord or inside the server. Mandatory security and legal rules apply in the event of conflict.',
+            ],
+        ],
+        [
+            'title' => '2. Infrastructure security',
+            'items' => [
+                'Do not attack, overload, disrupt or attempt unauthorised access to the website, server, database, APIs or administrative accounts.',
+                'Do not distribute malware, phishing, deceptive links or files designed to compromise players or staff.',
+                'Do not exploit vulnerabilities to alter prices, orders, coupons, permissions or data.',
+            ],
+            'note' => 'A defect should be reported responsibly to support without continuing to exploit it or publishing abuse instructions.',
+        ],
+        [
+            'title' => '3. Purchases and payments',
+            'items' => [
+                'Use only payment methods authorised by their owner.',
+                'Do not manipulate requests, AJAX responses, HTML or JavaScript in an attempt to obtain unpaid products, discounts or quantities.',
+                'Do not use coupons contrary to their conditions, create abusive automated orders or bypass limits.',
+                'Do not submit false chargebacks, complaints or receipts.',
+            ],
+        ],
+        [
+            'title' => '4. Identity and support',
+            'items' => [
+                'Do not impersonate staff, partners, moderators or Tebex representatives.',
+                'Do not deceive support in an attempt to transfer products, alter recipients or obtain third-party information.',
+                'Never request or share Minecraft, Microsoft, email or card passwords or authentication codes through Atlantic channels.',
+            ],
+        ],
+        [
+            'title' => '5. Conduct and legality',
+            'items' => [
+                'Do not publish credible threats, third-party personal data, extortion, unlawful content or instructions intended to cause real-world harm.',
+                'Do not use the infrastructure for fraud, money laundering, unauthorised sales or conduct prohibited by law.',
+                'Follow the rules of the platform, payment provider and external services used.',
+            ],
+        ],
+        [
+            'title' => '6. Anarchic nature of the server',
+            'paragraphs' => [
+                'The anarchic-server concept may allow broader gameplay freedom than other servers, but it does not authorise infrastructure attacks, financial fraud, account compromise, malware or unlawful conduct.',
+                'Purchasing a product does not guarantee immunity from sanctions and does not grant administrative power, ownership of the server or an exception to applicable rules.',
+            ],
+        ],
+        [
+            'title' => '7. Measures that may be taken',
+            'paragraphs' => [
+                'Depending on severity and available evidence, staff may restrict access to the store or community, cancel unpaid operations, correct improperly obtained benefits, preserve records and report matters to competent bodies.',
+                'Measures must comply with applicable law and do not remove mandatory rights connected to a purchase.',
+            ],
+        ],
+        [
+            'title' => '8. Reporting problems',
+            'paragraphs' => [
+                'To report vulnerabilities, fraud, delivery failures or serious conduct, contact :support_email. Include enough information to investigate and avoid publicly disclosing sensitive data or exploitation steps.',
+            ],
+        ],
+    ],
+
 ];

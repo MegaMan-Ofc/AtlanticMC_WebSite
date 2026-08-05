@@ -349,4 +349,342 @@ return [
     'products.hearts-25.name' => '25 Corações Extra',
     'products.hearts-25.description' => 'Um grande pacote de corações para sessões longas.',
     'products.hearts-25.badge' => 'Melhor valor',
+
+
+    'footer.purchase_policy' => 'Política de Compras e Reembolsos',
+    'footer.rules' => 'Regras',
+
+    'legal.navigation_aria' => 'Páginas legais',
+    'legal.contents_aria' => 'Índice da página',
+    'legal.contents_title' => 'Nesta página',
+    'legal.last_updated' => 'Última atualização: :date',
+    'legal.setup_warning_title' => 'Configuração legal incompleta',
+    'legal.setup_warning_text' => 'Preenche os campos LEGAL_OPERATOR_ADDRESS e LEGAL_OPERATOR_TAX_ID no ficheiro .env e revê estes textos antes de colocar a loja em produção.',
+    'legal.operator_title' => 'Responsável pela loja',
+    'legal.operator_intro' => 'Estes dados identificam o responsável pela loja e o contacto para questões legais ou de privacidade.',
+    'legal.operator_name' => 'Operador',
+    'legal.operator_email' => 'Contacto',
+    'legal.operator_country' => 'País',
+    'legal.operator_address' => 'Morada',
+    'legal.operator_tax_id' => 'Identificação fiscal',
+    'legal.mandatory_rights' => 'Nada nestas páginas limita direitos obrigatórios atribuídos ao consumidor pela legislação aplicável.',
+    'legal.contact_us' => 'Contactar',
+
+    'legal.privacy.page_title' => 'Atlantic Anarchy - Política de Privacidade',
+    'legal.privacy.title' => 'Política de Privacidade',
+    'legal.privacy.description' => 'Como a loja recolhe, utiliza e protege dados pessoais.',
+    'legal.privacy.intro' => 'Esta política descreve o tratamento de dados necessário para disponibilizar a loja, guardar o carrinho, processar encomendas e prestar suporte.',
+    'legal.privacy.sections' => [
+        [
+            'title' => '1. Âmbito e responsável',
+            'paragraphs' => [
+                ':store é responsável pelo tratamento realizado diretamente nesta loja. Para questões de privacidade, utiliza :privacy_email.',
+                'Os fornecedores externos utilizados no pagamento, alojamento ou apresentação de recursos podem atuar como responsáveis independentes ou subcontratantes, de acordo com os respetivos termos.',
+            ],
+        ],
+        [
+            'title' => '2. Dados que tratamos',
+            'paragraphs' => [
+                'A loja procura recolher apenas os dados necessários ao seu funcionamento.',
+            ],
+            'items' => [
+                'Nome Minecraft e plataforma Java ou Bedrock escolhidos como destinatário da compra.',
+                'Conteúdo do carrinho, cupão aplicado, idioma e identificadores técnicos da sessão.',
+                'Produtos, quantidades, valores, moeda, estado da encomenda e referências devolvidas pelo prestador de pagamento.',
+                'Mensagens enviadas ao suporte e informação necessária para responder ao pedido.',
+                'Dados técnicos de segurança, como endereço IP, data, browser e registos do servidor, quando produzidos pelo alojamento ou necessários para prevenir abuso.',
+            ],
+            'note' => 'A loja não solicita a palavra-passe da conta Minecraft, Microsoft ou Xbox.',
+        ],
+        [
+            'title' => '3. Finalidades e fundamentos',
+            'items' => [
+                'Executar o pedido, validar preços, criar a encomenda e entregar produtos ao destinatário Minecraft indicado.',
+                'Manter a sessão, o carrinho e as preferências essenciais escolhidas pelo visitante.',
+                'Prestar suporte, resolver falhas de entrega e gerir pedidos relacionados com pagamentos.',
+                'Prevenir fraude, abuso de cupões, ataques e utilização indevida da loja.',
+                'Cumprir obrigações legais, contabilísticas, fiscais e de defesa em reclamações ou litígios, quando aplicável.',
+            ],
+            'paragraphs' => [
+                'Consoante a operação, o tratamento baseia-se na execução do contrato, em obrigações legais, no interesse legítimo de proteger a loja ou no consentimento quando este for necessário.',
+            ],
+        ],
+        [
+            'title' => '4. Serviços e destinatários externos',
+            'paragraphs' => [
+                'Alguns dados podem ser comunicados ou tecnicamente enviados aos serviços necessários para disponibilizar a loja.',
+            ],
+            'items' => [
+                'Tebex, para criação do checkout, processamento do pagamento e entrega associada à encomenda.',
+                'Fornecedor de alojamento e base de dados, para execução, segurança e cópias de segurança do site.',
+                'MC-Heads, quando é pedido o avatar associado ao nome Minecraft introduzido.',
+                'Google Fonts, CDNJS/Cloudflare e Font Awesome, enquanto forem carregados recursos externos dessas plataformas.',
+                'Discord, apenas quando o visitante abre os links de comunidade ou suporte.',
+                'Autoridades ou entidades competentes, quando a comunicação for legalmente exigida.',
+            ],
+            'note' => 'Os serviços externos podem tratar dados técnicos segundo as próprias políticas. Deve ser consultada a informação disponibilizada por cada fornecedor.',
+        ],
+        [
+            'title' => '5. Cookies e sessão',
+            'paragraphs' => [
+                'A loja utiliza um cookie de sessão estritamente necessário para manter o carrinho, o idioma, o destinatário Minecraft, a proteção CSRF e mensagens temporárias.',
+                'O código atual da loja não instala cookies próprios de publicidade ou análise de comportamento. Esta informação deve ser atualizada antes de adicionar serviços de estatística, marketing ou publicidade.',
+            ],
+        ],
+        [
+            'title' => '6. Conservação',
+            'paragraphs' => [
+                'Dados temporários da sessão são eliminados quando a sessão expira ou é limpa. Dados de encomendas, pagamentos, cupões e webhooks são conservados durante o período necessário para entrega, suporte, prevenção de fraude, contabilidade, cumprimento legal e resolução de litígios.',
+                'Os períodos concretos podem variar conforme a obrigação aplicável e a configuração do alojamento. Os dados deixam de ser conservados quando já não forem necessários, salvo obrigação legal em contrário.',
+            ],
+        ],
+        [
+            'title' => '7. Direitos do titular',
+            'paragraphs' => [
+                'Nos termos aplicáveis, o titular pode pedir acesso, retificação, apagamento, limitação, oposição ou portabilidade dos seus dados e retirar consentimento quando o tratamento depender dele.',
+                'Também pode apresentar reclamação junto da autoridade de proteção de dados competente. Para exercer direitos, contacta :privacy_email e inclui informação suficiente para localizar o pedido sem enviar palavras-passe.',
+            ],
+        ],
+        [
+            'title' => '8. Segurança e alterações',
+            'paragraphs' => [
+                'A loja aplica sessões HttpOnly, proteção CSRF, validação no servidor, queries preparadas e restrições de acesso a ficheiros privados. Nenhum sistema ligado à Internet pode garantir segurança absoluta.',
+                'Esta política pode ser atualizada quando as funcionalidades, fornecedores ou obrigações legais mudarem. A data apresentada no topo identifica a versão atual.',
+            ],
+        ],
+    ],
+
+    'legal.terms.page_title' => 'Atlantic Anarchy - Termos e Condições',
+    'legal.terms.title' => 'Termos e Condições',
+    'legal.terms.description' => 'Condições aplicáveis à utilização da loja e à aquisição de produtos digitais.',
+    'legal.terms.intro' => 'Ao utilizar a loja ou concluir uma compra, o visitante aceita estes termos e as condições apresentadas pelo prestador de pagamento no checkout.',
+    'legal.terms.sections' => [
+        [
+            'title' => '1. Loja e aceitação',
+            'paragraphs' => [
+                'A loja :store disponibiliza produtos digitais destinados ao servidor Minecraft acessível em :server.',
+                'O utilizador deve ter capacidade legal para contratar ou autorização do respetivo representante legal. Caso não concorde com estes termos, não deve concluir a compra.',
+            ],
+        ],
+        [
+            'title' => '2. Destinatário Minecraft e presentes',
+            'paragraphs' => [
+                'O nome introduzido na página de login identifica apenas o destinatário da compra. Não prova que o visitante é proprietário dessa conta e não concede acesso à conta Minecraft.',
+                'É permitido comprar para outra pessoa como presente. O comprador é responsável por escolher a plataforma correta e escrever exatamente o nome que deve receber o produto.',
+            ],
+            'note' => 'Confirma o nome antes do pagamento. Depois da entrega, a transferência para outro jogador pode não ser tecnicamente possível.',
+        ],
+        [
+            'title' => '3. Produtos, preços e disponibilidade',
+            'paragraphs' => [
+                'Descrições, vantagens, duração e limitações são as apresentadas na loja no momento da compra. Os preços são validados pelo servidor e apresentados em :currency, incluindo ou identificando impostos e encargos quando aplicável.',
+                'Produtos podem ser alterados, suspensos ou removidos. Uma alteração posterior não modifica a encomenda já concluída, salvo quando necessária por razões legais, técnicas ou de equilíbrio do servidor e sem prejudicar direitos obrigatórios.',
+            ],
+        ],
+        [
+            'title' => '4. Encomenda e pagamento',
+            'paragraphs' => [
+                'A encomenda só fica concluída após confirmação do pagamento pelo prestador indicado no checkout. O comprador deve rever produtos, quantidades, destinatário e valor total antes de pagar.',
+                'O processamento do pagamento é realizado pelo Tebex segundo os termos e métodos apresentados no respetivo checkout. A loja não recebe a palavra-passe ou os dados completos do cartão do comprador.',
+            ],
+        ],
+        [
+            'title' => '5. Entrega digital',
+            'paragraphs' => [
+                'Após confirmação do pagamento, a entrega é enviada para o nome Minecraft selecionado. A entrega pode depender de o servidor e o serviço Tebex estarem disponíveis.',
+                'Se o produto não chegar num prazo razoável, o comprador deve contactar :support_email com a referência da encomenda e o nome do destinatário.',
+            ],
+        ],
+        [
+            'title' => '6. Regras e medidas de moderação',
+            'paragraphs' => [
+                'As compras não concedem imunidade às regras do servidor, da comunidade ou da loja. Produtos digitais não autorizam ataques, fraude, abuso do sistema ou violação da lei.',
+                'Uma sanção aplicada por comportamento do jogador não elimina direitos obrigatórios do consumidor, mas também não transforma automaticamente uma compra corretamente entregue num produto defeituoso.',
+            ],
+        ],
+        [
+            'title' => '7. Cancelamentos, reembolsos e litígios',
+            'paragraphs' => [
+                'Pedidos de cancelamento ou reembolso são tratados segundo a Política de Compras e Reembolsos, os termos aplicáveis do Tebex e a legislação obrigatória.',
+                'O comprador deve contactar o suporte antes de iniciar um chargeback, exceto quando isso não seja razoável ou prejudique um direito legal.',
+            ],
+        ],
+        [
+            'title' => '8. Utilização indevida',
+            'items' => [
+                'Não é permitido manipular pedidos, preços, quantidades, cupões ou respostas do servidor.',
+                'Não é permitido explorar falhas da loja, automatizar compras abusivas, contornar limites ou interferir com o serviço.',
+                'Não é permitido usar dados de pagamento sem autorização, apresentar informação falsa ao suporte ou utilizar chargebacks de forma fraudulenta.',
+            ],
+        ],
+        [
+            'title' => '9. Propriedade intelectual e marcas',
+            'paragraphs' => [
+                'O conteúdo visual, textos e identidade da Atlantic Anarchy não podem ser reutilizados de forma enganosa ou para representar uma associação inexistente.',
+                'Minecraft, Mojang e Microsoft pertencem aos respetivos titulares. :store não é afiliada nem apoiada pela Mojang ou Microsoft.',
+            ],
+        ],
+        [
+            'title' => '10. Responsabilidade, alterações e lei aplicável',
+            'paragraphs' => [
+                'A loja procura manter informação correta e disponibilidade razoável, mas pode ocorrer manutenção, falha de terceiros ou interrupção técnica. Nada nestes termos exclui responsabilidade que não possa ser excluída por lei.',
+                'Estes termos podem ser atualizados para refletir mudanças técnicas, comerciais ou legais. A lei aplicável e os meios de resolução de litígios são determinados pelas regras obrigatórias aplicáveis ao operador e ao consumidor.',
+            ],
+        ],
+    ],
+
+    'legal.purchase-policy.page_title' => 'Atlantic Anarchy - Política de Compras e Reembolsos',
+    'legal.purchase-policy.title' => 'Política de Compras e Reembolsos',
+    'legal.purchase-policy.description' => 'Pagamento, entrega digital, correções e tratamento de pedidos de reembolso.',
+    'legal.purchase-policy.intro' => 'Esta política explica o que acontece antes e depois do pagamento e como pedir ajuda quando existe uma falha de entrega ou cobrança.',
+    'legal.purchase-policy.sections' => [
+        [
+            'title' => '1. Natureza dos produtos',
+            'paragraphs' => [
+                'Os produtos vendidos são conteúdos ou benefícios digitais destinados ao servidor Minecraft :store. Não existe envio físico.',
+                'A compra pode ser feita para o próprio jogador ou oferecida a outro nome Minecraft.',
+            ],
+        ],
+        [
+            'title' => '2. Verificações antes do pagamento',
+            'items' => [
+                'Confirmar se o destinatário utiliza Java ou Bedrock.',
+                'Confirmar a grafia exata do nome Minecraft e o ponto inicial usado nos nomes Bedrock desta rede.',
+                'Rever produto, quantidade, preço, desconto e valor total.',
+                'Ler as vantagens, duração e limitações indicadas para o produto.',
+            ],
+        ],
+        [
+            'title' => '3. Pagamento',
+            'paragraphs' => [
+                'O preço final e os métodos disponíveis são apresentados no checkout Tebex. O pagamento só é considerado concluído depois da respetiva confirmação.',
+                'A loja regista a referência, os itens, os valores e o estado necessários para acompanhar a encomenda, mas não guarda dados completos do cartão.',
+            ],
+        ],
+        [
+            'title' => '4. Entrega',
+            'paragraphs' => [
+                'A entrega normalmente começa após a confirmação do pagamento e é dirigida ao nome Minecraft selecionado. Manutenção, indisponibilidade do servidor ou falha de terceiros pode causar atraso.',
+                'Se não existir entrega, contacta :support_email e indica a referência da encomenda, o produto e o destinatário. Não envies passwords.',
+            ],
+        ],
+        [
+            'title' => '5. Nome ou plataforma incorretos',
+            'paragraphs' => [
+                'Contacta o suporte imediatamente se detetares um erro. Antes da entrega, poderá ser possível corrigir a encomenda. Depois de o produto ter sido atribuído, a transferência ou reversão pode ser impossível.',
+                'A introdução de um nome pertencente a outra pessoa é tratada como uma oferta e não como acesso à conta desse jogador.',
+            ],
+        ],
+        [
+            'title' => '6. Direito de livre resolução e conteúdo digital',
+            'paragraphs' => [
+                'Os direitos de cancelamento dependem da legislação aplicável e do momento em que começa a entrega digital. Quando a lei o permita, o direito de livre resolução relativo a conteúdo digital fornecido imediatamente só pode cessar depois do consentimento prévio expresso do consumidor e do reconhecimento das consequências dessa escolha.',
+                'As opções, confirmações e termos apresentados no checkout Tebex fazem parte do processo de compra. Esta política não substitui nem reduz direitos legais obrigatórios.',
+            ],
+        ],
+        [
+            'title' => '7. Situações analisadas para reembolso ou correção',
+            'items' => [
+                'Cobrança duplicada confirmada.',
+                'Produto não entregue e impossibilidade de concluir a entrega num prazo razoável.',
+                'Produto ou quantidade diferentes do que foi confirmado por falha da loja ou do sistema de entrega.',
+                'Produto digital que não corresponde ao anunciado ou outros casos exigidos pela legislação aplicável.',
+            ],
+            'paragraphs' => [
+                'A solução pode consistir em nova entrega, correção, crédito, redução de preço ou reembolso, conforme o problema, a possibilidade técnica e os direitos aplicáveis.',
+            ],
+        ],
+        [
+            'title' => '8. Situações que normalmente não justificam reembolso após entrega correta',
+            'items' => [
+                'Mudança de opinião depois de o benefício digital ter sido entregue, sem prejuízo de direitos legais.',
+                'Erro do comprador no nome ou na plataforma quando a entrega foi efetuada exatamente para os dados confirmados.',
+                'Perda de acesso por sanção resultante de violação das regras, salvo quando a lei determine solução diferente.',
+                'Tentativa de manipular preços, cupões, quantidades, pagamentos ou o processo de suporte.',
+            ],
+        ],
+        [
+            'title' => '9. Como pedir ajuda',
+            'paragraphs' => [
+                'Envia o pedido para :support_email ou através do Discord oficial. Inclui a referência da encomenda, nome Minecraft, data aproximada, produto e descrição objetiva do problema.',
+                'Não publiques comprovativos com dados sensíveis em canais públicos. O suporte poderá pedir elementos adicionais estritamente necessários para confirmar o pagamento.',
+            ],
+        ],
+        [
+            'title' => '10. Chargebacks e fraude',
+            'paragraphs' => [
+                'Um chargeback não deve ser usado como alternativa a contactar o suporte para um problema corrigível. A loja e o prestador de pagamento podem contestar pedidos fraudulentos com registos da encomenda e entrega.',
+                'Nada impede o comprador de exercer legitimamente os seus direitos junto do prestador de pagamento, autoridade competente ou mecanismo de resolução de litígios.',
+            ],
+        ],
+    ],
+
+    'legal.rules.page_title' => 'Atlantic Anarchy - Regras',
+    'legal.rules.title' => 'Regras da Loja e Comunidade',
+    'legal.rules.description' => 'Regras mínimas de segurança, compras e participação na comunidade Atlantic.',
+    'legal.rules.intro' => 'A experiência de jogo pode ser anárquica, mas a loja, a infraestrutura e a comunidade continuam sujeitas a regras de segurança, pagamento e legalidade.',
+    'legal.rules.sections' => [
+        [
+            'title' => '1. Âmbito',
+            'paragraphs' => [
+                'Estas regras aplicam-se à loja, checkout, suporte, Discord oficial e serviços técnicos da Atlantic Anarchy.',
+                'Regras específicas de jogo podem ser publicadas no Discord ou dentro do servidor. Em caso de conflito, aplicam-se as regras obrigatórias de segurança e legalidade.',
+            ],
+        ],
+        [
+            'title' => '2. Segurança da infraestrutura',
+            'items' => [
+                'Não atacar, sobrecarregar, interromper ou tentar obter acesso não autorizado ao site, servidor, base de dados, APIs ou contas administrativas.',
+                'Não distribuir malware, phishing, links enganosos ou ficheiros destinados a comprometer outros jogadores ou a equipa.',
+                'Não explorar vulnerabilidades para alterar preços, encomendas, cupões, permissões ou dados.',
+            ],
+            'note' => 'Uma falha deve ser comunicada de forma responsável ao suporte, sem continuar a explorá-la nem divulgar instruções de abuso.',
+        ],
+        [
+            'title' => '3. Compras e pagamentos',
+            'items' => [
+                'Utilizar apenas métodos de pagamento autorizados pelo respetivo titular.',
+                'Não manipular pedidos, respostas AJAX, HTML ou JavaScript para tentar obter produtos, descontos ou quantidades não pagas.',
+                'Não utilizar cupões de forma contrária às respetivas condições, criar encomendas automatizadas abusivas ou contornar limites.',
+                'Não apresentar chargebacks, reclamações ou comprovativos falsos.',
+            ],
+        ],
+        [
+            'title' => '4. Identidade e suporte',
+            'items' => [
+                'Não fingir ser membro da equipa, parceiro, moderador ou representante do Tebex.',
+                'Não tentar enganar o suporte para transferir produtos, alterar destinatários ou obter acesso a informação de terceiros.',
+                'Nunca pedir ou partilhar passwords Minecraft, Microsoft, email, cartões ou códigos de autenticação através dos canais da Atlantic.',
+            ],
+        ],
+        [
+            'title' => '5. Conduta e legalidade',
+            'items' => [
+                'Não publicar ameaças credíveis, dados pessoais de terceiros, extorsão, conteúdo ilegal ou instruções destinadas a causar dano real.',
+                'Não usar a infraestrutura para fraude, branqueamento, venda não autorizada ou qualquer atividade proibida por lei.',
+                'Respeitar as regras da plataforma, do prestador de pagamento e dos serviços externos utilizados.',
+            ],
+        ],
+        [
+            'title' => '6. Natureza anárquica do servidor',
+            'paragraphs' => [
+                'O conceito de servidor anárquico pode permitir liberdade de jogo superior à de outros servidores, mas não autoriza ataques à infraestrutura, fraude financeira, comprometimento de contas, malware ou violações da lei.',
+                'A compra de um produto não garante ausência de sanções e não concede poder administrativo, propriedade do servidor ou exceção às regras aplicáveis.',
+            ],
+        ],
+        [
+            'title' => '7. Medidas aplicáveis',
+            'paragraphs' => [
+                'Consoante a gravidade e as provas disponíveis, a equipa pode limitar o acesso à loja ou comunidade, cancelar operações não pagas, corrigir vantagens obtidas de forma abusiva, preservar registos e comunicar situações às entidades competentes.',
+                'As medidas devem respeitar a legislação aplicável e não eliminam direitos obrigatórios relacionados com uma compra.',
+            ],
+        ],
+        [
+            'title' => '8. Comunicação de problemas',
+            'paragraphs' => [
+                'Para comunicar vulnerabilidades, fraude, falhas de entrega ou comportamento grave, contacta :support_email. Inclui informação suficiente para investigar e evita divulgar publicamente dados sensíveis ou passos de exploração.',
+            ],
+        ],
+    ],
+
 ];
