@@ -45,6 +45,27 @@ function request_string(string $key, string $default = ''): string
     return is_string($value) ? trim($value) : $default;
 }
 
+
+function query_int(string $key, int $default = 0): int
+{
+    $raw = $_GET[$key] ?? null;
+
+    if (!is_string($raw) && !is_int($raw)) {
+        return $default;
+    }
+
+    $value = filter_var($raw, FILTER_VALIDATE_INT);
+
+    return $value === false ? $default : (int) $value;
+}
+
+function query_string(string $key, string $default = ''): string
+{
+    $value = $_GET[$key] ?? null;
+
+    return is_string($value) ? trim($value) : $default;
+}
+
 function client_ip(): string
 {
     $ip = (string) ($_SERVER['REMOTE_ADDR'] ?? '127.0.0.1');

@@ -75,3 +75,11 @@ CREATE TABLE IF NOT EXISTS webhook_events (
     received_at DATETIME NOT NULL,
     UNIQUE KEY uq_webhook_provider_event (provider, event_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS daily_site_stats (
+    visit_date DATE PRIMARY KEY,
+    page_views INT UNSIGNED NOT NULL DEFAULT 0,
+    unique_sessions INT UNSIGNED NOT NULL DEFAULT 0,
+    updated_at DATETIME NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+

@@ -120,8 +120,11 @@ function config(?string $key = null, mixed $default = null): mixed
                 ))),
             ],
             'admin' => [
-                'username' => (string) env_value('ADMIN_USERNAME', 'admin'),
+                'username' => (string) env_value('ADMIN_USERNAME', ''),
                 'password_hash' => (string) env_value('ADMIN_PASSWORD_HASH', ''),
+                'session_timeout' => max(300, (int) env_value('ADMIN_SESSION_TIMEOUT', '1800')),
+                'login_max_attempts' => max(1, (int) env_value('ADMIN_LOGIN_MAX_ATTEMPTS', '5')),
+                'login_window' => max(60, (int) env_value('ADMIN_LOGIN_WINDOW_SECONDS', '900')),
             ],
         ];
 

@@ -7,7 +7,11 @@ require_post();
 verify_csrf();
 require_admin();
 
-$statement = db()->prepare('DELETE FROM coupons WHERE id = :id');
-$statement->execute(['id' => request_int('id')]);
-flash('success', t('messages.admin_coupon_deleted'));
-redirect_route('admin');
+try {
+    delete_coupon_from_admin(request_int('id'));
+    flash('success', t('messages.admin_coupon_deleted'));
+} catch (Throwable $error) {
+    flash('error', public_error_message($error, t('messages.admin_delete_failed')));
+}
+
+redirect_admin('coupons');

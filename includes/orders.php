@@ -159,17 +159,6 @@ function mark_order_status_by_token(string $token, string $status, ?string $prov
 }
 
 
-function recent_orders_admin(int $limit = 50): array
-{
-    $limit = max(1, min(200, $limit));
-    $statement = db()->query(
-        'SELECT id, public_token, minecraft_name, minecraft_platform, subtotal_cents, discount_cents, total_cents,
-                currency, coupon_code, status, provider, provider_reference, created_at
-         FROM orders ORDER BY id DESC LIMIT ' . $limit
-    );
-
-    return $statement->fetchAll();
-}
 
 
 function process_order_webhook(

@@ -11,7 +11,7 @@ try {
     save_product_from_admin($_POST);
     flash('success', t('messages.admin_product_saved'));
 } catch (Throwable $error) {
-    flash('error', $error->getMessage());
+    flash('error', public_error_message($error, t('messages.admin_save_failed')));
 }
 
-redirect_route('admin');
+redirect_admin('products');
