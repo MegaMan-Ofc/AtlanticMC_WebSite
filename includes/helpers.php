@@ -11,7 +11,7 @@ function request_base_path(): string
 {
     $scriptName = str_replace('\\', '/', (string) ($_SERVER['SCRIPT_NAME'] ?? ''));
 
-    foreach (['/actions/', '/api/'] as $marker) {
+    foreach (['/actions/', '/api/', '/ajax/'] as $marker) {
         $position = strpos($scriptName, $marker);
 
         if ($position !== false) {
