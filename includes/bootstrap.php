@@ -13,7 +13,12 @@ require_once __DIR__ . '/database.php';
 require_once __DIR__ . '/catalog.php';
 require_once __DIR__ . '/coupons.php';
 require_once __DIR__ . '/cart.php';
-require_once __DIR__ . '/auth.php';
+require_once __DIR__ . '/admin_auth.php';
+require_once __DIR__ . '/admin_products.php';
+require_once __DIR__ . '/admin_coupons.php';
+require_once __DIR__ . '/admin_orders.php';
+require_once __DIR__ . '/analytics.php';
+require_once __DIR__ . '/admin_dashboard.php';
 require_once __DIR__ . '/minecraft_recipient.php';
 require_once __DIR__ . '/http.php';
 require_once __DIR__ . '/tebex.php';
@@ -63,3 +68,7 @@ set_exception_handler(static function (Throwable $error): void {
 });
 
 initialize_database();
+
+if (!defined('ATLANTIC_STATELESS') || ATLANTIC_STATELESS !== true) {
+    track_public_page_view();
+}

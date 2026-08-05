@@ -14,7 +14,11 @@ function current_minecraft_recipient(): ?array
     $platform = $recipient['platform'] ?? null;
     $avatarUrl = $recipient['avatar_url'] ?? null;
 
-    if (!is_string($username) || !is_string($platform) || !is_string($avatarUrl)) {
+    if (
+        !is_string($username)
+        || $platform !== 'java'
+        || !is_string($avatarUrl)
+    ) {
         return null;
     }
 
@@ -35,26 +39,16 @@ function normalize_minecraft_username(string $username, string $platform): strin
     $username = trim($username);
     $platform = strtolower(trim($platform));
 
-    if (!in_array($platform, ['java', 'bedrock'], true)) {
+    if ($platform === 'bedrock') {
+        throw new InvalidArgumentException(t('validation.bedrock_disabled'));
+    }
+
+    if ($platform !== 'java') {
         throw new InvalidArgumentException(t('validation.platform'));
     }
 
-    if ($platform === 'bedrock') {
-        $cleanUsername = ltrim($username, '.');
-
-        if (!preg_match('/^[A-Za-z0-9_]{2,15}$/', $cleanUsername)) {
-            throw new InvalidArgumentException(
-                t('validation.bedrock_username')
-            );
-        }
-
-        return '.' . $cleanUsername;
-    }
-
     if (!preg_match('/^[A-Za-z0-9_]{3,16}$/', $username)) {
-        throw new InvalidArgumentException(
-            t('validation.java_username')
-        );
+        throw new InvalidArgumentException(t('validation.java_username'));
     }
 
     return $username;
@@ -62,10 +56,9 @@ function normalize_minecraft_username(string $username, string $platform): strin
 
 function minecraft_avatar_url(string $username, int $size = 64): string
 {
-    $cleanUsername = ltrim($username, '.');
     $size = max(16, min(256, $size));
 
-    return 'https://mc-heads.net/avatar/' . rawurlencode($cleanUsername) . '/' . $size;
+    return 'https://mc-heads.net/avatar/' . rawurlencode($username) . '/' . $size;
 }
 
 function select_minecraft_recipient(string $username, string $platform): array
@@ -104,7 +97,11 @@ function require_minecraft_recipient(string $returnTo = 'checkout'): void
         return;
     }
 
-    $_SESSION['recipient_return_to'] = safe_return_path($returnTo, route_path('home'));
+    $_SESSION['recipient_return_to'] = safe_return_path(
+        $returnTo,
+        route_path('home')
+    );
+
     flash('info', t('messages.recipient_required'));
     redirect_route('login');
 }

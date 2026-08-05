@@ -79,3 +79,11 @@ CREATE TABLE IF NOT EXISTS webhook_events (
     received_at TEXT NOT NULL,
     UNIQUE(provider, event_id)
 );
+
+CREATE TABLE IF NOT EXISTS daily_site_stats (
+    visit_date TEXT PRIMARY KEY,
+    page_views INTEGER NOT NULL DEFAULT 0,
+    unique_sessions INTEGER NOT NULL DEFAULT 0,
+    updated_at TEXT NOT NULL
+);
+
