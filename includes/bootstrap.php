@@ -5,6 +5,7 @@ declare(strict_types=1);
 require_once __DIR__ . '/config.php';
 require_once __DIR__ . '/helpers.php';
 require_once __DIR__ . '/session.php';
+require_once __DIR__ . '/i18n.php';
 require_once __DIR__ . '/security.php';
 require_once __DIR__ . '/database.php';
 require_once __DIR__ . '/catalog.php';
@@ -36,7 +37,7 @@ set_exception_handler(static function (Throwable $error): void {
     $debug = (bool) config('app.debug', false);
     $plainMessage = $debug
         ? $error->getMessage()
-        : 'Ocorreu um erro interno. Tenta novamente mais tarde.';
+        : t('messages.internal_error');
 
     if (defined('ATLANTIC_JSON') && ATLANTIC_JSON === true) {
         if (!headers_sent()) {
@@ -53,10 +54,10 @@ set_exception_handler(static function (Throwable $error): void {
         header('Content-Type: text/html; charset=utf-8');
     }
 
-    echo '<!doctype html><html lang="pt"><meta charset="utf-8"><title>Erro</title>'
+    echo '<!doctype html><html lang="' . e(current_language()) . '"><meta charset="utf-8"><title>' . e(t('common.error', [], 'Error')) . '</title>'
         . '<body style="font-family:sans-serif;padding:2rem;background:#0b0e13;color:#fff">'
         . '<h1>Atlantic Anarchy</h1><p>' . e($plainMessage) . '</p>'
-        . '<p><a style="color:#8fd3ff" href="' . e(url('index.php')) . '">Voltar à loja</a></p></body></html>';
+        . '<p><a style="color:#8fd3ff" href="' . e(url('index.php')) . '">' . e(t('messages.back_to_store')) . '</a></p></body></html>';
 });
 
 initialize_database();

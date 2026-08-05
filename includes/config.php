@@ -81,6 +81,7 @@ function config(?string $key = null, mixed $default = null): mixed
                 'env' => (string) env_value('APP_ENV', 'development'),
                 'url' => rtrim((string) env_value('APP_URL', ''), '/'),
                 'timezone' => (string) env_value('APP_TIMEZONE', 'Europe/Lisbon'),
+                'default_language' => (string) env_value('APP_DEFAULT_LANGUAGE', 'pt'),
                 'auto_migrate' => (bool) env_value('APP_AUTO_MIGRATE', true),
                 'debug' => (bool) env_value('APP_DEBUG', false),
                 'server_ip' => (string) env_value('SERVER_IP', 'atlanticmc.secure.pebble.host'),

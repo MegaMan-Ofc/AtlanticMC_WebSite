@@ -2,7 +2,7 @@ Options -Indexes
 
 <IfModule mod_rewrite.c>
     RewriteEngine On
-    RewriteRule ^(?:includes|controllers|templates|database|storage)/ - [F,L]
+    RewriteRule ^(?:includes|controllers|templates|translations|database|storage)/ - [F,L]
 </IfModule>
 
 <FilesMatch "^(?:\.env|\.env\.example|README-PHP\.md)$">
