@@ -92,6 +92,14 @@ function config(?string $key = null, mixed $default = null): mixed
                 'max_cart_quantity' => max(1, (int) env_value('MAX_CART_QUANTITY', '20')),
                 'allow_test_orders' => (bool) env_value('ALLOW_TEST_ORDERS', false),
             ],
+            'legal' => [
+                'operator_name' => (string) env_value('LEGAL_OPERATOR_NAME', env_value('APP_NAME', 'Atlantic Anarchy')),
+                'operator_address' => (string) env_value('LEGAL_OPERATOR_ADDRESS', ''),
+                'operator_tax_id' => (string) env_value('LEGAL_OPERATOR_TAX_ID', ''),
+                'country' => (string) env_value('LEGAL_COUNTRY', 'Portugal'),
+                'privacy_email' => (string) env_value('PRIVACY_EMAIL', env_value('SUPPORT_EMAIL', 'support@atlantic.net')),
+                'last_updated' => (string) env_value('LEGAL_LAST_UPDATED', '2026-08-05'),
+            ],
             'database' => [
                 'driver' => $dbDriver,
                 'sqlite_path' => $sqlitePath,

@@ -25,8 +25,10 @@
             <nav class="footer-legal-links" aria-label="<?= e(t('footer.legal_aria')) ?>">
                 <h2><?= e(t('common.legal')) ?></h2>
                 <div class="footer-links">
-                    <span class="footer-link--disabled"><?= e(t('footer.privacy')) ?></span>
-                    <span class="footer-link--disabled"><?= e(t('footer.terms')) ?></span>
+                    <a href="<?= e(url('privacy.php')) ?>"><?= e(t('footer.privacy')) ?></a>
+                    <a href="<?= e(url('terms.php')) ?>"><?= e(t('footer.terms')) ?></a>
+                    <a href="<?= e(url('purchase-policy.php')) ?>"><?= e(t('footer.purchase_policy')) ?></a>
+                    <a href="<?= e(url('rules.php')) ?>"><?= e(t('footer.rules')) ?></a>
                     <a href="https://www.livroreclamacoes.pt/Inicio/" target="_blank" rel="noopener noreferrer"><?= e(t('footer.complaints')) ?></a>
                 </div>
             </nav>
