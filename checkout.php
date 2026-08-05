@@ -23,7 +23,12 @@
                                 <div class="cart-preview-total"><span>Total</span><strong><?= e(format_money($cart['total_cents'])) ?></strong></div>
                             </div>
                         </div>
-                        <form action="<?= e(url('actions/checkout.php')) ?>" method="post">
+                        <form
+                            action="<?= e(url('actions/checkout.php')) ?>"
+                            method="post"
+                            data-ajax-checkout
+                            data-ajax-url="<?= e(url('ajax/checkout.php')) ?>"
+                        >
                             <?= csrf_field() ?>
                             <button class="button button--primary button--large button--wide" type="submit">
                                 <i class="fa-solid fa-lock"></i>

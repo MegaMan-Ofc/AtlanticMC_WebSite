@@ -1,4 +1,7 @@
-<?php $headerRecipient = current_minecraft_recipient(); ?>
+<?php
+$headerRecipient = current_minecraft_recipient();
+$headerCartCount = cart_count();
+?>
 <header class="site-header" id="top">
     <div class="header-primary">
         <div class="container header-grid">
@@ -33,9 +36,7 @@
                 </button>
                 <a aria-label="Open shopping cart" class="button button--primary cart-button" href="<?= e(url('cart.php')) ?>">
                     <i aria-hidden="true" class="fa-solid fa-cart-shopping"></i>
-                    <?php if (cart_count() > 0): ?>
-                        <span class="cart-count"><?= cart_count() ?></span>
-                    <?php endif; ?>
+                    <span class="cart-count" data-cart-count<?= $headerCartCount === 0 ? ' hidden' : '' ?>><?= $headerCartCount ?></span>
                 </a>
             </nav>
         </div>
