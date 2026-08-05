@@ -32,7 +32,7 @@
             <input type="hidden" name="id" value="<?= (int) $product['id'] ?>">
             <div class="admin-product-preview">
                 <img src="<?= e(url((string) $product['image'])) ?>" alt="">
-                <div><strong><?= e(localized_product_name($product)) ?></strong><span><?= e(localized_category((string) $product['category'])) ?></span></div>
+                <div><strong><?= e((string) $product['name']) ?></strong><span><?= e(localized_category((string) $product['category'])) ?></span></div>
             </div>
             <div class="admin-form-grid">
                 <div class="admin-field"><label><?= e(t('common.name')) ?></label><input name="name" value="<?= e($product['name']) ?>" maxlength="120" required></div>

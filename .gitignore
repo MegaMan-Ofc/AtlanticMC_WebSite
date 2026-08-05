@@ -13,3 +13,4 @@ storage/*.log
 *.sql.zip
 *.dump
 *.backup
+adm_pass_tut.md
