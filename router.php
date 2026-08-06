@@ -2,12 +2,8 @@
 
 declare(strict_types=1);
 
-/**
- * Development router for PHP's built-in server.
- *
- * Run the project locally with:
- * php -S localhost:8000 router.php
- */
+header_remove('X-Powered-By');
+
 
 require_once __DIR__ . '/includes/config.php';
 require_once __DIR__ . '/includes/routes.php';
@@ -48,7 +44,8 @@ if ($relativePath !== $trimmedPath && isset($pathToName[$trimmedPath])) {
 }
 
 // Let the built-in server handle real assets, actions, AJAX and API files.
-$filePath = __DIR__ . $requestPath;
+$publicRoot = __DIR__ . '/public';
+$filePath = $publicRoot . $requestPath;
 
 if ($requestPath !== '/' && is_file($filePath)) {
     return false;
@@ -66,7 +63,7 @@ if (!is_string($routeName)) {
 }
 
 $route = public_routes()[$routeName];
-$_SERVER['SCRIPT_FILENAME'] = __DIR__ . '/' . $route['script'];
+$_SERVER['SCRIPT_FILENAME'] = $publicRoot . '/' . $route['script'];
 $_SERVER['SCRIPT_NAME'] = '/' . $route['script'];
 
 require $_SERVER['SCRIPT_FILENAME'];
