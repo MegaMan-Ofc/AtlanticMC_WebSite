@@ -12,7 +12,9 @@ $adminConfigured = admin_is_configured();
 $adminAuthenticated = admin_is_authenticated();
 $adminSection = admin_section();
 $adminSummary = [];
+$adminProductFilters = [];
 $adminProducts = [];
+$adminCouponFilters = [];
 $adminCoupons = [];
 $adminOrderFilters = [];
 $adminOrdersPage = ['orders' => [], 'total' => 0, 'page' => 1, 'pages' => 1];
@@ -22,9 +24,11 @@ if ($adminAuthenticated) {
     $adminSummary = admin_dashboard_summary();
 
     if ($adminSection === 'products') {
-        $adminProducts = all_products_admin();
+        $adminProductFilters = admin_product_filters();
+        $adminProducts = all_products_admin($adminProductFilters);
     } elseif ($adminSection === 'coupons') {
-        $adminCoupons = all_coupons_admin();
+        $adminCouponFilters = admin_coupon_filters();
+        $adminCoupons = all_coupons_admin($adminCouponFilters);
     } elseif ($adminSection === 'orders') {
         $adminOrderFilters = admin_order_filters();
         $adminOrdersPage = admin_orders_page($adminOrderFilters);
@@ -42,27 +46,4 @@ function admin_section_icon(string $section): string
         'analytics' => 'fa-solid fa-chart-column',
         default => 'fa-solid fa-gauge-high',
     };
-}
-
-function format_admin_coupon_discount(array $coupon): string
-{
-    if (($coupon['discount_type'] ?? '') === 'fixed') {
-        return format_money((int) ($coupon['discount_value'] ?? 0));
-    }
-
-    return (int) ($coupon['discount_value'] ?? 0) . '%';
-}
-
-function format_admin_datetime(string $value): string
-{
-    $timestamp = strtotime($value);
-
-    return $timestamp === false ? $value : date('d/m/Y H:i', $timestamp);
-}
-
-function format_admin_date(string $value): string
-{
-    $timestamp = strtotime($value);
-
-    return $timestamp === false ? $value : date('d/m/Y', $timestamp);
 }

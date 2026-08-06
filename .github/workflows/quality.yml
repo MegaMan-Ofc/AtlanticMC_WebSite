@@ -1,0 +1,64 @@
+name: Quality
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:8.4
+        env:
+          MYSQL_DATABASE: atlantic_store_test
+          MYSQL_USER: atlantic_user
+          MYSQL_PASSWORD: atlantic_test_password
+          MYSQL_ROOT_PASSWORD: atlantic_root_password
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -uroot -patlantic_root_password"
+          --health-interval=5s
+          --health-timeout=5s
+          --health-retries=20
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: pdo_mysql, pdo_sqlite, sqlite3
+          coverage: none
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Lint PHP and JavaScript
+        run: php bin/quality.php
+
+      - name: Run core tests
+        run: php tests/run.php
+
+      - name: Test MySQL migrations and seed
+        env:
+          APP_ENV: test
+          APP_KEY: test-key-test-key-test-key-test-key
+          APP_DEBUG: 'false'
+          APP_URL: http://localhost
+          APP_FORCE_HTTPS: 'false'
+          PAYMENTS_ENABLED: 'false'
+          ALLOW_TEST_ORDERS: 'true'
+          DB_DRIVER: mysql
+          DB_HOST: 127.0.0.1
+          DB_PORT: 3306
+          DB_NAME: atlantic_store_test
+          DB_USER: atlantic_user
+          DB_PASSWORD: atlantic_test_password
+          DB_CHARSET: utf8mb4
+        run: |
+          php bin/migrate.php
+          php bin/seed.php
+          php bin/check-database.php

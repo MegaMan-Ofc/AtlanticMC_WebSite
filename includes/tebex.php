@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 function tebex_is_configured(): bool
 {
-    return trim((string) config('tebex.public_token', '')) !== '';
+    return (bool) config('app.payments_enabled', false)
+        && trim((string) config('tebex.public_token', '')) !== '';
 }
 
 function tebex_create_checkout(array $order, array $items): array

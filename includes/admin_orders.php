@@ -30,6 +30,7 @@ function admin_order_filters(): array
     $order = substr(trim(query_string('order')), 0, 64);
     $dateFrom = query_string('date_from');
     $dateTo = query_string('date_to');
+    $sort = query_string('sort');
     $page = max(1, query_int('page', 1));
 
     if ($status !== '' && !in_array($status, ADMIN_ORDER_STATUSES, true)) {
@@ -44,12 +45,24 @@ function admin_order_filters(): array
         $dateTo = '';
     }
 
+    if (!in_array($sort, [
+        '',
+        'created_asc',
+        'total_desc',
+        'total_asc',
+        'player_asc',
+        'player_desc',
+    ], true)) {
+        $sort = '';
+    }
+
     return [
         'player' => $player,
         'status' => $status,
         'order' => $order,
         'date_from' => $dateFrom,
         'date_to' => $dateTo,
+        'sort' => $sort,
         'page' => $page,
     ];
 }
@@ -114,6 +127,18 @@ function admin_order_items(array $orderIds): array
     return $items;
 }
 
+function admin_order_order_by(array $filters): string
+{
+    return match ((string) ($filters['sort'] ?? '')) {
+        'created_asc' => 'created_at ASC, id ASC',
+        'total_desc' => 'total_cents DESC, id DESC',
+        'total_asc' => 'total_cents ASC, id ASC',
+        'player_asc' => 'minecraft_name ASC, id DESC',
+        'player_desc' => 'minecraft_name DESC, id DESC',
+        default => 'created_at DESC, id DESC',
+    };
+}
+
 function admin_orders_page(array $filters, int $perPage = 25): array
 {
     $perPage = max(10, min(100, $perPage));
@@ -127,7 +152,7 @@ function admin_orders_page(array $filters, int $perPage = 25): array
     $statement = db()->prepare(
         'SELECT id, public_token, minecraft_name, minecraft_platform, subtotal_cents, discount_cents,
                 total_cents, currency, coupon_code, status, provider, provider_reference, created_at, updated_at
-         FROM orders' . $query['where'] . ' ORDER BY id DESC LIMIT :limit OFFSET :offset'
+         FROM orders' . $query['where'] . ' ORDER BY ' . admin_order_order_by($filters) . ' LIMIT :limit OFFSET :offset'
     );
 
     foreach ($query['parameters'] as $name => $value) {

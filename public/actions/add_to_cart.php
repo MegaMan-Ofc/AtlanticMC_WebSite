@@ -1,0 +1,18 @@
+<?php
+
+declare(strict_types=1);
+
+require_once dirname(__DIR__, 2) . '/includes/bootstrap.php';
+require_post();
+verify_csrf();
+
+$returnTo = safe_return_path(request_string('return_to'), route_path('home'));
+
+try {
+    cart_add(request_int('product_id'), max(1, request_int('quantity', 1)));
+    flash('success', t('messages.cart_added'));
+} catch (InvalidArgumentException $error) {
+    flash('error', $error->getMessage());
+}
+
+redirect($returnTo);

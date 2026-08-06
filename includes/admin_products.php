@@ -2,11 +2,121 @@
 
 declare(strict_types=1);
 
-function all_products_admin(): array
+function admin_product_filters(): array
 {
-    return db()->query(
-        'SELECT * FROM products ORDER BY category ASC, sort_order ASC, id ASC'
-    )->fetchAll();
+    $search = substr(trim(query_string('search')), 0, 120);
+    $category = query_string('category');
+    $state = query_string('state');
+    $sort = query_string('sort');
+
+    if ($category !== '' && !in_array($category, STORE_CATEGORIES, true)) {
+        $category = '';
+    }
+
+    if (!in_array($state, ['', 'active', 'inactive'], true)) {
+        $state = '';
+    }
+
+    if (!in_array($sort, [
+        '',
+        'name_asc',
+        'name_desc',
+        'price_asc',
+        'price_desc',
+        'created_asc',
+        'created_desc',
+    ], true)) {
+        $sort = '';
+    }
+
+    return [
+        'search' => $search,
+        'category' => $category,
+        'state' => $state,
+        'sort' => $sort,
+    ];
+}
+
+function admin_products_query(array $filters): array
+{
+    $conditions = [];
+    $parameters = [];
+    $search = (string) ($filters['search'] ?? '');
+    $category = (string) ($filters['category'] ?? '');
+    $state = (string) ($filters['state'] ?? '');
+
+    if ($search !== '') {
+        $searchPattern = '%' . $search . '%';
+
+        $conditions[] = '(
+            name LIKE :search_name
+            OR slug LIKE :search_slug
+            OR tebex_package_id LIKE :search_tebex
+        )';
+
+        $parameters['search_name'] = $searchPattern;
+        $parameters['search_slug'] = $searchPattern;
+        $parameters['search_tebex'] = $searchPattern;
+    }
+
+    if ($category !== '') {
+        $conditions[] = 'category = :category';
+        $parameters['category'] = $category;
+    }
+
+    if ($state !== '') {
+        $conditions[] = 'active = :active';
+        $parameters['active'] = $state === 'active' ? 1 : 0;
+    }
+
+    return [
+        'where' => $conditions === []
+            ? ''
+            : ' WHERE ' . implode(' AND ', $conditions),
+        'parameters' => $parameters,
+    ];
+}
+
+function admin_product_query_parameters(array $filters): array
+{
+    return array_filter(
+        [
+            'search' => (string) ($filters['search'] ?? ''),
+            'category' => (string) ($filters['category'] ?? ''),
+            'state' => (string) ($filters['state'] ?? ''),
+            'sort' => (string) ($filters['sort'] ?? ''),
+        ],
+        static fn (string $value): bool => $value !== ''
+    );
+}
+
+function admin_product_order_by(array $filters): string
+{
+    return match ((string) ($filters['sort'] ?? '')) {
+        'name_asc' => 'name ASC, id ASC',
+        'name_desc' => 'name DESC, id DESC',
+        'price_asc' => 'price_cents ASC, id ASC',
+        'price_desc' => 'price_cents DESC, id DESC',
+        'created_asc' => 'created_at ASC, id ASC',
+        'created_desc' => 'created_at DESC, id DESC',
+        default => 'category ASC, sort_order ASC, id ASC',
+    };
+}
+
+function all_products_admin(array $filters = []): array
+{
+    $query = admin_products_query($filters);
+
+    $statement = db()->prepare(
+        'SELECT *
+         FROM products'
+        . $query['where']
+        . ' ORDER BY ' . admin_product_order_by($filters)
+    );
+
+    $statement->execute($query['parameters']);
+
+    return $statement->fetchAll();
 }
 
 function save_product_from_admin(array $input): int

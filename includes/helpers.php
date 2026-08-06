@@ -66,11 +66,138 @@ function query_string(string $key, string $default = ''): string
     return is_string($value) ? trim($value) : $default;
 }
 
+function ip_matches_network(string $ip, string $network): bool
+{
+    $network = trim($network);
+
+    if ($network === '') {
+        return false;
+    }
+
+    if (!str_contains($network, '/')) {
+        return hash_equals($network, $ip);
+    }
+
+    [$subnet, $prefix] = array_pad(explode('/', $network, 2), 2, '');
+    $ipBinary = @inet_pton($ip);
+    $subnetBinary = @inet_pton($subnet);
+
+    if ($ipBinary === false || $subnetBinary === false || strlen($ipBinary) !== strlen($subnetBinary)) {
+        return false;
+    }
+
+    $prefixLength = filter_var($prefix, FILTER_VALIDATE_INT);
+    $maximum = strlen($ipBinary) * 8;
+
+    if ($prefixLength === false || $prefixLength < 0 || $prefixLength > $maximum) {
+        return false;
+    }
+
+    $fullBytes = intdiv((int) $prefixLength, 8);
+    $remainingBits = (int) $prefixLength % 8;
+
+    if ($fullBytes > 0 && substr($ipBinary, 0, $fullBytes) !== substr($subnetBinary, 0, $fullBytes)) {
+        return false;
+    }
+
+    if ($remainingBits === 0) {
+        return true;
+    }
+
+    $mask = (0xFF << (8 - $remainingBits)) & 0xFF;
+
+    return (ord($ipBinary[$fullBytes]) & $mask) === (ord($subnetBinary[$fullBytes]) & $mask);
+}
+
+function request_from_trusted_proxy(): bool
+{
+    $remote = (string) ($_SERVER['REMOTE_ADDR'] ?? '');
+    $trusted = config('app.trusted_proxies', []);
+
+    if (!filter_var($remote, FILTER_VALIDATE_IP) || !is_array($trusted)) {
+        return false;
+    }
+
+    foreach ($trusted as $network) {
+        if (is_string($network) && ip_matches_network($remote, $network)) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 function client_ip(): string
 {
-    $ip = (string) ($_SERVER['REMOTE_ADDR'] ?? '127.0.0.1');
+    $remote = (string) ($_SERVER['REMOTE_ADDR'] ?? '127.0.0.1');
 
-    return filter_var($ip, FILTER_VALIDATE_IP) ? $ip : '127.0.0.1';
+    if (!filter_var($remote, FILTER_VALIDATE_IP)) {
+        $remote = '127.0.0.1';
+    }
+
+    if (!request_from_trusted_proxy()) {
+        return $remote;
+    }
+
+    $forwarded = (string) ($_SERVER['HTTP_X_FORWARDED_FOR'] ?? '');
+    $addresses = array_values(array_filter(array_map('trim', explode(',', $forwarded))));
+    $addresses[] = $remote;
+    $trusted = config('app.trusted_proxies', []);
+
+    for ($index = count($addresses) - 1; $index >= 0; $index--) {
+        $candidate = $addresses[$index];
+
+        if (!filter_var($candidate, FILTER_VALIDATE_IP)) {
+            continue;
+        }
+
+        $isTrusted = false;
+
+        foreach ($trusted as $network) {
+            if (is_string($network) && ip_matches_network($candidate, $network)) {
+                $isTrusted = true;
+                break;
+            }
+        }
+
+        if (!$isTrusted) {
+            return $candidate;
+        }
+    }
+
+    return $remote;
+}
+
+function request_is_https(): bool
+{
+    if (!empty($_SERVER['HTTPS']) && strtolower((string) $_SERVER['HTTPS']) !== 'off') {
+        return true;
+    }
+
+    if (!request_from_trusted_proxy()) {
+        return false;
+    }
+
+    return strtolower(trim(explode(',', (string) ($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? ''))[0] ?? '')) === 'https';
+}
+
+function enforce_https_request(): void
+{
+    if (!(bool) config('app.force_https', false) || request_is_https()) {
+        return;
+    }
+
+    $method = strtoupper((string) ($_SERVER['REQUEST_METHOD'] ?? 'GET'));
+
+    if (!in_array($method, ['GET', 'HEAD'], true)) {
+        http_response_code(400);
+        exit('HTTPS is required.');
+    }
+
+    $appUrl = (string) config('app.url');
+    $requestUri = (string) ($_SERVER['REQUEST_URI'] ?? '/');
+    header('Location: ' . $appUrl . '/' . ltrim($requestUri, '/'), true, 308);
+    exit;
 }
 
 function format_money(int $cents, ?string $currency = null): string
