@@ -36,6 +36,7 @@ require_once $root . '/includes/config.php';
 require_once $root . '/includes/routes.php';
 require_once $root . '/includes/helpers.php';
 require_once $root . '/includes/logging.php';
+require_once $root . '/includes/session.php';
 require_once $root . '/includes/database.php';
 require_once $root . '/includes/migrations.php';
 require_once $root . '/includes/i18n.php';
@@ -79,6 +80,33 @@ $assert(csrf_is_valid('token', 'token'), 'Valid CSRF tokens pass.');
 $assert(!csrf_is_valid('wrong', 'token'), 'Invalid CSRF tokens fail.');
 $assert(!admin_is_authenticated(), 'An empty session is not an authenticated administrator.');
 $assert(configuration_errors() === [], 'The isolated test configuration is valid.');
+
+$portugueseTranslations = require $root . '/translations/pt.php';
+$englishTranslations = require $root . '/translations/en.php';
+$assert(
+    array_diff_key($portugueseTranslations, $englishTranslations) === []
+        && array_diff_key($englishTranslations, $portugueseTranslations) === [],
+    'Portuguese and English translation catalogues contain the same keys.'
+);
+
+$_SESSION['language'] = 'pt';
+$assert(alternate_language() === 'en', 'Portuguese switches to English.');
+$_SERVER['REQUEST_URI'] = '/admin?section=products';
+$adminConfigured = true;
+$adminAuthenticated = false;
+ob_start();
+require $root . '/templates/admin/page.php';
+$adminLoginHtml = (string) ob_get_clean();
+$assert(
+    str_contains($adminLoginHtml, 'name="language" value="en"'),
+    'The administrator login renders the language switch.'
+);
+$assert(
+    str_contains($adminLoginHtml, 'name="return_to" value="admin?section=products"'),
+    'The administrator language switch preserves the current section.'
+);
+$_SESSION = [];
+$_SERVER['REQUEST_URI'] = '/';
 
 if (!in_array('sqlite', PDO::getAvailableDrivers(), true)) {
     fwrite(STDOUT, 'Skipped database integration tests because pdo_sqlite is unavailable.' . PHP_EOL);
