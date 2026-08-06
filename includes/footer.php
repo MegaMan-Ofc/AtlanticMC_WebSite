@@ -9,9 +9,9 @@
                 <h2><?= e(t('common.store')) ?></h2>
                 <div class="footer-links">
                     <a href="<?= e(route_url('home')) ?>"><?= e(t('common.home')) ?></a>
-                    <a href="<?= e(route_url('ranks')) ?>">VIPs</a>
-                    <a href="<?= e(route_url('rubis')) ?>">Rubis</a>
-                    <a href="<?= e(route_url('keys')) ?>"><?= e(t('category.keys')) ?></a>
+                    <a href="<?= e(route_url('ranks')) ?>"><?= e(localized_category('ranks')) ?></a>
+                    <a href="<?= e(route_url('rubis')) ?>"><?= e(localized_category('rubis')) ?></a>
+                    <a href="<?= e(route_url('keys')) ?>"><?= e(localized_category('keys')) ?></a>
                 </div>
             </nav>
             <section>

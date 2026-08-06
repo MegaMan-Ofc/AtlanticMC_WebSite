@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-const STORE_CATEGORIES = ['ranks', 'rubis', 'keys', 'battlepass', 'boosters'];
-
 function product_metadata(array $product): array
 {
     $metadata = json_decode((string) ($product['metadata'] ?? '{}'), true);
@@ -33,7 +31,7 @@ function products_by_category(string $category, bool $includeInactive = false): 
 
 function product_by_id(int $productId, bool $includeInactive = false): ?array
 {
-    $sql = 'SELECT * FROM products WHERE id = :id';
+    $sql = "SELECT * FROM products WHERE id = :id AND category IN ('ranks', 'rubis', 'keys', 'boosters')";
 
     if (!$includeInactive) {
         $sql .= ' AND active = 1';
@@ -55,7 +53,7 @@ function products_by_ids(array $ids): array
     }
 
     $placeholders = implode(',', array_fill(0, count($ids), '?'));
-    $statement = db()->prepare("SELECT * FROM products WHERE active = 1 AND id IN ($placeholders)");
+    $statement = db()->prepare("SELECT * FROM products WHERE active = 1 AND category IN ('ranks', 'rubis', 'keys', 'boosters') AND id IN ($placeholders)");
     $statement->execute($ids);
     $products = [];
 
@@ -70,31 +68,24 @@ function category_configuration(string $category): array
 {
     $configurations = [
         'ranks' => [
-            'title' => t('catalog.ranks.title'),
-            'heading' => t('catalog.ranks.heading'),
+            'title' => 'Atlantic Anarchy - ' . localized_category('ranks'),
+            'heading' => localized_category('ranks'),
             'description' => t('catalog.ranks.description'),
             'bodyClass' => 'page-ranks',
             'styles' => ['css/pages/catalog.css', 'css/pages/ranks.css'],
         ],
         'rubis' => [
-            'title' => t('catalog.rubis.title'),
-            'heading' => t('catalog.rubis.heading'),
+            'title' => 'Atlantic Anarchy - ' . localized_category('rubis'),
+            'heading' => localized_category('rubis'),
             'description' => t('catalog.rubis.description'),
             'bodyClass' => 'page-rubis',
             'styles' => ['css/pages/catalog.css'],
         ],
         'keys' => [
-            'title' => t('catalog.keys.title'),
-            'heading' => t('catalog.keys.heading'),
+            'title' => 'Atlantic Anarchy - ' . localized_category('keys'),
+            'heading' => localized_category('keys'),
             'description' => t('catalog.keys.description'),
             'bodyClass' => 'page-keys',
-            'styles' => ['css/pages/catalog.css'],
-        ],
-        'battlepass' => [
-            'title' => t('catalog.battlepass.title'),
-            'heading' => t('catalog.battlepass.heading'),
-            'description' => t('catalog.battlepass.description'),
-            'bodyClass' => 'page-battlepass',
             'styles' => ['css/pages/catalog.css'],
         ],
         'boosters' => [
