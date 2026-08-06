@@ -46,6 +46,7 @@ require_once $root . '/includes/cart.php';
 require_once $root . '/includes/security.php';
 require_once $root . '/includes/admin_auth.php';
 require_once $root . '/includes/admin_products.php';
+require_once $root . '/includes/admin_orders.php';
 
 $tests = 0;
 $failures = [];
@@ -139,6 +140,40 @@ $assert(
 );
 
 $_GET = [];
+
+$assert(
+    admin_product_query_parameters([
+        'search' => 'vip',
+        'category' => '',
+        'state' => 'active',
+    ]) === [
+        'search' => 'vip',
+        'state' => 'active',
+    ],
+    'Product filter URLs omit empty values.'
+);
+
+$assert(
+    is_file($root . '/public/ajax/admin-filter.php'),
+    'The administrator AJAX filter endpoint exists.'
+);
+
+$adminJavaScript = file_get_contents(
+    $root . '/public/js/admin.js'
+);
+
+$assert(
+    is_string($adminJavaScript)
+        && str_contains(
+            $adminJavaScript,
+            'data-admin-filter-form'
+        )
+        && str_contains(
+            $adminJavaScript,
+            'data-admin-pagination'
+        ),
+    'Administrator JavaScript supports AJAX filters and pagination.'
+);
 
 $portugueseTranslations = require $root . '/translations/pt.php';
 $englishTranslations = require $root . '/translations/en.php';

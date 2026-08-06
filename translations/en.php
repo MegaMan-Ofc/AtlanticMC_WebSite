@@ -361,6 +361,7 @@ return [
     'validation.product_has_orders' => 'This product belongs to an existing purchase and cannot be deleted. Disable it to preserve the history.',
     'validation.coupon_not_found' => 'Coupon not found.',
     'validation.admin_required' => 'Administrator authentication required.',
+    'validation.invalid_admin_section' => 'Invalid administrator section.',
     'validation.order_invalid' => 'The cart is empty or invalid.',
     'validation.order_reload' => 'Unable to reload the order.',
     'validation.order_status' => 'Invalid order status.',

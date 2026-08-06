@@ -361,6 +361,7 @@ return [
     'validation.product_has_orders' => 'Este produto já pertence a uma compra e não pode ser eliminado. Desativa-o para preservar o histórico.',
     'validation.coupon_not_found' => 'Cupão não encontrado.',
     'validation.admin_required' => 'É necessária autenticação de administrador.',
+    'validation.invalid_admin_section' => 'Secção administrativa inválida.',
     'validation.order_invalid' => 'O carrinho está vazio ou é inválido.',
     'validation.order_reload' => 'Não foi possível voltar a carregar a encomenda.',
     'validation.order_status' => 'Estado da encomenda inválido.',

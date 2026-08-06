@@ -63,6 +63,18 @@ function admin_products_query(array $filters): array
     ];
 }
 
+function admin_product_query_parameters(array $filters): array
+{
+    return array_filter(
+        [
+            'search' => (string) ($filters['search'] ?? ''),
+            'category' => (string) ($filters['category'] ?? ''),
+            'state' => (string) ($filters['state'] ?? ''),
+        ],
+        static fn (string $value): bool => $value !== ''
+    );
+}
+
 function all_products_admin(array $filters = []): array
 {
     $query = admin_products_query($filters);
