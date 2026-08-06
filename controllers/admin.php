@@ -12,6 +12,7 @@ $adminConfigured = admin_is_configured();
 $adminAuthenticated = admin_is_authenticated();
 $adminSection = admin_section();
 $adminSummary = [];
+$adminProductFilters = [];
 $adminProducts = [];
 $adminCoupons = [];
 $adminOrderFilters = [];
@@ -22,7 +23,8 @@ if ($adminAuthenticated) {
     $adminSummary = admin_dashboard_summary();
 
     if ($adminSection === 'products') {
-        $adminProducts = all_products_admin();
+        $adminProductFilters = admin_product_filters();
+        $adminProducts = all_products_admin($adminProductFilters);
     } elseif ($adminSection === 'coupons') {
         $adminCoupons = all_coupons_admin();
     } elseif ($adminSection === 'orders') {

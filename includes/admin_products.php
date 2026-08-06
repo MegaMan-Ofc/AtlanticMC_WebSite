@@ -2,11 +2,81 @@
 
 declare(strict_types=1);
 
-function all_products_admin(): array
+function admin_product_filters(): array
 {
-    return db()->query(
-        'SELECT * FROM products ORDER BY category ASC, sort_order ASC, id ASC'
-    )->fetchAll();
+    $search = substr(trim(query_string('search')), 0, 120);
+    $category = query_string('category');
+    $state = query_string('state');
+
+    if ($category !== '' && !in_array($category, STORE_CATEGORIES, true)) {
+        $category = '';
+    }
+
+    if (!in_array($state, ['', 'active', 'inactive'], true)) {
+        $state = '';
+    }
+
+    return [
+        'search' => $search,
+        'category' => $category,
+        'state' => $state,
+    ];
+}
+
+function admin_products_query(array $filters): array
+{
+    $conditions = [];
+    $parameters = [];
+    $search = (string) ($filters['search'] ?? '');
+    $category = (string) ($filters['category'] ?? '');
+    $state = (string) ($filters['state'] ?? '');
+
+    if ($search !== '') {
+        $searchPattern = '%' . $search . '%';
+
+        $conditions[] = '(
+            name LIKE :search_name
+            OR slug LIKE :search_slug
+            OR tebex_package_id LIKE :search_tebex
+        )';
+
+        $parameters['search_name'] = $searchPattern;
+        $parameters['search_slug'] = $searchPattern;
+        $parameters['search_tebex'] = $searchPattern;
+    }
+
+    if ($category !== '') {
+        $conditions[] = 'category = :category';
+        $parameters['category'] = $category;
+    }
+
+    if ($state !== '') {
+        $conditions[] = 'active = :active';
+        $parameters['active'] = $state === 'active' ? 1 : 0;
+    }
+
+    return [
+        'where' => $conditions === []
+            ? ''
+            : ' WHERE ' . implode(' AND ', $conditions),
+        'parameters' => $parameters,
+    ];
+}
+
+function all_products_admin(array $filters = []): array
+{
+    $query = admin_products_query($filters);
+
+    $statement = db()->prepare(
+        'SELECT *
+         FROM products'
+        . $query['where']
+        . ' ORDER BY category ASC, sort_order ASC, id ASC'
+    );
+
+    $statement->execute($query['parameters']);
+
+    return $statement->fetchAll();
 }
 
 function save_product_from_admin(array $input): int

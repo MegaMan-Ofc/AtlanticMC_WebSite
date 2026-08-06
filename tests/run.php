@@ -45,6 +45,7 @@ require_once $root . '/includes/coupons.php';
 require_once $root . '/includes/cart.php';
 require_once $root . '/includes/security.php';
 require_once $root . '/includes/admin_auth.php';
+require_once $root . '/includes/admin_products.php';
 
 $tests = 0;
 $failures = [];
@@ -80,6 +81,64 @@ $assert(csrf_is_valid('token', 'token'), 'Valid CSRF tokens pass.');
 $assert(!csrf_is_valid('wrong', 'token'), 'Invalid CSRF tokens fail.');
 $assert(!admin_is_authenticated(), 'An empty session is not an authenticated administrator.');
 $assert(configuration_errors() === [], 'The isolated test configuration is valid.');
+
+$_GET = [
+    'search' => '  vip  ',
+    'category' => 'ranks',
+    'state' => 'inactive',
+];
+
+$productFilters = admin_product_filters();
+
+$assert(
+    $productFilters === [
+        'search' => 'vip',
+        'category' => 'ranks',
+        'state' => 'inactive',
+    ],
+    'Valid product filters are normalized.'
+);
+
+$productQuery = admin_products_query($productFilters);
+
+$assert(
+    str_contains(
+        $productQuery['where'],
+        'name LIKE :search_name'
+    )
+        && str_contains(
+            $productQuery['where'],
+            'category = :category'
+        )
+        && str_contains(
+            $productQuery['where'],
+            'active = :active'
+        )
+        && $productQuery['parameters'] === [
+            'search_name' => '%vip%',
+            'search_slug' => '%vip%',
+            'search_tebex' => '%vip%',
+            'category' => 'ranks',
+            'active' => 0,
+        ],
+    'Product filters generate a parameterized query.'
+);
+
+$_GET = [
+    'category' => 'invalid-category',
+    'state' => 'invalid-state',
+];
+
+$assert(
+    admin_product_filters() === [
+        'search' => '',
+        'category' => '',
+        'state' => '',
+    ],
+    'Invalid product filters are discarded.'
+);
+
+$_GET = [];
 
 $portugueseTranslations = require $root . '/translations/pt.php';
 $englishTranslations = require $root . '/translations/en.php';
