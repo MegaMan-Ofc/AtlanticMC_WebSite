@@ -39,7 +39,7 @@ function admin_product_filters(): array
 
 function admin_products_query(array $filters): array
 {
-    $conditions = [];
+    $conditions = ["category IN ('ranks', 'rubis', 'keys', 'boosters')"];
     $parameters = [];
     $search = (string) ($filters['search'] ?? '');
     $category = (string) ($filters['category'] ?? '');

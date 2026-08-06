@@ -15,7 +15,6 @@ function public_routes(): array
         'rubis' => ['path' => 'rubis', 'script' => 'rubis.php'],
         'keys' => ['path' => 'keys', 'script' => 'keys.php'],
         'boosters' => ['path' => 'boosters', 'script' => 'boosters.php'],
-        'battlepass' => ['path' => 'battlepass', 'script' => 'battlepass.php'],
         'cart' => ['path' => 'cart', 'script' => 'cart.php'],
         'checkout' => ['path' => 'checkout', 'script' => 'checkout.php'],
         'login' => ['path' => 'login', 'script' => 'login.php'],

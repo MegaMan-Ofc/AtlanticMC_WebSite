@@ -12,6 +12,7 @@ $adminConfigured = admin_is_configured();
 $adminAuthenticated = admin_is_authenticated();
 $adminSection = admin_section();
 $adminSummary = [];
+$adminCategories = [];
 $adminProductFilters = [];
 $adminProducts = [];
 $adminCouponFilters = [];
@@ -23,7 +24,9 @@ $adminTraffic = [];
 if ($adminAuthenticated) {
     $adminSummary = admin_dashboard_summary();
 
-    if ($adminSection === 'products') {
+    if ($adminSection === 'categories') {
+        $adminCategories = editable_store_category_settings();
+    } elseif ($adminSection === 'products') {
         $adminProductFilters = admin_product_filters();
         $adminProducts = all_products_admin($adminProductFilters);
     } elseif ($adminSection === 'coupons') {
@@ -40,6 +43,7 @@ if ($adminAuthenticated) {
 function admin_section_icon(string $section): string
 {
     return match ($section) {
+        'categories' => 'fa-solid fa-layer-group',
         'products' => 'fa-solid fa-tags',
         'coupons' => 'fa-solid fa-ticket',
         'orders' => 'fa-solid fa-receipt',

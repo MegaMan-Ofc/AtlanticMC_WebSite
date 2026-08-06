@@ -6,9 +6,6 @@
     --card-accent: #e73f71;
 }
 
-.page-battlepass .package {
-    --card-accent: var(--bp-color, #f0b84d);
-}
 
 .page-boosters .package {
     --card-accent: var(--booster-color, #ff4369);
@@ -39,8 +36,7 @@
 }
 
 .package-bonus-badge,
-.rubis-bonus-badge,
-.battlepass-special-badge {
+.rubis-bonus-badge {
     position: absolute;
     top: 0.875rem;
     left: 0.875rem;
@@ -116,12 +112,8 @@
     font-weight: 900;
 }
 
-.battlepass-subtitle {
-    margin-bottom: 0.875rem;
-    color: var(--muted);
-}
 
-.battlepass-benefits {
+.package-benefits {
     display: grid;
     gap: 0.4375rem;
     margin-bottom: 1.125rem;

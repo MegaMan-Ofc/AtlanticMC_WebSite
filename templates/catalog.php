@@ -42,7 +42,7 @@
                             <?php endif; ?>
                             <p class="booster-description"><?= e($localizedProduct['description']) ?></p>
                             <?php if (!empty($metadata['features']) && is_array($metadata['features'])): ?>
-                                <div class="battlepass-benefits">
+                                <div class="package-benefits">
                                     <?php foreach ($metadata['features'] as $feature): ?>
                                         <div class="benefit-item"><i class="fa-solid fa-check" aria-hidden="true"></i> <?= e($feature) ?></div>
                                     <?php endforeach; ?>
