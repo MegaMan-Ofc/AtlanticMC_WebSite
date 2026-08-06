@@ -102,6 +102,37 @@
                 </option>
             </select>
         </div>
+
+
+        <div class="admin-field">
+            <label for="filter-product-sort">
+                <?= e(t('admin.sort_by')) ?>
+            </label>
+
+            <select
+                id="filter-product-sort"
+                name="sort"
+            >
+                <?php foreach ([
+                    '' => 'admin.sort_catalog',
+                    'name_asc' => 'admin.sort_name_asc',
+                    'name_desc' => 'admin.sort_name_desc',
+                    'price_asc' => 'admin.sort_price_asc',
+                    'price_desc' => 'admin.sort_price_desc',
+                    'created_desc' => 'admin.sort_created_desc',
+                    'created_asc' => 'admin.sort_created_asc',
+                ] as $sortValue => $sortLabel): ?>
+                    <option
+                        value="<?= e($sortValue) ?>"
+                        <?= $adminProductFilters['sort'] === $sortValue
+                            ? 'selected'
+                            : '' ?>
+                    >
+                        <?= e(t($sortLabel)) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
     </div>
 
     <div class="admin-filter-actions">

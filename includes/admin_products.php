@@ -7,6 +7,7 @@ function admin_product_filters(): array
     $search = substr(trim(query_string('search')), 0, 120);
     $category = query_string('category');
     $state = query_string('state');
+    $sort = query_string('sort');
 
     if ($category !== '' && !in_array($category, STORE_CATEGORIES, true)) {
         $category = '';
@@ -16,10 +17,23 @@ function admin_product_filters(): array
         $state = '';
     }
 
+    if (!in_array($sort, [
+        '',
+        'name_asc',
+        'name_desc',
+        'price_asc',
+        'price_desc',
+        'created_asc',
+        'created_desc',
+    ], true)) {
+        $sort = '';
+    }
+
     return [
         'search' => $search,
         'category' => $category,
         'state' => $state,
+        'sort' => $sort,
     ];
 }
 
@@ -70,9 +84,23 @@ function admin_product_query_parameters(array $filters): array
             'search' => (string) ($filters['search'] ?? ''),
             'category' => (string) ($filters['category'] ?? ''),
             'state' => (string) ($filters['state'] ?? ''),
+            'sort' => (string) ($filters['sort'] ?? ''),
         ],
         static fn (string $value): bool => $value !== ''
     );
+}
+
+function admin_product_order_by(array $filters): string
+{
+    return match ((string) ($filters['sort'] ?? '')) {
+        'name_asc' => 'name ASC, id ASC',
+        'name_desc' => 'name DESC, id DESC',
+        'price_asc' => 'price_cents ASC, id ASC',
+        'price_desc' => 'price_cents DESC, id DESC',
+        'created_asc' => 'created_at ASC, id ASC',
+        'created_desc' => 'created_at DESC, id DESC',
+        default => 'category ASC, sort_order ASC, id ASC',
+    };
 }
 
 function all_products_admin(array $filters = []): array
@@ -83,7 +111,7 @@ function all_products_admin(array $filters = []): array
         'SELECT *
          FROM products'
         . $query['where']
-        . ' ORDER BY category ASC, sort_order ASC, id ASC'
+        . ' ORDER BY ' . admin_product_order_by($filters)
     );
 
     $statement->execute($query['parameters']);
