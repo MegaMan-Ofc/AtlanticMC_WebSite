@@ -108,6 +108,36 @@
                 type="date"
             >
         </div>
+
+
+        <div class="admin-field">
+            <label for="filter-order-sort">
+                <?= e(t('admin.sort_by')) ?>
+            </label>
+
+            <select
+                id="filter-order-sort"
+                name="sort"
+            >
+                <?php foreach ([
+                    '' => 'admin.sort_created_desc',
+                    'created_asc' => 'admin.sort_created_asc',
+                    'total_desc' => 'admin.sort_total_desc',
+                    'total_asc' => 'admin.sort_total_asc',
+                    'player_asc' => 'admin.sort_player_asc',
+                    'player_desc' => 'admin.sort_player_desc',
+                ] as $sortValue => $sortLabel): ?>
+                    <option
+                        value="<?= e($sortValue) ?>"
+                        <?= $adminOrderFilters['sort'] === $sortValue
+                            ? 'selected'
+                            : '' ?>
+                    >
+                        <?= e(t($sortLabel)) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
     </div>
 
     <div class="admin-filter-actions">
