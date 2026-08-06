@@ -4,36 +4,86 @@ declare(strict_types=1);
 
 const BASE_PATH = __DIR__ . '/..';
 
+function parse_environment_line(string $line): ?array
+{
+    $line = trim($line);
+
+    if ($line === '' || str_starts_with($line, '#') || !str_contains($line, '=')) {
+        return null;
+    }
+
+    [$name, $rawValue] = explode('=', $line, 2);
+    $name = trim($name);
+    $rawValue = ltrim($rawValue);
+
+    if (!preg_match('/^[A-Z][A-Z0-9_]*$/', $name)) {
+        return null;
+    }
+
+    if ($rawValue === '') {
+        return [$name, ''];
+    }
+
+    $quote = $rawValue[0];
+
+    if ($quote === '"' || $quote === "'") {
+        $length = strlen($rawValue);
+        $closing = null;
+
+        for ($index = 1; $index < $length; $index++) {
+            if ($rawValue[$index] === $quote && $rawValue[$index - 1] !== '\\') {
+                $closing = $index;
+                break;
+            }
+        }
+
+        if ($closing === null) {
+            return null;
+        }
+
+        $tail = trim(substr($rawValue, $closing + 1));
+
+        if ($tail !== '' && !str_starts_with($tail, '#')) {
+            return null;
+        }
+
+        $value = substr($rawValue, 1, $closing - 1);
+
+        if ($quote === '"') {
+            $value = str_replace(['\\n', '\\r', '\\t', '\\"', '\\\\'], ["\n", "\r", "\t", '"', '\\'], $value);
+        }
+
+        return [$name, $value];
+    }
+
+    $value = preg_replace('/\s+#.*$/', '', $rawValue);
+
+    return [$name, trim(is_string($value) ? $value : $rawValue)];
+}
+
 function load_environment_file(string $path): void
 {
     if (!is_file($path) || !is_readable($path)) {
         return;
     }
 
-    $lines = file($path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+    $lines = file($path, FILE_IGNORE_NEW_LINES);
 
     if ($lines === false) {
         return;
     }
 
     foreach ($lines as $line) {
-        $line = trim($line);
+        $parsed = parse_environment_line($line);
 
-        if ($line === '' || str_starts_with($line, '#') || !str_contains($line, '=')) {
+        if ($parsed === null) {
             continue;
         }
 
-        [$name, $value] = array_map('trim', explode('=', $line, 2));
+        [$name, $value] = $parsed;
 
-        if ($name === '' || getenv($name) !== false) {
+        if (getenv($name) !== false) {
             continue;
-        }
-
-        if (
-            strlen($value) >= 2
-            && (($value[0] === '"' && $value[-1] === '"') || ($value[0] === "'" && $value[-1] === "'"))
-        ) {
-            $value = substr($value, 1, -1);
         }
 
         putenv($name . '=' . $value);
@@ -43,6 +93,26 @@ function load_environment_file(string $path): void
 }
 
 load_environment_file(BASE_PATH . '/.env');
+
+function resolve_application_path(string $path): string
+{
+    $path = trim($path);
+
+    if ($path === '') {
+        return BASE_PATH;
+    }
+
+    $windowsAbsolute = strlen($path) >= 3
+        && ctype_alpha($path[0])
+        && $path[1] === ':'
+        && ($path[2] === '\\' || $path[2] === '/');
+
+    if (str_starts_with($path, '/') || $windowsAbsolute) {
+        return $path;
+    }
+
+    return BASE_PATH . '/' . ltrim($path, '/\\');
+}
 
 function env_value(string $name, mixed $default = null): mixed
 {
@@ -63,27 +133,36 @@ function env_value(string $name, mixed $default = null): mixed
     };
 }
 
+function env_csv(string $name): array
+{
+    return array_values(array_filter(array_map(
+        'trim',
+        explode(',', (string) env_value($name, ''))
+    ), static fn (string $value): bool => $value !== ''));
+}
+
 function config(?string $key = null, mixed $default = null): mixed
 {
     static $configuration = null;
 
     if ($configuration === null) {
         $dbDriver = strtolower((string) env_value('DB_DRIVER', 'sqlite'));
-        $sqlitePath = (string) env_value('DB_PATH', BASE_PATH . '/storage/store.sqlite');
-
-        if (!str_starts_with($sqlitePath, '/') && !preg_match('/^[A-Za-z]:[\\\\\/]/', $sqlitePath)) {
-            $sqlitePath = BASE_PATH . '/' . ltrim($sqlitePath, '/\\');
-        }
+        $sqlitePath = resolve_application_path(
+            (string) env_value('DB_PATH', 'storage/store.sqlite')
+        );
 
         $configuration = [
             'app' => [
                 'name' => (string) env_value('APP_NAME', 'Atlantic Anarchy'),
-                'env' => (string) env_value('APP_ENV', 'development'),
+                'env' => strtolower((string) env_value('APP_ENV', 'development')),
+                'key' => (string) env_value('APP_KEY', ''),
                 'url' => rtrim((string) env_value('APP_URL', ''), '/'),
                 'timezone' => (string) env_value('APP_TIMEZONE', 'Europe/Lisbon'),
                 'default_language' => (string) env_value('APP_DEFAULT_LANGUAGE', 'pt'),
-                'auto_migrate' => (bool) env_value('APP_AUTO_MIGRATE', true),
                 'debug' => (bool) env_value('APP_DEBUG', false),
+                'force_https' => (bool) env_value('APP_FORCE_HTTPS', false),
+                'trusted_proxies' => env_csv('TRUSTED_PROXIES'),
+                'payments_enabled' => (bool) env_value('PAYMENTS_ENABLED', false),
                 'server_ip' => (string) env_value('SERVER_IP', 'atlanticmc.secure.pebble.host'),
                 'discord_url' => (string) env_value('DISCORD_URL', 'https://discord.gg/atlanticnetwork'),
                 'support_email' => (string) env_value('SUPPORT_EMAIL', 'support@atlantic.net'),
@@ -109,15 +188,17 @@ function config(?string $key = null, mixed $default = null): mixed
                 'user' => (string) env_value('DB_USER', 'root'),
                 'password' => (string) env_value('DB_PASSWORD', ''),
                 'charset' => (string) env_value('DB_CHARSET', 'utf8mb4'),
+                'connect_timeout' => max(1, (int) env_value('DB_CONNECT_TIMEOUT', '5')),
             ],
             'tebex' => [
                 'public_token' => (string) env_value('TEBEX_PUBLIC_TOKEN', ''),
                 'webhook_secret' => (string) env_value('TEBEX_WEBHOOK_SECRET', ''),
                 'verify_webhook_amount' => (bool) env_value('TEBEX_VERIFY_WEBHOOK_AMOUNT', true),
-                'allowed_webhook_ips' => array_values(array_filter(array_map(
-                    'trim',
-                    explode(',', (string) env_value('TEBEX_ALLOWED_WEBHOOK_IPS', ''))
-                ))),
+                'allowed_webhook_ips' => env_csv('TEBEX_ALLOWED_WEBHOOK_IPS'),
+            ],
+            'logging' => [
+                'app_path' => resolve_application_path((string) env_value('APP_LOG_PATH', 'storage/app.log')),
+                'security_path' => resolve_application_path((string) env_value('SECURITY_LOG_PATH', 'storage/security.log')),
             ],
             'admin' => [
                 'username' => (string) env_value('ADMIN_USERNAME', ''),
@@ -128,7 +209,9 @@ function config(?string $key = null, mixed $default = null): mixed
             ],
         ];
 
-        date_default_timezone_set($configuration['app']['timezone']);
+        if (!@date_default_timezone_set($configuration['app']['timezone'])) {
+            throw new RuntimeException('Invalid APP_TIMEZONE configuration.');
+        }
     }
 
     if ($key === null) {
@@ -146,4 +229,124 @@ function config(?string $key = null, mixed $default = null): mixed
     }
 
     return $value;
+}
+
+function is_production(): bool
+{
+    return config('app.env') === 'production';
+}
+
+function configuration_errors(): array
+{
+    $errors = [];
+    $environment = (string) config('app.env');
+    $driver = (string) config('database.driver');
+    $currency = (string) config('app.currency');
+
+    if (!in_array($environment, ['development', 'test', 'production'], true)) {
+        $errors[] = 'APP_ENV must be development, test or production.';
+    }
+
+    if (!in_array($driver, ['sqlite', 'mysql'], true)) {
+        $errors[] = 'DB_DRIVER must be sqlite or mysql.';
+    }
+
+    if (!preg_match('/^[A-Z]{3}$/', $currency)) {
+        $errors[] = 'STORE_CURRENCY must contain three uppercase letters.';
+    }
+
+    if ((int) config('database.port') < 1 || (int) config('database.port') > 65535) {
+        $errors[] = 'DB_PORT is invalid.';
+    }
+
+    if (!is_production()) {
+        return $errors;
+    }
+
+    $appUrl = (string) config('app.url');
+    $urlParts = parse_url($appUrl);
+
+    if (!is_array($urlParts) || ($urlParts['scheme'] ?? '') !== 'https' || empty($urlParts['host'])) {
+        $errors[] = 'APP_URL must be a complete HTTPS URL in production.';
+    }
+
+    if ((bool) config('app.debug')) {
+        $errors[] = 'APP_DEBUG must be false in production.';
+    }
+
+    if (!(bool) config('app.force_https')) {
+        $errors[] = 'APP_FORCE_HTTPS must be true in production.';
+    }
+
+    if ((bool) config('app.allow_test_orders')) {
+        $errors[] = 'ALLOW_TEST_ORDERS must be false in production.';
+    }
+
+    if ((bool) env_value('APP_AUTO_MIGRATE', false)) {
+        $errors[] = 'APP_AUTO_MIGRATE must be false or removed in production.';
+    }
+
+    if (strlen((string) config('app.key')) < 32) {
+        $errors[] = 'APP_KEY must contain at least 32 characters in production.';
+    }
+
+    if ($driver !== 'mysql') {
+        $errors[] = 'DB_DRIVER must be mysql in production.';
+    }
+
+    foreach (['host', 'name', 'user', 'password'] as $key) {
+        if (trim((string) config('database.' . $key)) === '') {
+            $errors[] = 'Database configuration is incomplete.';
+            break;
+        }
+    }
+
+    if ((string) config('database.charset') !== 'utf8mb4') {
+        $errors[] = 'DB_CHARSET must be utf8mb4 in production.';
+    }
+
+    $publicPath = realpath(BASE_PATH . '/public') ?: BASE_PATH . '/public';
+
+    foreach (['app_path', 'security_path'] as $logKey) {
+        $logPath = (string) config('logging.' . $logKey);
+        $normalizedLogPath = str_replace('\\', '/', $logPath);
+        $normalizedPublicPath = rtrim(str_replace('\\', '/', $publicPath), '/');
+
+        if ($normalizedLogPath === $normalizedPublicPath || str_starts_with($normalizedLogPath, $normalizedPublicPath . '/')) {
+            $errors[] = 'Log files must be stored outside public/.';
+        }
+    }
+
+    $adminUsername = trim((string) config('admin.username'));
+    $adminHash = trim((string) config('admin.password_hash'));
+    $passwordInfo = $adminHash === '' ? ['algoName' => 'unknown'] : password_get_info($adminHash);
+
+    if ($adminUsername === '' || ($passwordInfo['algoName'] ?? 'unknown') === 'unknown') {
+        $errors[] = 'Administrator credentials are not configured correctly.';
+    }
+
+    if ((bool) config('app.payments_enabled')) {
+        if (trim((string) config('tebex.public_token')) === '') {
+            $errors[] = 'TEBEX_PUBLIC_TOKEN is required when payments are enabled.';
+        }
+
+        if (strlen(trim((string) config('tebex.webhook_secret'))) < 16) {
+            $errors[] = 'TEBEX_WEBHOOK_SECRET is required when payments are enabled.';
+        }
+
+        if (!(bool) config('tebex.verify_webhook_amount')) {
+            $errors[] = 'TEBEX_VERIFY_WEBHOOK_AMOUNT must be true when payments are enabled.';
+        }
+    }
+
+    return array_values(array_unique($errors));
+}
+
+function validate_runtime_configuration(): void
+{
+    $errors = configuration_errors();
+
+    if ($errors !== []) {
+        throw new RuntimeException(implode(' ', $errors));
+    }
 }

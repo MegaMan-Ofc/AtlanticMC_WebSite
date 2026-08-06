@@ -1,0 +1,25 @@
+services:
+  mysql:
+    image: mysql:8.4
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --sql-mode=STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION
+    environment:
+      MYSQL_DATABASE: atlantic_store_dev
+      MYSQL_USER: atlantic_user
+      MYSQL_PASSWORD: atlantic_dev_only
+      MYSQL_ROOT_PASSWORD: atlantic_root_only
+    ports:
+      - "3307:3306"
+    volumes:
+      - atlantic_mysql_data:/var/lib/mysql
+      - ./database/docker:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-patlantic_root_only"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  atlantic_mysql_data:

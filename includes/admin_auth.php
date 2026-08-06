@@ -26,109 +26,157 @@ function admin_is_authenticated(): bool
         return false;
     }
 
+    $now = time();
     $lastActivity = (int) ($session['last_activity'] ?? 0);
     $timeout = max(300, (int) config('admin.session_timeout', 1800));
     $fingerprint = (string) ($session['fingerprint'] ?? '');
 
-    if ($lastActivity < time() - $timeout || !hash_equals($fingerprint, admin_session_fingerprint())) {
+    if ($lastActivity < $now - $timeout || !hash_equals($fingerprint, admin_session_fingerprint())) {
         admin_logout();
         return false;
     }
 
-    $_SESSION['admin']['last_activity'] = time();
+    $regeneratedAt = (int) ($session['regenerated_at'] ?? 0);
+
+    if ($regeneratedAt < $now - 900) {
+        session_regenerate_id(false);
+        $_SESSION['admin']['regenerated_at'] = $now;
+    }
+
+    $_SESSION['admin']['last_activity'] = $now;
 
     return true;
 }
 
-function admin_rate_limit_file(): string
+function admin_login_identity(string $username): string
 {
-    $key = (string) config('admin.password_hash', 'atlantic-admin');
-    $identity = client_ip();
-    $hash = hash_hmac('sha256', $identity, $key);
+    $secret = (string) config('app.key', 'atlantic-development-key');
+    $identity = client_ip() . '|' . strtolower(trim($username));
 
-    return BASE_PATH . '/storage/admin-login-' . $hash . '.json';
+    return hash_hmac('sha256', $identity, $secret);
 }
 
-function admin_rate_limit_attempts(): array
+function admin_login_limit_row(string $identity): ?array
 {
-    $file = admin_rate_limit_file();
+    $statement = db()->prepare(
+        'SELECT attempts, window_started_at, locked_until
+         FROM admin_login_limits
+         WHERE identity_hash = :identity_hash'
+    );
+    $statement->execute(['identity_hash' => $identity]);
+    $row = $statement->fetch();
 
-    if (!is_file($file)) {
-        return [];
+    return is_array($row) ? $row : null;
+}
+
+function admin_login_is_locked(string $username): bool
+{
+    try {
+        $row = admin_login_limit_row(admin_login_identity($username));
+    } catch (Throwable $error) {
+        security_log('error', 'admin_rate_limit_read_failed', ['message' => $error->getMessage()]);
+        return is_production();
     }
 
-    $contents = file_get_contents($file);
-    $decoded = is_string($contents) ? json_decode($contents, true) : null;
+    if ($row === null || empty($row['locked_until'])) {
+        return false;
+    }
+
+    return strtotime((string) $row['locked_until']) > time();
+}
+
+function admin_record_failed_login(string $username): void
+{
+    $pdo = db();
+    $driver = (string) config('database.driver');
+    $identity = admin_login_identity($username);
     $window = max(60, (int) config('admin.login_window', 900));
-    $threshold = time() - $window;
-
-    if (!is_array($decoded)) {
-        return [];
-    }
-
-    return array_values(array_filter(
-        $decoded,
-        static fn (mixed $timestamp): bool => is_int($timestamp) && $timestamp > $threshold
-    ));
-}
-
-function admin_login_is_locked(): bool
-{
     $maximum = max(1, (int) config('admin.login_max_attempts', 5));
-
-    return count(admin_rate_limit_attempts()) >= $maximum;
-}
-
-function admin_record_failed_login(): void
-{
-    $file = admin_rate_limit_file();
-    $directory = dirname($file);
-
-    if (!is_dir($directory) || !is_writable($directory)) {
-        enforce_rate_limit('admin_login_fallback', 5, 900);
-        return;
-    }
-
-    $handle = fopen($file, 'c+');
-
-    if ($handle === false) {
-        enforce_rate_limit('admin_login_fallback', 5, 900);
-        return;
-    }
+    $now = time();
+    $started = false;
 
     try {
-        if (!flock($handle, LOCK_EX)) {
-            enforce_rate_limit('admin_login_fallback', 5, 900);
-            return;
+        if ($driver === 'sqlite') {
+            $pdo->exec('BEGIN IMMEDIATE');
+            $started = true;
+        } else {
+            $pdo->beginTransaction();
+            $started = true;
         }
 
-        rewind($handle);
-        $contents = stream_get_contents($handle);
-        $decoded = is_string($contents) ? json_decode($contents, true) : null;
-        $attempts = is_array($decoded) ? $decoded : [];
-        $window = max(60, (int) config('admin.login_window', 900));
-        $threshold = time() - $window;
-        $attempts = array_values(array_filter(
-            $attempts,
-            static fn (mixed $timestamp): bool => is_int($timestamp) && $timestamp > $threshold
-        ));
-        $attempts[] = time();
-        ftruncate($handle, 0);
-        rewind($handle);
-        fwrite($handle, json_encode($attempts, JSON_THROW_ON_ERROR));
-        fflush($handle);
-        flock($handle, LOCK_UN);
-    } finally {
-        fclose($handle);
+        $sql = 'SELECT attempts, window_started_at, locked_until
+                FROM admin_login_limits
+                WHERE identity_hash = :identity_hash';
+
+        if ($driver === 'mysql') {
+            $sql .= ' FOR UPDATE';
+        }
+
+        $statement = $pdo->prepare($sql);
+        $statement->execute(['identity_hash' => $identity]);
+        $row = $statement->fetch();
+        $windowStarted = is_array($row) ? strtotime((string) $row['window_started_at']) : false;
+        $attempts = is_array($row) ? (int) $row['attempts'] : 0;
+
+        if ($windowStarted === false || $windowStarted <= $now - $window) {
+            $windowStarted = $now;
+            $attempts = 0;
+        }
+
+        $attempts++;
+        $lockedUntil = $attempts >= $maximum
+            ? date('Y-m-d H:i:s', $windowStarted + $window)
+            : null;
+        $values = [
+            'identity_hash' => $identity,
+            'attempts' => $attempts,
+            'window_started_at' => date('Y-m-d H:i:s', $windowStarted),
+            'locked_until' => $lockedUntil,
+            'updated_at' => now_sql(),
+        ];
+
+        if (is_array($row)) {
+            $save = $pdo->prepare(
+                'UPDATE admin_login_limits
+                 SET attempts = :attempts,
+                     window_started_at = :window_started_at,
+                     locked_until = :locked_until,
+                     updated_at = :updated_at
+                 WHERE identity_hash = :identity_hash'
+            );
+        } else {
+            $save = $pdo->prepare(
+                'INSERT INTO admin_login_limits
+                 (identity_hash, attempts, window_started_at, locked_until, updated_at)
+                 VALUES
+                 (:identity_hash, :attempts, :window_started_at, :locked_until, :updated_at)'
+            );
+        }
+
+        $save->execute($values);
+        $pdo->commit();
+    } catch (Throwable $error) {
+        if ($started && $pdo->inTransaction()) {
+            $pdo->rollBack();
+        }
+
+        security_log('error', 'admin_rate_limit_write_failed', ['message' => $error->getMessage()]);
+
+        if (is_production()) {
+            throw new RuntimeException('Administrator login is temporarily unavailable.', 0, $error);
+        }
+
+        enforce_rate_limit('admin_login_fallback', $maximum, $window);
     }
 }
 
-function admin_clear_failed_logins(): void
+function admin_clear_failed_logins(string $username): void
 {
-    $file = admin_rate_limit_file();
-
-    if (is_file($file)) {
-        @unlink($file);
+    try {
+        $statement = db()->prepare('DELETE FROM admin_login_limits WHERE identity_hash = :identity_hash');
+        $statement->execute(['identity_hash' => admin_login_identity($username)]);
+    } catch (Throwable $error) {
+        security_log('warning', 'admin_rate_limit_cleanup_failed', ['message' => $error->getMessage()]);
     }
 }
 
@@ -138,28 +186,35 @@ function admin_attempt_login(string $username, string $password): string
         return ADMIN_LOGIN_DISABLED;
     }
 
-    if (admin_login_is_locked()) {
+    $username = trim($username);
+
+    if (admin_login_is_locked($username)) {
+        security_log('warning', 'admin_login_locked', ['ip_hash' => admin_login_identity(''), 'username_hash' => hash('sha256', strtolower($username))]);
         return ADMIN_LOGIN_LOCKED;
     }
 
     $expectedUsername = (string) config('admin.username', '');
     $hash = (string) config('admin.password_hash', '');
-    $usernameValid = hash_equals($expectedUsername, trim($username));
+    $usernameValid = hash_equals($expectedUsername, $username);
     $passwordValid = password_verify($password, $hash);
 
     if (!$usernameValid || !$passwordValid) {
-        admin_record_failed_login();
-        return admin_login_is_locked() ? ADMIN_LOGIN_LOCKED : ADMIN_LOGIN_INVALID;
+        admin_record_failed_login($username);
+        security_log('warning', 'admin_login_failed', ['ip_hash' => admin_login_identity(''), 'username_hash' => hash('sha256', strtolower($username))]);
+        return admin_login_is_locked($username) ? ADMIN_LOGIN_LOCKED : ADMIN_LOGIN_INVALID;
     }
 
-    admin_clear_failed_logins();
+    admin_clear_failed_logins($username);
     session_regenerate_id(true);
     unset($_SESSION['csrf_token']);
+    $now = time();
+    security_log('info', 'admin_login_succeeded', ['username_hash' => hash('sha256', strtolower($expectedUsername))]);
     $_SESSION['admin'] = [
         'authenticated' => true,
         'username' => $expectedUsername,
-        'authenticated_at' => time(),
-        'last_activity' => time(),
+        'authenticated_at' => $now,
+        'last_activity' => $now,
+        'regenerated_at' => $now,
         'fingerprint' => admin_session_fingerprint(),
     ];
 
@@ -168,6 +223,10 @@ function admin_attempt_login(string $username, string $password): string
 
 function admin_logout(): void
 {
+    if (isset($_SESSION['admin'])) {
+        security_log('info', 'admin_logout');
+    }
+
     unset($_SESSION['admin'], $_SESSION['csrf_token']);
     session_regenerate_id(true);
 }

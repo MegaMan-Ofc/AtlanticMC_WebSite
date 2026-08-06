@@ -64,7 +64,7 @@ function track_public_page_view(): void
             );
         }
     } catch (Throwable $error) {
-        error_log('Analytics tracking failed: ' . $error->getMessage());
+        app_log('warning', 'analytics_tracking_failed', ['message' => $error->getMessage()]);
     }
 }
 

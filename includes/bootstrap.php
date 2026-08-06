@@ -5,6 +5,7 @@ declare(strict_types=1);
 require_once __DIR__ . '/config.php';
 require_once __DIR__ . '/routes.php';
 require_once __DIR__ . '/helpers.php';
+require_once __DIR__ . '/logging.php';
 require_once __DIR__ . '/session.php';
 require_once __DIR__ . '/i18n.php';
 require_once __DIR__ . '/legal.php';
@@ -25,24 +26,37 @@ require_once __DIR__ . '/tebex.php';
 require_once __DIR__ . '/orders.php';
 require_once __DIR__ . '/checkout.php';
 
+try {
+    $debugEnabled = (bool) config('app.debug', false) && !is_production();
+    ini_set('display_errors', $debugEnabled ? '1' : '0');
+    error_reporting(E_ALL);
+    validate_runtime_configuration();
+    enforce_https_request();
+} catch (Throwable $error) {
+    ini_set('display_errors', '0');
+    error_log('Invalid AtlanticStore configuration: ' . $error->getMessage());
+
+    if (PHP_SAPI === 'cli') {
+        throw $error;
+    }
+
+    http_response_code(500);
+    header('Content-Type: text/plain; charset=utf-8');
+    echo 'Application configuration error.';
+    exit;
+}
+
 if (!defined('ATLANTIC_STATELESS') || ATLANTIC_STATELESS !== true) {
     start_store_session();
 }
 
+header('X-Request-ID: ' . request_id());
 send_security_headers();
 
-if ((bool) config('app.debug', false)) {
-    ini_set('display_errors', '1');
-    error_reporting(E_ALL);
-} else {
-    ini_set('display_errors', '0');
-}
-
 set_exception_handler(static function (Throwable $error): void {
-    error_log((string) $error);
+    log_exception($error);
 
-    $debug = (bool) config('app.debug', false);
-    $plainMessage = $debug
+    $plainMessage = (bool) config('app.debug', false) && !is_production()
         ? $error->getMessage()
         : t('messages.internal_error');
 
@@ -66,8 +80,6 @@ set_exception_handler(static function (Throwable $error): void {
         . '<h1>Atlantic Anarchy</h1><p>' . e($plainMessage) . '</p>'
         . '<p><a style="color:#8fd3ff" href="' . e(route_url('home')) . '">' . e(t('messages.back_to_store')) . '</a></p></body></html>';
 });
-
-initialize_database();
 
 if (!defined('ATLANTIC_STATELESS') || ATLANTIC_STATELESS !== true) {
     track_public_page_view();
