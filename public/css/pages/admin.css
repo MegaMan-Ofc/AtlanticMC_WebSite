@@ -319,11 +319,12 @@
 }
 
 .admin-filter-grid {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
-.admin-filter-grid--products {
-    grid-template-columns: 2fr repeat(2, minmax(0, 1fr));
+.admin-filter-grid--products,
+.admin-filter-grid--coupons {
+    grid-template-columns: 2fr repeat(3, minmax(0, 1fr));
 }
 
 .admin-check {

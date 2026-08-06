@@ -15,6 +15,7 @@ require_once __DIR__ . '/catalog.php';
 require_once __DIR__ . '/coupons.php';
 require_once __DIR__ . '/cart.php';
 require_once __DIR__ . '/admin_auth.php';
+require_once __DIR__ . '/admin_formatting.php';
 require_once __DIR__ . '/admin_products.php';
 require_once __DIR__ . '/admin_coupons.php';
 require_once __DIR__ . '/admin_orders.php';

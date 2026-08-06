@@ -62,6 +62,29 @@ if ($section === 'products') {
     ]);
 }
 
+if ($section === 'coupons') {
+    $adminCouponFilters = admin_coupon_filters();
+    $adminCoupons = all_coupons_admin($adminCouponFilters);
+
+    json_response([
+        'data' => [
+            'html' => $renderTemplate(
+                'coupons-results',
+                [
+                    'adminCoupons' => $adminCoupons,
+                ]
+            ),
+            'url' => admin_section_url(
+                'coupons',
+                admin_coupon_query_parameters($adminCouponFilters)
+            ),
+            'count_label' => t('admin.results_count', [
+                'count' => count($adminCoupons),
+            ]),
+        ],
+    ]);
+}
+
 if ($section === 'orders') {
     $adminOrderFilters = admin_order_filters();
     $adminOrdersPage = admin_orders_page($adminOrderFilters);

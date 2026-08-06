@@ -45,7 +45,9 @@ require_once $root . '/includes/coupons.php';
 require_once $root . '/includes/cart.php';
 require_once $root . '/includes/security.php';
 require_once $root . '/includes/admin_auth.php';
+require_once $root . '/includes/admin_formatting.php';
 require_once $root . '/includes/admin_products.php';
+require_once $root . '/includes/admin_coupons.php';
 require_once $root . '/includes/admin_orders.php';
 
 $tests = 0;
@@ -82,11 +84,20 @@ $assert(csrf_is_valid('token', 'token'), 'Valid CSRF tokens pass.');
 $assert(!csrf_is_valid('wrong', 'token'), 'Invalid CSRF tokens fail.');
 $assert(!admin_is_authenticated(), 'An empty session is not an authenticated administrator.');
 $assert(configuration_errors() === [], 'The isolated test configuration is valid.');
+$assert(
+    format_admin_datetime('2026-08-06 14:20:00') === '06/08/2026 14:20'
+        && format_admin_coupon_discount([
+            'discount_type' => 'percentage',
+            'discount_value' => 15,
+        ]) === '15%',
+    'Administrator formatting helpers are available to page and AJAX templates.'
+);
 
 $_GET = [
     'search' => '  vip  ',
     'category' => 'ranks',
     'state' => 'inactive',
+    'sort' => 'price_desc',
 ];
 
 $productFilters = admin_product_filters();
@@ -96,8 +107,9 @@ $assert(
         'search' => 'vip',
         'category' => 'ranks',
         'state' => 'inactive',
+        'sort' => 'price_desc',
     ],
-    'Valid product filters are normalized.'
+    'Valid product filters and sorting are normalized.'
 );
 
 $productQuery = admin_products_query($productFilters);
@@ -128,6 +140,7 @@ $assert(
 $_GET = [
     'category' => 'invalid-category',
     'state' => 'invalid-state',
+    'sort' => 'invalid-sort',
 ];
 
 $assert(
@@ -135,6 +148,7 @@ $assert(
         'search' => '',
         'category' => '',
         'state' => '',
+        'sort' => '',
     ],
     'Invalid product filters are discarded.'
 );
@@ -146,12 +160,100 @@ $assert(
         'search' => 'vip',
         'category' => '',
         'state' => 'active',
+        'sort' => 'name_asc',
     ]) === [
         'search' => 'vip',
         'state' => 'active',
+        'sort' => 'name_asc',
     ],
     'Product filter URLs omit empty values.'
 );
+
+$assert(
+    admin_product_order_by(['sort' => 'price_desc']) === 'price_cents DESC, id DESC'
+        && admin_product_order_by(['sort' => 'invalid']) === 'category ASC, sort_order ASC, id ASC',
+    'Product sorting uses only server-side allowlisted clauses.'
+);
+
+$_GET = [
+    'player' => ' Steve ',
+    'status' => 'paid',
+    'order' => 'abc',
+    'date_from' => '2026-01-01',
+    'date_to' => '2026-01-31',
+    'sort' => 'total_desc',
+    'page' => '2',
+];
+
+$orderFilters = admin_order_filters();
+
+$assert(
+    $orderFilters === [
+        'player' => 'Steve',
+        'status' => 'paid',
+        'order' => 'abc',
+        'date_from' => '2026-01-01',
+        'date_to' => '2026-01-31',
+        'sort' => 'total_desc',
+        'page' => 2,
+    ],
+    'Valid order filters and sorting are normalized.'
+);
+
+$assert(
+    admin_order_order_by($orderFilters) === 'total_cents DESC, id DESC'
+        && admin_order_order_by(['sort' => 'invalid']) === 'created_at DESC, id DESC',
+    'Order sorting uses only server-side allowlisted clauses.'
+);
+
+$_GET = [
+    'search' => ' save ',
+    'type' => 'percentage',
+    'state' => 'available',
+    'sort' => 'usage_desc',
+];
+
+$couponFilters = admin_coupon_filters();
+$couponQuery = admin_coupons_query($couponFilters);
+
+$assert(
+    $couponFilters === [
+        'search' => 'save',
+        'type' => 'percentage',
+        'state' => 'available',
+        'sort' => 'usage_desc',
+    ]
+        && str_contains($couponQuery['where'], 'code LIKE :search')
+        && str_contains($couponQuery['where'], 'discount_type = :discount_type')
+        && str_contains($couponQuery['where'], 'used_count < max_uses')
+        && $couponQuery['parameters']['search'] === '%SAVE%'
+        && $couponQuery['parameters']['discount_type'] === 'percentage',
+    'Coupon filters generate a parameterized query.'
+);
+
+$assert(
+    admin_coupon_order_by($couponFilters) === 'used_count DESC, id DESC'
+        && admin_coupon_order_by(['sort' => 'invalid']) === 'created_at DESC, id DESC',
+    'Coupon sorting uses only server-side allowlisted clauses.'
+);
+
+$_GET = [
+    'type' => 'invalid',
+    'state' => 'invalid',
+    'sort' => 'invalid',
+];
+
+$assert(
+    admin_coupon_filters() === [
+        'search' => '',
+        'type' => '',
+        'state' => '',
+        'sort' => '',
+    ],
+    'Invalid coupon filters and sorting are discarded.'
+);
+
+$_GET = [];
 
 $assert(
     is_file($root . '/public/ajax/admin-filter.php'),
@@ -171,7 +273,8 @@ $assert(
         && str_contains(
             $adminJavaScript,
             'data-admin-pagination'
-        ),
+        )
+        && is_file($root . '/templates/admin/coupons-results.php'),
     'Administrator JavaScript supports AJAX filters and pagination.'
 );
 
@@ -255,6 +358,26 @@ if (!in_array('sqlite', PDO::getAvailableDrivers(), true)) {
     ]);
     $throws(static fn () => validate_coupon('EXPIRED', 2000), 'Expired coupons are rejected.');
     $throws(static fn () => validate_coupon('EXHAUSTED', 2000), 'Exhausted coupons are rejected.');
+    $expiredCoupons = all_coupons_admin([
+        'search' => '',
+        'type' => '',
+        'state' => 'expired',
+        'sort' => 'code_asc',
+    ]);
+    $exhaustedCoupons = all_coupons_admin([
+        'search' => '',
+        'type' => '',
+        'state' => 'exhausted',
+        'sort' => 'code_asc',
+    ]);
+    $assert(
+        in_array('EXPIRED', array_column($expiredCoupons, 'code'), true),
+        'Coupon AJAX filters can select expired coupons.'
+    );
+    $assert(
+        in_array('EXHAUSTED', array_column($exhaustedCoupons, 'code'), true),
+        'Coupon AJAX filters can select exhausted coupons.'
+    );
     $assert((int) $pdo->query('SELECT COUNT(*) FROM admin_login_limits')->fetchColumn() === 0, 'The admin rate-limit table is available.');
 }
 

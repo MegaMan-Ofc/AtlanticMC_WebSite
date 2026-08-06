@@ -3,37 +3,160 @@
         <h2><?= e(t('admin.coupons')) ?></h2>
         <p><?= e(t('admin.coupons_text')) ?></p>
     </div>
+
+    <span
+        id="admin-coupons-count"
+        class="admin-result-count"
+    >
+        <?= e(t('admin.results_count', [
+            'count' => count($adminCoupons),
+        ])) ?>
+    </span>
 </section>
 
-<?php
-$newCoupon = [
-    'id' => 0,
-    'code' => '',
-    'discount_type' => 'percentage',
-    'discount_value' => 10,
-    'min_subtotal_cents' => 0,
-    'max_uses' => null,
-    'used_count' => 0,
-    'active' => 1,
-    'expires_at' => null,
-];
-?>
+<form
+    class="admin-panel admin-filter-form"
+    action="<?= e(route_url('admin')) ?>"
+    method="get"
+    autocomplete="off"
+    data-admin-filter-form
+    data-ajax-endpoint="<?= e(url('ajax/admin-filter.php')) ?>"
+    data-results-target="admin-coupons-results"
+    data-count-target="admin-coupons-count"
+>
+    <input
+        type="hidden"
+        name="section"
+        value="coupons"
+    >
 
-<div class="admin-entity-grid admin-coupon-grid" aria-label="<?= e(t('admin.coupons')) ?>">
-    <button class="admin-entity-card admin-entity-card--create" type="button" data-dialog-open="admin-coupon-dialog-new" aria-haspopup="dialog" aria-controls="admin-coupon-dialog-new">
-        <span class="admin-entity-icon"><i class="fa-solid fa-plus" aria-hidden="true"></i></span>
-        <strong><?= e(t('admin.create_coupon')) ?></strong>
-    </button>
+    <div class="admin-filter-grid admin-filter-grid--coupons">
+        <div class="admin-field">
+            <label for="filter-coupon-search">
+                <?= e(t('admin.coupon_search')) ?>
+            </label>
 
-    <?php foreach ($adminCoupons as $coupon): ?>
-        <button class="admin-entity-card admin-coupon-tile <?= (bool) $coupon['active'] ? '' : 'is-inactive' ?>" type="button" data-dialog-open="admin-coupon-dialog-<?= (int) $coupon['id'] ?>" aria-haspopup="dialog" aria-controls="admin-coupon-dialog-<?= (int) $coupon['id'] ?>" aria-label="<?= e(t('admin.edit_coupon', ['code' => (string) $coupon['code']])) ?>">
-            <strong><?= e((string) $coupon['code']) ?></strong>
-            <span><?= e(format_admin_coupon_discount($coupon)) ?></span>
+            <input
+                id="filter-coupon-search"
+                name="search"
+                value="<?= e($adminCouponFilters['search']) ?>"
+                maxlength="50"
+            >
+        </div>
+
+        <div class="admin-field">
+            <label for="filter-coupon-type">
+                <?= e(t('common.type')) ?>
+            </label>
+
+            <select
+                id="filter-coupon-type"
+                name="type"
+            >
+                <option value="">
+                    <?= e(t('admin.all_coupon_types')) ?>
+                </option>
+                <option
+                    value="percentage"
+                    <?= $adminCouponFilters['type'] === 'percentage'
+                        ? 'selected'
+                        : '' ?>
+                >
+                    <?= e(t('admin.percentage')) ?>
+                </option>
+                <option
+                    value="fixed"
+                    <?= $adminCouponFilters['type'] === 'fixed'
+                        ? 'selected'
+                        : '' ?>
+                >
+                    <?= e(t('admin.fixed_eur')) ?>
+                </option>
+            </select>
+        </div>
+
+        <div class="admin-field">
+            <label for="filter-coupon-state">
+                <?= e(t('common.status')) ?>
+            </label>
+
+            <select
+                id="filter-coupon-state"
+                name="state"
+            >
+                <?php foreach ([
+                    '' => 'admin.all_coupon_states',
+                    'available' => 'admin.available_coupons_only',
+                    'inactive' => 'admin.inactive_coupons_only',
+                    'expired' => 'admin.expired_coupons_only',
+                    'exhausted' => 'admin.exhausted_coupons_only',
+                ] as $stateValue => $stateLabel): ?>
+                    <option
+                        value="<?= e($stateValue) ?>"
+                        <?= $adminCouponFilters['state'] === $stateValue
+                            ? 'selected'
+                            : '' ?>
+                    >
+                        <?= e(t($stateLabel)) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+
+        <div class="admin-field">
+            <label for="filter-coupon-sort">
+                <?= e(t('admin.sort_by')) ?>
+            </label>
+
+            <select
+                id="filter-coupon-sort"
+                name="sort"
+            >
+                <?php foreach ([
+                    '' => 'admin.sort_created_desc',
+                    'created_asc' => 'admin.sort_created_asc',
+                    'code_asc' => 'admin.sort_code_asc',
+                    'code_desc' => 'admin.sort_code_desc',
+                    'usage_desc' => 'admin.sort_usage_desc',
+                    'usage_asc' => 'admin.sort_usage_asc',
+                ] as $sortValue => $sortLabel): ?>
+                    <option
+                        value="<?= e($sortValue) ?>"
+                        <?= $adminCouponFilters['sort'] === $sortValue
+                            ? 'selected'
+                            : '' ?>
+                    >
+                        <?= e(t($sortLabel)) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+    </div>
+
+    <div class="admin-filter-actions">
+        <button
+            class="button button--primary"
+            type="submit"
+        >
+            <?= e(t('admin.filter')) ?>
         </button>
-    <?php endforeach; ?>
-</div>
 
-<?php $couponForm = $newCoupon; require BASE_PATH . '/templates/admin/coupon-dialog.php'; ?>
-<?php foreach ($adminCoupons as $couponForm): ?>
-    <?php require BASE_PATH . '/templates/admin/coupon-dialog.php'; ?>
-<?php endforeach; ?>
+        <a
+            class="button button--ghost"
+            href="<?= e(admin_section_url('coupons')) ?>"
+            data-admin-filter-clear
+        >
+            <?= e(t('admin.clear_filters')) ?>
+        </a>
+    </div>
+</form>
+
+<section
+    id="admin-coupons-results"
+    class="admin-results"
+    data-admin-results
+    aria-live="polite"
+    aria-busy="false"
+>
+    <?php require BASE_PATH . '/templates/admin/coupons-results.php'; ?>
+</section>
