@@ -16,7 +16,6 @@
                 <a class="category-card" data-theme="vips" href="<?= e(route_url('ranks')) ?>"><img alt="<?= e(t('home.diamond_alt')) ?>" src="<?= e(url('assets/diamante.png')) ?>"><h2>VIPs</h2></a>
                 <a class="category-card" data-theme="rubis" href="<?= e(route_url('rubis')) ?>"><img alt="<?= e(t('home.rubis_alt')) ?>" src="<?= e(url('assets/rubis-saco-pequeno.png.png')) ?>"><h2>Rubis</h2></a>
                 <a class="category-card" data-theme="keys" href="<?= e(route_url('keys')) ?>"><img alt="<?= e(t('home.key_alt')) ?>" src="<?= e(url('assets/atlantic-key.png')) ?>"><h2><?= e(t('category.keys')) ?></h2></a>
-                <a class="category-card" data-theme="money" href="<?= e(route_url('battlepass')) ?>"><i aria-hidden="true" class="fa-solid fa-ticket"></i><h2><?= e(t('category.battlepass')) ?></h2><small><?= e(t('home.season_rewards')) ?></small></a>
             </section>
             <a class="promo-card sdz-rank-card" href="<?= e(route_url('boosters')) ?>">
                 <div><p><?= e(t('home.power_up')) ?></p><h2><?= e(t('home.hearts')) ?><br><small><?= e(t('home.extra_life')) ?></small></h2><span class="button button--ghost"><?= e(t('home.view_hearts')) ?></span></div>
