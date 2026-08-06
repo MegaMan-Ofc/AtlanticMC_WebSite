@@ -820,3 +820,73 @@ html.admin-dialog-open {
         max-height: calc(100vh - 1rem);
     }
 }
+
+.admin-category-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.admin-category-card {
+    display: grid;
+    gap: 1rem;
+    margin: 0;
+}
+
+.admin-category-preview {
+    display: grid;
+    min-height: 12rem;
+    place-items: center;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: .9rem;
+    background: radial-gradient(circle, rgba(108, 92, 231, .18), transparent 65%), var(--bg);
+}
+
+.admin-category-preview img {
+    width: min(9rem, 70%);
+    max-height: 9rem;
+    object-fit: contain;
+    filter: drop-shadow(0 1rem 1.5rem rgba(0, 0, 0, .35));
+}
+
+.admin-category-card-body {
+    display: grid;
+    gap: 1rem;
+}
+
+.admin-category-card .admin-field small {
+    color: var(--muted);
+    line-height: 1.45;
+}
+
+.admin-category-key {
+    margin: 0;
+    color: var(--muted);
+    font-size: .75rem;
+    font-weight: 800;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+}
+
+.admin-category-limit-note {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    margin-top: 1rem;
+    color: var(--muted);
+}
+
+.admin-category-limit-note i {
+    color: var(--primary);
+}
+
+.admin-category-limit-note p {
+    margin: 0;
+}
+
+@media (max-width: 900px) {
+    .admin-category-grid {
+        grid-template-columns: 1fr;
+    }
+}

@@ -40,15 +40,18 @@ require_once $root . '/includes/session.php';
 require_once $root . '/includes/database.php';
 require_once $root . '/includes/migrations.php';
 require_once $root . '/includes/i18n.php';
+require_once $root . '/includes/categories.php';
 require_once $root . '/includes/catalog.php';
 require_once $root . '/includes/coupons.php';
 require_once $root . '/includes/cart.php';
 require_once $root . '/includes/security.php';
 require_once $root . '/includes/admin_auth.php';
 require_once $root . '/includes/admin_formatting.php';
+require_once $root . '/includes/admin_categories.php';
 require_once $root . '/includes/admin_products.php';
 require_once $root . '/includes/admin_coupons.php';
 require_once $root . '/includes/admin_orders.php';
+require_once $root . '/includes/admin_dashboard.php';
 
 $tests = 0;
 $failures = [];
@@ -84,6 +87,36 @@ $assert(csrf_is_valid('token', 'token'), 'Valid CSRF tokens pass.');
 $assert(!csrf_is_valid('wrong', 'token'), 'Invalid CSRF tokens fail.');
 $assert(!admin_is_authenticated(), 'An empty session is not an authenticated administrator.');
 $assert(configuration_errors() === [], 'The isolated test configuration is valid.');
+
+$assert(
+    STORE_CATEGORIES === ['ranks', 'rubis', 'keys', 'boosters']
+        && EDITABLE_STORE_CATEGORIES === ['ranks', 'rubis', 'keys']
+        && array_keys(public_routes()) === [
+            'home',
+            'ranks',
+            'rubis',
+            'keys',
+            'boosters',
+            'cart',
+            'checkout',
+            'login',
+            'success',
+            'privacy',
+            'terms',
+            'purchase-policy',
+            'rules',
+            'admin',
+        ],
+    'The active catalogue and its three editable categories remain fixed.'
+);
+$assert(
+    in_array('categories', ADMIN_SECTIONS, true),
+    'The administrator exposes the fixed category settings section.'
+);
+$throws(
+    static fn () => validate_category_image_path('https://example.com/icon.png'),
+    'Category images must remain inside the local assets folder.'
+);
 $assert(
     format_admin_datetime('2026-08-06 14:20:00') === '06/08/2026 14:20'
         && format_admin_coupon_discount([
@@ -317,6 +350,29 @@ if (!in_array('sqlite', PDO::getAvailableDrivers(), true)) {
 
     $assert((int) $pdo->query('SELECT COUNT(*) FROM schema_migrations')->fetchColumn() >= 3, 'All SQLite migrations are recorded.');
     $assert((int) $pdo->query('SELECT COUNT(*) FROM products')->fetchColumn() > 0, 'The seed creates products.');
+    $seedCategories = $pdo->query('SELECT DISTINCT category FROM products ORDER BY category')->fetchAll(PDO::FETCH_COLUMN);
+    $assert(
+        array_diff($seedCategories, STORE_CATEGORIES) === [],
+        'The seed creates products only for active catalogue categories.'
+    );
+    save_category_from_admin([
+        'category' => 'ranks',
+        'name' => 'Premium Ranks',
+        'image' => 'assets/diamante.png',
+    ]);
+    $assert(
+        store_category_name('ranks') === 'Premium Ranks'
+            && store_category_image('ranks') === 'assets/diamante.png',
+        'Administrators can update only the displayed category name and image.'
+    );
+    $throws(
+        static fn () => save_category_from_admin([
+            'category' => 'boosters',
+            'name' => 'Boosters',
+            'image' => 'assets/heart.png',
+        ]),
+        'Non-editable categories cannot be changed through the administrator.'
+    );
     $product = $pdo->query('SELECT * FROM products ORDER BY id LIMIT 1')->fetch();
     $productId = (int) $product['id'];
     $expectedPrice = (int) $product['price_cents'];

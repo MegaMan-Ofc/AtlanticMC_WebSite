@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-const ADMIN_SECTIONS = ['overview', 'products', 'coupons', 'orders', 'analytics'];
+const ADMIN_SECTIONS = ['overview', 'categories', 'products', 'coupons', 'orders', 'analytics'];
 
 function admin_section(): string
 {
@@ -40,8 +40,12 @@ function admin_dashboard_summary(): array
     $traffic = today_traffic_stats();
 
     return [
-        'active_products' => admin_scalar('SELECT COUNT(*) FROM products WHERE active = 1'),
-        'total_products' => admin_scalar('SELECT COUNT(*) FROM products'),
+        'active_products' => admin_scalar(
+            "SELECT COUNT(*) FROM products WHERE active = 1 AND category IN ('ranks', 'rubis', 'keys', 'boosters')"
+        ),
+        'total_products' => admin_scalar(
+            "SELECT COUNT(*) FROM products WHERE category IN ('ranks', 'rubis', 'keys', 'boosters')"
+        ),
         'pending_orders' => admin_scalar(
             "SELECT COUNT(*) FROM orders WHERE status IN ('pending', 'awaiting_payment')"
         ),
