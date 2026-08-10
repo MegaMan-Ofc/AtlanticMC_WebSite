@@ -1,4 +1,10 @@
-<?php require_once dirname(__DIR__) . '/controllers/index.php'; ?>
+<?php
+
+declare(strict_types=1);
+
+require_once dirname(__DIR__) . '/controllers/public_router.php';
+require_once dirname(__DIR__) . '/controllers/index.php';
+?>
 <!DOCTYPE html>
 <html lang="<?= e(current_language()) ?>">
 <?php require dirname(__DIR__) . '/includes/head.php'; ?>

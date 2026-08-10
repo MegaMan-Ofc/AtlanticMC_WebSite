@@ -1,4 +1,3 @@
-doc/
 .env
 .env.local
 .env.*.local
@@ -13,8 +12,6 @@ storage/*.log
 *.sql.zip
 *.dump
 *.backup
-ADMIN-SETUP.md
-plan.txt
 .env.*
 !.env.example
 *.log
@@ -28,5 +25,4 @@ database/backups/
 *.dump.sql
 *.key
 *.pem
-plan.md
 release/
