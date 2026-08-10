@@ -27,6 +27,35 @@ function public_routes(): array
     ];
 }
 
+/**
+ * Resolves a request URI to one of the known public routes.
+ *
+ * This is intentionally independent from Apache rewrites so shared hosting
+ * can send clean URLs such as /admin through public/index.php as a fallback.
+ */
+function public_route_name_from_request_uri(string $requestUri): ?string
+{
+    $requestPath = parse_url($requestUri, PHP_URL_PATH);
+
+    if (!is_string($requestPath)) {
+        return null;
+    }
+
+    $requestPath = trim(rawurldecode($requestPath), '/');
+
+    if ($requestPath === '' || $requestPath === 'index' || $requestPath === 'index.php') {
+        return 'home';
+    }
+
+    foreach (public_routes() as $name => $route) {
+        if ($requestPath === $route['path']) {
+            return $name;
+        }
+    }
+
+    return null;
+}
+
 function route_path(string $name, array $query = []): string
 {
     $route = public_routes()[$name] ?? null;

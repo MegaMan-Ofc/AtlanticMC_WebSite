@@ -30,7 +30,7 @@ $_SESSION = [];
 $_SERVER['REMOTE_ADDR'] = '127.0.0.1';
 $_SERVER['REQUEST_METHOD'] = 'GET';
 $_SERVER['SCRIPT_NAME'] = '/index.php';
-$_SERVER['SCRIPT_FILENAME'] = $root . '/public/index.php';
+$_SERVER['SCRIPT_FILENAME'] = $root . '/public_html/index.php';
 
 require_once $root . '/includes/config.php';
 require_once $root . '/includes/routes.php';
@@ -87,6 +87,14 @@ $assert(csrf_is_valid('token', 'token'), 'Valid CSRF tokens pass.');
 $assert(!csrf_is_valid('wrong', 'token'), 'Invalid CSRF tokens fail.');
 $assert(!admin_is_authenticated(), 'An empty session is not an authenticated administrator.');
 $assert(configuration_errors() === [], 'The isolated test configuration is valid.');
+
+$assert(
+    public_route_name_from_request_uri('/') === 'home'
+        && public_route_name_from_request_uri('/admin') === 'admin'
+        && public_route_name_from_request_uri('/purchase-policy?from=footer') === 'purchase-policy'
+        && public_route_name_from_request_uri('/does-not-exist') === null,
+    'Clean request paths resolve through the shared public route table.'
+);
 
 $assert(
     STORE_CATEGORIES === ['ranks', 'rubis', 'keys', 'boosters']
@@ -289,12 +297,12 @@ $assert(
 $_GET = [];
 
 $assert(
-    is_file($root . '/public/ajax/admin-filter.php'),
+    is_file($root . '/public_html/ajax/admin-filter.php'),
     'The administrator AJAX filter endpoint exists.'
 );
 
 $adminJavaScript = file_get_contents(
-    $root . '/public/js/admin.js'
+    $root . '/public_html/js/admin.js'
 );
 
 $assert(

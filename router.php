@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 header_remove('X-Powered-By');
 
-
 require_once __DIR__ . '/includes/config.php';
 require_once __DIR__ . '/includes/routes.php';
 
@@ -25,13 +24,22 @@ foreach (public_routes() as $name => $route) {
 // Match Apache's canonical redirects during local development.
 if ($relativePath === 'index' || $relativePath === 'index.php') {
     $location = route_url('home');
-    header('Location: ' . ($queryString === '' ? $location : $location . '?' . $queryString), true, 301);
+    header(
+        'Location: ' . ($queryString === '' ? $location : $location . '?' . $queryString),
+        true,
+        301
+    );
     exit;
 }
 
 if (isset($scriptToName[$relativePath])) {
     $location = route_url($scriptToName[$relativePath]);
-    header('Location: ' . ($queryString === '' ? $location : $location . '?' . $queryString), true, 301);
+
+    header(
+        'Location: ' . ($queryString === '' ? $location : $location . '?' . $queryString),
+        true,
+        301
+    );
     exit;
 }
 
@@ -39,12 +47,17 @@ $trimmedPath = trim($relativePath, '/');
 
 if ($relativePath !== $trimmedPath && isset($pathToName[$trimmedPath])) {
     $location = route_url($pathToName[$trimmedPath]);
-    header('Location: ' . ($queryString === '' ? $location : $location . '?' . $queryString), true, 301);
+
+    header(
+        'Location: ' . ($queryString === '' ? $location : $location . '?' . $queryString),
+        true,
+        301
+    );
     exit;
 }
 
 // Let the built-in server handle real assets, actions, AJAX and API files.
-$publicRoot = __DIR__ . '/public';
+$publicRoot = __DIR__ . '/public_html';
 $filePath = $publicRoot . $requestPath;
 
 if ($requestPath !== '/' && is_file($filePath)) {
@@ -63,6 +76,7 @@ if (!is_string($routeName)) {
 }
 
 $route = public_routes()[$routeName];
+
 $_SERVER['SCRIPT_FILENAME'] = $publicRoot . '/' . $route['script'];
 $_SERVER['SCRIPT_NAME'] = '/' . $route['script'];
 
