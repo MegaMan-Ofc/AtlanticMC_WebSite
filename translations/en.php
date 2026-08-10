@@ -223,7 +223,7 @@ return [
     'admin.categories_text' => 'Change only the name and image of the three categories shown on the home page.',
     'admin.category_name' => 'Displayed name',
     'admin.category_image' => 'Image path',
-    'admin.category_image_help' => 'Use an existing image inside public/assets, for example assets/diamante.png.',
+    'admin.category_image_help' => 'Use an existing image inside public_html/assets, for example assets/diamante.png.',
     'admin.categories_locked' => 'The categories are fixed. They cannot be created or deleted here.',
     'admin.products' => 'Products and prices',
     'admin.products_text' => 'Checkout prices are always read from this database.',

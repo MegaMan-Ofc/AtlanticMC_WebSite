@@ -163,7 +163,7 @@ function config(?string $key = null, mixed $default = null): mixed
                 'force_https' => (bool) env_value('APP_FORCE_HTTPS', false),
                 'trusted_proxies' => env_csv('TRUSTED_PROXIES'),
                 'payments_enabled' => (bool) env_value('PAYMENTS_ENABLED', false),
-                'server_ip' => (string) env_value('SERVER_IP', 'atlanticmc.secure.pebble.host'),
+                'server_ip' => (string) env_value('SERVER_IP', 'play.atlanticeu.online'),
                 'discord_url' => (string) env_value('DISCORD_URL', 'https://discord.gg/atlanticnetwork'),
                 'support_email' => (string) env_value('SUPPORT_EMAIL', 'support@atlantic.net'),
                 'currency' => strtoupper((string) env_value('STORE_CURRENCY', 'EUR')),
@@ -305,7 +305,7 @@ function configuration_errors(): array
         $errors[] = 'DB_CHARSET must be utf8mb4 in production.';
     }
 
-    $publicPath = realpath(BASE_PATH . '/public') ?: BASE_PATH . '/public';
+    $publicPath = realpath(BASE_PATH . '/public_html') ?: BASE_PATH . '/public_html';
 
     foreach (['app_path', 'security_path'] as $logKey) {
         $logPath = (string) config('logging.' . $logKey);
@@ -313,7 +313,7 @@ function configuration_errors(): array
         $normalizedPublicPath = rtrim(str_replace('\\', '/', $publicPath), '/');
 
         if ($normalizedLogPath === $normalizedPublicPath || str_starts_with($normalizedLogPath, $normalizedPublicPath . '/')) {
-            $errors[] = 'Log files must be stored outside public/.';
+            $errors[] = 'Log files must be stored outside public_html/.';
         }
     }
 

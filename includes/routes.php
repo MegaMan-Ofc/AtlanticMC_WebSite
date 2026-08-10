@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-/**
- * Public pages exposed through extensionless URLs.
- *
- * @return array<string, array{path:string, script:string}>
- */
+
+
+
+
+
 function public_routes(): array
 {
     return [
@@ -27,12 +27,12 @@ function public_routes(): array
     ];
 }
 
-/**
- * Resolves a request URI to one of the known public routes.
- *
- * This is intentionally independent from Apache rewrites so shared hosting
- * can send clean URLs such as /admin through public/index.php as a fallback.
- */
+
+
+
+
+
+
 function public_route_name_from_request_uri(string $requestUri): ?string
 {
     $requestPath = parse_url($requestUri, PHP_URL_PATH);
@@ -125,10 +125,10 @@ function request_base_path(): string
     return $directory === '/' ? '' : rtrim($directory, '/');
 }
 
-/**
- * Converts a root-level legacy PHP page path into its clean public path.
- * Internal endpoints such as actions/login.php are intentionally unchanged.
- */
+
+
+
+
 function normalize_public_path(string $path): string
 {
     $parts = parse_url($path);

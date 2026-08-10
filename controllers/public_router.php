@@ -18,12 +18,12 @@ if ($routeName === 'home') {
 }
 
 $route = public_routes()[$routeName];
-$publicRoot = dirname(__DIR__) . '/public';
+$publicRoot = dirname(__DIR__) . '/public_html';
 $targetScript = $publicRoot . '/' . $route['script'];
 
-// Some shared hosts send extensionless requests to index.php before their
-// rewrite layer runs. Keep route/canonical helpers aware of the actual page
-// while delegating rendering to the existing public page entry point.
+
+
+
 $_SERVER['SCRIPT_FILENAME'] = $targetScript;
 $_SERVER['SCRIPT_NAME'] = '/' . $route['script'];
 

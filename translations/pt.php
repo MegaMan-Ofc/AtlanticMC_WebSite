@@ -223,7 +223,7 @@ return [
     'admin.categories_text' => 'Altera apenas o nome e a imagem das três categorias apresentadas na página inicial.',
     'admin.category_name' => 'Nome apresentado',
     'admin.category_image' => 'Caminho da imagem',
-    'admin.category_image_help' => 'Usa uma imagem existente dentro de public/assets, por exemplo assets/diamante.png.',
+    'admin.category_image_help' => 'Usa uma imagem existente dentro de public_html/assets, por exemplo assets/diamante.png.',
     'admin.categories_locked' => 'As categorias são fixas. Não podem ser criadas nem eliminadas nesta área.',
     'admin.products' => 'Produtos e preços',
     'admin.products_text' => 'Os preços utilizados no checkout são sempre lidos desta base de dados.',

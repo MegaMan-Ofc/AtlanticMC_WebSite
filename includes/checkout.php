@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-/**
- * Creates the local order and returns the URL where the browser must continue.
- *
- * All prices, quantities, coupons and recipient data are validated again on the
- * server before this function returns a redirect URL.
- *
- * @return array{redirect_url:string, external:bool, message:?string, order_token:string}
- */
+
+
+
+
+
+
+
+
 function start_checkout(): array
 {
     $summary = cart_summary();

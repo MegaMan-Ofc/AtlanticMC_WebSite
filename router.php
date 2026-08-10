@@ -21,7 +21,7 @@ foreach (public_routes() as $name => $route) {
     $pathToName[$route['path']] = $name;
 }
 
-// Match Apache's canonical redirects during local development.
+
 if ($relativePath === 'index' || $relativePath === 'index.php') {
     $location = route_url('home');
     header(
@@ -56,7 +56,7 @@ if ($relativePath !== $trimmedPath && isset($pathToName[$trimmedPath])) {
     exit;
 }
 
-// Let the built-in server handle real assets, actions, AJAX and API files.
+
 $publicRoot = __DIR__ . '/public_html';
 $filePath = $publicRoot . $requestPath;
 
