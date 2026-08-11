@@ -5,15 +5,6 @@
                 <h2><?= e(t('footer.about_title')) ?></h2>
                 <p><?= e(t('footer.about_text', ['server' => (string) config('app.server_ip')])) ?></p>
             </section>
-            <nav aria-label="<?= e(t('footer.store_links_aria')) ?>">
-                <h2><?= e(t('common.store')) ?></h2>
-                <div class="footer-links">
-                    <a href="<?= e(route_url('home')) ?>"><?= e(t('common.home')) ?></a>
-                    <a href="<?= e(route_url('ranks')) ?>"><?= e(localized_category('ranks')) ?></a>
-                    <a href="<?= e(route_url('rubis')) ?>"><?= e(localized_category('rubis')) ?></a>
-                    <a href="<?= e(route_url('keys')) ?>"><?= e(localized_category('keys')) ?></a>
-                </div>
-            </nav>
             <section>
                 <h2><?= e(t('common.support')) ?></h2>
                 <p><?= e(t('footer.questions')) ?></p>
