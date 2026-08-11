@@ -2,125 +2,131 @@
 
 declare(strict_types=1);
 
-const STORE_CATEGORIES = ['ranks', 'rubis', 'keys', 'boosters'];
-const EDITABLE_STORE_CATEGORIES = ['ranks', 'rubis', 'keys'];
+const HOME_CATEGORY_ROUTES = [
+    'ranks' => ['theme' => 'vips', 'route' => 'ranks'],
+    'rubis' => ['theme' => 'rubis', 'route' => 'rubis'],
+    'keys' => ['theme' => 'keys', 'route' => 'keys'],
+];
 
-function editable_category_defaults(): array
+function reset_store_categories_cache(): void
 {
-    return [
-        'ranks' => [
-            'image' => 'assets/diamante.png',
-            'theme' => 'vips',
-            'route' => 'ranks',
-        ],
-        'rubis' => [
-            'image' => 'assets/rubis-saco-pequeno.png.png',
-            'theme' => 'rubis',
-            'route' => 'rubis',
-        ],
-        'keys' => [
-            'image' => 'assets/atlantic-key.png',
-            'theme' => 'keys',
-            'route' => 'keys',
-        ],
-    ];
+    unset($GLOBALS['store_categories_cache']);
 }
 
-function is_editable_store_category(string $category): bool
+function all_store_categories(bool $includeInactive = false): array
 {
-    return in_array($category, EDITABLE_STORE_CATEGORIES, true);
-}
+    $cacheKey = $includeInactive ? 'all' : 'active';
 
-function category_meta_key(string $category, string $field): string
-{
-    return 'store_category.' . $category . '.' . $field;
-}
-
-function reset_category_settings_cache(): void
-{
-    unset($GLOBALS['store_category_settings_cache']);
-}
-
-function saved_category_settings(): array
-{
-    if (isset($GLOBALS['store_category_settings_cache']) && is_array($GLOBALS['store_category_settings_cache'])) {
-        return $GLOBALS['store_category_settings_cache'];
+    if (isset($GLOBALS['store_categories_cache'][$cacheKey])) {
+        return $GLOBALS['store_categories_cache'][$cacheKey];
     }
 
-    $keys = [];
+    $sql = 'SELECT id, slug, name, image, active, sort_order, created_at, updated_at FROM categories';
 
-    foreach (EDITABLE_STORE_CATEGORIES as $category) {
-        $keys[] = category_meta_key($category, 'name');
-        $keys[] = category_meta_key($category, 'image');
+    if (!$includeInactive) {
+        $sql .= ' WHERE active = 1';
     }
 
-    $placeholders = implode(',', array_fill(0, count($keys), '?'));
-    $statement = db()->prepare(
-        "SELECT meta_key, meta_value
-         FROM app_meta
-         WHERE meta_key IN ($placeholders)"
+    $sql .= ' ORDER BY sort_order ASC, id ASC';
+    $categories = db()->query($sql)->fetchAll();
+    $GLOBALS['store_categories_cache'][$cacheKey] = $categories;
+
+    return $categories;
+}
+
+function store_category_by_id(int $id, bool $includeInactive = true): ?array
+{
+    if ($id < 1) {
+        return null;
+    }
+
+    foreach (all_store_categories(true) as $category) {
+        if ((int) $category['id'] !== $id) {
+            continue;
+        }
+
+        if (!$includeInactive && !(bool) $category['active']) {
+            return null;
+        }
+
+        return $category;
+    }
+
+    return null;
+}
+
+function store_category_by_slug(string $slug, bool $includeInactive = true): ?array
+{
+    $slug = strtolower(trim($slug));
+
+    if ($slug === '') {
+        return null;
+    }
+
+    foreach (all_store_categories(true) as $category) {
+        if ((string) $category['slug'] !== $slug) {
+            continue;
+        }
+
+        if (!$includeInactive && !(bool) $category['active']) {
+            return null;
+        }
+
+        return $category;
+    }
+
+    return null;
+}
+
+function store_category_exists(string $slug, bool $includeInactive = true): bool
+{
+    return store_category_by_slug($slug, $includeInactive) !== null;
+}
+
+function store_category_name(string $slug): string
+{
+    $category = store_category_by_slug($slug, true);
+
+    return $category === null
+        ? t('category.' . strtolower($slug), [], ucfirst($slug))
+        : (string) $category['name'];
+}
+
+function store_category_image(string $slug): string
+{
+    $category = store_category_by_slug($slug, true);
+
+    return $category === null ? '' : (string) $category['image'];
+}
+
+function home_store_categories(): array
+{
+    $categories = [];
+
+    foreach (HOME_CATEGORY_ROUTES as $slug => $presentation) {
+        $category = store_category_by_slug($slug, false);
+
+        if ($category === null) {
+            continue;
+        }
+
+        $categories[] = [
+            'id' => (int) $category['id'],
+            'key' => (string) $category['slug'],
+            'slug' => (string) $category['slug'],
+            'name' => (string) $category['name'],
+            'image' => (string) $category['image'],
+            'active' => (bool) $category['active'],
+            'sort_order' => (int) $category['sort_order'],
+            'theme' => $presentation['theme'],
+            'route' => $presentation['route'],
+        ];
+    }
+
+    usort(
+        $categories,
+        static fn (array $left, array $right): int => [$left['sort_order'], $left['id']] <=> [$right['sort_order'], $right['id']]
     );
-    $statement->execute($keys);
-    $settings = [];
 
-    foreach ($statement->fetchAll() as $row) {
-        $settings[(string) $row['meta_key']] = (string) $row['meta_value'];
-    }
-
-    $GLOBALS['store_category_settings_cache'] = $settings;
-
-    return $settings;
-}
-
-function store_category_name(string $category): string
-{
-    if (!is_editable_store_category($category)) {
-        return t('category.' . strtolower($category), [], ucfirst($category));
-    }
-
-    $settings = saved_category_settings();
-    $savedName = trim((string) ($settings[category_meta_key($category, 'name')] ?? ''));
-
-    return $savedName !== ''
-        ? $savedName
-        : t('category.' . $category, [], ucfirst($category));
-}
-
-function store_category_image(string $category): string
-{
-    $defaults = editable_category_defaults();
-
-    if (!isset($defaults[$category])) {
-        return '';
-    }
-
-    $settings = saved_category_settings();
-    $savedImage = trim((string) ($settings[category_meta_key($category, 'image')] ?? ''));
-
-    return $savedImage !== '' ? $savedImage : $defaults[$category]['image'];
-}
-
-function store_category_settings(string $category): array
-{
-    $defaults = editable_category_defaults();
-
-    if (!isset($defaults[$category])) {
-        throw new InvalidArgumentException(t('validation.category_not_editable'));
-    }
-
-    return [
-        'key' => $category,
-        'name' => store_category_name($category),
-        'image' => store_category_image($category),
-        'theme' => $defaults[$category]['theme'],
-        'route' => $defaults[$category]['route'],
-    ];
-}
-
-function editable_store_category_settings(): array
-{
-    return array_map(
-        static fn (string $category): array => store_category_settings($category),
-        EDITABLE_STORE_CATEGORIES
-    );
+    return $categories;
 }
