@@ -51,6 +51,7 @@ require_once $root . '/includes/cart.php';
 require_once $root . '/includes/security.php';
 require_once $root . '/includes/admin_auth.php';
 require_once $root . '/includes/admin_formatting.php';
+require_once $root . '/includes/media.php';
 require_once $root . '/includes/admin_categories.php';
 require_once $root . '/includes/admin_products.php';
 require_once $root . '/includes/admin_coupons.php';
@@ -116,34 +117,63 @@ $assert(
 );
 
 $assert(
-    STORE_CATEGORIES === ['ranks', 'rubis', 'keys', 'boosters']
-        && EDITABLE_STORE_CATEGORIES === ['ranks', 'rubis', 'keys']
-        && array_keys(public_routes()) === [
-            'home',
-            'ranks',
-            'rubis',
-            'keys',
-            'boosters',
-            'cart',
-            'checkout',
-            'login',
-            'success',
-            'privacy',
-            'terms',
-            'purchase-policy',
-            'rules',
-            'admin',
-        ],
-    'The active catalogue and its three editable categories remain fixed.'
+    array_keys(public_routes()) === [
+        'home',
+        'ranks',
+        'rubis',
+        'keys',
+        'boosters',
+        'cart',
+        'checkout',
+        'login',
+        'success',
+        'privacy',
+        'terms',
+        'purchase-policy',
+        'rules',
+        'admin',
+    ],
+    'The shared public route table remains stable while catalogue categories become dynamic.'
 );
 $assert(
-    in_array('categories', ADMIN_SECTIONS, true),
-    'The administrator exposes the fixed category settings section.'
+    in_array('categories', ADMIN_SECTIONS, true)
+        && is_file($root . '/database/migrations/sqlite/004_dynamic_categories.php')
+        && is_file($root . '/database/migrations/mysql/004_dynamic_categories.php')
+        && is_file($root . '/public_html/actions/admin_delete_category.php'),
+    'Dynamic category administration and migrations are present.'
 );
 $throws(
     static fn () => validate_category_image_path('https://example.com/icon.png'),
-    'Category images must remain inside the local assets folder.'
+    'Category images reject external paths.'
 );
+$assert(
+    is_managed_upload_path('uploads/categories/category-' . str_repeat('a', 32) . '.png')
+        && is_managed_upload_path('uploads/products/product-' . str_repeat('b', 32) . '.png')
+        && !is_managed_upload_path('uploads/categories/file.php'),
+    'Managed media paths only accept generated PNG locations.'
+);
+
+$testPngPath = $root . '/storage/test-upload.png';
+$testTextPath = $root . '/storage/test-upload.txt';
+file_put_contents(
+    $testPngPath,
+    base64_decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=', true)
+);
+file_put_contents($testTextPath, 'not a png');
+
+try {
+    validate_png_file($testPngPath, (int) filesize($testPngPath));
+    $assert(true, 'Valid PNG uploads pass content validation.');
+} catch (Throwable) {
+    $assert(false, 'Valid PNG uploads pass content validation.');
+}
+
+$throws(
+    static fn () => validate_png_file($testTextPath, (int) filesize($testTextPath)),
+    'Non-PNG upload content is rejected.'
+);
+@unlink($testPngPath);
+@unlink($testTextPath);
 $assert(
     format_admin_datetime('2026-08-06 14:20:00') === '06/08/2026 14:20'
         && format_admin_coupon_discount([
@@ -155,7 +185,7 @@ $assert(
 
 $_GET = [
     'search' => '  vip  ',
-    'category' => 'ranks',
+    'category_id' => '2',
     'state' => 'inactive',
     'sort' => 'price_desc',
 ];
@@ -165,7 +195,7 @@ $productFilters = admin_product_filters();
 $assert(
     $productFilters === [
         'search' => 'vip',
-        'category' => 'ranks',
+        'category_id' => 2,
         'state' => 'inactive',
         'sort' => 'price_desc',
     ],
@@ -181,7 +211,7 @@ $assert(
     )
         && str_contains(
             $productQuery['where'],
-            'category = :category'
+            'p.category_id = :category_id'
         )
         && str_contains(
             $productQuery['where'],
@@ -191,14 +221,14 @@ $assert(
             'search_name' => '%vip%',
             'search_slug' => '%vip%',
             'search_tebex' => '%vip%',
-            'category' => 'ranks',
+            'category_id' => 2,
             'active' => 0,
         ],
     'Product filters generate a parameterized query.'
 );
 
 $_GET = [
-    'category' => 'invalid-category',
+    'category_id' => '-4',
     'state' => 'invalid-state',
     'sort' => 'invalid-sort',
 ];
@@ -206,7 +236,7 @@ $_GET = [
 $assert(
     admin_product_filters() === [
         'search' => '',
-        'category' => '',
+        'category_id' => 0,
         'state' => '',
         'sort' => '',
     ],
@@ -218,7 +248,7 @@ $_GET = [];
 $assert(
     admin_product_query_parameters([
         'search' => 'vip',
-        'category' => '',
+        'category_id' => 0,
         'state' => 'active',
         'sort' => 'name_asc',
     ]) === [
@@ -230,8 +260,8 @@ $assert(
 );
 
 $assert(
-    admin_product_order_by(['sort' => 'price_desc']) === 'price_cents DESC, id DESC'
-        && admin_product_order_by(['sort' => 'invalid']) === 'category ASC, sort_order ASC, id ASC',
+    admin_product_order_by(['sort' => 'price_desc']) === 'p.price_cents DESC, p.id DESC'
+        && admin_product_order_by(['sort' => 'invalid']) === 'c.sort_order ASC, c.id ASC, p.sort_order ASC, p.id ASC',
     'Product sorting uses only server-side allowlisted clauses.'
 );
 
@@ -371,8 +401,27 @@ $assert(
             $adminJavaScript,
             'data-admin-pagination'
         )
+        && str_contains($adminJavaScript, 'data-admin-image-input')
+        && str_contains($adminJavaScript, 'data-admin-slug-source')
         && is_file($root . '/templates/admin/coupons-results.php'),
     'Administrator JavaScript supports AJAX filters and pagination.'
+);
+
+$categoryDialogTemplate = file_get_contents($root . '/templates/admin/category-dialog.php');
+$productDialogTemplate = file_get_contents($root . '/templates/admin/product-dialog.php');
+$uploadProtection = file_get_contents($root . '/public_html/uploads/.htaccess');
+$publicHtaccess = file_get_contents($root . '/public_html/.htaccess');
+$assert(
+    is_string($categoryDialogTemplate)
+        && str_contains($categoryDialogTemplate, 'accept="image/png,.png"')
+        && str_contains($categoryDialogTemplate, 'admin_delete_category.php')
+        && is_string($productDialogTemplate)
+        && str_contains($productDialogTemplate, 'accept="image/png,.png"')
+        && is_string($uploadProtection)
+        && str_contains($uploadProtection, 'Require all denied')
+        && is_string($publicHtaccess)
+        && str_contains($publicHtaccess, 'LimitRequestBody 6291456'),
+    'Category and product forms use protected PNG uploads with a bounded request size.'
 );
 
 $loginJavaScript = file_get_contents($root . '/public_html/js/login.js');
@@ -423,30 +472,61 @@ if (!in_array('sqlite', PDO::getAvailableDrivers(), true)) {
     seed_store_database($pdo);
     $pdo->commit();
 
-    $assert((int) $pdo->query('SELECT COUNT(*) FROM schema_migrations')->fetchColumn() >= 3, 'All SQLite migrations are recorded.');
+    $assert((int) $pdo->query('SELECT COUNT(*) FROM schema_migrations')->fetchColumn() >= 4, 'All SQLite migrations are recorded.');
     $assert((int) $pdo->query('SELECT COUNT(*) FROM products')->fetchColumn() > 0, 'The seed creates products.');
-    $seedCategories = $pdo->query('SELECT DISTINCT category FROM products ORDER BY category')->fetchAll(PDO::FETCH_COLUMN);
-    $assert(
-        array_diff($seedCategories, STORE_CATEGORIES) === [],
-        'The seed creates products only for active catalogue categories.'
-    );
+    $assert((int) $pdo->query('SELECT COUNT(*) FROM categories')->fetchColumn() >= 4, 'The dynamic category migration creates catalogue categories.');
+    $assert((int) $pdo->query('SELECT COUNT(*) FROM products WHERE category_id IS NULL')->fetchColumn() === 0, 'Seed products are linked to dynamic category IDs.');
+
+    $ranks = store_category_by_slug('ranks', true);
+    $assert(is_array($ranks), 'Existing category slugs are migrated to category records.');
     save_category_from_admin([
-        'category' => 'ranks',
+        'id' => (int) $ranks['id'],
+        'slug' => 'ranks',
         'name' => 'Premium Ranks',
-        'image' => 'assets/diamante.png',
-    ]);
+        'sort_order' => 10,
+        'active' => '1',
+    ], 'assets/diamante.png');
     $assert(
         store_category_name('ranks') === 'Premium Ranks'
             && store_category_image('ranks') === 'assets/diamante.png',
-        'Administrators can update only the displayed category name and image.'
+        'Administrators can edit dynamic category data.'
+    );
+
+    $testCategoryId = save_category_from_admin([
+        'slug' => 'test-category',
+        'name' => 'Test Category',
+        'sort_order' => 90,
+        'active' => '1',
+    ], 'assets/diamante.png');
+    $assert(store_category_by_id($testCategoryId, true) !== null, 'Administrators can create categories.');
+
+    $testProductId = save_product_from_admin([
+        'category_id' => $testCategoryId,
+        'name' => 'Dynamic Product',
+        'slug' => 'dynamic-product',
+        'description' => 'Dynamic category product.',
+        'price' => '4.99',
+        'sort_order' => 10,
+        'active' => '1',
+        'tebex_package_id' => '',
+    ]);
+    $testProduct = product_by_id($testProductId, true);
+    $assert(
+        is_array($testProduct)
+            && (int) $testProduct['category_id'] === $testCategoryId
+            && (string) $testProduct['category'] === 'test-category',
+        'Products are linked to categories by ID while preserving the category slug mirror.'
     );
     $throws(
-        static fn () => save_category_from_admin([
-            'category' => 'boosters',
-            'name' => 'Boosters',
-            'image' => 'assets/heart.png',
-        ]),
-        'Non-editable categories cannot be changed through the administrator.'
+        static fn () => delete_category_from_admin($testCategoryId),
+        'Categories containing products cannot be deleted.'
+    );
+    delete_product_from_admin($testProductId);
+    delete_category_from_admin($testCategoryId);
+    $assert(store_category_by_id($testCategoryId, true) === null, 'Empty categories can be deleted.');
+    $throws(
+        static fn () => delete_category_from_admin((int) $ranks['id']),
+        'Seed categories containing products cannot be deleted.'
     );
     $product = $pdo->query('SELECT * FROM products ORDER BY id LIMIT 1')->fetch();
     $productId = (int) $product['id'];
