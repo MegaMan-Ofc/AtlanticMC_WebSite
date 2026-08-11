@@ -8,6 +8,7 @@ $pageTitle = t('login.page_title');
 $pageDescription = t('login.page_description');
 $bodyClass = 'page-login';
 $pageStyles = ['css/pages/auth.css'];
+$pageScripts = ['js/login.js'];
 $loginRecipient = current_minecraft_recipient();
 $returnTo = safe_return_path(
     is_string($_GET['return_to'] ?? null) ? $_GET['return_to'] : ($_SESSION['recipient_return_to'] ?? route_path('home')),

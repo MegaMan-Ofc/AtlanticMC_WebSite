@@ -28,6 +28,10 @@ function tebex_create_checkout(array $order, array $items): array
     }
 
     $token = rawurlencode((string) config('tebex.public_token'));
+    $serverUsername = minecraft_server_username(
+        (string) $order['minecraft_name'],
+        (string) $order['minecraft_platform']
+    );
     $createResponse = http_request_json(
         'POST',
         'https://headless.tebex.io/api/accounts/' . $token . '/baskets',
@@ -35,11 +39,12 @@ function tebex_create_checkout(array $order, array $items): array
             'complete_url' => $completeUrl,
             'cancel_url' => $cancelUrl,
             'complete_auto_redirect' => true,
-            'username' => (string) $order['minecraft_name'],
+            'username' => $serverUsername,
             'custom' => [
                 'order_token' => (string) $order['public_token'],
                 'minecraft_name' => (string) $order['minecraft_name'],
                 'minecraft_platform' => (string) $order['minecraft_platform'],
+                'minecraft_server_name' => $serverUsername,
             ],
         ]
     );

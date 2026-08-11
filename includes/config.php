@@ -150,6 +150,12 @@ function config(?string $key = null, mixed $default = null): mixed
         $sqlitePath = resolve_application_path(
             (string) env_value('DB_PATH', 'storage/store.sqlite')
         );
+        $serverIp = trim((string) env_value('SERVER_IP', 'play.atlanticeu.online'));
+        $bedrockServerIp = trim((string) env_value('BEDROCK_SERVER_IP', ''));
+
+        if ($bedrockServerIp === '') {
+            $bedrockServerIp = $serverIp;
+        }
 
         $configuration = [
             'app' => [
@@ -163,7 +169,10 @@ function config(?string $key = null, mixed $default = null): mixed
                 'force_https' => (bool) env_value('APP_FORCE_HTTPS', false),
                 'trusted_proxies' => env_csv('TRUSTED_PROXIES'),
                 'payments_enabled' => (bool) env_value('PAYMENTS_ENABLED', false),
-                'server_ip' => (string) env_value('SERVER_IP', 'play.atlanticeu.online'),
+                'server_ip' => $serverIp,
+                'bedrock_server_ip' => $bedrockServerIp,
+                'bedrock_server_port' => (int) env_value('BEDROCK_SERVER_PORT', '19132'),
+                'bedrock_username_prefix' => (string) env_value('BEDROCK_USERNAME_PREFIX', ''),
                 'discord_url' => (string) env_value('DISCORD_URL', 'https://discord.gg/atlanticnetwork'),
                 'support_email' => (string) env_value('SUPPORT_EMAIL', 'support@atlantic.net'),
                 'currency' => strtoupper((string) env_value('STORE_CURRENCY', 'EUR')),
@@ -257,6 +266,18 @@ function configuration_errors(): array
 
     if ((int) config('database.port') < 1 || (int) config('database.port') > 65535) {
         $errors[] = 'DB_PORT is invalid.';
+    }
+
+    if (trim((string) config('app.server_ip')) === '') {
+        $errors[] = 'SERVER_IP is required.';
+    }
+
+    if (trim((string) config('app.bedrock_server_ip')) === '') {
+        $errors[] = 'BEDROCK_SERVER_IP is required.';
+    }
+
+    if ((int) config('app.bedrock_server_port') < 1 || (int) config('app.bedrock_server_port') > 65535) {
+        $errors[] = 'BEDROCK_SERVER_PORT is invalid.';
     }
 
     if (!is_production()) {
