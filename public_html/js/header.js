@@ -1,7 +1,6 @@
 "use strict";
 
-const SMART_HEADER_DOWN_DISTANCE = 8;
-const SMART_HEADER_UP_DISTANCE = 2;
+const SMART_HEADER_SCROLL_FACTOR = 0.6;
 const SMART_HEADER_TOP_TOLERANCE = 1;
 
 function initializeSmartHeader() {
@@ -16,66 +15,115 @@ function initializeSmartHeader() {
     }
 
     let primaryBottom = 0;
+    let secondaryHeight = 0;
+    let secondaryOffset = 0;
+    let secondaryFixed = false;
     let lastScrollY = window.scrollY;
-    let direction = "";
-    let directionDistance = 0;
     let frameRequested = false;
 
+    const clampSecondaryOffset = () => {
+        secondaryOffset = Math.max(
+            0,
+            Math.min(secondaryHeight, secondaryOffset)
+        );
+    };
+
+    const applySecondaryOffset = () => {
+        clampSecondaryOffset();
+
+        if (!secondaryFixed) {
+            secondary.style.removeProperty("transform");
+            secondary.classList.remove("is-hidden");
+            secondary.inert = false;
+            return;
+        }
+
+        secondary.style.transform =
+            `translate3d(0, ${-secondaryOffset}px, 0)`;
+
+        const fullyHidden =
+            secondaryHeight > 0
+            && secondaryOffset >= secondaryHeight - 0.5;
+
+        secondary.classList.toggle("is-hidden", fullyHidden);
+        secondary.inert = fullyHidden;
+    };
+
     const measure = () => {
-        const primaryRect = primary.getBoundingClientRect();
-        primaryBottom = window.scrollY + primaryRect.bottom;
-        header.style.setProperty("--header-secondary-height", `${secondary.offsetHeight}px`);
-    };
+        const wasFullyHidden =
+            secondary.classList.contains("is-hidden");
 
-    const showSecondary = () => {
-        secondary.classList.remove("is-hidden");
-        secondary.inert = false;
-    };
+        const primaryRect =
+            primary.getBoundingClientRect();
 
-    const hideSecondary = () => {
-        secondary.classList.add("is-hidden");
-        secondary.inert = true;
+        primaryBottom =
+            window.scrollY + primaryRect.bottom;
+
+        secondaryHeight =
+            secondary.offsetHeight;
+
+        header.style.setProperty(
+            "--header-secondary-height",
+            `${secondaryHeight}px`
+        );
+
+        if (wasFullyHidden) {
+            secondaryOffset = secondaryHeight;
+        }
+
+        applySecondaryOffset();
     };
 
     const setFixed = (fixed) => {
-        header.classList.toggle("is-secondary-fixed", fixed);
-        secondary.classList.toggle("is-fixed", fixed);
+        if (secondaryFixed === fixed) {
+            return;
+        }
+
+        secondaryFixed = fixed;
+
+        header.classList.toggle(
+            "is-secondary-fixed",
+            fixed
+        );
+
+        secondary.classList.toggle(
+            "is-fixed",
+            fixed
+        );
 
         if (!fixed) {
-            showSecondary();
+            secondaryOffset = 0;
         }
+
+        applySecondaryOffset();
     };
 
     const updatePosition = () => {
         frameRequested = false;
 
-        const currentScrollY = Math.max(0, window.scrollY);
-        const fixed = currentScrollY + SMART_HEADER_TOP_TOLERANCE >= primaryBottom;
+        const currentScrollY =
+            Math.max(0, window.scrollY);
+
+        const fixed =
+            currentScrollY + SMART_HEADER_TOP_TOLERANCE
+            >= primaryBottom;
+
+        const delta =
+            currentScrollY - lastScrollY;
+
         setFixed(fixed);
 
-        const delta = currentScrollY - lastScrollY;
-
-        if (Math.abs(delta) < 0.5) {
-            lastScrollY = currentScrollY;
-            return;
+        if (
+            !fixed
+            || currentScrollY <= SMART_HEADER_TOP_TOLERANCE
+        ) {
+            secondaryOffset = 0;
+        } else if (Math.abs(delta) >= 0.5) {
+            secondaryOffset +=
+                delta * SMART_HEADER_SCROLL_FACTOR;
         }
 
-        const nextDirection = delta > 0 ? "down" : "up";
-
-        if (nextDirection !== direction) {
-            direction = nextDirection;
-            directionDistance = Math.abs(delta);
-        } else {
-            directionDistance += Math.abs(delta);
-        }
-
-        if (!fixed || currentScrollY <= SMART_HEADER_TOP_TOLERANCE) {
-            showSecondary();
-        } else if (direction === "up" && directionDistance >= SMART_HEADER_UP_DISTANCE) {
-            showSecondary();
-        } else if (direction === "down" && directionDistance >= SMART_HEADER_DOWN_DISTANCE) {
-            hideSecondary();
-        }
+        applySecondaryOffset();
 
         lastScrollY = currentScrollY;
     };
@@ -86,44 +134,76 @@ function initializeSmartHeader() {
         }
 
         frameRequested = true;
-        window.requestAnimationFrame(updatePosition);
+
+        window.requestAnimationFrame(
+            updatePosition
+        );
     };
 
     const shouldApplyInitialOffset = () => {
-        if (header.dataset.initialPrimaryOffset !== "1" || window.location.hash !== "") {
+        if (
+            header.dataset.initialPrimaryOffset !== "1"
+            || window.location.hash !== ""
+        ) {
             return false;
         }
 
-        const navigation = performance.getEntriesByType("navigation")[0];
+        const navigation =
+            performance.getEntriesByType("navigation")[0];
 
         if (navigation?.type === "back_forward") {
             return false;
         }
 
-        return window.scrollY <= SMART_HEADER_TOP_TOLERANCE;
+        return window.scrollY <=
+            SMART_HEADER_TOP_TOLERANCE;
     };
 
     const start = () => {
         measure();
 
         if (shouldApplyInitialOffset()) {
-            const root = document.documentElement;
-            const previousScrollBehavior = root.style.scrollBehavior;
+            const root =
+                document.documentElement;
+
+            const previousScrollBehavior =
+                root.style.scrollBehavior;
+
             root.style.scrollBehavior = "auto";
-            window.scrollTo(0, Math.max(0, Math.round(primaryBottom)));
-            root.style.scrollBehavior = previousScrollBehavior;
+
+            window.scrollTo(
+                0,
+                Math.max(
+                    0,
+                    Math.round(primaryBottom)
+                )
+            );
+
+            root.style.scrollBehavior =
+                previousScrollBehavior;
         }
 
-        lastScrollY = Math.max(0, window.scrollY);
-        direction = "";
-        directionDistance = 0;
+        lastScrollY =
+            Math.max(0, window.scrollY);
+
+        secondaryOffset = 0;
+
         updatePosition();
 
-        window.addEventListener("scroll", requestUpdate, { passive: true });
-        window.addEventListener("resize", () => {
-            measure();
-            requestUpdate();
-        }, { passive: true });
+        window.addEventListener(
+            "scroll",
+            requestUpdate,
+            { passive: true }
+        );
+
+        window.addEventListener(
+            "resize",
+            () => {
+                measure();
+                requestUpdate();
+            },
+            { passive: true }
+        );
     };
 
     window.requestAnimationFrame(() => {
