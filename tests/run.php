@@ -324,6 +324,43 @@ $adminJavaScript = file_get_contents(
     $root . '/public_html/js/admin.js'
 );
 
+$headerJavaScript = file_get_contents(
+    $root . '/public_html/js/header.js'
+);
+
+$headerTemplate = file_get_contents(
+    $root . '/includes/header.php'
+);
+
+$headerStyles = file_get_contents(
+    $root . '/public_html/css/components.css'
+);
+
+$assert(
+    is_string($headerJavaScript)
+        && str_contains($headerJavaScript, 'data-smart-header')
+        && str_contains($headerJavaScript, 'initialPrimaryOffset')
+        && str_contains($headerJavaScript, 'is-hidden')
+        && str_contains($headerJavaScript, 'is-fixed'),
+    'The smart header script manages scroll direction, fixed state, and initial page offset.'
+);
+
+$assert(
+    is_string($headerTemplate)
+        && str_contains($headerTemplate, 'data-smart-header')
+        && str_contains($headerTemplate, 'data-header-primary')
+        && str_contains($headerTemplate, 'data-header-secondary'),
+    'The public header exposes the hooks required by the smart header behavior.'
+);
+
+$assert(
+    is_string($headerStyles)
+        && str_contains($headerStyles, '.header-secondary.is-fixed')
+        && str_contains($headerStyles, '.header-secondary.is-hidden'),
+    'The shared header styles support fixed and hidden secondary header states.'
+);
+
+
 $assert(
     is_string($adminJavaScript)
         && str_contains(
