@@ -41,10 +41,10 @@ function admin_dashboard_summary(): array
 
     return [
         'active_products' => admin_scalar(
-            "SELECT COUNT(*) FROM products WHERE active = 1 AND category IN ('ranks', 'rubis', 'keys', 'boosters')"
+            'SELECT COUNT(*) FROM products p INNER JOIN categories c ON c.id = p.category_id WHERE p.active = 1 AND c.active = 1'
         ),
         'total_products' => admin_scalar(
-            "SELECT COUNT(*) FROM products WHERE category IN ('ranks', 'rubis', 'keys', 'boosters')"
+            'SELECT COUNT(*) FROM products p INNER JOIN categories c ON c.id = p.category_id'
         ),
         'pending_orders' => admin_scalar(
             "SELECT COUNT(*) FROM orders WHERE status IN ('pending', 'awaiting_payment')"
