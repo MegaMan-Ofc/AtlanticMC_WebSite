@@ -12,6 +12,10 @@ $environment = [
     'APP_DEBUG' => 'false',
     'APP_URL' => 'http://localhost:8000',
     'APP_FORCE_HTTPS' => 'false',
+    'SERVER_IP' => 'play.atlanticeu.online',
+    'BEDROCK_SERVER_IP' => 'play.atlanticeu.online',
+    'BEDROCK_SERVER_PORT' => '19132',
+    'BEDROCK_USERNAME_PREFIX' => '.',
     'PAYMENTS_ENABLED' => 'false',
     'ALLOW_TEST_ORDERS' => 'true',
     'DB_DRIVER' => 'sqlite',
@@ -52,6 +56,7 @@ require_once $root . '/includes/admin_products.php';
 require_once $root . '/includes/admin_coupons.php';
 require_once $root . '/includes/admin_orders.php';
 require_once $root . '/includes/admin_dashboard.php';
+require_once $root . '/includes/minecraft_recipient.php';
 
 $tests = 0;
 $failures = [];
@@ -87,6 +92,20 @@ $assert(csrf_is_valid('token', 'token'), 'Valid CSRF tokens pass.');
 $assert(!csrf_is_valid('wrong', 'token'), 'Invalid CSRF tokens fail.');
 $assert(!admin_is_authenticated(), 'An empty session is not an authenticated administrator.');
 $assert(configuration_errors() === [], 'The isolated test configuration is valid.');
+$assert(
+    normalize_minecraft_username('Java_User', 'java') === 'Java_User'
+        && normalize_minecraft_username('Bed Rock', 'bedrock') === 'Bed Rock'
+        && minecraft_server_username('Bed Rock', 'bedrock') === '.Bed_Rock',
+    'Java and Bedrock recipients normalize to the expected server usernames.'
+);
+$throws(
+    static fn () => normalize_minecraft_username('ab', 'java'),
+    'Invalid Java usernames are rejected.'
+);
+$throws(
+    static fn () => normalize_minecraft_username('Bed-Rock!', 'bedrock'),
+    'Invalid Bedrock Gamertags are rejected.'
+);
 
 $assert(
     public_route_name_from_request_uri('/') === 'home'
@@ -317,6 +336,17 @@ $assert(
         )
         && is_file($root . '/templates/admin/coupons-results.php'),
     'Administrator JavaScript supports AJAX filters and pagination.'
+);
+
+$loginJavaScript = file_get_contents($root . '/public_html/js/login.js');
+$headerTemplate = file_get_contents($root . '/includes/header.php');
+$assert(
+    is_string($loginJavaScript)
+        && str_contains($loginJavaScript, 'value === "bedrock"')
+        && is_string($headerTemplate)
+        && str_contains($headerTemplate, "assets/ip.png")
+        && str_contains($headerTemplate, "app.bedrock_server_ip"),
+    'Bedrock login behavior and dual server addresses are present.'
 );
 
 $portugueseTranslations = require $root . '/translations/pt.php';

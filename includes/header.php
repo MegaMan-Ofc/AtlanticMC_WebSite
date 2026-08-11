@@ -4,6 +4,8 @@ $headerCartCount = cart_count();
 $headerLanguage = current_language();
 $nextLanguage = alternate_language();
 $languageReturnTo = current_public_return_path();
+$headerJavaAddress = (string) config('app.server_ip');
+$headerBedrockAddress = (string) config('app.bedrock_server_ip') . ':' . (int) config('app.bedrock_server_port');
 ?>
 <header class="site-header" id="top">
     <div class="header-primary">
@@ -15,10 +17,33 @@ $languageReturnTo = current_public_return_path();
             <a aria-label="<?= e(t('header.store_home_aria')) ?>" class="brand" href="<?= e(route_url('home')) ?>">
                 <img alt="Atlantic Anarchy" src="<?= e(url('assets/logo1.png')) ?>">
             </a>
-            <button aria-label="<?= e(t('header.copy_server_aria')) ?>" class="header-link header-link--server" data-copy-value="<?= e(config('app.server_ip')) ?>" title="<?= e(t('header.click_to_copy')) ?>" type="button">
-                <i aria-hidden="true" class="fa-solid fa-server"></i>
-                <span><small><?= e(t('header.server_ip')) ?></small><strong><?= e(config('app.server_ip')) ?></strong></span>
-            </button>
+            <div class="header-link header-link--server">
+                <span class="header-server-icon" aria-hidden="true">
+                    <img src="<?= e(url('assets/ip.png')) ?>" alt="">
+                </span>
+                <div class="server-addresses">
+                    <button
+                        class="server-address"
+                        type="button"
+                        data-copy-value="<?= e($headerJavaAddress) ?>"
+                        aria-label="<?= e(t('header.copy_java_aria')) ?>"
+                        title="<?= e(t('header.click_to_copy')) ?>"
+                    >
+                        <span>Java:</span>
+                        <strong><?= e($headerJavaAddress) ?></strong>
+                    </button>
+                    <button
+                        class="server-address"
+                        type="button"
+                        data-copy-value="<?= e($headerBedrockAddress) ?>"
+                        aria-label="<?= e(t('header.copy_bedrock_aria')) ?>"
+                        title="<?= e(t('header.click_to_copy')) ?>"
+                    >
+                        <span>Bedrock:</span>
+                        <strong><?= e($headerBedrockAddress) ?></strong>
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
     <div class="header-secondary">

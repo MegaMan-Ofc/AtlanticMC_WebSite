@@ -130,39 +130,27 @@
                                 </span>
                             </label>
 
-                            <label
-                                class="platform-option platform-option--disabled"
-                                aria-disabled="true"
-                                title="<?= e(t('login.bedrock_disabled_help')) ?>"
-                            >
+                            <label class="platform-option">
                                 <input
                                     type="radio"
                                     name="platform"
                                     value="bedrock"
-                                    disabled
                                 >
                                 <span class="platform-btn">
                                     <i
                                         class="fa-solid fa-mobile-screen"
                                         aria-hidden="true"
                                     ></i>
-                                    <span>Bedrock</span>
-                                    <small class="platform-status">
-                                        <?= e(t('login.unavailable')) ?>
-                                    </small>
+                                    Bedrock
                                 </span>
                             </label>
                         </fieldset>
-
-                        <small class="login-help login-help--notice">
-                            <?= e(t('login.bedrock_disabled_help')) ?>
-                        </small>
 
                         <label
                             class="login-field"
                             for="username-input"
                         >
-                            <span><?= e(t('login.username_label')) ?></span>
+                            <span data-recipient-username-label><?= e(t('login.java_username_label')) ?></span>
                             <input
                                 class="field"
                                 id="username-input"
@@ -171,13 +159,20 @@
                                 minlength="3"
                                 maxlength="16"
                                 autocomplete="off"
-                                placeholder="<?= e(t('login.username_placeholder')) ?>"
+                                placeholder="<?= e(t('login.java_username_placeholder')) ?>"
                                 pattern="[A-Za-z0-9_]+"
                                 required
+                                data-recipient-username
+                                data-java-label="<?= e(t('login.java_username_label')) ?>"
+                                data-bedrock-label="<?= e(t('login.bedrock_username_label')) ?>"
+                                data-java-placeholder="<?= e(t('login.java_username_placeholder')) ?>"
+                                data-bedrock-placeholder="<?= e(t('login.bedrock_username_placeholder')) ?>"
+                                data-java-help="<?= e(t('login.java_help')) ?>"
+                                data-bedrock-help="<?= e(t('login.bedrock_help')) ?>"
                             >
                         </label>
 
-                        <small class="login-help">
+                        <small class="login-help" data-recipient-username-help>
                             <?= e(t('login.java_help')) ?>
                         </small>
 

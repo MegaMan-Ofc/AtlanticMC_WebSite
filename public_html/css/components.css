@@ -84,7 +84,7 @@
 }
 
 .header-primary {
-    padding-block: 1.125rem;
+    padding-block: 1rem;
     border-bottom: 1px solid var(--border);
     background: radial-gradient(circle at 50% -110%, rgba(108, 92, 231, .3), transparent 60%), rgba(11, 14, 19, .97);
 }
@@ -136,12 +136,14 @@
     justify-self: start;
 }
 
-.header-link--server { 
-    justify-self: end; 
+.header-link--server {
+    justify-self: end;
+    cursor: default;
 }
 
 .header-link > i,
-.header-link .icon {
+.header-link .icon,
+.header-server-icon {
     display: grid;
     width: 2.875rem;
     height: 2.875rem;
@@ -156,8 +158,62 @@
     background: linear-gradient(135deg, var(--discord), #4752c4); 
 }
 
-.header-link--server > i { 
-    background: linear-gradient(135deg, var(--accent), var(--primary)); 
+.header-server-icon img {
+    width: 2.875rem;
+    height: 2.875rem;
+    object-fit: contain;
+    border-radius: 0.6875rem;
+}
+
+.server-addresses {
+    display: grid;
+    gap: 0.1875rem;
+    min-width: 0;
+}
+
+.server-address {
+    display: flex;
+    align-items: baseline;
+    gap: 0.375rem;
+    min-width: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--text);
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+}
+
+.server-address span,
+.server-address strong {
+    color: var(--text);
+    font-size: 0.82rem;
+    line-height: 1.25;
+    white-space: nowrap;
+}
+
+.server-address span {
+    flex: 0 0 auto;
+    font-weight: 700;
+}
+
+.server-address strong {
+    overflow: hidden;
+    font-weight: 800;
+    text-overflow: ellipsis;
+}
+
+.server-address:hover span,
+.server-address:hover strong,
+.server-address:focus-visible span,
+.server-address:focus-visible strong {
+    text-decoration: underline;
+}
+
+.server-address:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 0.1875rem;
 }
 
 .header-link span,
@@ -690,7 +746,8 @@
         padding: 0.625rem 0.75rem;
     }
 
-    .header-link > i {
+    .header-link > i,
+    .header-server-icon {
         width: 2.5rem;
         height: 2.5rem;
         flex-basis: 2.5rem;
@@ -703,6 +760,23 @@
     .header-row {
         align-items: stretch;
         gap: 0.5625rem;
+    }
+
+    .header-server-icon {
+        width: 2.5rem;
+        height: 2.5rem;
+        flex: 0 0 2.5rem;
+    }
+
+    .header-server-icon img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+
+    .header-server-info {
+        min-width: 0;
+        font-size: 0.8rem;
     }
 
     .user-card {

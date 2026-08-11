@@ -64,3 +64,6 @@
     hidden
 ></div>
 <script defer src="<?= e(url('js/main.js')) ?>"></script>
+<?php foreach (($pageScripts ?? []) as $script): ?>
+    <script defer src="<?= e(url($script)) ?>"></script>
+<?php endforeach; ?>

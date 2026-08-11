@@ -2,6 +2,69 @@
 
 declare(strict_types=1);
 
+function normalize_minecraft_platform(string $platform): string
+{
+    $platform = strtolower(trim($platform));
+
+    if (!in_array($platform, ['java', 'bedrock'], true)) {
+        throw new InvalidArgumentException(t('validation.platform'));
+    }
+
+    return $platform;
+}
+
+function normalize_minecraft_username(string $username, string $platform): string
+{
+    $username = trim($username);
+    $platform = normalize_minecraft_platform($platform);
+
+    if ($platform === 'java') {
+        if (!preg_match('/^[A-Za-z0-9_]{3,16}$/', $username)) {
+            throw new InvalidArgumentException(t('validation.java_username'));
+        }
+
+        return $username;
+    }
+
+    if (!preg_match('/^[A-Za-z0-9_ ]{2,16}$/', $username)) {
+        throw new InvalidArgumentException(t('validation.bedrock_username'));
+    }
+
+    return preg_replace('/ +/', ' ', $username) ?? $username;
+}
+
+function minecraft_server_username(string $username, string $platform): string
+{
+    $platform = normalize_minecraft_platform($platform);
+    $username = normalize_minecraft_username($username, $platform);
+
+    if ($platform === 'java') {
+        return $username;
+    }
+
+    $prefix = (string) config('app.bedrock_username_prefix', '');
+
+    return $prefix . str_replace(' ', '_', $username);
+}
+
+function minecraft_avatar_url(string $username, int $size = 64): string
+{
+    $size = max(16, min(256, $size));
+
+    return 'https://mc-heads.net/avatar/' . rawurlencode($username) . '/' . $size;
+}
+
+function minecraft_recipient_avatar_url(string $username, string $platform): string
+{
+    $platform = normalize_minecraft_platform($platform);
+
+    if ($platform === 'bedrock') {
+        return url('assets/steve.png');
+    }
+
+    return minecraft_avatar_url($username);
+}
+
 function current_minecraft_recipient(): ?array
 {
     $recipient = $_SESSION['minecraft_recipient'] ?? null;
@@ -12,20 +75,23 @@ function current_minecraft_recipient(): ?array
 
     $username = $recipient['username'] ?? null;
     $platform = $recipient['platform'] ?? null;
-    $avatarUrl = $recipient['avatar_url'] ?? null;
 
-    if (
-        !is_string($username)
-        || $platform !== 'java'
-        || !is_string($avatarUrl)
-    ) {
+    if (!is_string($username) || !is_string($platform)) {
+        return null;
+    }
+
+    try {
+        $platform = normalize_minecraft_platform($platform);
+        $username = normalize_minecraft_username($username, $platform);
+    } catch (InvalidArgumentException) {
         return null;
     }
 
     return [
         'username' => $username,
         'platform' => $platform,
-        'avatar_url' => $avatarUrl,
+        'server_username' => minecraft_server_username($username, $platform),
+        'avatar_url' => minecraft_recipient_avatar_url($username, $platform),
     ];
 }
 
@@ -34,36 +100,9 @@ function has_minecraft_recipient(): bool
     return current_minecraft_recipient() !== null;
 }
 
-function normalize_minecraft_username(string $username, string $platform): string
-{
-    $username = trim($username);
-    $platform = strtolower(trim($platform));
-
-    if ($platform === 'bedrock') {
-        throw new InvalidArgumentException(t('validation.bedrock_disabled'));
-    }
-
-    if ($platform !== 'java') {
-        throw new InvalidArgumentException(t('validation.platform'));
-    }
-
-    if (!preg_match('/^[A-Za-z0-9_]{3,16}$/', $username)) {
-        throw new InvalidArgumentException(t('validation.java_username'));
-    }
-
-    return $username;
-}
-
-function minecraft_avatar_url(string $username, int $size = 64): string
-{
-    $size = max(16, min(256, $size));
-
-    return 'https://mc-heads.net/avatar/' . rawurlencode($username) . '/' . $size;
-}
-
 function select_minecraft_recipient(string $username, string $platform): array
 {
-    $platform = strtolower(trim($platform));
+    $platform = normalize_minecraft_platform($platform);
     $normalizedUsername = normalize_minecraft_username($username, $platform);
 
     session_regenerate_id(true);
@@ -72,7 +111,8 @@ function select_minecraft_recipient(string $username, string $platform): array
     $recipient = [
         'username' => $normalizedUsername,
         'platform' => $platform,
-        'avatar_url' => minecraft_avatar_url($normalizedUsername),
+        'server_username' => minecraft_server_username($normalizedUsername, $platform),
+        'avatar_url' => minecraft_recipient_avatar_url($normalizedUsername, $platform),
     ];
 
     $_SESSION['minecraft_recipient'] = $recipient;
