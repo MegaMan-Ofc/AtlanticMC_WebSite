@@ -51,20 +51,20 @@
 
             <select
                 id="filter-product-category"
-                name="category"
+                name="category_id"
             >
                 <option value="">
                     <?= e(t('admin.all_categories')) ?>
                 </option>
 
-                <?php foreach (STORE_CATEGORIES as $category): ?>
+                <?php foreach ($adminCategoryOptions as $category): ?>
                     <option
-                        value="<?= e($category) ?>"
-                        <?= $adminProductFilters['category'] === $category
+                        value="<?= (int) $category['id'] ?>"
+                        <?= (int) $adminProductFilters['category_id'] === (int) $category['id']
                             ? 'selected'
                             : '' ?>
                     >
-                        <?= e(localized_category($category)) ?>
+                        <?= e((string) $category['name']) ?><?= (bool) $category['active'] ? '' : ' · ' . e(t('common.inactive')) ?>
                     </option>
                 <?php endforeach; ?>
             </select>

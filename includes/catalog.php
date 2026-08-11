@@ -11,30 +11,34 @@ function product_metadata(array $product): array
 
 function products_by_category(string $category, bool $includeInactive = false): array
 {
-    if (!in_array($category, STORE_CATEGORIES, true)) {
+    $storeCategory = store_category_by_slug($category, $includeInactive);
+
+    if ($storeCategory === null) {
         return [];
     }
 
-    $sql = 'SELECT * FROM products WHERE category = :category';
+    $sql = 'SELECT p.* FROM products p WHERE p.category_id = :category_id';
 
     if (!$includeInactive) {
-        $sql .= ' AND active = 1';
+        $sql .= ' AND p.active = 1';
     }
 
-    $sql .= ' ORDER BY sort_order ASC, id ASC';
+    $sql .= ' ORDER BY p.sort_order ASC, p.id ASC';
     $statement = db()->prepare($sql);
-    $statement->execute(['category' => $category]);
+    $statement->execute(['category_id' => (int) $storeCategory['id']]);
 
     return $statement->fetchAll();
 }
 
-
 function product_by_id(int $productId, bool $includeInactive = false): ?array
 {
-    $sql = "SELECT * FROM products WHERE id = :id AND category IN ('ranks', 'rubis', 'keys', 'boosters')";
+    $sql = 'SELECT p.*
+            FROM products p
+            INNER JOIN categories c ON c.id = p.category_id
+            WHERE p.id = :id';
 
     if (!$includeInactive) {
-        $sql .= ' AND active = 1';
+        $sql .= ' AND p.active = 1 AND c.active = 1';
     }
 
     $statement = db()->prepare($sql);
@@ -53,7 +57,14 @@ function products_by_ids(array $ids): array
     }
 
     $placeholders = implode(',', array_fill(0, count($ids), '?'));
-    $statement = db()->prepare("SELECT * FROM products WHERE active = 1 AND category IN ('ranks', 'rubis', 'keys', 'boosters') AND id IN ($placeholders)");
+    $statement = db()->prepare(
+        "SELECT p.*
+         FROM products p
+         INNER JOIN categories c ON c.id = p.category_id
+         WHERE p.active = 1
+           AND c.active = 1
+           AND p.id IN ($placeholders)"
+    );
     $statement->execute($ids);
     $products = [];
 
