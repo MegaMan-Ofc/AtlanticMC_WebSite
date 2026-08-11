@@ -1,4 +1,4 @@
-LimitRequestBody 1048576
+LimitRequestBody 6291456
 Options -Indexes
 DirectoryIndex index.php
 

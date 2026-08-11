@@ -136,7 +136,7 @@ function localized_platform(string $platform): string
 
 function localized_category(string $category): string
 {
-    if (function_exists('store_category_name') && is_editable_store_category($category)) {
+    if (function_exists('store_category_name')) {
         return store_category_name($category);
     }
 

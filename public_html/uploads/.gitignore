@@ -1,0 +1,4 @@
+categories/*
+products/*
+!categories/.gitkeep
+!products/.gitkeep

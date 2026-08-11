@@ -40,6 +40,7 @@ $renderTemplate = static function (
 $section = query_string('section');
 
 if ($section === 'products') {
+    $adminCategoryOptions = all_store_categories(true);
     $adminProductFilters = admin_product_filters();
     $adminProducts = all_products_admin($adminProductFilters);
 
@@ -49,6 +50,7 @@ if ($section === 'products') {
                 'products-results',
                 [
                     'adminProducts' => $adminProducts,
+                    'adminCategoryOptions' => $adminCategoryOptions,
                 ]
             ),
             'url' => admin_section_url(

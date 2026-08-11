@@ -1,5 +1,48 @@
 'use strict';
 
+
+const adminImagePreviewUrls = new WeakMap();
+
+const slugifyAdminValue = value => {
+    return value
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '')
+        .slice(0, 100);
+};
+
+const updateAdminImagePreview = input => {
+    const form = input.closest('form');
+    const preview = form?.querySelector('[data-admin-image-preview]');
+    const file = input.files?.[0];
+
+    if (!(preview instanceof HTMLElement) || !(file instanceof File)) {
+        return;
+    }
+
+    const previousUrl = adminImagePreviewUrls.get(input);
+
+    if (previousUrl) {
+        URL.revokeObjectURL(previousUrl);
+    }
+
+    const objectUrl = URL.createObjectURL(file);
+    adminImagePreviewUrls.set(input, objectUrl);
+
+    let image = preview.querySelector('[data-admin-image-preview-image]');
+
+    if (!(image instanceof HTMLImageElement)) {
+        image = document.createElement('img');
+        image.dataset.adminImagePreviewImage = '';
+        image.alt = '';
+        preview.replaceChildren(image);
+    }
+
+    image.src = objectUrl;
+};
+
 const adminFilterControllers = new WeakMap();
 const adminFilterTimers = new WeakMap();
 
@@ -341,7 +384,7 @@ document.addEventListener('submit', event => {
     if (
         !(submitter instanceof HTMLElement)
         || !submitter.matches(
-            '[data-delete-coupon], [data-delete-product]'
+            '[data-delete-coupon], [data-delete-product], [data-delete-category]'
         )
     ) {
         return;
@@ -364,9 +407,26 @@ document.addEventListener('input', event => {
         return;
     }
 
+    if (field.matches('[data-admin-slug-target]')) {
+        field.dataset.adminSlugManual = '1';
+    }
+
+    if (field.matches('[data-admin-slug-source]')) {
+        const form = field.closest('form');
+        const target = form?.querySelector('[data-admin-slug-target]');
+
+        if (
+            target instanceof HTMLInputElement
+            && target.dataset.adminSlugManual !== '1'
+        ) {
+            target.value = slugifyAdminValue(field.value);
+        }
+    }
+
     if (
         field.type === 'hidden'
         || field.type === 'date'
+        || field.type === 'file'
     ) {
         return;
     }
@@ -382,6 +442,15 @@ document.addEventListener('input', event => {
 
 document.addEventListener('change', event => {
     const field = event.target;
+
+    if (
+        field instanceof HTMLInputElement
+        && field.type === 'file'
+        && field.matches('[data-admin-image-input]')
+    ) {
+        updateAdminImagePreview(field);
+        return;
+    }
 
     if (
         !(field instanceof HTMLSelectElement)

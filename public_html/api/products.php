@@ -8,7 +8,7 @@ require_get();
 
 $category = is_string($_GET['category'] ?? null) ? strtolower(trim($_GET['category'])) : '';
 
-if (!in_array($category, STORE_CATEGORIES, true)) {
+if (!store_category_exists($category, false)) {
     json_response(['error' => t('validation.invalid_category')], 422);
 }
 

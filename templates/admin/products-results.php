@@ -3,7 +3,8 @@ $newProduct = [
     'id' => 0,
     'name' => '',
     'slug' => '',
-    'category' => STORE_CATEGORIES[0],
+    'category_id' => (int) ($adminCategoryOptions[0]['id'] ?? 0),
+    'category' => (string) ($adminCategoryOptions[0]['slug'] ?? ''),
     'price_cents' => 0,
     'image' => '',
     'tebex_package_id' => null,
@@ -67,6 +68,9 @@ $newProduct = [
             <strong>
                 <?= e((string) $product['name']) ?>
             </strong>
+            <small class="admin-product-category">
+                <?= e((string) $product['category_name']) ?>
+            </small>
         </button>
     <?php endforeach; ?>
 </div>

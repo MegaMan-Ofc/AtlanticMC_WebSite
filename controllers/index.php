@@ -8,4 +8,4 @@ $pageTitle = t('home.page_title');
 $pageDescription = t('home.description');
 $bodyClass = 'page-home';
 $pageStyles = ['css/pages/home.css'];
-$homeCategories = editable_store_category_settings();
+$homeCategories = home_store_categories();
