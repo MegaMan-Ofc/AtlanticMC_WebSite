@@ -28,7 +28,7 @@
     <div class="footer-bottom">
         <div class="container footer-row">
             <div class="footer-legal">
-                <p><?= date('Y') ?> © <strong>Atlantic Anarchy</strong></p>
+                <p><?= date('Y') ?> © <strong>Atlantic SMP</strong></p>
                 <p><?= e(t('footer.disclaimer')) ?></p>
             </div>
             <ul class="footer-socials" aria-label="<?= e(t('footer.social_aria')) ?>">

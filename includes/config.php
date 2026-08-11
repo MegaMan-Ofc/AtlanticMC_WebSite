@@ -159,7 +159,7 @@ function config(?string $key = null, mixed $default = null): mixed
 
         $configuration = [
             'app' => [
-                'name' => (string) env_value('APP_NAME', 'Atlantic Anarchy'),
+                'name' => (string) env_value('APP_NAME', 'Atlantic SMP'),
                 'env' => strtolower((string) env_value('APP_ENV', 'development')),
                 'key' => (string) env_value('APP_KEY', ''),
                 'url' => rtrim((string) env_value('APP_URL', ''), '/'),
@@ -181,7 +181,7 @@ function config(?string $key = null, mixed $default = null): mixed
                 'allow_test_orders' => (bool) env_value('ALLOW_TEST_ORDERS', false),
             ],
             'legal' => [
-                'operator_name' => (string) env_value('LEGAL_OPERATOR_NAME', env_value('APP_NAME', 'Atlantic Anarchy')),
+                'operator_name' => (string) env_value('LEGAL_OPERATOR_NAME', env_value('APP_NAME', 'Atlantic SMP')),
                 'operator_address' => (string) env_value('LEGAL_OPERATOR_ADDRESS', ''),
                 'operator_tax_id' => (string) env_value('LEGAL_OPERATOR_TAX_ID', ''),
                 'country' => (string) env_value('LEGAL_COUNTRY', 'Portugal'),

@@ -21,7 +21,7 @@ $headerStartsBelowPrimary = current_route_name() !== 'home';
                 <span><small><?= e(t('header.join_our')) ?></small><strong>Discord</strong></span>
             </a>
             <a aria-label="<?= e(t('header.store_home_aria')) ?>" class="brand" href="<?= e(route_url('home')) ?>">
-                <img alt="Atlantic Anarchy" src="<?= e(url('assets/logo1.png')) ?>">
+                <img alt="Atlantic SMP" src="<?= e(url('assets/logo1.png')) ?>">
             </a>
             <div class="header-link header-link--server">
                 <span class="header-server-icon" aria-hidden="true">

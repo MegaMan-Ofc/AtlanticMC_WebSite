@@ -80,7 +80,7 @@ set_exception_handler(static function (Throwable $error): void {
 
     echo '<!doctype html><html lang="' . e(current_language()) . '"><meta charset="utf-8"><title>' . e(t('common.error', [], 'Error')) . '</title>'
         . '<body style="font-family:sans-serif;padding:2rem;background:#0b0e13;color:#fff">'
-        . '<h1>Atlantic Anarchy</h1><p>' . e($plainMessage) . '</p>'
+        . '<h1>Atlantic SMP</h1><p>' . e($plainMessage) . '</p>'
         . '<p><a style="color:#8fd3ff" href="' . e(route_url('home')) . '">' . e(t('messages.back_to_store')) . '</a></p></body></html>';
 });
 

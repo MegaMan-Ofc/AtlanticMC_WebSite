@@ -68,21 +68,21 @@ function category_configuration(string $category): array
 {
     $configurations = [
         'ranks' => [
-            'title' => 'Atlantic Anarchy - ' . localized_category('ranks'),
+            'title' => 'Atlantic SMP - ' . localized_category('ranks'),
             'heading' => localized_category('ranks'),
             'description' => t('catalog.ranks.description'),
             'bodyClass' => 'page-ranks',
             'styles' => ['css/pages/catalog.css', 'css/pages/ranks.css'],
         ],
         'rubis' => [
-            'title' => 'Atlantic Anarchy - ' . localized_category('rubis'),
+            'title' => 'Atlantic SMP - ' . localized_category('rubis'),
             'heading' => localized_category('rubis'),
             'description' => t('catalog.rubis.description'),
             'bodyClass' => 'page-rubis',
             'styles' => ['css/pages/catalog.css'],
         ],
         'keys' => [
-            'title' => 'Atlantic Anarchy - ' . localized_category('keys'),
+            'title' => 'Atlantic SMP - ' . localized_category('keys'),
             'heading' => localized_category('keys'),
             'description' => t('catalog.keys.description'),
             'bodyClass' => 'page-keys',

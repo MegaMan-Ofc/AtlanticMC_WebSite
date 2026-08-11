@@ -54,7 +54,7 @@ return [
 
     'header.join_our' => 'Join our',
     'header.join_discord_aria' => 'Join our Discord server',
-    'header.store_home_aria' => 'Atlantic Anarchy store home',
+    'header.store_home_aria' => 'Atlantic SMP store home',
     'header.server_ip' => 'Server IP',
     'header.copy_server_aria' => 'Copy the Minecraft server address',
     'header.copy_java_aria' => 'Copy the Java server address',
@@ -69,7 +69,7 @@ return [
     'header.user_avatar' => ':username Minecraft avatar',
 
     'footer.about_title' => 'About us',
-    'footer.about_text' => 'Atlantic Anarchy is a public Minecraft anarchy server for Java and Bedrock players. Join us at :server.',
+    'footer.about_text' => 'Atlantic SMP is a public Minecraft SMP server for Java and Bedrock players. Join us at :server.',
     'footer.store_links_aria' => 'Store links',
     'footer.questions' => 'Questions before purchasing? Contact us through Discord or email.',
     'footer.legal_aria' => 'Legal information',
@@ -80,11 +80,11 @@ return [
     'footer.social_aria' => 'Social links',
     'footer.back_to_top' => 'Back to top',
 
-    'head.default_description' => 'Atlantic Anarchy Minecraft Store',
+    'head.default_description' => 'Atlantic SMP Minecraft Store',
 
-    'home.title' => 'Atlantic Anarchy Store',
-    'home.page_title' => 'Atlantic Anarchy - Store',
-    'home.description' => 'Official Atlantic Anarchy Minecraft Store.',
+    'home.title' => 'Atlantic SMP Store',
+    'home.page_title' => 'Atlantic SMP - Store',
+    'home.description' => 'Official Atlantic SMP Minecraft Store.',
     'home.hero_alt' => 'Magma crate key',
     'home.order_now' => 'Order now →',
     'home.server_cart' => 'SERVER-SIDE CART ENABLED',
@@ -106,20 +106,20 @@ return [
     'catalog.quantity' => 'Quantity',
     'catalog.add_to_cart' => 'Add to cart',
     'catalog.unknown_category' => 'Unknown catalogue category.',
-    'catalog.ranks.title' => 'Atlantic Anarchy - VIPs',
+    'catalog.ranks.title' => 'Atlantic SMP - VIPs',
     'catalog.ranks.heading' => 'VIP Ranks',
     'catalog.ranks.description' => 'Choose a permanent rank and add it securely to your server-side cart.',
-    'catalog.rubis.title' => 'Atlantic Anarchy - Rubis',
+    'catalog.rubis.title' => 'Atlantic SMP - Rubis',
     'catalog.rubis.heading' => 'Rubis',
     'catalog.rubis.description' => 'Rubis packages with prices validated on the server.',
-    'catalog.keys.title' => 'Atlantic Anarchy - Keys',
+    'catalog.keys.title' => 'Atlantic SMP - Keys',
     'catalog.keys.heading' => 'Crate Keys',
     'catalog.keys.description' => 'Choose a key package for the Atlantic server.',
-    'catalog.boosters.title' => 'Atlantic Anarchy - Hearts',
+    'catalog.boosters.title' => 'Atlantic SMP - Hearts',
     'catalog.boosters.heading' => 'Extra Hearts',
     'catalog.boosters.description' => 'Add extra-life heart bundles to your account.',
 
-    'cart.page_title' => 'Atlantic Anarchy - Cart',
+    'cart.page_title' => 'Atlantic SMP - Cart',
     'cart.page_description' => 'Review the products stored securely in your cart session.',
     'cart.heading' => 'Shopping Cart',
     'cart.your_products' => 'Your products',
@@ -140,8 +140,8 @@ return [
     'cart.continue_shopping' => 'Continue shopping',
     'cart.checkout' => 'Checkout · :amount',
 
-    'checkout.page_title' => 'Atlantic Anarchy - Checkout',
-    'checkout.page_description' => 'Confirm your Atlantic Anarchy order.',
+    'checkout.page_title' => 'Atlantic SMP - Checkout',
+    'checkout.page_description' => 'Confirm your Atlantic SMP order.',
     'checkout.heading' => 'Checkout',
     'checkout.confirm_purchase' => 'Confirm the purchase',
     'checkout.purchase_for' => 'Purchase for :username',
@@ -158,7 +158,7 @@ return [
     'checkout.quantity' => 'Quantity: :quantity',
     'checkout.vat_included' => 'VAT included',
 
-    'login.page_title' => 'Atlantic Anarchy - Minecraft Recipient',
+    'login.page_title' => 'Atlantic SMP - Minecraft Recipient',
     'login.page_description' => 'Choose the Minecraft account that will receive the purchase.',
     'login.back_aria' => 'Back to store',
     'login.avatar_alt' => ':username Minecraft avatar',
@@ -177,8 +177,8 @@ return [
     'login.java_help' => 'Java accepts 3 to 16 letters, numbers or underscores.',
     'login.bedrock_help' => 'Bedrock accepts 2 to 16 letters, numbers, spaces or underscores. Spaces are converted internally to underscores when needed.',
 
-    'success.page_title' => 'Atlantic Anarchy - Order',
-    'success.page_description' => 'Atlantic Anarchy order status.',
+    'success.page_title' => 'Atlantic SMP - Order',
+    'success.page_description' => 'Atlantic SMP order status.',
     'success.not_found' => 'Order not found',
     'success.not_found_text' => 'The order is unavailable or the order token is invalid.',
     'success.payment_completed' => 'Payment completed',
@@ -187,8 +187,8 @@ return [
     'success.recipient' => 'Minecraft recipient',
     'success.webhook_note' => 'An order is only considered paid after a verified payment webhook changes its status.',
 
-    'admin.page_title' => 'Atlantic Anarchy - Administration',
-    'admin.page_description' => 'Private Atlantic Anarchy store administration.',
+    'admin.page_title' => 'Atlantic SMP - Administration',
+    'admin.page_description' => 'Private Atlantic SMP store administration.',
     'admin.title' => 'Atlantic Store Administration',
     'admin.subtitle' => 'Server-side products, orders, coupons and traffic statistics.',
     'admin.disabled' => 'Administration disabled',
@@ -470,7 +470,7 @@ return [
     'legal.mandatory_rights' => 'Nothing on these pages limits mandatory consumer rights granted by applicable law.',
     'legal.contact_us' => 'Contact us',
 
-    'legal.privacy.page_title' => 'Atlantic Anarchy - Privacy Policy',
+    'legal.privacy.page_title' => 'Atlantic SMP - Privacy Policy',
     'legal.privacy.title' => 'Privacy Policy',
     'legal.privacy.description' => 'How the store collects, uses and protects personal data.',
     'legal.privacy.intro' => 'This policy describes the data processing needed to provide the store, keep the cart, process orders and provide support.',
@@ -554,7 +554,7 @@ return [
         ],
     ],
 
-    'legal.terms.page_title' => 'Atlantic Anarchy - Terms and Conditions',
+    'legal.terms.page_title' => 'Atlantic SMP - Terms and Conditions',
     'legal.terms.title' => 'Terms and Conditions',
     'legal.terms.description' => 'Terms applying to use of the store and purchase of digital products.',
     'legal.terms.intro' => 'By using the store or completing a purchase, the visitor accepts these terms and the conditions shown by the payment provider at checkout.',
@@ -620,7 +620,7 @@ return [
         [
             'title' => '9. Intellectual property and trademarks',
             'paragraphs' => [
-                'Atlantic Anarchy visual content, text and identity may not be reused deceptively or to claim a non-existent association.',
+                'Atlantic SMP visual content, text and identity may not be reused deceptively or to claim a non-existent association.',
                 'Minecraft, Mojang and Microsoft belong to their respective owners. :store is not affiliated with or endorsed by Mojang or Microsoft.',
             ],
         ],
@@ -633,7 +633,7 @@ return [
         ],
     ],
 
-    'legal.purchase-policy.page_title' => 'Atlantic Anarchy - Purchase and Refund Policy',
+    'legal.purchase-policy.page_title' => 'Atlantic SMP - Purchase and Refund Policy',
     'legal.purchase-policy.title' => 'Purchase and Refund Policy',
     'legal.purchase-policy.description' => 'Payment, digital delivery, corrections and handling of refund requests.',
     'legal.purchase-policy.intro' => 'This policy explains what happens before and after payment and how to request help for delivery or billing problems.',
@@ -719,15 +719,15 @@ return [
         ],
     ],
 
-    'legal.rules.page_title' => 'Atlantic Anarchy - Rules',
+    'legal.rules.page_title' => 'Atlantic SMP - Rules',
     'legal.rules.title' => 'Store and Community Rules',
     'legal.rules.description' => 'Minimum security, purchase and community-participation rules for Atlantic.',
-    'legal.rules.intro' => 'Gameplay may be anarchic, but the store, infrastructure and community remain subject to security, payment and legal rules.',
+    'legal.rules.intro' => 'Atlantic SMP provides a multiplayer survival experience while the store, infrastructure and community remain subject to security, payment and legal rules.',
     'legal.rules.sections' => [
         [
             'title' => '1. Scope',
             'paragraphs' => [
-                'These rules apply to the store, checkout, support, official Discord and Atlantic Anarchy technical services.',
+                'These rules apply to the store, checkout, support, official Discord and Atlantic SMP technical services.',
                 'Specific gameplay rules may be published on Discord or inside the server. Mandatory security and legal rules apply in the event of conflict.',
             ],
         ],
@@ -766,9 +766,9 @@ return [
             ],
         ],
         [
-            'title' => '6. Anarchic nature of the server',
+            'title' => '6. Gameplay and community rules',
             'paragraphs' => [
-                'The anarchic-server concept may allow broader gameplay freedom than other servers, but it does not authorise infrastructure attacks, financial fraud, account compromise, malware or unlawful conduct.',
+                'The SMP experience allows exploration, progression and player interaction, but it does not authorise infrastructure attacks, financial fraud, account compromise, malware or unlawful conduct.',
                 'Purchasing a product does not guarantee immunity from sanctions and does not grant administrative power, ownership of the server or an exception to applicable rules.',
             ],
         ],

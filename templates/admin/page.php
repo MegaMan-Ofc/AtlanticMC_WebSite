@@ -6,7 +6,7 @@ $adminLanguageReturnTo = current_public_return_path();
 <div class="admin-shell">
     <header class="admin-topbar">
         <div>
-            <p class="admin-eyebrow">Atlantic Anarchy</p>
+            <p class="admin-eyebrow">Atlantic SMP</p>
             <h1><?= e(t('admin.title')) ?></h1>
             <p><?= e(t('admin.subtitle')) ?></p>
         </div>
