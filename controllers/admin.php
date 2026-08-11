@@ -13,6 +13,7 @@ $adminAuthenticated = admin_is_authenticated();
 $adminSection = admin_section();
 $adminSummary = [];
 $adminCategories = [];
+$adminCategoryOptions = [];
 $adminProductFilters = [];
 $adminProducts = [];
 $adminCouponFilters = [];
@@ -25,8 +26,9 @@ if ($adminAuthenticated) {
     $adminSummary = admin_dashboard_summary();
 
     if ($adminSection === 'categories') {
-        $adminCategories = editable_store_category_settings();
+        $adminCategories = all_categories_admin();
     } elseif ($adminSection === 'products') {
+        $adminCategoryOptions = all_store_categories(true);
         $adminProductFilters = admin_product_filters();
         $adminProducts = all_products_admin($adminProductFilters);
     } elseif ($adminSection === 'coupons') {
