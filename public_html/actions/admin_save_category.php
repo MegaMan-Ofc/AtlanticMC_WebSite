@@ -7,10 +7,23 @@ require_post();
 verify_csrf();
 require_admin();
 
+$uploadedImage = null;
+
 try {
-    save_category_from_admin($_POST);
+    $uploadedImage = save_uploaded_png($_FILES['image_file'] ?? [], 'categories');
+    save_category_from_admin($_POST, $uploadedImage);
     flash('success', t('messages.admin_category_saved'));
+} catch (InvalidArgumentException $error) {
+    if (is_string($uploadedImage)) {
+        delete_managed_upload_file($uploadedImage);
+    }
+
+    flash('error', $error->getMessage());
 } catch (Throwable $error) {
+    if (is_string($uploadedImage)) {
+        delete_managed_upload_file($uploadedImage);
+    }
+
     flash('error', public_error_message($error, t('messages.admin_save_failed')));
 }
 
