@@ -6,9 +6,15 @@ $nextLanguage = alternate_language();
 $languageReturnTo = current_public_return_path();
 $headerJavaAddress = (string) config('app.server_ip');
 $headerBedrockAddress = (string) config('app.bedrock_server_ip') . ':' . (int) config('app.bedrock_server_port');
+$headerStartsBelowPrimary = current_route_name() !== 'home';
 ?>
-<header class="site-header" id="top">
-    <div class="header-primary">
+<header
+    class="site-header"
+    id="top"
+    data-smart-header
+    data-initial-primary-offset="<?= $headerStartsBelowPrimary ? '1' : '0' ?>"
+>
+    <div class="header-primary" data-header-primary>
         <div class="container header-grid">
             <a aria-label="<?= e(t('header.join_discord_aria')) ?>" class="header-link header-link--discord" href="<?= e(config('app.discord_url')) ?>" rel="noopener noreferrer" target="_blank">
                 <i aria-hidden="true" class="fa-brands fa-discord"></i>
@@ -46,7 +52,7 @@ $headerBedrockAddress = (string) config('app.bedrock_server_ip') . ':' . (int) c
             </div>
         </div>
     </div>
-    <div class="header-secondary">
+    <div class="header-secondary" data-header-secondary>
         <div class="container header-row">
             <a aria-label="<?= e(t('header.choose_recipient_aria')) ?>" class="user-card" href="<?= e(route_url('login')) ?>">
                 <?php if ($headerRecipient === null): ?>
