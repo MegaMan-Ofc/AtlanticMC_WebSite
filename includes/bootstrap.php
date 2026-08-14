@@ -22,6 +22,7 @@ require_once __DIR__ . '/media.php';
 require_once __DIR__ . '/admin_categories.php';
 require_once __DIR__ . '/admin_products.php';
 require_once __DIR__ . '/admin_recommended.php';
+require_once __DIR__ . '/admin_home.php';
 require_once __DIR__ . '/admin_coupons.php';
 require_once __DIR__ . '/admin_orders.php';
 require_once __DIR__ . '/analytics.php';
