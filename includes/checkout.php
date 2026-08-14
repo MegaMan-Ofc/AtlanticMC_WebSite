@@ -35,7 +35,13 @@ function start_checkout(): array
     if (tebex_is_configured()) {
         try {
             $tebex = tebex_create_checkout($order, $summary['items']);
-            update_order_provider((int) $order['id'], $tebex['reference'], $tebex['checkout_url']);
+            update_order_provider(
+                (int) $order['id'],
+                (string) $tebex['reference'],
+                (string) $tebex['checkout_url'],
+                (int) $tebex['total_cents'],
+                (string) $tebex['currency']
+            );
         } catch (Throwable $error) {
             mark_order_status_by_token($orderToken, 'checkout_failed');
             throw $error;
