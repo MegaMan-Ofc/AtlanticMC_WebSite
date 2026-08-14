@@ -532,3 +532,206 @@ document.addEventListener('click', event => {
         toggle.getAttribute('aria-pressed') !== 'true'
     );
 });
+
+const adminRecommendedDialog = document.getElementById('admin-recommended-dialog');
+const adminRecommendedGrid = document.querySelector('[data-admin-recommended-grid]');
+let adminRecommendedDraggedSlot = null;
+
+const updateAdminRecommendedSlotMetadata = () => {
+    if (!(adminRecommendedGrid instanceof HTMLElement)) {
+        return;
+    }
+
+    const template = adminRecommendedGrid.dataset.slotTemplate ?? 'Slot :slot';
+
+    [...adminRecommendedGrid.querySelectorAll('[data-admin-recommended-slot]')]
+        .forEach((slot, index) => {
+            if (!(slot instanceof HTMLElement)) {
+                return;
+            }
+
+            const position = index + 1;
+            const label = slot.querySelector('[data-admin-recommended-slot-label]');
+            const editButton = slot.querySelector('[data-admin-recommended-edit]');
+            const slotInput = slot.querySelector('[data-admin-recommended-slot-input]');
+
+            if (label instanceof HTMLElement) {
+                label.textContent = template.replace(':slot', String(position));
+            }
+
+            if (editButton instanceof HTMLElement) {
+                editButton.dataset.slot = String(position);
+            }
+
+            if (slotInput instanceof HTMLInputElement) {
+                slotInput.value = String(position);
+            }
+        });
+};
+
+const setAdminRecommendedState = (message, isError = false) => {
+    const target = document.querySelector('[data-admin-recommended-state]');
+
+    if (!(target instanceof HTMLElement)) {
+        return;
+    }
+
+    target.textContent = message;
+    target.classList.toggle('is-error', isError);
+};
+
+const saveAdminRecommendedOrder = async () => {
+    if (!(adminRecommendedGrid instanceof HTMLElement)) {
+        return;
+    }
+
+    const endpoint = adminRecommendedGrid.dataset.reorderUrl;
+    const csrfToken = adminRecommendedGrid.dataset.csrfToken;
+
+    if (!endpoint || !csrfToken) {
+        return;
+    }
+
+    const productIds = [...adminRecommendedGrid.querySelectorAll('[data-admin-recommended-slot]')]
+        .map(slot => slot instanceof HTMLElement ? (slot.dataset.productId ?? '0') : '0');
+
+    setAdminRecommendedState(adminRecommendedGrid.dataset.savingLabel ?? '');
+
+    try {
+        const body = new FormData();
+        body.set('csrf_token', csrfToken);
+        body.set('product_ids', productIds.join(','));
+
+        const response = await fetch(endpoint, {
+            method: 'POST',
+            body,
+            credentials: 'same-origin',
+            headers: {
+                Accept: 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+            },
+        });
+
+        const payload = await response.json();
+
+        if (!response.ok || payload?.ok !== true) {
+            throw new Error(payload?.error ?? 'Unable to save order.');
+        }
+
+        setAdminRecommendedState(adminRecommendedGrid.dataset.savedLabel ?? '');
+    } catch (error) {
+        setAdminRecommendedState(adminRecommendedGrid.dataset.errorLabel ?? '', true);
+        window.setTimeout(() => window.location.reload(), 1200);
+    }
+};
+
+document.addEventListener('click', event => {
+    const target = event.target;
+
+    if (!(target instanceof Element)) {
+        return;
+    }
+
+    const editButton = target.closest('[data-admin-recommended-edit]');
+
+    if (!(editButton instanceof HTMLElement)
+        || !(adminRecommendedDialog instanceof HTMLDialogElement)) {
+        return;
+    }
+
+    const slotField = adminRecommendedDialog.querySelector('[data-admin-recommended-dialog-slot]');
+    const productSelect = adminRecommendedDialog.querySelector('[data-admin-recommended-product-select]');
+
+    if (slotField instanceof HTMLInputElement) {
+        slotField.value = editButton.dataset.slot ?? '1';
+    }
+
+    if (productSelect instanceof HTMLSelectElement) {
+        const productId = editButton.dataset.productId ?? '';
+        const optionExists = [...productSelect.options].some(option => option.value === productId);
+
+        if (optionExists) {
+            productSelect.value = productId;
+        } else if (productSelect.options.length > 0) {
+            productSelect.selectedIndex = 0;
+        }
+    }
+
+    adminRecommendedDialog.showModal();
+    syncAdminDialogState();
+});
+
+if (adminRecommendedGrid instanceof HTMLElement) {
+    adminRecommendedGrid.dataset.slotTemplate = adminRecommendedGrid.querySelector('[data-admin-recommended-slot-label]')?.textContent
+        ?.replace(/\d+/, ':slot')
+        .trim() ?? 'Slot :slot';
+
+    adminRecommendedGrid.addEventListener('dragstart', event => {
+        const slot = event.target instanceof Element
+            ? event.target.closest('[data-admin-recommended-slot]')
+            : null;
+
+        if (!(slot instanceof HTMLElement) || slot.dataset.productId === '0') {
+            event.preventDefault();
+            return;
+        }
+
+        adminRecommendedDraggedSlot = slot;
+        slot.classList.add('is-dragging');
+        event.dataTransfer?.setData('text/plain', slot.dataset.productId ?? '');
+        if (event.dataTransfer) {
+            event.dataTransfer.effectAllowed = 'move';
+        }
+    });
+
+    adminRecommendedGrid.addEventListener('dragover', event => {
+        if (!(adminRecommendedDraggedSlot instanceof HTMLElement)) {
+            return;
+        }
+
+        const target = event.target instanceof Element
+            ? event.target.closest('[data-admin-recommended-slot]')
+            : null;
+
+        if (!(target instanceof HTMLElement) || target === adminRecommendedDraggedSlot) {
+            return;
+        }
+
+        event.preventDefault();
+        adminRecommendedGrid.querySelectorAll('.is-drag-target').forEach(slot => slot.classList.remove('is-drag-target'));
+        target.classList.add('is-drag-target');
+    });
+
+    adminRecommendedGrid.addEventListener('drop', event => {
+        if (!(adminRecommendedDraggedSlot instanceof HTMLElement)) {
+            return;
+        }
+
+        const target = event.target instanceof Element
+            ? event.target.closest('[data-admin-recommended-slot]')
+            : null;
+
+        if (!(target instanceof HTMLElement) || target === adminRecommendedDraggedSlot) {
+            return;
+        }
+
+        event.preventDefault();
+        const targetRect = target.getBoundingClientRect();
+        const insertAfter = event.clientX > targetRect.left + (targetRect.width / 2)
+            || event.clientY > targetRect.top + (targetRect.height / 2);
+
+        adminRecommendedGrid.insertBefore(
+            adminRecommendedDraggedSlot,
+            insertAfter ? target.nextSibling : target
+        );
+
+        updateAdminRecommendedSlotMetadata();
+        saveAdminRecommendedOrder();
+    });
+
+    adminRecommendedGrid.addEventListener('dragend', () => {
+        adminRecommendedGrid.querySelectorAll('.is-dragging, .is-drag-target')
+            .forEach(slot => slot.classList.remove('is-dragging', 'is-drag-target'));
+        adminRecommendedDraggedSlot = null;
+    });
+}
