@@ -43,6 +43,7 @@ $assert(
 );
 $assert(
     in_array('categories', ADMIN_SECTIONS, true)
+        && in_array('recommended', ADMIN_SECTIONS, true)
         && is_file($root . '/database/migrations/sqlite/004_dynamic_categories.php')
         && is_file($root . '/database/migrations/mysql/004_dynamic_categories.php')
         && is_file($root . '/public_html/actions/admin_delete_category.php')

@@ -49,7 +49,7 @@
 
 .admin-navigation {
     display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
     gap: .625rem;
     margin-bottom: 1.5rem;
 }
@@ -981,5 +981,228 @@ html.admin-dialog-open {
 
     .admin-discount-heading .button {
         width: 100%;
+    }
+}
+
+.admin-recommended-panel {
+    display: grid;
+    gap: 1rem;
+}
+
+.admin-recommended-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.admin-recommended-toolbar p {
+    margin: .2rem 0 0;
+    color: var(--muted);
+    font-size: .85rem;
+}
+
+.admin-recommended-save-state {
+    min-height: 1.25rem;
+    color: var(--muted);
+    font-size: .8rem;
+    font-weight: 700;
+}
+
+.admin-recommended-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: .85rem;
+}
+
+.admin-recommended-slot {
+    display: grid;
+    align-content: start;
+    gap: .8rem;
+    min-width: 0;
+    min-height: 18rem;
+    padding: .85rem;
+    border: 1px solid var(--border);
+    border-radius: .9rem;
+    background: linear-gradient(145deg, rgba(255, 255, 255, .05), rgba(255, 255, 255, .018));
+    transition: border-color .16s ease, transform .16s ease, opacity .16s ease, background .16s ease;
+}
+
+.admin-recommended-slot.has-product {
+    cursor: grab;
+}
+
+.admin-recommended-slot.has-product:active {
+    cursor: grabbing;
+}
+
+.admin-recommended-slot.is-dragging {
+    opacity: .35;
+}
+
+.admin-recommended-slot.is-drag-target {
+    border-color: var(--primary);
+    background: rgba(108, 92, 231, .12);
+    transform: translateY(-.15rem);
+}
+
+.admin-recommended-slot-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .5rem;
+}
+
+.admin-recommended-slot-number {
+    color: var(--subtle);
+    font-size: .68rem;
+    font-weight: 900;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.admin-recommended-drag-handle {
+    display: grid;
+    width: 2rem;
+    height: 2rem;
+    place-items: center;
+    border-radius: .5rem;
+    color: var(--muted);
+}
+
+.admin-recommended-product-preview {
+    display: grid;
+    gap: .65rem;
+    text-align: center;
+}
+
+.admin-recommended-image {
+    display: grid;
+    height: 7.25rem;
+    place-items: center;
+    overflow: hidden;
+    border-radius: .75rem;
+    background: rgba(7, 10, 15, .58);
+}
+
+.admin-recommended-image img {
+    width: 6.5rem;
+    height: 6.5rem;
+    object-fit: contain;
+}
+
+.admin-recommended-product-copy {
+    display: grid;
+    min-width: 0;
+    gap: .2rem;
+}
+
+.admin-recommended-product-copy small {
+    color: var(--muted);
+    font-size: .68rem;
+    text-transform: uppercase;
+}
+
+.admin-recommended-product-copy strong {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.admin-recommended-price {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: .4rem;
+}
+
+.admin-recommended-price span {
+    color: var(--subtle);
+    font-size: .72rem;
+    text-decoration: line-through;
+}
+
+.admin-recommended-price b {
+    color: var(--accent);
+}
+
+.admin-recommended-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: .5rem;
+    margin-top: auto;
+}
+
+.admin-recommended-actions form,
+.admin-recommended-actions .button {
+    width: 100%;
+    min-width: 0;
+}
+
+.admin-recommended-actions .button {
+    min-height: 2.5rem;
+    padding: .55rem .65rem;
+    font-size: .8rem;
+    white-space: nowrap;
+}
+
+.admin-recommended-empty-action {
+    display: grid;
+    min-height: 14rem;
+    appearance: none;
+    place-items: center;
+    align-content: center;
+    gap: .55rem;
+    padding: 1rem;
+    border: 1px dashed var(--border);
+    border-radius: .75rem;
+    background: rgba(255, 255, 255, .018);
+    color: var(--muted);
+    text-align: center;
+    cursor: pointer;
+    transition: border-color .2s ease, background .2s ease, color .2s ease;
+}
+
+.admin-recommended-empty-action:hover {
+    border-color: var(--primary);
+    background: rgba(108, 92, 231, .08);
+    color: var(--text);
+}
+
+.admin-recommended-empty-icon {
+    display: grid;
+    width: 3rem;
+    height: 3rem;
+    place-items: center;
+    border-radius: .8rem;
+    background: rgba(108, 92, 231, .14);
+    color: var(--accent);
+    font-size: 1.15rem;
+}
+
+.admin-recommended-empty-action small {
+    color: var(--subtle);
+}
+
+@media (max-width: 1180px) {
+    .admin-recommended-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 760px) {
+    .admin-recommended-toolbar {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .admin-recommended-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 480px) {
+    .admin-recommended-grid {
+        grid-template-columns: 1fr;
     }
 }

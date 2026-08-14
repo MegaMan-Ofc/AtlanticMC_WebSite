@@ -9,4 +9,5 @@ $pageDescription = t('home.description');
 $bodyClass = 'page-home';
 $pageStyles = ['css/pages/home.css'];
 $homeCategories = home_store_categories();
+$homeRecommendedProducts = recommended_products_for_home();
 $homeHeroCategory = store_category_by_slug('keys', false);
