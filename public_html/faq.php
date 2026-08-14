@@ -17,6 +17,21 @@
                 </div>
             </header>
 
+            <nav class="legal-navigation" aria-label="<?= e(t('legal.navigation_aria')) ?>">
+                <?php foreach ($legalNavigation as $item): ?>
+                    <a href="<?= e($item['url']) ?>">
+                        <?= e($item['label']) ?>
+                    </a>
+                <?php endforeach; ?>
+                <a href="<?= e(route_url('faq')) ?>" aria-current="page">
+                    <?= e(t('common.faq')) ?>
+                </a>
+                <a href="https://www.livroreclamacoes.pt/Inicio/" target="_blank" rel="noopener noreferrer">
+                    <?= e(t('footer.complaints')) ?>
+                    <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                </a>
+            </nav>
+
             <section class="faq-list" aria-label="<?= e(t('faq.list_aria')) ?>">
                 <?php foreach ($faqItems as $item): ?>
                     <details class="faq-item">

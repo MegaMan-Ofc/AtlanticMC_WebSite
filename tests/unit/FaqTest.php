@@ -14,22 +14,28 @@ $assert(
     is_string($faqPage)
         && str_contains($faqPage, '<details class="faq-item">')
         && str_contains($faqPage, '<summary>')
-        && str_contains($faqPage, 'faq-answer'),
-    'The FAQ page uses native expandable questions that remain open until toggled again.'
+        && str_contains($faqPage, 'faq-answer')
+        && str_contains($faqPage, 'legal-navigation')
+        && str_contains($faqPage, 'aria-current="page"')
+        && strpos($faqPage, "route_url('faq')") < strpos($faqPage, 'livroreclamacoes.pt'),
+    'The FAQ page uses native expandable questions and includes the legal navigation with FAQ selected.'
 );
 
 $assert(
     is_string($faqController)
         && str_contains($faqController, "translation_value('faq.items')")
-        && str_contains($faqController, "'css/pages/faq.css'"),
-    'The FAQ controller loads localized questions and dedicated styles.'
+        && str_contains($faqController, "'css/pages/legal.css'")
+        && str_contains($faqController, "'css/pages/faq.css'")
+        && str_contains($faqController, 'legal_navigation()'),
+    'The FAQ controller loads localized questions and the shared legal navigation styles.'
 );
 
 $assert(
     is_string($faqStyles)
         && str_contains($faqStyles, '.faq-item[open]')
-        && str_contains($faqStyles, '.faq-answer'),
-    'FAQ styles include the expanded state and answer layout.'
+        && str_contains($faqStyles, '.faq-answer')
+        && str_contains($faqStyles, 'padding: .55rem 1.35rem 1.3rem;'),
+    'FAQ styles include the expanded state and breathing room above each answer.'
 );
 
 $assert(
@@ -49,8 +55,9 @@ $assert(
 $assert(
     is_string($homePage)
         && str_contains($homePage, "home.about_faq_prompt")
-        && str_contains($homePage, "route_url('faq')"),
-    'The first About section copy links visitors to the FAQ.'
+        && str_contains($homePage, "route_url('faq')")
+        && strpos($homePage, "home.about_tag_community") < strpos($homePage, "home.about_faq_prompt"),
+    'The first About section shows the community highlight before the FAQ prompt.'
 );
 
 $assert(

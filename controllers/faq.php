@@ -7,7 +7,8 @@ require_once __DIR__ . '/../includes/bootstrap.php';
 $pageTitle = t('faq.page_title');
 $pageDescription = t('faq.description');
 $bodyClass = 'page-faq';
-$pageStyles = ['css/pages/faq.css'];
+$pageStyles = ['css/pages/legal.css', 'css/pages/faq.css'];
+$legalNavigation = legal_navigation();
 
 $faqItems = translation_value('faq.items');
 $faqItems = is_array($faqItems) ? $faqItems : [];
