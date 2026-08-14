@@ -23,7 +23,11 @@ DirectoryIndex index.php
     RewriteCond %{REQUEST_FILENAME} -d
     RewriteRule ^ - [L]
 
+    RewriteCond %{THE_REQUEST} \s/+([a-z0-9]+(?:-[a-z0-9]+)*)/+(?:[?\s]) [NC]
+    RewriteRule ^([a-z0-9]+(?:-[a-z0-9]+)*)/$ /$1 [R=301,L,NE]
+
     RewriteRule ^(ranks|rubis|keys|boosters|cart|checkout|login|success|privacy|terms|purchase-policy|rules|admin)$ $1.php [END,QSA]
+    RewriteRule ^([a-z0-9]+(?:-[a-z0-9]+)*)$ category.php?slug=$1 [END,QSA]
 </IfModule>
 
 <FilesMatch "^(?:\.env|\.env\.example|README-PHP\.md|CLEAN-URLS\.md|ADMIN-SETUP\.md|plan\.(?:txt|md))$">

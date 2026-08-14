@@ -2,11 +2,6 @@
 
 declare(strict_types=1);
 
-
-
-
-
-
 function public_routes(): array
 {
     return [
@@ -27,11 +22,83 @@ function public_routes(): array
     ];
 }
 
+function legacy_category_slugs(): array
+{
+    return ['ranks', 'rubis', 'keys', 'boosters'];
+}
 
+function reserved_category_slugs(): array
+{
+    $reserved = [
+        'home',
+        'index',
+        'category',
+        'actions',
+        'ajax',
+        'api',
+        'assets',
+        'css',
+        'js',
+        'uploads',
+    ];
 
+    foreach (public_routes() as $route) {
+        $path = (string) ($route['path'] ?? '');
 
+        if ($path !== '' && !in_array($path, legacy_category_slugs(), true)) {
+            $reserved[] = $path;
+        }
+    }
 
+    return array_values(array_unique($reserved));
+}
 
+function category_slug_is_reserved(string $slug): bool
+{
+    return in_array(strtolower(trim($slug)), reserved_category_slugs(), true);
+}
+
+function public_category_slug_from_path(string $path): ?string
+{
+    $path = trim(rawurldecode($path), '/');
+
+    if (
+        $path === ''
+        || str_contains($path, '/')
+        || preg_match('/^[a-z0-9]+(?:-[a-z0-9]+)*$/', $path) !== 1
+        || category_slug_is_reserved($path)
+    ) {
+        return null;
+    }
+
+    return $path;
+}
+
+function public_category_slug_from_request_uri(string $requestUri): ?string
+{
+    $requestPath = parse_url($requestUri, PHP_URL_PATH);
+
+    return is_string($requestPath) ? public_category_slug_from_path($requestPath) : null;
+}
+
+function category_path(string $slug): string
+{
+    $slug = strtolower(trim($slug));
+
+    if (
+        preg_match('/^[a-z0-9]+(?:-[a-z0-9]+)*$/', $slug) !== 1
+        || category_slug_is_reserved($slug)
+    ) {
+        throw new InvalidArgumentException('Invalid public category slug.');
+    }
+
+    return $slug;
+}
+
+function category_url(string $slug): string
+{
+    return url(category_path($slug));
+}
 
 function public_route_name_from_request_uri(string $requestUri): ?string
 {
@@ -88,6 +155,10 @@ function current_route_name(): ?string
 {
     $script = basename((string) ($_SERVER['SCRIPT_FILENAME'] ?? $_SERVER['SCRIPT_NAME'] ?? ''));
 
+    if ($script === 'category.php') {
+        return 'category';
+    }
+
     foreach (public_routes() as $name => $route) {
         if ($script === $route['script']) {
             return $name;
@@ -104,6 +175,17 @@ function current_canonical_url(): ?string
     }
 
     $routeName = current_route_name();
+
+    if ($routeName === 'category') {
+        $slug = public_category_slug_from_request_uri((string) ($_SERVER['REQUEST_URI'] ?? '/'));
+
+        if ($slug === null) {
+            $querySlug = $_GET['slug'] ?? null;
+            $slug = is_string($querySlug) ? public_category_slug_from_path($querySlug) : null;
+        }
+
+        return $slug === null ? null : category_url($slug);
+    }
 
     return $routeName === null ? null : route_url($routeName);
 }
@@ -124,10 +206,6 @@ function request_base_path(): string
 
     return $directory === '/' ? '' : rtrim($directory, '/');
 }
-
-
-
-
 
 function normalize_public_path(string $path): string
 {
@@ -244,6 +322,10 @@ function safe_return_path(?string $path, string $fallback = ''): string
                 break;
             }
         }
+
+        if ($matchedPath === null) {
+            $matchedPath = public_category_slug_from_path($requestedPath);
+        }
     }
 
     if ($matchedPath === null) {
@@ -263,4 +345,3 @@ function current_public_return_path(): string
 
     return safe_return_path($uri, route_path('home'));
 }
-

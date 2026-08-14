@@ -21,7 +21,6 @@ foreach (public_routes() as $name => $route) {
     $pathToName[$route['path']] = $name;
 }
 
-
 if ($relativePath === 'index' || $relativePath === 'index.php') {
     $location = route_url('home');
     header(
@@ -34,7 +33,6 @@ if ($relativePath === 'index' || $relativePath === 'index.php') {
 
 if (isset($scriptToName[$relativePath])) {
     $location = route_url($scriptToName[$relativePath]);
-
     header(
         'Location: ' . ($queryString === '' ? $location : $location . '?' . $queryString),
         true,
@@ -45,17 +43,29 @@ if (isset($scriptToName[$relativePath])) {
 
 $trimmedPath = trim($relativePath, '/');
 
-if ($relativePath !== $trimmedPath && isset($pathToName[$trimmedPath])) {
-    $location = route_url($pathToName[$trimmedPath]);
+if ($relativePath !== $trimmedPath) {
+    if (isset($pathToName[$trimmedPath])) {
+        $location = route_url($pathToName[$trimmedPath]);
+        header(
+            'Location: ' . ($queryString === '' ? $location : $location . '?' . $queryString),
+            true,
+            301
+        );
+        exit;
+    }
 
-    header(
-        'Location: ' . ($queryString === '' ? $location : $location . '?' . $queryString),
-        true,
-        301
-    );
-    exit;
+    $categorySlug = public_category_slug_from_path($trimmedPath);
+
+    if ($categorySlug !== null) {
+        $location = category_url($categorySlug);
+        header(
+            'Location: ' . ($queryString === '' ? $location : $location . '?' . $queryString),
+            true,
+            301
+        );
+        exit;
+    }
 }
-
 
 $publicRoot = __DIR__ . '/public_html';
 $filePath = $publicRoot . $requestPath;
@@ -64,20 +74,26 @@ if ($requestPath !== '/' && is_file($filePath)) {
     return false;
 }
 
-$routeName = $requestPath === '/'
-    ? 'home'
-    : ($pathToName[trim($requestPath, '/')] ?? null);
+if ($requestPath === '/') {
+    $targetScript = $publicRoot . '/index.php';
+} elseif (isset($pathToName[$trimmedPath])) {
+    $route = public_routes()[$pathToName[$trimmedPath]];
+    $targetScript = $publicRoot . '/' . $route['script'];
+} else {
+    $categorySlug = public_category_slug_from_path($trimmedPath);
 
-if (!is_string($routeName)) {
-    http_response_code(404);
-    header('Content-Type: text/plain; charset=utf-8');
-    echo '404 Not Found';
-    exit;
+    if ($categorySlug === null) {
+        http_response_code(404);
+        header('Content-Type: text/plain; charset=utf-8');
+        echo '404 Not Found';
+        exit;
+    }
+
+    $_GET['slug'] = $categorySlug;
+    $targetScript = $publicRoot . '/category.php';
 }
 
-$route = public_routes()[$routeName];
+$_SERVER['SCRIPT_FILENAME'] = $targetScript;
+$_SERVER['SCRIPT_NAME'] = '/' . basename($targetScript);
 
-$_SERVER['SCRIPT_FILENAME'] = $publicRoot . '/' . $route['script'];
-$_SERVER['SCRIPT_NAME'] = '/' . $route['script'];
-
-require $_SERVER['SCRIPT_FILENAME'];
+require $targetScript;
