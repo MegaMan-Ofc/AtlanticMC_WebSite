@@ -123,3 +123,214 @@
         min-height: 13.125rem;
     }
 }
+
+.home-recommended {
+    margin-bottom: 1.875rem;
+}
+
+.home-section-heading {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 2rem;
+    margin-bottom: 1rem;
+}
+
+.home-section-heading h2,
+.home-section-heading p {
+    margin-bottom: 0;
+}
+
+.home-section-heading h2 {
+    font-size: clamp(1.45rem, 3vw, 2rem);
+}
+
+.home-section-heading p {
+    max-width: 36rem;
+    color: var(--muted);
+    text-align: right;
+}
+
+.home-section-kicker {
+    display: block;
+    margin-bottom: .25rem;
+    color: #ffad24;
+    font-size: .72rem;
+    font-weight: 900;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+}
+
+.home-recommended-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: .9rem;
+}
+
+.home-recommended-card {
+    position: relative;
+    display: grid;
+    grid-template-rows: 1fr auto auto;
+    gap: .8rem;
+    min-width: 0;
+    padding: 1rem;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    background:
+        radial-gradient(circle at 50% 12%, rgba(108, 92, 231, .16), transparent 45%),
+        var(--surface);
+    box-shadow: 0 .8rem 2rem rgba(0, 0, 0, .16);
+    transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+
+.home-recommended-card:hover {
+    transform: translateY(-.25rem);
+    border-color: rgba(108, 92, 231, .75);
+    box-shadow: 0 1.15rem 2.5rem rgba(0, 0, 0, .25);
+}
+
+.home-recommended-product {
+    display: grid;
+    align-content: start;
+    min-width: 0;
+    color: inherit;
+    text-align: center;
+    text-decoration: none;
+}
+
+.home-recommended-image {
+    display: grid;
+    min-height: 8rem;
+    place-items: center;
+    margin-bottom: .55rem;
+}
+
+.home-recommended-image img {
+    width: min(8rem, 88%);
+    height: 7rem;
+    object-fit: contain;
+    filter: drop-shadow(0 .75rem 1rem rgba(0, 0, 0, .38));
+}
+
+.home-recommended-product small {
+    color: var(--muted);
+    font-size: .68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.home-recommended-product h3 {
+    margin: .2rem 0 0;
+    overflow: hidden;
+    font-size: .95rem;
+    line-height: 1.25;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.home-recommended-price {
+    display: flex;
+    min-height: 1.8rem;
+    align-items: baseline;
+    justify-content: center;
+    gap: .45rem;
+}
+
+.home-recommended-price span {
+    color: var(--subtle);
+    font-size: .78rem;
+    text-decoration: line-through;
+}
+
+.home-recommended-price strong {
+    color: var(--accent);
+    font-size: 1.12rem;
+}
+
+.home-recommended-card form,
+.home-recommended-card .button {
+    width: 100%;
+}
+
+.home-recommended-card .button {
+    min-height: 2.6rem;
+    padding-inline: .65rem;
+    font-size: .78rem;
+}
+
+.home-recommended-discount {
+    position: absolute;
+    top: .7rem;
+    left: .7rem;
+    z-index: 3;
+    padding: .32rem .5rem;
+    border-radius: .45rem;
+    background: linear-gradient(135deg, #ffd54a, #ff8a00);
+    color: #fff;
+    font-size: .58rem;
+    font-weight: 900;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    box-shadow: 0 .45rem 1rem rgba(255, 145, 0, .32);
+}
+
+@media (max-width: 1100px) {
+    .home-recommended-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 720px) {
+    .home-section-heading {
+        align-items: start;
+        flex-direction: column;
+        gap: .45rem;
+    }
+
+    .home-section-heading p {
+        text-align: left;
+    }
+
+    .home-recommended-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 430px) {
+    .home-recommended-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .home-recommended-card {
+        grid-template-columns: 6.5rem minmax(0, 1fr);
+        grid-template-rows: auto auto;
+        align-items: center;
+    }
+
+    .home-recommended-product {
+        display: contents;
+    }
+
+    .home-recommended-image {
+        grid-row: 1 / 3;
+        min-height: 6rem;
+        margin: 0;
+    }
+
+    .home-recommended-image img {
+        width: 5.5rem;
+        height: 5.5rem;
+    }
+
+    .home-recommended-product small,
+    .home-recommended-product h3 {
+        grid-column: 2;
+        text-align: left;
+    }
+
+    .home-recommended-price,
+    .home-recommended-card form {
+        grid-column: 2;
+    }
+}
