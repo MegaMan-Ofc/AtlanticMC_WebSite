@@ -735,3 +735,244 @@ if (adminRecommendedGrid instanceof HTMLElement) {
         adminRecommendedDraggedSlot = null;
     });
 }
+
+const adminHomeLayout = document.querySelector('[data-admin-home-layout]');
+let adminHomeDraggedCategory = null;
+let adminHomeDragOrigin = null;
+let adminHomeDragNextSibling = null;
+
+const adminHomeDirectCategoryCards = zone => {
+    if (!(zone instanceof HTMLElement)) {
+        return [];
+    }
+
+    return [...zone.children].filter(child => child instanceof HTMLElement && child.matches('[data-admin-home-category]'));
+};
+
+const updateAdminHomeLayoutEmptyStates = () => {
+    if (!(adminHomeLayout instanceof HTMLElement)) {
+        return;
+    }
+
+    adminHomeLayout.querySelectorAll('[data-admin-home-zone]').forEach(zone => {
+        if (!(zone instanceof HTMLElement)) {
+            return;
+        }
+
+        const emptyState = [...zone.children].find(child => child instanceof HTMLElement && child.matches('[data-admin-home-empty]'));
+        const hasCategory = adminHomeDirectCategoryCards(zone).length > 0;
+
+        zone.classList.toggle('has-category', hasCategory);
+
+        if (emptyState instanceof HTMLElement) {
+            emptyState.hidden = hasCategory;
+        }
+    });
+};
+
+const setAdminHomeLayoutState = (message, isError = false) => {
+    const target = document.querySelector('[data-admin-home-layout-state]');
+
+    if (!(target instanceof HTMLElement)) {
+        return;
+    }
+
+    target.textContent = message;
+    target.classList.toggle('is-error', isError);
+};
+
+const saveAdminHomeLayout = async () => {
+    if (!(adminHomeLayout instanceof HTMLElement)) {
+        return;
+    }
+
+    const endpoint = adminHomeLayout.dataset.saveUrl;
+    const csrfToken = adminHomeLayout.dataset.csrfToken;
+    const topZone = adminHomeLayout.querySelector('[data-admin-home-zone="top"]');
+    const gridZone = adminHomeLayout.querySelector('[data-admin-home-zone="grid"]');
+    const bottomZone = adminHomeLayout.querySelector('[data-admin-home-zone="bottom"]');
+
+    if (!endpoint || !csrfToken
+        || !(topZone instanceof HTMLElement)
+        || !(gridZone instanceof HTMLElement)
+        || !(bottomZone instanceof HTMLElement)) {
+        return;
+    }
+
+    const topCategory = adminHomeDirectCategoryCards(topZone)[0] ?? null;
+    const bottomCategory = adminHomeDirectCategoryCards(bottomZone)[0] ?? null;
+    const gridIds = adminHomeDirectCategoryCards(gridZone).map(card => card.dataset.categoryId ?? '');
+
+    setAdminHomeLayoutState(adminHomeLayout.dataset.savingLabel ?? '');
+
+    try {
+        const body = new FormData();
+        body.set('csrf_token', csrfToken);
+        body.set('top_category_id', topCategory instanceof HTMLElement ? (topCategory.dataset.categoryId ?? '0') : '0');
+        body.set('grid_category_ids', gridIds.join(','));
+        body.set('bottom_category_id', bottomCategory instanceof HTMLElement ? (bottomCategory.dataset.categoryId ?? '0') : '0');
+
+        const response = await fetch(endpoint, {
+            method: 'POST',
+            body,
+            credentials: 'same-origin',
+            headers: {
+                Accept: 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+            },
+        });
+
+        const payload = await response.json();
+
+        if (!response.ok || payload?.ok !== true) {
+            throw new Error(payload?.error ?? 'Unable to save homepage category layout.');
+        }
+
+        setAdminHomeLayoutState(adminHomeLayout.dataset.savedLabel ?? '');
+    } catch (error) {
+        setAdminHomeLayoutState(adminHomeLayout.dataset.errorLabel ?? '', true);
+        window.setTimeout(() => window.location.reload(), 1200);
+    }
+};
+
+const clearAdminHomeDragTargets = () => {
+    if (!(adminHomeLayout instanceof HTMLElement)) {
+        return;
+    }
+
+    adminHomeLayout.querySelectorAll('.is-drag-target')
+        .forEach(element => element.classList.remove('is-drag-target'));
+};
+
+if (adminHomeLayout instanceof HTMLElement) {
+    updateAdminHomeLayoutEmptyStates();
+
+    adminHomeLayout.addEventListener('dragstart', event => {
+        const category = event.target instanceof Element
+            ? event.target.closest('[data-admin-home-category]')
+            : null;
+
+        if (!(category instanceof HTMLElement)) {
+            return;
+        }
+
+        const origin = category.parentElement;
+
+        if (!(origin instanceof HTMLElement) || !origin.matches('[data-admin-home-zone]')) {
+            event.preventDefault();
+            return;
+        }
+
+        adminHomeDraggedCategory = category;
+        adminHomeDragOrigin = origin;
+        adminHomeDragNextSibling = category.nextElementSibling;
+        category.classList.add('is-dragging');
+
+        event.dataTransfer?.setData('text/plain', category.dataset.categoryId ?? '');
+        if (event.dataTransfer) {
+            event.dataTransfer.effectAllowed = 'move';
+        }
+    });
+
+    adminHomeLayout.addEventListener('dragover', event => {
+        if (!(adminHomeDraggedCategory instanceof HTMLElement)) {
+            return;
+        }
+
+        const zone = event.target instanceof Element
+            ? event.target.closest('[data-admin-home-zone]')
+            : null;
+
+        if (!(zone instanceof HTMLElement)) {
+            return;
+        }
+
+        event.preventDefault();
+        clearAdminHomeDragTargets();
+
+        const targetCategory = event.target instanceof Element
+            ? event.target.closest('[data-admin-home-category]')
+            : null;
+
+        if (zone.dataset.adminHomeZone === 'grid'
+            && targetCategory instanceof HTMLElement
+            && targetCategory !== adminHomeDraggedCategory) {
+            targetCategory.classList.add('is-drag-target');
+        } else {
+            zone.classList.add('is-drag-target');
+        }
+    });
+
+    adminHomeLayout.addEventListener('drop', event => {
+        if (!(adminHomeDraggedCategory instanceof HTMLElement)
+            || !(adminHomeDragOrigin instanceof HTMLElement)) {
+            return;
+        }
+
+        const targetZone = event.target instanceof Element
+            ? event.target.closest('[data-admin-home-zone]')
+            : null;
+
+        if (!(targetZone instanceof HTMLElement)) {
+            return;
+        }
+
+        event.preventDefault();
+        const targetType = targetZone.dataset.adminHomeZone ?? 'grid';
+        const sourceType = adminHomeDragOrigin.dataset.adminHomeZone ?? 'grid';
+
+        if (targetZone === adminHomeDragOrigin && targetType !== 'grid') {
+            clearAdminHomeDragTargets();
+            return;
+        }
+
+        if (targetType === 'grid') {
+            const targetCategory = event.target instanceof Element
+                ? event.target.closest('[data-admin-home-category]')
+                : null;
+
+            if (targetCategory instanceof HTMLElement && targetCategory !== adminHomeDraggedCategory) {
+                const rect = targetCategory.getBoundingClientRect();
+                const insertAfter = event.clientX > rect.left + (rect.width / 2)
+                    || event.clientY > rect.top + (rect.height / 2);
+
+                targetZone.insertBefore(
+                    adminHomeDraggedCategory,
+                    insertAfter ? targetCategory.nextSibling : targetCategory
+                );
+            } else {
+                targetZone.appendChild(adminHomeDraggedCategory);
+            }
+        } else {
+            const occupyingCategory = adminHomeDirectCategoryCards(targetZone)
+                .find(category => category !== adminHomeDraggedCategory) ?? null;
+
+            if (occupyingCategory instanceof HTMLElement) {
+                if (sourceType === 'grid') {
+                    const reference = adminHomeDragNextSibling instanceof Element
+                        && adminHomeDragNextSibling.parentElement === adminHomeDragOrigin
+                        ? adminHomeDragNextSibling
+                        : null;
+                    adminHomeDragOrigin.insertBefore(occupyingCategory, reference);
+                } else {
+                    adminHomeDragOrigin.appendChild(occupyingCategory);
+                }
+            }
+
+            targetZone.appendChild(adminHomeDraggedCategory);
+        }
+
+        clearAdminHomeDragTargets();
+        updateAdminHomeLayoutEmptyStates();
+        saveAdminHomeLayout();
+    });
+
+    adminHomeLayout.addEventListener('dragend', () => {
+        adminHomeLayout.querySelectorAll('.is-dragging')
+            .forEach(element => element.classList.remove('is-dragging'));
+        clearAdminHomeDragTargets();
+        adminHomeDraggedCategory = null;
+        adminHomeDragOrigin = null;
+        adminHomeDragNextSibling = null;
+    });
+}
