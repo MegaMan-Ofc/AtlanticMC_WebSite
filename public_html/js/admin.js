@@ -478,3 +478,57 @@ window.addEventListener('popstate', () => {
         window.location.reload();
     }
 });
+
+
+const setAdminDiscountState = (control, enabled) => {
+    const state = control.querySelector('[data-admin-discount-enabled]');
+    const fields = control.querySelector('[data-admin-discount-fields]');
+    const price = control.querySelector('[data-admin-discount-price]');
+    const toggle = control.querySelector('[data-admin-discount-toggle]');
+    const label = control.querySelector('[data-admin-discount-toggle-label]');
+
+    if (!(state instanceof HTMLInputElement)
+        || !(fields instanceof HTMLElement)
+        || !(price instanceof HTMLInputElement)
+        || !(toggle instanceof HTMLButtonElement)) {
+        return;
+    }
+
+    state.value = enabled ? '1' : '0';
+    fields.hidden = !enabled;
+    price.disabled = !enabled;
+    price.required = enabled;
+    toggle.setAttribute('aria-pressed', String(enabled));
+    toggle.classList.toggle('button--primary', enabled);
+    toggle.classList.toggle('button--ghost', !enabled);
+    control.classList.toggle('is-active', enabled);
+
+    if (label instanceof HTMLElement) {
+        label.textContent = enabled
+            ? (toggle.dataset.disableLabel ?? '')
+            : (toggle.dataset.enableLabel ?? '');
+    }
+
+    if (enabled) {
+        price.focus();
+    }
+};
+
+document.addEventListener('click', event => {
+    const toggle = event.target.closest('[data-admin-discount-toggle]');
+
+    if (!(toggle instanceof HTMLButtonElement)) {
+        return;
+    }
+
+    const control = toggle.closest('[data-admin-discount-control]');
+
+    if (!(control instanceof HTMLElement)) {
+        return;
+    }
+
+    setAdminDiscountState(
+        control,
+        toggle.getAttribute('aria-pressed') !== 'true'
+    );
+});

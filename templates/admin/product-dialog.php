@@ -8,6 +8,12 @@ $productTitleId = $productDialogId . '-title';
 $productIsNew = $productId === 0;
 $productImage = (string) ($productForm['image'] ?? '');
 $productCategoryId = (int) ($productForm['category_id'] ?? 0);
+$productDiscountPriceCents = isset($productForm['discount_price_cents'])
+    && $productForm['discount_price_cents'] !== null
+    ? (int) $productForm['discount_price_cents']
+    : null;
+$productDiscountEnabled = $productDiscountPriceCents !== null
+    && $productDiscountPriceCents < (int) $productForm['price_cents'];
 $hasCategoryOptions = $adminCategoryOptions !== [];
 
 ?>
@@ -130,6 +136,62 @@ $hasCategoryOptions = $adminCategoryOptions !== [];
                         inputmode="decimal"
                         required
                     >
+                </div>
+
+                <div
+                    class="admin-field admin-field--full admin-discount-control <?= $productDiscountEnabled ? 'is-active' : '' ?>"
+                    data-admin-discount-control
+                >
+                    <input
+                        type="hidden"
+                        name="discount_enabled"
+                        value="<?= $productDiscountEnabled ? '1' : '0' ?>"
+                        data-admin-discount-enabled
+                    >
+
+                    <div class="admin-discount-heading">
+                        <div>
+                            <span class="admin-discount-title">
+                                <?= e(t('admin.product_discount')) ?>
+                            </span>
+                            <small><?= e(t('admin.product_discount_help')) ?></small>
+                        </div>
+
+                        <button
+                            class="button <?= $productDiscountEnabled ? 'button--primary' : 'button--ghost' ?>"
+                            type="button"
+                            aria-pressed="<?= $productDiscountEnabled ? 'true' : 'false' ?>"
+                            data-admin-discount-toggle
+                            data-enable-label="<?= e(t('admin.enable_discount')) ?>"
+                            data-disable-label="<?= e(t('admin.disable_discount')) ?>"
+                        >
+                            <i class="fa-solid fa-percent" aria-hidden="true"></i>
+                            <span data-admin-discount-toggle-label>
+                                <?= e($productDiscountEnabled ? t('admin.disable_discount') : t('admin.enable_discount')) ?>
+                            </span>
+                        </button>
+                    </div>
+
+                    <div
+                        class="admin-discount-fields"
+                        data-admin-discount-fields
+                        <?= $productDiscountEnabled ? '' : 'hidden' ?>
+                    >
+                        <label for="<?= e($productDialogId) ?>-discount-price">
+                            <?= e(t('admin.discount_price_eur')) ?>
+                        </label>
+                        <input
+                            id="<?= e($productDialogId) ?>-discount-price"
+                            name="discount_price"
+                            value="<?= $productDiscountPriceCents !== null
+                                ? e(number_format($productDiscountPriceCents / 100, 2, '.', ''))
+                                : '' ?>"
+                            inputmode="decimal"
+                            <?= $productDiscountEnabled ? 'required' : 'disabled' ?>
+                            data-admin-discount-price
+                        >
+                        <small><?= e(t('admin.discount_price_help')) ?></small>
+                    </div>
                 </div>
 
                 <div class="admin-field admin-field--full">
