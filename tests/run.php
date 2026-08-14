@@ -117,6 +117,18 @@ $assert(
 );
 
 $assert(
+    public_category_slug_from_request_uri('/custom-kits') === 'custom-kits'
+        && public_category_slug_from_request_uri('/cart') === null
+        && category_path('custom-kits') === 'custom-kits'
+        && safe_return_path('/custom-kits?source=store', '') === 'custom-kits?source=store',
+    'Dynamic category slugs resolve to clean public paths without colliding with reserved routes.'
+);
+$throws(
+    static fn () => validate_category_slug('cart'),
+    'Category slugs cannot use reserved public routes.'
+);
+
+$assert(
     array_keys(public_routes()) === [
         'home',
         'ranks',
@@ -139,8 +151,11 @@ $assert(
     in_array('categories', ADMIN_SECTIONS, true)
         && is_file($root . '/database/migrations/sqlite/004_dynamic_categories.php')
         && is_file($root . '/database/migrations/mysql/004_dynamic_categories.php')
-        && is_file($root . '/public_html/actions/admin_delete_category.php'),
-    'Dynamic category administration and migrations are present.'
+        && is_file($root . '/public_html/actions/admin_delete_category.php')
+        && is_file($root . '/public_html/category.php')
+        && is_file($root . '/controllers/category.php')
+        && is_file($root . '/controllers/catalog.php'),
+    'Dynamic category administration, migrations and public storefront routing are present.'
 );
 $throws(
     static fn () => validate_category_image_path('https://example.com/icon.png'),
@@ -499,6 +514,12 @@ if (!in_array('sqlite', PDO::getAvailableDrivers(), true)) {
         'active' => '1',
     ], 'assets/diamante.png');
     $assert(store_category_by_id($testCategoryId, true) !== null, 'Administrators can create categories.');
+    $homeCategorySlugs = array_column(home_store_categories(), 'slug');
+    $assert(
+        in_array('test-category', $homeCategorySlugs, true)
+            && category_configuration('test-category')['heading'] === 'Test Category',
+        'Active dynamic categories appear on the homepage and receive a generic catalogue page configuration.'
+    );
 
     $testProductId = save_product_from_admin([
         'category_id' => $testCategoryId,
@@ -521,6 +542,24 @@ if (!in_array('sqlite', PDO::getAvailableDrivers(), true)) {
         static fn () => delete_category_from_admin($testCategoryId),
         'Categories containing products cannot be deleted.'
     );
+    save_category_from_admin([
+        'id' => $testCategoryId,
+        'slug' => 'test-category',
+        'name' => 'Test Category',
+        'sort_order' => 90,
+    ]);
+    $assert(
+        !in_array('test-category', array_column(home_store_categories(), 'slug'), true)
+            && product_by_id($testProductId) === null,
+        'Inactive categories disappear from the public homepage and hide their products.'
+    );
+    save_category_from_admin([
+        'id' => $testCategoryId,
+        'slug' => 'test-category',
+        'name' => 'Test Category',
+        'sort_order' => 90,
+        'active' => '1',
+    ]);
     delete_product_from_admin($testProductId);
     delete_category_from_admin($testCategoryId);
     $assert(store_category_by_id($testCategoryId, true) === null, 'Empty categories can be deleted.');
