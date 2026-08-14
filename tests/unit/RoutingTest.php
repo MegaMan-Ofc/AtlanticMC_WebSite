@@ -6,6 +6,7 @@ $assert(
     public_route_name_from_request_uri('/') === 'home'
         && public_route_name_from_request_uri('/admin') === 'admin'
         && public_route_name_from_request_uri('/purchase-policy?from=footer') === 'purchase-policy'
+        && public_route_name_from_request_uri('/faq') === 'faq'
         && public_route_name_from_request_uri('/does-not-exist') === null,
     'Clean request paths resolve through the shared public route table.'
 );
@@ -37,6 +38,7 @@ $assert(
         'terms',
         'purchase-policy',
         'rules',
+        'faq',
         'admin',
     ],
     'The shared public route table remains stable while catalogue categories become dynamic.'
