@@ -18,6 +18,7 @@ $adminProductFilters = [];
 $adminProducts = [];
 $adminRecommendedSlots = [];
 $adminRecommendedOptions = [];
+$adminHomeCategoryLayout = ['top' => null, 'grid' => [], 'bottom' => null];
 $adminCouponFilters = [];
 $adminCoupons = [];
 $adminOrderFilters = [];
@@ -36,6 +37,7 @@ if ($adminAuthenticated) {
     } elseif ($adminSection === 'recommended') {
         $adminRecommendedSlots = admin_recommended_slots();
         $adminRecommendedOptions = admin_recommended_product_options();
+        $adminHomeCategoryLayout = admin_home_category_layout();
     } elseif ($adminSection === 'coupons') {
         $adminCouponFilters = admin_coupon_filters();
         $adminCoupons = all_coupons_admin($adminCouponFilters);
@@ -52,7 +54,7 @@ function admin_section_icon(string $section): string
     return match ($section) {
         'categories' => 'fa-solid fa-layer-group',
         'products' => 'fa-solid fa-tags',
-        'recommended' => 'fa-solid fa-star',
+        'recommended' => 'fa-solid fa-house',
         'coupons' => 'fa-solid fa-ticket',
         'orders' => 'fa-solid fa-receipt',
         'analytics' => 'fa-solid fa-chart-column',

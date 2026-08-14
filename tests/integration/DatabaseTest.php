@@ -15,7 +15,7 @@ $pdo->beginTransaction();
 seed_store_database($pdo);
 $pdo->commit();
 
-$assert((int) $pdo->query('SELECT COUNT(*) FROM schema_migrations')->fetchColumn() >= 7, 'All SQLite migrations are recorded.');
+$assert((int) $pdo->query('SELECT COUNT(*) FROM schema_migrations')->fetchColumn() >= 8, 'All SQLite migrations are recorded.');
 
 $orderColumns = array_column($pdo->query('PRAGMA table_info(orders)')->fetchAll(), 'name');
 $assert(
@@ -32,8 +32,16 @@ $assert(
 
 $assert((int) $pdo->query('SELECT COUNT(*) FROM products')->fetchColumn() > 0, 'The seed creates products.');
 $assert((int) $pdo->query('SELECT COUNT(*) FROM categories')->fetchColumn() >= 4, 'The dynamic category migration creates catalogue categories.');
+
+$categoryColumns = array_column($pdo->query('PRAGMA table_info(categories)')->fetchAll(), 'name');
+$assert(
+    in_array('home_placement', $categoryColumns, true)
+        && in_array('home_sort_order', $categoryColumns, true),
+    'The homepage category layout migration adds placement and independent homepage ordering.'
+);
 $assert((int) $pdo->query('SELECT COUNT(*) FROM products WHERE category_id IS NULL')->fetchColumn() === 0, 'Seed products are linked to dynamic category IDs.');
 
 require __DIR__ . '/CategoryProductTest.php';
 require __DIR__ . '/CommerceTest.php';
 require __DIR__ . '/RecommendedProductsTest.php';
+require __DIR__ . '/HomeCategoryLayoutTest.php';

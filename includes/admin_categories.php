@@ -128,9 +128,9 @@ function save_category_from_admin(array $input, ?string $uploadedImage = null): 
         } else {
             $statement = $database->prepare(
                 'INSERT INTO categories
-                 (slug, name, image, active, sort_order, created_at, updated_at)
+                 (slug, name, image, active, sort_order, home_placement, home_sort_order, created_at, updated_at)
                  VALUES
-                 (:slug, :name, :image, :active, :sort_order, :created_at, :updated_at)'
+                 (:slug, :name, :image, :active, :sort_order, :home_placement, :home_sort_order, :created_at, :updated_at)'
             );
             $statement->execute([
                 'slug' => $slug,
@@ -138,6 +138,8 @@ function save_category_from_admin(array $input, ?string $uploadedImage = null): 
                 'image' => $image,
                 'active' => $active,
                 'sort_order' => $sortOrder,
+                'home_placement' => 'grid',
+                'home_sort_order' => $sortOrder,
                 'created_at' => $now,
                 'updated_at' => $now,
             ]);

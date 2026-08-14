@@ -62,6 +62,7 @@ foreach ([
     'admin_categories',
     'admin_products',
     'admin_recommended',
+    'admin_home',
     'admin_coupons',
     'admin_orders',
     'admin_dashboard',
