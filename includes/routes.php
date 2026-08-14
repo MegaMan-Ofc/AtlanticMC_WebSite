@@ -18,6 +18,7 @@ function public_routes(): array
         'terms' => ['path' => 'terms', 'script' => 'terms.php'],
         'purchase-policy' => ['path' => 'purchase-policy', 'script' => 'purchase-policy.php'],
         'rules' => ['path' => 'rules', 'script' => 'rules.php'],
+        'faq' => ['path' => 'faq', 'script' => 'faq.php'],
         'admin' => ['path' => 'admin', 'script' => 'admin.php'],
     ];
 }

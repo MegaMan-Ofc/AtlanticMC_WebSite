@@ -10,6 +10,7 @@ return [
     'common.home' => 'Início',
     'common.store' => 'Loja',
     'common.support' => 'Suporte',
+    'common.faq' => 'FAQ',
     'common.legal' => 'Legal',
     'common.email' => 'Email',
     'common.back' => 'Voltar',
@@ -101,6 +102,7 @@ return [
     'home.about_title' => 'Sobre o servidor',
     'home.about_community_title' => 'Uma comunidade para criar histórias',
     'home.about_community_text' => 'Atlantic SMP é um survival multiplayer feito para jogar ao teu ritmo. Explora, constrói a tua base e partilha um mundo onde cada jogador ajuda a dar vida ao servidor.',
+    'home.about_faq_prompt' => 'Alguma questão?',
     'home.about_adventure_title' => 'A tua próxima aventura começa aqui',
     'home.about_adventure_text' => 'Entra por Java ou Bedrock e evolui através de desafios, eventos e progressão. Queremos que cada sessão tenha sempre algo novo para descobrir, conquistar ou construir.',
     'home.about_highlights_aria' => 'Destaques do servidor',
@@ -109,6 +111,61 @@ return [
     'home.about_tag_progression' => 'Eventos & progressão',
     'home.about_brand_alt' => 'Identidade visual do servidor Atlantic SMP',
     'home.about_player_alt' => 'Jogador Minecraft da comunidade Atlantic SMP',
+
+    'faq.page_title' => 'Atlantic SMP - FAQ',
+    'faq.title' => 'Perguntas Frequentes',
+    'faq.description' => 'Respostas rápidas às dúvidas mais comuns sobre o Atlantic SMP e a loja.',
+    'faq.list_aria' => 'Perguntas frequentes sobre o servidor e a loja',
+    'faq.items' => [
+        [
+            'question' => 'O que é o Atlantic SMP?',
+            'answer' => 'Atlantic SMP é um servidor survival multiplayer focado em comunidade, construção, progressão e eventos. A ideia é poderes jogar ao teu ritmo e partilhar o mundo com outros jogadores.',
+        ],
+        [
+            'question' => 'Como entro no servidor?',
+            'answer' => 'Em Java utiliza :java_ip. Em Bedrock utiliza :bedrock_ip com a porta :bedrock_port. Confirma sempre a plataforma escolhida antes de iniciares sessão na loja.',
+        ],
+        [
+            'question' => 'Posso jogar em Java e Bedrock?',
+            'answer' => 'Sim. O Atlantic SMP suporta jogadores Java e Bedrock. A loja também permite escolher a plataforma para que os produtos sejam associados ao destinatário correto.',
+        ],
+        [
+            'question' => 'O servidor aceita contas Java premium e não-premium?',
+            'answer' => 'Sim. O servidor está preparado para aceitar jogadores Java premium e não-premium. Usa sempre exatamente o mesmo nome de jogador que utilizas dentro do servidor.',
+        ],
+        [
+            'question' => 'Preciso de criar uma conta no site para usar a loja?',
+            'answer' => 'Não. O login simples da loja serve para escolher a plataforma e o nome Minecraft que irá receber os produtos. Uma conta avançada poderá existir futuramente para funcionalidades adicionais.',
+        ],
+        [
+            'question' => 'Como sei qual jogador vai receber a minha compra?',
+            'answer' => 'O destinatário ativo aparece no topo da loja. Antes de avançar, confirma o nome Minecraft e a plataforma para garantir que os produtos ficam associados ao jogador certo.',
+        ],
+        [
+            'question' => 'O que faço se escrever o nome do jogador errado?',
+            'answer' => 'Não concluas a compra enquanto o destinatário estiver errado. Volta ao seletor de jogador e corrige o nome. Se já tiveres concluído uma compra, contacta o suporte no Discord o mais rapidamente possível.',
+        ],
+        [
+            'question' => 'O que faço se um produto não aparecer no servidor?',
+            'answer' => 'Confirma primeiro se estás na conta e plataforma corretas e volta a entrar no servidor. Se o produto continuar em falta depois da compra estar confirmada, contacta o suporte no Discord com os dados da encomenda. Nunca envies a tua palavra-passe.',
+        ],
+        [
+            'question' => 'Posso pedir reembolso?',
+            'answer' => 'Os pedidos de reembolso são analisados de acordo com a Política de Compras e Reembolsos disponível no site. Consulta essa página para conhecer as condições aplicáveis antes de comprar.',
+        ],
+        [
+            'question' => 'Onde posso consultar as regras do servidor?',
+            'answer' => 'As regras estão disponíveis na página Regras, acessível através do footer e das páginas legais. É recomendado lê-las antes de jogar ou efetuar compras.',
+        ],
+        [
+            'question' => 'Como posso pedir ajuda?',
+            'answer' => 'O Discord oficial é o principal canal de suporte do Atlantic SMP. Usa-o para dúvidas sobre o servidor, problemas com produtos ou questões relacionadas com a loja.',
+        ],
+        [
+            'question' => 'O Atlantic SMP é afiliado à Mojang ou Microsoft?',
+            'answer' => 'Não. Atlantic SMP é um projeto independente e não é afiliado, aprovado ou patrocinado pela Mojang ou Microsoft.',
+        ],
+    ],
 
     'catalog.go_back' => 'Voltar',
     'catalog.no_products' => 'Nenhum produto disponível',
