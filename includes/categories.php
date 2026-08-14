@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-const HOME_CATEGORY_ROUTES = [
-    'ranks' => ['theme' => 'vips', 'route' => 'ranks'],
-    'rubis' => ['theme' => 'rubis', 'route' => 'rubis'],
-    'keys' => ['theme' => 'keys', 'route' => 'keys'],
-];
-
 function reset_store_categories_cache(): void
 {
     unset($GLOBALS['store_categories_cache']);
@@ -99,18 +93,21 @@ function store_category_image(string $slug): string
     return $category === null ? '' : (string) $category['image'];
 }
 
+function category_card_theme(string $slug): string
+{
+    return match ($slug) {
+        'ranks' => 'vips',
+        'rubis' => 'rubis',
+        'keys' => 'keys',
+        'boosters' => 'boosters',
+        default => 'default',
+    };
+}
+
 function home_store_categories(): array
 {
-    $categories = [];
-
-    foreach (HOME_CATEGORY_ROUTES as $slug => $presentation) {
-        $category = store_category_by_slug($slug, false);
-
-        if ($category === null) {
-            continue;
-        }
-
-        $categories[] = [
+    return array_map(
+        static fn (array $category): array => [
             'id' => (int) $category['id'],
             'key' => (string) $category['slug'],
             'slug' => (string) $category['slug'],
@@ -118,15 +115,9 @@ function home_store_categories(): array
             'image' => (string) $category['image'],
             'active' => (bool) $category['active'],
             'sort_order' => (int) $category['sort_order'],
-            'theme' => $presentation['theme'],
-            'route' => $presentation['route'],
-        ];
-    }
-
-    usort(
-        $categories,
-        static fn (array $left, array $right): int => [$left['sort_order'], $left['id']] <=> [$right['sort_order'], $right['id']]
+            'theme' => category_card_theme((string) $category['slug']),
+            'url' => category_url((string) $category['slug']),
+        ],
+        all_store_categories(false)
     );
-
-    return $categories;
 }
