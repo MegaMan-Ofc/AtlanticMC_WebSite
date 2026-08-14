@@ -87,7 +87,11 @@
         </form>
 
         <div class="cart-coupon">
-            <?php if ($cart['coupon'] === null): ?>
+            <?php if (tebex_is_configured() && !tebex_coupons_enabled()): ?>
+                <p class="coupon-message">
+                    <?= e(t('tebex.coupons_disabled')) ?>
+                </p>
+            <?php elseif ($cart['coupon'] === null): ?>
                 <form
                     class="coupon-input-group"
                     action="<?= e(url('actions/apply_coupon.php')) ?>"

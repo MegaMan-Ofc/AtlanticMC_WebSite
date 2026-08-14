@@ -429,6 +429,8 @@ return [
     'tebex.app_url' => 'APP_URL deve conter o endereço público completo da loja antes de ser possível usar o checkout Tebex.',
     'tebex.basket_missing' => 'O Tebex não devolveu um identificador de carrinho.',
     'tebex.checkout_url_missing' => 'O Tebex não devolveu um endereço de checkout válido.',
+    'tebex.basket_totals_missing' => 'O Tebex não devolveu o total ou a moeda do carrinho.',
+    'tebex.coupons_disabled' => 'Os cupões estão temporariamente indisponíveis no checkout Tebex.',
 
     'products.deep-diver.name' => 'Deep Diver',
     'products.deep-diver.description' => 'Rank inicial com comandos úteis e um kit de início.',
