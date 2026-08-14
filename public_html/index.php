@@ -18,11 +18,10 @@ require_once dirname(__DIR__) . '/controllers/index.php';
             <?php if ($homeRecommendedProducts !== []): ?>
                 <section class="home-recommended" aria-labelledby="home-recommended-title">
                     <header class="home-section-heading">
-                        <div>
+                        <div class="home-section-title-box">
                             <span class="home-section-kicker"><?= e(t('home.recommended_kicker')) ?></span>
                             <h2 id="home-recommended-title"><?= e(t('home.recommended_title')) ?></h2>
                         </div>
-                        <p><?= e(t('home.recommended_text')) ?></p>
                     </header>
 
                     <div class="home-recommended-grid">
@@ -68,6 +67,10 @@ require_once dirname(__DIR__) . '/controllers/index.php';
                         <?php endforeach; ?>
                     </div>
                 </section>
+
+                <div class="home-recommended-divider" aria-hidden="true">
+                    <span></span>
+                </div>
             <?php endif; ?>
 
             <?php if ($homeHeroCategory !== null): ?>

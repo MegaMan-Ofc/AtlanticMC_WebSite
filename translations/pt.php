@@ -95,7 +95,6 @@ return [
     'home.category_image_alt' => 'Ícone da categoria :category',
     'home.recommended_kicker' => 'Escolhas em destaque',
     'home.recommended_title' => 'Recomendados',
-    'home.recommended_text' => 'Cinco produtos selecionados pela equipa Atlantic SMP.',
 
     'catalog.go_back' => 'Voltar',
     'catalog.no_products' => 'Nenhum produto disponível',
