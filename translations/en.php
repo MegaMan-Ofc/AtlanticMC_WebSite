@@ -95,6 +95,8 @@ return [
     'home.category_image_alt' => ':category category icon',
     'home.recommended_kicker' => 'Featured picks',
     'home.recommended_title' => 'Recommended',
+    'home.store_kicker' => 'Explore Atlantic',
+    'home.store_title' => 'Store',
 
     'catalog.go_back' => 'Go back',
     'catalog.no_products' => 'No products available',

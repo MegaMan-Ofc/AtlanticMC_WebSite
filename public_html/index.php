@@ -73,6 +73,13 @@ require_once dirname(__DIR__) . '/controllers/index.php';
                 </div>
             <?php endif; ?>
 
+            <header class="home-section-heading home-store-heading">
+                <div class="home-section-title-box home-store-title-box">
+                    <span class="home-section-kicker"><?= e(t('home.store_kicker')) ?></span>
+                    <h2><?= e(t('home.store_title')) ?></h2>
+                </div>
+            </header>
+
             <?php if ($homeHeroCategory !== null): ?>
                 <a class="home-hero" href="<?= e(category_url((string) $homeHeroCategory['slug'])) ?>">
                     <img alt="<?= e(t('home.hero_alt')) ?>" src="<?= e(url('assets/magma-key.png')) ?>">
