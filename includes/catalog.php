@@ -9,6 +9,44 @@ function product_metadata(array $product): array
     return is_array($metadata) ? $metadata : [];
 }
 
+function product_discount_price_cents(array $product): ?int
+{
+    if (!array_key_exists('discount_price_cents', $product) || $product['discount_price_cents'] === null) {
+        return null;
+    }
+
+    $basePrice = max(0, (int) ($product['price_cents'] ?? 0));
+    $discountPrice = (int) $product['discount_price_cents'];
+
+    if ($discountPrice < 0 || $discountPrice >= $basePrice) {
+        return null;
+    }
+
+    return $discountPrice;
+}
+
+function product_has_discount(array $product): bool
+{
+    return product_discount_price_cents($product) !== null;
+}
+
+function product_effective_price_cents(array $product): int
+{
+    return product_discount_price_cents($product) ?? max(0, (int) ($product['price_cents'] ?? 0));
+}
+
+function product_discount_percentage(array $product): ?int
+{
+    $basePrice = max(0, (int) ($product['price_cents'] ?? 0));
+    $discountPrice = product_discount_price_cents($product);
+
+    if ($basePrice < 1 || $discountPrice === null) {
+        return null;
+    }
+
+    return max(1, min(100, (int) round((($basePrice - $discountPrice) / $basePrice) * 100)));
+}
+
 function products_by_category(string $category, bool $includeInactive = false): array
 {
     $storeCategory = store_category_by_slug($category, $includeInactive);

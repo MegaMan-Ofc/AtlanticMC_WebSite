@@ -45,7 +45,16 @@
                                 <div class="item-name"><?= e($product['name']) ?></div>
                                 <div class="item-type"><?= e(localized_category((string) $item['product']['category'])) ?></div>
                             </td>
-                            <td class="price-amount"><?= e(format_money((int) $item['product']['price_cents'])) ?></td>
+                            <td class="price-amount">
+                                <?php if (product_has_discount($item['product'])): ?>
+                                    <span class="cart-original-price">
+                                        <?= e(format_money((int) $item['product']['price_cents'])) ?>
+                                    </span>
+                                <?php endif; ?>
+                                <span class="cart-current-price">
+                                    <?= e(format_money(product_effective_price_cents($item['product']))) ?>
+                                </span>
+                            </td>
                             <td>
                                 <input
                                     class="qty-input"

@@ -14,7 +14,7 @@ $items = array_map(static function (array $item): array {
         'product_id' => (int) $item['product']['id'],
         'name' => $product['name'],
         'quantity' => (int) $item['quantity'],
-        'unit_price_cents' => (int) $item['product']['price_cents'],
+        'unit_price_cents' => product_effective_price_cents($item['product']),
         'line_total_cents' => (int) $item['line_total_cents'],
     ];
 }, $summary['items']);

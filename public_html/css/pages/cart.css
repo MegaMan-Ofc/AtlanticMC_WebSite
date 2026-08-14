@@ -189,3 +189,22 @@
 .cart-panel[aria-busy="true"] {
     opacity: 0.75;
 }
+
+
+.cart-original-price,
+.cart-current-price {
+    display: block;
+    white-space: nowrap;
+}
+
+.cart-original-price {
+    margin-bottom: .15rem;
+    color: var(--subtle);
+    font-size: .78rem;
+    font-weight: 600;
+    text-decoration: line-through;
+}
+
+.cart-current-price {
+    color: var(--accent);
+}

@@ -21,14 +21,20 @@ function validate_png_file(string $temporaryPath, int $size): void
         throw new InvalidArgumentException(t('validation.image_upload_size'));
     }
 
-    $finfo = new finfo(FILEINFO_MIME_TYPE);
-    $mime = $finfo->file($temporaryPath);
+    $handle = @fopen($temporaryPath, 'rb');
+    $signature = is_resource($handle) ? fread($handle, 8) : false;
+
+    if (is_resource($handle)) {
+        fclose($handle);
+    }
+
     $imageInfo = @getimagesize($temporaryPath);
 
     if (
-        $mime !== 'image/png'
+        $signature !== "\x89PNG\r\n\x1a\n"
         || !is_array($imageInfo)
         || ($imageInfo[2] ?? null) !== IMAGETYPE_PNG
+        || strtolower((string) ($imageInfo['mime'] ?? '')) !== 'image/png'
     ) {
         throw new InvalidArgumentException(t('validation.image_upload_png'));
     }

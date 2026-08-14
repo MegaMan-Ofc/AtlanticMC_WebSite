@@ -926,3 +926,60 @@ html.admin-dialog-open {
         height: 10rem;
     }
 }
+
+
+.admin-discount-control {
+    padding: 1rem;
+    border: 1px solid var(--border);
+    border-radius: .8rem;
+    background: rgba(255, 255, 255, .02);
+}
+
+.admin-discount-control.is-active {
+    border-color: color-mix(in srgb, var(--success) 55%, var(--border));
+    background: color-mix(in srgb, var(--success) 8%, transparent);
+}
+
+.admin-discount-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.admin-discount-heading > div {
+    display: grid;
+    gap: .25rem;
+}
+
+.admin-discount-title {
+    color: var(--text);
+    font-size: .9rem;
+    font-weight: 800;
+}
+
+.admin-discount-heading small,
+.admin-discount-fields small {
+    color: var(--muted);
+}
+
+.admin-discount-fields {
+    display: grid;
+    gap: .4rem;
+    margin-top: 1rem;
+}
+
+.admin-discount-fields[hidden] {
+    display: none;
+}
+
+@media (max-width: 680px) {
+    .admin-discount-heading {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .admin-discount-heading .button {
+        width: 100%;
+    }
+}

@@ -6,6 +6,7 @@ $newProduct = [
     'category_id' => (int) ($adminCategoryOptions[0]['id'] ?? 0),
     'category' => (string) ($adminCategoryOptions[0]['slug'] ?? ''),
     'price_cents' => 0,
+    'discount_price_cents' => null,
     'image' => '',
     'tebex_package_id' => null,
     'description' => '',

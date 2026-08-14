@@ -54,7 +54,7 @@ function create_order(array $recipient, array $summary): array
                 'order_id' => $orderId,
                 'product_id' => (int) $product['id'],
                 'product_name' => (string) $product['name'],
-                'unit_price_cents' => (int) $product['price_cents'],
+                'unit_price_cents' => product_effective_price_cents($product),
                 'quantity' => (int) $item['quantity'],
                 'line_total_cents' => (int) $item['line_total_cents'],
                 'tebex_package_id' => $product['tebex_package_id'] ?: null,
@@ -176,8 +176,6 @@ function mark_order_status_by_token(string $token, string $status, ?string $prov
         throw $error;
     }
 }
-
-
 
 
 function process_order_webhook(

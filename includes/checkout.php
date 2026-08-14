@@ -2,14 +2,6 @@
 
 declare(strict_types=1);
 
-
-
-
-
-
-
-
-
 function start_checkout(): array
 {
     $summary = cart_summary();

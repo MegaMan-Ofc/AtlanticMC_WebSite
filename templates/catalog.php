@@ -26,8 +26,11 @@
                         }
                     ?>
                     <article class="<?= e(implode(' ', $cardClasses)) ?>"<?php if (isset($metadata['color'])): ?> style="--rank-color: <?= e($metadata['color']) ?>; --booster-color: <?= e($metadata['color']) ?>"<?php endif; ?>>
+                        <?php if (product_has_discount($product)): ?>
+                            <span class="package-discount-badge"><?= e(t('common.discount')) ?></span>
+                        <?php endif; ?>
                         <?php if (!empty($metadata['badge'])): ?>
-                            <span class="package-bonus-badge"><?= e($metadata['badge']) ?></span>
+                            <span class="package-bonus-badge<?= product_has_discount($product) ? ' package-bonus-badge--stacked' : '' ?>"><?= e($metadata['badge']) ?></span>
                         <?php endif; ?>
                         <div class="image">
                             <div class="package-image-wrap">
@@ -48,7 +51,16 @@
                                     <?php endforeach; ?>
                                 </div>
                             <?php endif; ?>
-                            <div class="price"><span class="package-active-price"><?= e(format_money((int) $product['price_cents'], $product['currency'])) ?></span></div>
+                            <div class="price">
+                                <?php if (product_has_discount($product)): ?>
+                                    <span class="discount">
+                                        <?= e(format_money((int) $product['price_cents'], $product['currency'])) ?>
+                                    </span>
+                                <?php endif; ?>
+                                <span class="package-active-price">
+                                    <?= e(format_money(product_effective_price_cents($product), $product['currency'])) ?>
+                                </span>
+                            </div>
                             <form
                                 action="<?= e(url('actions/add_to_cart.php')) ?>"
                                 method="post"
