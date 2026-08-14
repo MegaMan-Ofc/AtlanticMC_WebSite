@@ -13,6 +13,7 @@ foreach ([
     'unit/RecommendedProductsTest.php',
     'unit/HomeCategoryLayoutTest.php',
     'unit/AboutSectionTest.php',
+    'unit/FaqTest.php',
     'unit/AdminFiltersTest.php',
     'unit/FrontendTest.php',
     'integration/DatabaseTest.php',

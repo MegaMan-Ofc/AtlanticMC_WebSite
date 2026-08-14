@@ -628,6 +628,34 @@
     line-height: 1.75;
 }
 
+.home-about-faq {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    margin-top: 1.15rem;
+}
+
+.home-about-faq > span {
+    color: var(--text);
+    font-size: .82rem;
+    font-weight: 700;
+}
+
+.home-about-faq-button {
+    min-height: 2.2rem;
+    padding: .45rem .75rem;
+    border-color: rgba(255, 184, 35, .42);
+    color: #ffbd31;
+    font-size: .76rem;
+}
+
+.home-about-faq-button:hover {
+    border-color: #ffbd31;
+    color: var(--text);
+}
+
 .home-about-tags {
     position: relative;
     z-index: 1;
@@ -770,6 +798,11 @@
     .home-about-copy h3,
     .home-about-copy p {
         margin-inline: auto;
+    }
+
+    .home-about-faq {
+        justify-content: center;
+        flex-wrap: wrap;
     }
 
     .home-about-tags {

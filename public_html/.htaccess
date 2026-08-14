@@ -10,14 +10,14 @@ DirectoryIndex index.php
     RewriteCond %{THE_REQUEST} \s/+(.*/)?index\.php(?:[?\s]) [NC]
     RewriteRule ^index\.php$ /%1 [R=301,L,NE]
 
-    RewriteCond %{THE_REQUEST} \s/+(.*/)?(ranks|rubis|keys|boosters|cart|checkout|login|success|privacy|terms|purchase-policy|rules|admin)\.php(?:[?\s]) [NC]
-    RewriteRule ^(ranks|rubis|keys|boosters|cart|checkout|login|success|privacy|terms|purchase-policy|rules|admin)\.php$ /%1%2 [R=301,L,NE]
+    RewriteCond %{THE_REQUEST} \s/+(.*/)?(ranks|rubis|keys|boosters|cart|checkout|login|success|privacy|terms|purchase-policy|rules|faq|admin)\.php(?:[?\s]) [NC]
+    RewriteRule ^(ranks|rubis|keys|boosters|cart|checkout|login|success|privacy|terms|purchase-policy|rules|faq|admin)\.php$ /%1%2 [R=301,L,NE]
 
     RewriteCond %{THE_REQUEST} \s/+(.*/)?index/?(?:[?\s]) [NC]
     RewriteRule ^index/?$ /%1 [R=301,L,NE]
 
-    RewriteCond %{THE_REQUEST} \s/+(.*/)?(ranks|rubis|keys|boosters|cart|checkout|login|success|privacy|terms|purchase-policy|rules|admin)/+(?:[?\s]) [NC]
-    RewriteRule ^(ranks|rubis|keys|boosters|cart|checkout|login|success|privacy|terms|purchase-policy|rules|admin)/$ /%1%2 [R=301,L,NE]
+    RewriteCond %{THE_REQUEST} \s/+(.*/)?(ranks|rubis|keys|boosters|cart|checkout|login|success|privacy|terms|purchase-policy|rules|faq|admin)/+(?:[?\s]) [NC]
+    RewriteRule ^(ranks|rubis|keys|boosters|cart|checkout|login|success|privacy|terms|purchase-policy|rules|faq|admin)/$ /%1%2 [R=301,L,NE]
 
     RewriteCond %{REQUEST_FILENAME} -f [OR]
     RewriteCond %{REQUEST_FILENAME} -d
@@ -26,7 +26,7 @@ DirectoryIndex index.php
     RewriteCond %{THE_REQUEST} \s/+([a-z0-9]+(?:-[a-z0-9]+)*)/+(?:[?\s]) [NC]
     RewriteRule ^([a-z0-9]+(?:-[a-z0-9]+)*)/$ /$1 [R=301,L,NE]
 
-    RewriteRule ^(ranks|rubis|keys|boosters|cart|checkout|login|success|privacy|terms|purchase-policy|rules|admin)$ $1.php [END,QSA]
+    RewriteRule ^(ranks|rubis|keys|boosters|cart|checkout|login|success|privacy|terms|purchase-policy|rules|faq|admin)$ $1.php [END,QSA]
     RewriteRule ^([a-z0-9]+(?:-[a-z0-9]+)*)$ category.php?slug=$1 [END,QSA]
 </IfModule>
 

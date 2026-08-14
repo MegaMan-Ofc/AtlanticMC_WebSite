@@ -21,6 +21,9 @@ $legalNavigation = is_array($legalPage['navigation'] ?? null) ? $legalPage['navi
             <?= e($item['label']) ?>
         </a>
     <?php endforeach; ?>
+    <a href="<?= e(route_url('faq')) ?>">
+        <?= e(t('common.faq')) ?>
+    </a>
     <a href="https://www.livroreclamacoes.pt/Inicio/" target="_blank" rel="noopener noreferrer">
         <?= e(t('footer.complaints')) ?>
         <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>

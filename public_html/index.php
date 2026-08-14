@@ -143,6 +143,13 @@ require_once dirname(__DIR__) . '/controllers/index.php';
                         <div class="home-about-tags" aria-label="<?= e(t('home.about_highlights_aria')) ?>">
                             <span><i class="fa-solid fa-users" aria-hidden="true"></i><?= e(t('home.about_tag_community')) ?></span>
                         </div>
+                        <div class="home-about-faq">
+                            <span><?= e(t('home.about_faq_prompt')) ?></span>
+                            <a class="button button--ghost home-about-faq-button" href="<?= e(route_url('faq')) ?>">
+                                <i class="fa-solid fa-circle-question" aria-hidden="true"></i>
+                                <?= e(t('common.faq')) ?>
+                            </a>
+                        </div>
                     </article>
 
                     <figure class="home-about-visual home-about-visual--brand">

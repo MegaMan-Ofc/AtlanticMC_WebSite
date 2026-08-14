@@ -14,7 +14,7 @@
                 <div class="footer-actions">
                     <a class="button button--primary" href="<?= e(config('app.discord_url')) ?>" target="_blank" rel="noopener noreferrer">Discord</a>
                     <span class="footer-support-label"><?= e(t('common.support')) ?></span>
-                    <a class="button button--ghost" href="mailto:<?= e(config('app.support_email')) ?>"><?= e(t('common.email')) ?></a>
+                    <a class="button button--ghost" href="<?= e(route_url('faq')) ?>"><i class="fa-solid fa-circle-question" aria-hidden="true"></i><?= e(t('common.faq')) ?></a>
                 </div>
             </section>
         </div>
