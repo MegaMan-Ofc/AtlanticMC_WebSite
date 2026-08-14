@@ -68,7 +68,7 @@ require_once dirname(__DIR__) . '/controllers/index.php';
                     </div>
                 </section>
 
-                <div class="home-recommended-divider" aria-hidden="true">
+                <div class="home-section-divider" aria-hidden="true">
                     <span></span>
                 </div>
             <?php endif; ?>
@@ -109,6 +109,53 @@ require_once dirname(__DIR__) . '/controllers/index.php';
                     <?php endforeach; ?>
                 </section>
             <?php endif; ?>
+
+            <div class="home-section-divider" aria-hidden="true">
+                <span></span>
+            </div>
+
+            <section class="home-about" aria-labelledby="home-about-title">
+                <header class="home-section-heading home-about-heading">
+                    <div class="home-section-title-box home-about-title-box">
+                        <span class="home-section-kicker"><?= e(t('home.about_kicker')) ?></span>
+                        <h2 id="home-about-title"><?= e(t('home.about_title')) ?></h2>
+                    </div>
+                </header>
+
+                <div class="home-about-grid">
+                    <article class="home-about-copy home-about-copy--primary">
+                        <div class="home-about-copy-icon" aria-hidden="true">
+                            <i class="fa-solid fa-people-group"></i>
+                        </div>
+                        <h3><?= e(t('home.about_community_title')) ?></h3>
+                        <p><?= e(t('home.about_community_text')) ?></p>
+                        <div class="home-about-tags" aria-label="<?= e(t('home.about_highlights_aria')) ?>">
+                            <span><i class="fa-solid fa-users" aria-hidden="true"></i><?= e(t('home.about_tag_community')) ?></span>
+                        </div>
+                    </article>
+
+                    <figure class="home-about-visual home-about-visual--brand">
+                        <img src="<?= e(url('assets/logo atlantic.png')) ?>" alt="<?= e(t('home.about_brand_alt')) ?>" loading="lazy">
+                    </figure>
+
+                    <article class="home-about-copy home-about-copy--secondary">
+                        <div class="home-about-copy-icon" aria-hidden="true">
+                            <i class="fa-solid fa-compass"></i>
+                        </div>
+                        <h3><?= e(t('home.about_adventure_title')) ?></h3>
+                        <p><?= e(t('home.about_adventure_text')) ?></p>
+                        <div class="home-about-tags" aria-label="<?= e(t('home.about_highlights_aria')) ?>">
+                            <span><i class="fa-solid fa-gamepad" aria-hidden="true"></i><?= e(t('home.about_tag_crossplay')) ?></span>
+                            <span><i class="fa-solid fa-trophy" aria-hidden="true"></i><?= e(t('home.about_tag_progression')) ?></span>
+                        </div>
+                    </article>
+
+                    <figure class="home-about-visual home-about-visual--player">
+                        <div class="home-about-player-glow" aria-hidden="true"></div>
+                        <img src="<?= e(url('assets/steve.png')) ?>" alt="<?= e(t('home.about_player_alt')) ?>" loading="lazy">
+                    </figure>
+                </div>
+            </section>
         </div>
     </main>
     <?php require dirname(__DIR__) . '/includes/footer.php'; ?>
