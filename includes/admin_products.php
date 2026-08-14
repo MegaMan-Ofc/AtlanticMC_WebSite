@@ -95,8 +95,8 @@ function admin_product_order_by(array $filters): string
     return match ((string) ($filters['sort'] ?? '')) {
         'name_asc' => 'p.name ASC, p.id ASC',
         'name_desc' => 'p.name DESC, p.id DESC',
-        'price_asc' => 'p.price_cents ASC, p.id ASC',
-        'price_desc' => 'p.price_cents DESC, p.id DESC',
+        'price_asc' => 'COALESCE(p.discount_price_cents, p.price_cents) ASC, p.id ASC',
+        'price_desc' => 'COALESCE(p.discount_price_cents, p.price_cents) DESC, p.id DESC',
         'created_asc' => 'p.created_at ASC, p.id ASC',
         'created_desc' => 'p.created_at DESC, p.id DESC',
         default => 'c.sort_order ASC, c.id ASC, p.sort_order ASC, p.id ASC',
@@ -152,6 +152,20 @@ function save_product_from_admin(array $input, ?string $uploadedImage = null): i
         (string) ($input['price'] ?? '0'),
         t('field.product_price')
     );
+    $discountEnabled = (string) ($input['discount_enabled'] ?? '0') === '1';
+    $discountPriceCents = null;
+
+    if ($discountEnabled) {
+        $discountPriceCents = parse_money_to_cents(
+            (string) ($input['discount_price'] ?? ''),
+            t('field.product_discount_price')
+        );
+
+        if ($priceCents < 1 || $discountPriceCents >= $priceCents) {
+            throw new InvalidArgumentException(t('validation.product_discount_price'));
+        }
+    }
+
     $sortOrder = (int) ($input['sort_order'] ?? 0);
     $active = isset($input['active']) ? 1 : 0;
     $tebexPackageId = trim((string) ($input['tebex_package_id'] ?? ''));
@@ -217,6 +231,7 @@ function save_product_from_admin(array $input, ?string $uploadedImage = null): i
         'description' => $description,
         'image' => $image,
         'price_cents' => $priceCents,
+        'discount_price_cents' => $discountPriceCents,
         'currency' => config('app.currency', 'EUR'),
         'active' => $active,
         'sort_order' => $sortOrder,
@@ -235,6 +250,7 @@ function save_product_from_admin(array $input, ?string $uploadedImage = null): i
                  description = :description,
                  image = :image,
                  price_cents = :price_cents,
+                 discount_price_cents = :discount_price_cents,
                  currency = :currency,
                  active = :active,
                  sort_order = :sort_order,
@@ -256,6 +272,7 @@ function save_product_from_admin(array $input, ?string $uploadedImage = null): i
                  description,
                  image,
                  price_cents,
+                 discount_price_cents,
                  currency,
                  active,
                  sort_order,
@@ -273,6 +290,7 @@ function save_product_from_admin(array $input, ?string $uploadedImage = null): i
                  :description,
                  :image,
                  :price_cents,
+                 :discount_price_cents,
                  :currency,
                  :active,
                  :sort_order,
