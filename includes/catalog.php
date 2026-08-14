@@ -77,40 +77,36 @@ function products_by_ids(array $ids): array
 
 function category_configuration(string $category): array
 {
-    $configurations = [
-        'ranks' => [
-            'title' => 'Atlantic SMP - ' . localized_category('ranks'),
-            'heading' => localized_category('ranks'),
-            'description' => t('catalog.ranks.description'),
-            'bodyClass' => 'page-ranks',
-            'styles' => ['css/pages/catalog.css', 'css/pages/ranks.css'],
-        ],
-        'rubis' => [
-            'title' => 'Atlantic SMP - ' . localized_category('rubis'),
-            'heading' => localized_category('rubis'),
-            'description' => t('catalog.rubis.description'),
-            'bodyClass' => 'page-rubis',
-            'styles' => ['css/pages/catalog.css'],
-        ],
-        'keys' => [
-            'title' => 'Atlantic SMP - ' . localized_category('keys'),
-            'heading' => localized_category('keys'),
-            'description' => t('catalog.keys.description'),
-            'bodyClass' => 'page-keys',
-            'styles' => ['css/pages/catalog.css'],
-        ],
-        'boosters' => [
-            'title' => t('catalog.boosters.title'),
-            'heading' => t('catalog.boosters.heading'),
-            'description' => t('catalog.boosters.description'),
-            'bodyClass' => 'page-boosters',
-            'styles' => ['css/pages/catalog.css'],
-        ],
-    ];
+    $storeCategory = store_category_by_slug($category, false);
 
-    if (!isset($configurations[$category])) {
+    if ($storeCategory === null) {
         throw new InvalidArgumentException(t('catalog.unknown_category'));
     }
 
-    return $configurations[$category];
+    $slug = (string) $storeCategory['slug'];
+    $name = (string) $storeCategory['name'];
+    $configuration = [
+        'title' => (string) config('app.name') . ' - ' . $name,
+        'heading' => $name,
+        'description' => t('catalog.category.description', ['category' => $name]),
+        'bodyClass' => 'page-category',
+        'styles' => ['css/pages/catalog.css'],
+    ];
+
+    if ($slug === 'ranks') {
+        $configuration['description'] = t('catalog.ranks.description');
+        $configuration['bodyClass'] = 'page-ranks';
+        $configuration['styles'][] = 'css/pages/ranks.css';
+    } elseif ($slug === 'rubis') {
+        $configuration['description'] = t('catalog.rubis.description');
+        $configuration['bodyClass'] = 'page-rubis';
+    } elseif ($slug === 'keys') {
+        $configuration['description'] = t('catalog.keys.description');
+        $configuration['bodyClass'] = 'page-keys';
+    } elseif ($slug === 'boosters') {
+        $configuration['description'] = t('catalog.boosters.description');
+        $configuration['bodyClass'] = 'page-boosters';
+    }
+
+    return $configuration;
 }

@@ -26,6 +26,10 @@ function validate_category_slug(string $slug): void
     ) {
         throw new InvalidArgumentException(t('validation.category_slug'));
     }
+
+    if (category_slug_is_reserved($slug)) {
+        throw new InvalidArgumentException(t('validation.category_slug_reserved'));
+    }
 }
 
 function all_categories_admin(): array
