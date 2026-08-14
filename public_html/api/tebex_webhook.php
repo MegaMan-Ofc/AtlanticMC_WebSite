@@ -6,12 +6,12 @@ define('ATLANTIC_JSON', true);
 define('ATLANTIC_STATELESS', true);
 require_once dirname(__DIR__, 2) . '/includes/bootstrap.php';
 
-if (!(bool) config('app.payments_enabled', false)) {
-    json_response(['error' => 'Not Found'], 404);
-}
-
 if (strtoupper((string) ($_SERVER['REQUEST_METHOD'] ?? 'GET')) !== 'POST') {
     json_response(['error' => 'Method Not Allowed'], 405);
+}
+
+if (!tebex_webhook_is_configured()) {
+    json_response(['error' => 'Not Found'], 404);
 }
 
 if (!tebex_webhook_ip_allowed(client_ip())) {
@@ -69,17 +69,37 @@ $orderToken = trim((string) ($custom['order_token'] ?? ''));
 $reference = trim((string) ($subject['transaction_id'] ?? $subject['id'] ?? ''));
 
 if ($orderToken === '') {
-    json_response(['error' => 'Order token missing'], 422);
+    if (!record_webhook_event('tebex', $eventId, $eventType)) {
+        json_response(['ok' => true, 'duplicate' => true]);
+    }
+
+    security_log('warning', 'tebex_webhook_order_token_missing', [
+        'event_id' => $eventId,
+        'event_type' => $eventType,
+    ]);
+    json_response(['ok' => true, 'unmatched' => true]);
 }
 
 $order = order_by_token($orderToken);
 
 if ($order === null) {
-    json_response(['error' => 'Order not found'], 404);
+    if (!record_webhook_event('tebex', $eventId, $eventType)) {
+        json_response(['ok' => true, 'duplicate' => true]);
+    }
+
+    security_log('warning', 'tebex_webhook_order_not_found', [
+        'order_token' => $orderToken,
+        'event_id' => $eventId,
+        'event_type' => $eventType,
+    ]);
+    json_response(['ok' => true, 'unmatched' => true]);
 }
 
 if ($eventType === 'payment.completed' && !tebex_webhook_matches_order($subject, $order)) {
-    security_log('warning', 'tebex_webhook_order_mismatch', ['order_id' => (int) $order['id'], 'event_id' => $eventId]);
+    security_log('warning', 'tebex_webhook_order_mismatch', [
+        'order_id' => (int) $order['id'],
+        'event_id' => $eventId,
+    ]);
     json_response(['error' => 'Payment does not match order'], 422);
 }
 
@@ -88,6 +108,7 @@ $status = match ($eventType) {
     'payment.declined' => 'declined',
     'payment.refunded' => 'refunded',
     'payment.dispute.opened', 'payment.dispute.lost' => 'disputed',
+    'payment.dispute.won' => 'paid',
     default => null,
 };
 
