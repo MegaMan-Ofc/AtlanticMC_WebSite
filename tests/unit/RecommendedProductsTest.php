@@ -22,7 +22,7 @@ $assert(
         && str_contains($homeTemplate, 'homeRecommendedProducts')
         && str_contains($homeTemplate, 'home-recommended-grid')
         && str_contains($homeTemplate, 'home-section-title-box')
-        && str_contains($homeTemplate, 'home-recommended-divider')
+        && str_contains($homeTemplate, 'home-section-divider')
         && str_contains($homeTemplate, "home.store_title")
         && !str_contains($homeTemplate, "home.recommended_text")
         && is_string($adminRecommendedTemplate)

@@ -11,6 +11,7 @@ foreach ([
     'unit/MediaTest.php',
     'unit/ProductDiscountTest.php',
     'unit/RecommendedProductsTest.php',
+    'unit/AboutSectionTest.php',
     'unit/AdminFiltersTest.php',
     'unit/FrontendTest.php',
     'integration/DatabaseTest.php',
