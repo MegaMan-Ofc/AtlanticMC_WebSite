@@ -80,34 +80,45 @@ require_once dirname(__DIR__) . '/controllers/index.php';
                 </div>
             </header>
 
-            <?php if ($homeHeroCategory !== null): ?>
-                <a class="home-hero" href="<?= e(category_url((string) $homeHeroCategory['slug'])) ?>">
-                    <img alt="<?= e(t('home.hero_alt')) ?>" src="<?= e(url('assets/magma-key.png')) ?>">
-                    <div><strong><?= e(t('home.order_now')) ?></strong><small><?= e(t('home.server_cart')) ?></small></div>
-                </a>
-            <?php endif; ?>
-
-            <?php if ($homeCategories === []): ?>
+            <?php if (!$homeHasCategories): ?>
                 <section class="prose home-empty-categories" aria-labelledby="home-categories-title">
                     <h2 id="home-categories-title"><?= e(t('home.no_categories')) ?></h2>
                     <p><?= e(t('home.no_categories_text')) ?></p>
                 </section>
             <?php else: ?>
-                <section aria-label="<?= e(t('home.categories_aria')) ?>" class="category-grid">
-                    <?php foreach ($homeCategories as $category): ?>
-                        <a
-                            class="category-card"
-                            data-theme="<?= e($category['theme']) ?>"
-                            href="<?= e($category['url']) ?>"
-                        >
-                            <img
-                                alt="<?= e(t('home.category_image_alt', ['category' => $category['name']])) ?>"
-                                src="<?= e(url($category['image'])) ?>"
+                <?php if ($homeTopCategory !== null): ?>
+                    <?php
+                    $homeBannerCategory = $homeTopCategory;
+                    $homeBannerPosition = 'top';
+                    require dirname(__DIR__) . '/templates/home/category-banner.php';
+                    ?>
+                <?php endif; ?>
+
+                <?php if ($homeCategories !== []): ?>
+                    <section aria-label="<?= e(t('home.categories_aria')) ?>" class="category-grid">
+                        <?php foreach ($homeCategories as $category): ?>
+                            <a
+                                class="category-card"
+                                data-theme="<?= e($category['theme']) ?>"
+                                href="<?= e($category['url']) ?>"
                             >
-                            <h2><?= e($category['name']) ?></h2>
-                        </a>
-                    <?php endforeach; ?>
-                </section>
+                                <img
+                                    alt="<?= e(t('home.category_image_alt', ['category' => $category['name']])) ?>"
+                                    src="<?= e(url($category['image'])) ?>"
+                                >
+                                <h2><?= e($category['name']) ?></h2>
+                            </a>
+                        <?php endforeach; ?>
+                    </section>
+                <?php endif; ?>
+
+                <?php if ($homeBottomCategory !== null): ?>
+                    <?php
+                    $homeBannerCategory = $homeBottomCategory;
+                    $homeBannerPosition = 'bottom';
+                    require dirname(__DIR__) . '/templates/home/category-banner.php';
+                    ?>
+                <?php endif; ?>
             <?php endif; ?>
 
             <div class="home-section-divider" aria-hidden="true">
