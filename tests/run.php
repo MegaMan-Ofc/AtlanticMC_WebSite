@@ -10,6 +10,7 @@ foreach ([
     'unit/RoutingTest.php',
     'unit/MediaTest.php',
     'unit/ProductDiscountTest.php',
+    'unit/RecommendedProductsTest.php',
     'unit/AdminFiltersTest.php',
     'unit/FrontendTest.php',
     'integration/DatabaseTest.php',

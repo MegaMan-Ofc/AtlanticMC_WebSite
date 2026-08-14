@@ -15,7 +15,7 @@ $pdo->beginTransaction();
 seed_store_database($pdo);
 $pdo->commit();
 
-$assert((int) $pdo->query('SELECT COUNT(*) FROM schema_migrations')->fetchColumn() >= 6, 'All SQLite migrations are recorded.');
+$assert((int) $pdo->query('SELECT COUNT(*) FROM schema_migrations')->fetchColumn() >= 7, 'All SQLite migrations are recorded.');
 
 $orderColumns = array_column($pdo->query('PRAGMA table_info(orders)')->fetchAll(), 'name');
 $assert(
@@ -36,3 +36,4 @@ $assert((int) $pdo->query('SELECT COUNT(*) FROM products WHERE category_id IS NU
 
 require __DIR__ . '/CategoryProductTest.php';
 require __DIR__ . '/CommerceTest.php';
+require __DIR__ . '/RecommendedProductsTest.php';
