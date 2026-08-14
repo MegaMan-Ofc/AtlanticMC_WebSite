@@ -1,10 +1,6 @@
 <footer class="site-footer">
     <div class="footer-main">
         <div class="container footer-grid">
-            <section class="footer-about">
-                <h2><?= e(t('footer.about_title')) ?></h2>
-                <p><?= e(t('footer.about_text', ['server' => (string) config('app.server_ip')])) ?></p>
-            </section>
             <section>
                 <h2><?= e(t('common.support')) ?></h2>
                 <p><?= e(t('footer.questions')) ?></p>
