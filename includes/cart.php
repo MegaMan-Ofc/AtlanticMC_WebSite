@@ -80,7 +80,7 @@ function cart_summary(): array
             continue;
         }
 
-        $lineTotal = (int) $product['price_cents'] * $quantity;
+        $lineTotal = product_effective_price_cents($product) * $quantity;
         $subtotal += $lineTotal;
         $normalizedCart[$productId] = $quantity;
         $items[] = [

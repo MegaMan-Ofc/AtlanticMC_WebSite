@@ -23,7 +23,10 @@ $products = array_map(static function (array $product): array {
         'name' => $localizedProduct['name'],
         'description' => $localizedProduct['description'],
         'image' => url($product['image']),
-        'price_cents' => (int) $product['price_cents'],
+        'price_cents' => product_effective_price_cents($product),
+        'original_price_cents' => product_has_discount($product) ? (int) $product['price_cents'] : null,
+        'discount_price_cents' => product_discount_price_cents($product),
+        'discount_percentage' => product_discount_percentage($product),
         'currency' => $product['currency'],
         'metadata' => localized_product_metadata($product),
     ];

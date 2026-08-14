@@ -48,7 +48,16 @@
                                     <?php endforeach; ?>
                                 </div>
                             <?php endif; ?>
-                            <div class="price"><span class="package-active-price"><?= e(format_money((int) $product['price_cents'], $product['currency'])) ?></span></div>
+                            <div class="price">
+                                <?php if (product_has_discount($product)): ?>
+                                    <span class="discount">
+                                        <?= e(format_money((int) $product['price_cents'], $product['currency'])) ?>
+                                    </span>
+                                <?php endif; ?>
+                                <span class="package-active-price">
+                                    <?= e(format_money(product_effective_price_cents($product), $product['currency'])) ?>
+                                </span>
+                            </div>
                             <form
                                 action="<?= e(url('actions/add_to_cart.php')) ?>"
                                 method="post"
