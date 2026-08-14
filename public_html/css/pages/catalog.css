@@ -58,13 +58,13 @@
     padding: 0.4375rem 0.6875rem;
     border: 1px solid rgba(255, 184, 77, 0.35);
     border-radius: 0.5625rem;
-    background: linear-gradient(135deg, #ffd54a, #ff8a00);
+    background: linear-gradient(135deg, var(--primary), #8b5cf6);
     color: #ffffff;
     font-size: .68rem;
     font-weight: 900;
     letter-spacing: .06em;
     text-transform: uppercase;
-    box-shadow: 0 0.625rem 1.375rem rgba(255, 166, 0, 0.45);
+    box-shadow: 0 0.625rem 1.375rem rgba(94, 86, 255, 0.24);
 }
 
 .package-bonus-badge--stacked {

@@ -126,6 +126,7 @@
 
 .home-recommended {
     margin-bottom: 1.25rem;
+    margin-top: -2rem;
 }
 
 .home-section-heading {
@@ -286,8 +287,12 @@
     grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
     align-items: center;
     gap: .85rem;
-    margin: .15rem 0 1.35rem;
-    opacity: .9;
+    min-height: 3.75rem;
+    margin-top: 3rem;
+    margin-bottom: 1.35rem;
+    background: rgba(19, 22, 28, .96);
+    box-shadow: 0 0 0 100vmax rgba(19, 22, 28, .96);
+    clip-path: inset(0 -100vmax);
 }
 
 .home-recommended-divider::before,
@@ -333,6 +338,7 @@
 
 @media (max-width: 600px) {
     .home-recommended {
+        margin-top: -0.5rem;
         margin-bottom: 1rem;
     }
 
@@ -411,8 +417,10 @@
     }
 
     .home-recommended-divider {
+        min-height: 3.25rem;
         gap: .55rem;
-        margin-bottom: 1.1rem;
+        margin-top: 1rem;
+        margin-bottom: 1.35rem;
     }
 
     .home-recommended-divider span {
