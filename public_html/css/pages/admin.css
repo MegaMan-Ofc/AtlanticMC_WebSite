@@ -1128,7 +1128,7 @@ html.admin-dialog-open {
 
 .admin-recommended-actions {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     gap: .5rem;
     margin-top: auto;
 }
@@ -1136,6 +1136,14 @@ html.admin-dialog-open {
 .admin-recommended-actions form,
 .admin-recommended-actions .button {
     width: 100%;
+    min-width: 0;
+}
+
+.admin-recommended-actions .button {
+    min-height: 2.5rem;
+    padding: .55rem .65rem;
+    font-size: .8rem;
+    white-space: nowrap;
 }
 
 .admin-recommended-empty-action {
