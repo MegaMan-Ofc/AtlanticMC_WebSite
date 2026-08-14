@@ -1,16 +1,7 @@
 <footer class="site-footer">
     <div class="footer-main">
         <div class="container footer-grid">
-            <section>
-                <h2><?= e(t('common.support')) ?></h2>
-                <p><?= e(t('footer.questions')) ?></p>
-                <div class="footer-actions">
-                    <a class="button button--primary" href="<?= e(config('app.discord_url')) ?>" target="_blank" rel="noopener noreferrer">Discord</a>
-                    <a class="button button--ghost" href="mailto:<?= e(config('app.support_email')) ?>"><?= e(t('common.email')) ?></a>
-                </div>
-            </section>
             <nav class="footer-legal-links" aria-label="<?= e(t('footer.legal_aria')) ?>">
-                <h2><?= e(t('common.legal')) ?></h2>
                 <div class="footer-links">
                     <a href="<?= e(route_url('privacy')) ?>"><?= e(t('footer.privacy')) ?></a>
                     <a href="<?= e(route_url('terms')) ?>"><?= e(t('footer.terms')) ?></a>
@@ -19,6 +10,13 @@
                     <a href="https://www.livroreclamacoes.pt/Inicio/" target="_blank" rel="noopener noreferrer"><?= e(t('footer.complaints')) ?></a>
                 </div>
             </nav>
+            <section class="footer-support">
+                <div class="footer-actions">
+                    <a class="button button--primary" href="<?= e(config('app.discord_url')) ?>" target="_blank" rel="noopener noreferrer">Discord</a>
+                    <span class="footer-support-label"><?= e(t('common.support')) ?></span>
+                    <a class="button button--ghost" href="mailto:<?= e(config('app.support_email')) ?>"><?= e(t('common.email')) ?></a>
+                </div>
+            </section>
         </div>
     </div>
     <div class="footer-bottom">
