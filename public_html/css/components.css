@@ -562,15 +562,22 @@
 }
 
 .footer-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: clamp(2rem, 4vw, 4rem);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.75rem;
+    text-align: center;
 }
 
 .footer-legal-links {
+    order: 1;
+    width: 100%;
     min-width: 0;
 }
 
+.footer-legal-links h2 {
+    display: none;
+}
 
 .footer-legal-links a {
     color: var(--muted);
@@ -582,9 +589,19 @@
     color: var(--accent);
 }
 
+.footer-grid > section:not(.footer-legal-links) {
+    order: 2;
+    width: 100%;
+    text-align: center;
+}
+
 .footer-grid h2 {
     margin-bottom: 0.875rem;
     font-size: 1.08rem;
+}
+
+.footer-grid > section:not(.footer-legal-links) p {
+    display: none;
 }
 
 .footer-grid p {
@@ -598,8 +615,11 @@
 }
 
 .footer-links {
-    display: grid;
-    gap: 0.4375rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4375rem 1.25rem;
 }
 
 .footer-links a {
@@ -614,7 +634,9 @@
 
 .footer-actions {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
     gap: 0.625rem;
     margin-top: 1.0625rem;
 }
@@ -954,4 +976,3 @@
 .login-config-warning p {
     margin-bottom: 0;
 }
-
