@@ -96,6 +96,11 @@ function cart_summary(): array
     $discount = 0;
     $couponCode = is_string($_SESSION['coupon_code'] ?? null) ? $_SESSION['coupon_code'] : '';
 
+    if ($couponCode !== '' && tebex_is_configured() && !tebex_coupons_enabled()) {
+        unset($_SESSION['coupon_code']);
+        $couponCode = '';
+    }
+
     if ($couponCode !== '' && $subtotal > 0) {
         try {
             $coupon = validate_coupon($couponCode, $subtotal);

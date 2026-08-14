@@ -18,6 +18,9 @@ $environment = [
     'BEDROCK_USERNAME_PREFIX' => '.',
     'PAYMENTS_ENABLED' => 'false',
     'ALLOW_TEST_ORDERS' => 'true',
+    'TEBEX_WEBHOOK_SECRET' => 'test-webhook-secret-0123456789',
+    'TEBEX_VERIFY_WEBHOOK_AMOUNT' => 'true',
+    'TEBEX_COUPONS_ENABLED' => 'false',
     'DB_DRIVER' => 'sqlite',
     'DB_PATH' => $databasePath,
     'ADMIN_USERNAME' => 'test-admin',
@@ -58,6 +61,8 @@ require_once $root . '/includes/admin_coupons.php';
 require_once $root . '/includes/admin_orders.php';
 require_once $root . '/includes/admin_dashboard.php';
 require_once $root . '/includes/minecraft_recipient.php';
+require_once $root . '/includes/tebex.php';
+require_once $root . '/includes/orders.php';
 
 $tests = 0;
 $failures = [];
@@ -106,6 +111,84 @@ $throws(
 $throws(
     static fn () => normalize_minecraft_username('Bed-Rock!', 'bedrock'),
     'Invalid Bedrock Gamertags are rejected.'
+);
+
+$webhookBody = json_encode([
+    'id' => 'evt-test',
+    'type' => 'validation.webhook',
+], JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR);
+$webhookSignature = hash_hmac(
+    'sha256',
+    hash('sha256', $webhookBody),
+    'test-webhook-secret-0123456789'
+);
+$assert(
+    tebex_webhook_is_configured()
+        && !tebex_is_configured(),
+    'Tebex webhooks can be configured while customer payments remain disabled.'
+);
+$assert(
+    verify_tebex_webhook_signature($webhookBody, $webhookSignature)
+        && !verify_tebex_webhook_signature($webhookBody . 'x', $webhookSignature),
+    'Tebex webhook signatures are verified against the exact request body.'
+);
+$assert(
+    tebex_money_to_cents('1.38') === 138
+        && tebex_money_to_cents(5) === 500
+        && tebex_money_to_cents('invalid') === null,
+    'Tebex monetary values are normalized safely to integer cents.'
+);
+$assert(
+    tebex_basket_totals([
+        'total_price' => 12.34,
+        'currency' => 'eur',
+    ]) === [
+        'total_cents' => 1234,
+        'currency' => 'EUR',
+    ],
+    'Tebex basket totals preserve the provider-calculated total and currency.'
+);
+$tebexOrderFixture = [
+    'total_cents' => 1000,
+    'currency' => 'EUR',
+    'tebex_total_cents' => 1234,
+    'tebex_currency' => 'EUR',
+    'items' => [
+        ['tebex_package_id' => '100', 'quantity' => 1],
+        ['tebex_package_id' => '200', 'quantity' => 2],
+    ],
+];
+$tebexSubjectFixture = [
+    'products' => [
+        ['id' => 200, 'quantity' => 2],
+        ['id' => 100, 'quantity' => 1],
+    ],
+    'price_paid' => [
+        'amount' => '12.34',
+        'currency' => 'EUR',
+    ],
+];
+$assert(
+    tebex_webhook_matches_order($tebexSubjectFixture, $tebexOrderFixture),
+    'Completed Tebex payments must match package IDs, quantities, provider total and currency.'
+);
+$wrongQuantitySubject = $tebexSubjectFixture;
+$wrongQuantitySubject['products'][0]['quantity'] = 1;
+$assert(
+    !tebex_webhook_matches_order($wrongQuantitySubject, $tebexOrderFixture),
+    'Tebex webhook validation rejects incorrect package quantities.'
+);
+$wrongAmountSubject = $tebexSubjectFixture;
+$wrongAmountSubject['price_paid']['amount'] = '12.35';
+$assert(
+    !tebex_webhook_matches_order($wrongAmountSubject, $tebexOrderFixture),
+    'Tebex webhook validation rejects an incorrect provider total.'
+);
+$wrongCurrencySubject = $tebexSubjectFixture;
+$wrongCurrencySubject['price_paid']['currency'] = 'USD';
+$assert(
+    !tebex_webhook_matches_order($wrongCurrencySubject, $tebexOrderFixture),
+    'Tebex webhook validation rejects an incorrect provider currency.'
 );
 
 $assert(
@@ -487,7 +570,13 @@ if (!in_array('sqlite', PDO::getAvailableDrivers(), true)) {
     seed_store_database($pdo);
     $pdo->commit();
 
-    $assert((int) $pdo->query('SELECT COUNT(*) FROM schema_migrations')->fetchColumn() >= 4, 'All SQLite migrations are recorded.');
+    $assert((int) $pdo->query('SELECT COUNT(*) FROM schema_migrations')->fetchColumn() >= 5, 'All SQLite migrations are recorded.');
+    $orderColumns = array_column($pdo->query('PRAGMA table_info(orders)')->fetchAll(), 'name');
+    $assert(
+        in_array('tebex_total_cents', $orderColumns, true)
+            && in_array('tebex_currency', $orderColumns, true),
+        'The Tebex hardening migration stores provider basket totals on orders.'
+    );
     $assert((int) $pdo->query('SELECT COUNT(*) FROM products')->fetchColumn() > 0, 'The seed creates products.');
     $assert((int) $pdo->query('SELECT COUNT(*) FROM categories')->fetchColumn() >= 4, 'The dynamic category migration creates catalogue categories.');
     $assert((int) $pdo->query('SELECT COUNT(*) FROM products WHERE category_id IS NULL')->fetchColumn() === 0, 'Seed products are linked to dynamic category IDs.');

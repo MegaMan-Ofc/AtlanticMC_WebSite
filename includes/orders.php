@@ -73,16 +73,30 @@ function create_order(array $recipient, array $summary): array
     }
 }
 
-function update_order_provider(int $orderId, string $reference, string $checkoutUrl): void
-{
+function update_order_provider(
+    int $orderId,
+    string $reference,
+    string $checkoutUrl,
+    int $tebexTotalCents,
+    string $tebexCurrency
+): void {
+    $currency = strtoupper(trim($tebexCurrency));
+
+    if ($tebexTotalCents < 0 || !preg_match('/^[A-Z]{3}$/', $currency)) {
+        throw new InvalidArgumentException(t('validation.order_invalid'));
+    }
+
     $statement = db()->prepare(
         'UPDATE orders SET provider = :provider, provider_reference = :reference,
-         provider_checkout_url = :checkout_url, status = :status, updated_at = :updated_at WHERE id = :id'
+         provider_checkout_url = :checkout_url, tebex_total_cents = :tebex_total_cents,
+         tebex_currency = :tebex_currency, status = :status, updated_at = :updated_at WHERE id = :id'
     );
     $statement->execute([
         'provider' => 'tebex',
         'reference' => $reference,
         'checkout_url' => $checkoutUrl,
+        'tebex_total_cents' => $tebexTotalCents,
+        'tebex_currency' => $currency,
         'status' => 'awaiting_payment',
         'updated_at' => now_sql(),
         'id' => $orderId,
@@ -138,7 +152,12 @@ function mark_order_status_by_token(string $token, string $status, ?string $prov
             'id' => $order['id'],
         ]);
 
-        if ($status === 'paid' && $order['status'] !== 'paid' && is_string($order['coupon_code']) && $order['coupon_code'] !== '') {
+        if (
+            $status === 'paid'
+            && !in_array((string) $order['status'], ['paid', 'refunded', 'disputed'], true)
+            && is_string($order['coupon_code'])
+            && $order['coupon_code'] !== ''
+        ) {
             $couponUpdate = $pdo->prepare(
                 'UPDATE coupons SET used_count = used_count + 1, updated_at = :updated_at WHERE code = :code'
             );
@@ -222,7 +241,12 @@ function process_order_webhook(
             'id' => $order['id'],
         ]);
 
-        if ($status === 'paid' && $order['status'] !== 'paid' && is_string($order['coupon_code']) && $order['coupon_code'] !== '') {
+        if (
+            $status === 'paid'
+            && !in_array((string) $order['status'], ['paid', 'refunded', 'disputed'], true)
+            && is_string($order['coupon_code'])
+            && $order['coupon_code'] !== ''
+        ) {
             $couponUpdate = $pdo->prepare(
                 'UPDATE coupons SET used_count = used_count + 1, updated_at = :updated_at WHERE code = :code'
             );

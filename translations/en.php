@@ -429,6 +429,8 @@ return [
     'tebex.app_url' => 'APP_URL must contain the full public store URL before Tebex checkout can be used.',
     'tebex.basket_missing' => 'Tebex did not return a basket identifier.',
     'tebex.checkout_url_missing' => 'Tebex did not return a valid checkout URL.',
+    'tebex.basket_totals_missing' => 'Tebex did not return the basket total or currency.',
+    'tebex.coupons_disabled' => 'Coupons are temporarily unavailable for Tebex checkout.',
 
     'products.deep-diver.name' => 'Deep Diver',
     'products.deep-diver.description' => 'Starter rank with useful commands and a starter kit.',

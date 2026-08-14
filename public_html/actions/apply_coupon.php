@@ -7,6 +7,10 @@ require_post();
 verify_csrf();
 
 try {
+    if (tebex_is_configured() && !tebex_coupons_enabled()) {
+        throw new InvalidArgumentException(t('tebex.coupons_disabled'));
+    }
+
     $code = request_string('coupon_code');
     $summary = cart_summary();
     $coupon = validate_coupon($code, (int) $summary['subtotal_cents']);

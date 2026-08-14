@@ -203,6 +203,7 @@ function config(?string $key = null, mixed $default = null): mixed
                 'public_token' => (string) env_value('TEBEX_PUBLIC_TOKEN', ''),
                 'webhook_secret' => (string) env_value('TEBEX_WEBHOOK_SECRET', ''),
                 'verify_webhook_amount' => (bool) env_value('TEBEX_VERIFY_WEBHOOK_AMOUNT', true),
+                'coupons_enabled' => (bool) env_value('TEBEX_COUPONS_ENABLED', false),
                 'allowed_webhook_ips' => env_csv('TEBEX_ALLOWED_WEBHOOK_IPS'),
             ],
             'logging' => [
@@ -346,12 +347,18 @@ function configuration_errors(): array
         $errors[] = 'Administrator credentials are not configured correctly.';
     }
 
+    $webhookSecret = trim((string) config('tebex.webhook_secret'));
+
+    if ($webhookSecret !== '' && strlen($webhookSecret) < 16) {
+        $errors[] = 'TEBEX_WEBHOOK_SECRET must contain at least 16 characters when configured.';
+    }
+
     if ((bool) config('app.payments_enabled')) {
         if (trim((string) config('tebex.public_token')) === '') {
             $errors[] = 'TEBEX_PUBLIC_TOKEN is required when payments are enabled.';
         }
 
-        if (strlen(trim((string) config('tebex.webhook_secret'))) < 16) {
+        if ($webhookSecret === '') {
             $errors[] = 'TEBEX_WEBHOOK_SECRET is required when payments are enabled.';
         }
 

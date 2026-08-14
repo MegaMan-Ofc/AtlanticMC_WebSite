@@ -30,6 +30,10 @@ try {
             break;
 
         case 'apply_coupon':
+            if (tebex_is_configured() && !tebex_coupons_enabled()) {
+                throw new InvalidArgumentException(t('tebex.coupons_disabled'));
+            }
+
             $summary = cart_summary();
             $coupon = validate_coupon(request_string('coupon_code'), (int) $summary['subtotal_cents']);
             $_SESSION['coupon_code'] = (string) $coupon['code'];
