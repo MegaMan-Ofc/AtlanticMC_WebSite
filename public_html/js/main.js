@@ -1,7 +1,10 @@
 "use strict";
 
 const NOTICE_DURATION_MS = 2500;
+const CART_AUTO_UPDATE_DELAY_MS = 180;
 let noticeTimer = 0;
+let cartAutoUpdateTimer = 0;
+let searchRequestController = null;
 
 class RequestError extends Error {
     constructor(message, payload = null) {
@@ -88,6 +91,7 @@ function replaceCartPanel(html) {
 
     if (replacement) {
         currentPanel.replaceWith(replacement);
+        initializeQuantitySteppers(replacement);
     }
 }
 
@@ -122,6 +126,90 @@ async function requestJson(url, formData) {
     return payload;
 }
 
+function searchUrlFromForm(form) {
+    const url = new URL(form.action || window.location.href, window.location.href);
+    const parameters = new URLSearchParams();
+
+    new FormData(form).forEach((value, key) => {
+        const normalizedValue = String(value).trim();
+
+        if (normalizedValue !== "") {
+            parameters.set(key, normalizedValue);
+        }
+    });
+
+    url.search = parameters.toString();
+    return url;
+}
+
+async function navigateSearch(url, { pushHistory = true } = {}) {
+    const shell = document.querySelector("[data-search-shell]");
+
+    if (!shell) {
+        window.location.assign(url);
+        return;
+    }
+
+    searchRequestController?.abort();
+    searchRequestController = new AbortController();
+    shell.setAttribute("aria-busy", "true");
+
+    try {
+        const response = await fetch(url, {
+            credentials: "same-origin",
+            headers: {
+                Accept: "text/html",
+                "X-Requested-With": "XMLHttpRequest",
+            },
+            signal: searchRequestController.signal,
+        });
+
+        if (!response.ok) {
+            throw new RequestError(
+                siteMessage("messageRequestFailed", "Unable to complete the request.")
+            );
+        }
+
+        const html = await response.text();
+        const documentResult = new DOMParser().parseFromString(html, "text/html");
+        const replacement = documentResult.querySelector("[data-search-shell]");
+
+        if (!replacement) {
+            throw new RequestError(
+                siteMessage("messageInvalidResponse", "The server returned an invalid response.")
+            );
+        }
+
+        shell.replaceWith(replacement);
+        initializeQuantitySteppers(replacement);
+
+        if (documentResult.title) {
+            document.title = documentResult.title;
+        }
+
+        if (pushHistory) {
+            window.history.pushState({ atlanticSearch: true }, "", url);
+        }
+    } catch (error) {
+        if (error instanceof DOMException && error.name === "AbortError") {
+            return;
+        }
+
+        shell.removeAttribute("aria-busy");
+        showNotice(
+            error instanceof Error
+                ? error.message
+                : siteMessage("messageRequestFailed", "Unable to complete the request."),
+            "error"
+        );
+    }
+}
+
+async function handleSearchSubmit(event, form) {
+    event.preventDefault();
+    await navigateSearch(searchUrlFromForm(form));
+}
+
 async function handleLanguageSubmit(event, form) {
     event.preventDefault();
 
@@ -151,12 +239,57 @@ async function handleLanguageSubmit(event, form) {
     }
 }
 
-async function handleCartSubmit(event, form) {
-    event.preventDefault();
+function setCartPanelBusy(busy) {
+    const panel = document.querySelector("[data-cart-panel]");
 
-    const submitter = event.submitter instanceof HTMLButtonElement
-        ? event.submitter
-        : null;
+    if (!panel) {
+        return;
+    }
+
+    if (busy) {
+        panel.setAttribute("aria-busy", "true");
+        return;
+    }
+
+    panel.removeAttribute("aria-busy");
+}
+
+function clampQuantityInput(input, value = input.value) {
+    if (!(input instanceof HTMLInputElement)) {
+        return 1;
+    }
+
+    const min = Number.parseInt(input.min, 10) || 1;
+    const max = Number.parseInt(input.max, 10) || Number.MAX_SAFE_INTEGER;
+    const parsed = Number.parseInt(String(value), 10);
+    const normalized = Math.min(max, Math.max(min, Number.isFinite(parsed) ? parsed : min));
+
+    input.value = String(normalized);
+
+    const stepper = input.closest("[data-quantity-stepper]");
+    const decreaseButton = stepper?.querySelector("[data-quantity-decrease]");
+    const increaseButton = stepper?.querySelector("[data-quantity-increase]");
+
+    if (decreaseButton instanceof HTMLButtonElement) {
+        decreaseButton.disabled = normalized <= min;
+    }
+
+    if (increaseButton instanceof HTMLButtonElement) {
+        increaseButton.disabled = normalized >= max;
+    }
+
+    return normalized;
+}
+
+function initializeQuantitySteppers(root = document) {
+    root.querySelectorAll("[data-quantity-input]").forEach((input) => {
+        if (input instanceof HTMLInputElement) {
+            clampQuantityInput(input);
+        }
+    });
+}
+
+async function submitCartForm(form, submitter = null, { showSuccess = true } = {}) {
     const operation = submitter?.dataset.cartOperation
         || form.dataset.cartOperation
         || "";
@@ -176,14 +309,21 @@ async function handleCartSubmit(event, form) {
 
     setButtonBusy(submitter, true);
 
+    if (form.dataset.renderCart === "1") {
+        setCartPanelBusy(true);
+    }
+
     try {
         const payload = await requestJson(endpoint, formData);
         updateCartCount(payload.data?.cart_count);
         replaceCartPanel(payload.data?.cart_html);
-        showNotice(
-            payload.message || siteMessage("messageCartUpdated", "Cart updated."),
-            "success"
-        );
+
+        if (showSuccess) {
+            showNotice(
+                payload.message || siteMessage("messageCartUpdated", "Cart updated."),
+                "success"
+            );
+        }
     } catch (error) {
         showNotice(
             error instanceof Error
@@ -192,10 +332,30 @@ async function handleCartSubmit(event, form) {
             "error"
         );
     } finally {
+        setCartPanelBusy(false);
+
         if (submitter?.isConnected) {
             setButtonBusy(submitter, false);
         }
     }
+}
+
+function scheduleCartAutoUpdate(form) {
+    window.clearTimeout(cartAutoUpdateTimer);
+    cartAutoUpdateTimer = window.setTimeout(() => {
+        void submitCartForm(form, null, { showSuccess: false });
+    }, CART_AUTO_UPDATE_DELAY_MS);
+}
+
+async function handleCartSubmit(event, form) {
+    event.preventDefault();
+    window.clearTimeout(cartAutoUpdateTimer);
+
+    const submitter = event.submitter instanceof HTMLButtonElement
+        ? event.submitter
+        : null;
+
+    await submitCartForm(form, submitter);
 }
 
 async function handleCheckoutSubmit(event, form) {
@@ -244,6 +404,30 @@ async function handleCheckoutSubmit(event, form) {
 }
 
 document.addEventListener("click", async (event) => {
+    const quantityButton = event.target.closest("[data-quantity-increase], [data-quantity-decrease]");
+
+    if (quantityButton instanceof HTMLButtonElement) {
+        const stepper = quantityButton.closest("[data-quantity-stepper]");
+        const input = stepper?.querySelector("[data-quantity-input]");
+
+        if (input instanceof HTMLInputElement) {
+            const current = clampQuantityInput(input);
+            const delta = quantityButton.matches("[data-quantity-increase]") ? 1 : -1;
+            clampQuantityInput(input, current + delta);
+            input.dispatchEvent(new Event("change", { bubbles: true }));
+        }
+
+        return;
+    }
+
+    const searchLink = event.target.closest("[data-search-link]");
+
+    if (searchLink instanceof HTMLAnchorElement && document.querySelector("[data-search-shell]")) {
+        event.preventDefault();
+        await navigateSearch(searchLink.href);
+        return;
+    }
+
     const copyButton = event.target.closest("[data-copy-value]");
 
     if (!copyButton) {
@@ -279,6 +463,40 @@ document.addEventListener("click", async (event) => {
     }
 });
 
+document.addEventListener("change", (event) => {
+    const input = event.target;
+
+    if (!(input instanceof HTMLInputElement) || !input.matches("[data-quantity-input]")) {
+        return;
+    }
+
+    clampQuantityInput(input);
+
+    const stepper = input.closest("[data-cart-auto-update]");
+    const form = input.closest("form[data-ajax-cart]");
+
+    if (stepper && form instanceof HTMLFormElement) {
+        scheduleCartAutoUpdate(form);
+    }
+});
+
+window.addEventListener("popstate", () => {
+    const shell = document.querySelector("[data-search-shell]");
+
+    if (!shell) {
+        return;
+    }
+
+    const searchPath = new URL(shell.dataset.searchPath || window.location.href, window.location.href).pathname;
+
+    if (window.location.pathname === searchPath) {
+        void navigateSearch(window.location.href, { pushHistory: false });
+        return;
+    }
+
+    window.location.reload();
+});
+
 document.addEventListener("submit", (event) => {
     if (!("fetch" in window)) {
         return;
@@ -295,6 +513,11 @@ document.addEventListener("submit", (event) => {
         return;
     }
 
+    if (form.matches("[data-ajax-search]")) {
+        void handleSearchSubmit(event, form);
+        return;
+    }
+
     if (form.matches("[data-ajax-cart]")) {
         void handleCartSubmit(event, form);
         return;
@@ -304,3 +527,6 @@ document.addEventListener("submit", (event) => {
         void handleCheckoutSubmit(event, form);
     }
 });
+
+
+initializeQuantitySteppers();

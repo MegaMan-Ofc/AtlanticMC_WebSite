@@ -369,6 +369,9 @@
 
 .package {
     position: relative;
+    display: flex;
+    height: 100%;
+    flex-direction: column;
     overflow: hidden;
     padding: 1.5rem;
     border: 1px solid var(--border);
@@ -419,6 +422,9 @@
 .package .info {
     position: relative;
     z-index: 3;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
     text-align: center;
 }
 
@@ -435,6 +441,7 @@
     align-items: baseline;
     justify-content: center;
     gap: 0.625rem;
+    margin-top: auto;
     margin-bottom: 1.125rem;
 }
 
@@ -455,6 +462,76 @@
 
 .package .button > button {
     width: 100%;
+}
+
+.package-purchase {
+    display: grid;
+    gap: 0.6875rem;
+}
+
+.quantity-stepper {
+    display: grid;
+    grid-template-columns: 2.75rem minmax(3.25rem, 1fr) 2.75rem;
+    align-items: center;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: 0.6875rem;
+    background: var(--surface-2);
+}
+
+.quantity-stepper:focus-within {
+    border-color: var(--card-accent, var(--primary));
+    box-shadow: 0 0 0 3px rgba(108, 92, 231, .14);
+}
+
+.quantity-stepper__button {
+    display: grid;
+    min-height: 2.875rem;
+    place-items: center;
+    border: 0;
+    background: transparent;
+    color: var(--text);
+    font: inherit;
+    font-size: 1.15rem;
+    font-weight: 900;
+    cursor: pointer;
+    transition: background .18s ease, color .18s ease;
+}
+
+.quantity-stepper__button:hover:not(:disabled) {
+    background: rgba(108, 92, 231, .16);
+    color: #fff;
+}
+
+.quantity-stepper__button:disabled {
+    color: var(--subtle);
+    cursor: not-allowed;
+    opacity: .55;
+}
+
+.quantity-stepper__input {
+    width: 100%;
+    min-width: 0;
+    min-height: 2.875rem;
+    padding: 0 .35rem;
+    border: 0;
+    border-right: 1px solid var(--border);
+    border-left: 1px solid var(--border);
+    outline: 0;
+    background: transparent;
+    color: var(--text);
+    font: inherit;
+    font-weight: 900;
+    text-align: center;
+    appearance: textfield;
+    -moz-appearance: textfield;
+}
+
+.quantity-stepper__input::-webkit-inner-spin-button,
+.quantity-stepper__input::-webkit-outer-spin-button {
+    margin: 0;
+    appearance: none;
+    -webkit-appearance: none;
 }
 
 .modal,
@@ -957,9 +1034,6 @@
     color: var(--muted);
 }
 
-.product-quantity {
-    margin-bottom: 0.75rem;
-}
 
 .login-provider-icon {
     margin-bottom: 1rem;

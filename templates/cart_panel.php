@@ -56,15 +56,31 @@
                                 </span>
                             </td>
                             <td>
-                                <input
-                                    class="qty-input"
-                                    type="number"
-                                    min="0"
-                                    max="<?= (int) config('app.max_cart_quantity') ?>"
-                                    name="quantities[<?= (int) $item['product']['id'] ?>]"
-                                    value="<?= (int) $item['quantity'] ?>"
-                                    aria-label="<?= e(t('cart.quantity_for', ['product' => $product['name']])) ?>"
-                                >
+                                <div class="quantity-stepper quantity-stepper--compact" data-quantity-stepper data-cart-auto-update>
+                                    <button
+                                        class="quantity-stepper__button"
+                                        type="button"
+                                        data-quantity-decrease
+                                        aria-label="<?= e(t('cart.quantity_decrease_for', ['product' => $product['name']])) ?>"
+                                    >−</button>
+                                    <input
+                                        class="quantity-stepper__input"
+                                        type="number"
+                                        min="1"
+                                        max="<?= (int) config('app.max_cart_quantity') ?>"
+                                        name="quantities[<?= (int) $item['product']['id'] ?>]"
+                                        value="<?= (int) $item['quantity'] ?>"
+                                        inputmode="numeric"
+                                        data-quantity-input
+                                        aria-label="<?= e(t('cart.quantity_for', ['product' => $product['name']])) ?>"
+                                    >
+                                    <button
+                                        class="quantity-stepper__button"
+                                        type="button"
+                                        data-quantity-increase
+                                        aria-label="<?= e(t('cart.quantity_increase_for', ['product' => $product['name']])) ?>"
+                                    >+</button>
+                                </div>
                             </td>
                             <td class="price-amount"><?= e(format_money((int) $item['line_total_cents'])) ?></td>
                             <td>
@@ -86,12 +102,12 @@
                 </table>
             </div>
 
-            <div class="cart-footer">
+            <div class="cart-footer cart-footer--info">
                 <div class="cart-footer-info">
                     <p><?= e(t('cart.server_prices')) ?></p>
                     <p><?= e(t('cart.vat_included', ['amount' => format_money((int) $cart['vat_included_cents'])])) ?></p>
                 </div>
-                <button class="button button--ghost" type="submit"><?= e(t('cart.update')) ?></button>
+                <noscript><button class="button button--ghost" type="submit"><?= e(t('cart.update')) ?></button></noscript>
             </div>
         </form>
 
