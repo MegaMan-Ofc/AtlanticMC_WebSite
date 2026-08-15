@@ -12,6 +12,7 @@ foreach ([
     'unit/ProductDiscountTest.php',
     'unit/RecommendedProductsTest.php',
     'unit/HomeCategoryLayoutTest.php',
+    'unit/HomeBannerCustomizationTest.php',
     'unit/AboutSectionTest.php',
     'unit/FaqTest.php',
     'unit/ProductSearchTest.php',
