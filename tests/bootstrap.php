@@ -6,13 +6,21 @@ require_once __DIR__ . '/support/TestSuite.php';
 
 $root = dirname(__DIR__);
 $databasePath = $root . '/storage/test-suite.sqlite';
+$maintenanceStatePath = $root . '/storage/test-maintenance.json';
+$appLogPath = $root . '/storage/test-app.log';
+$securityLogPath = $root . '/storage/test-security.log';
 @unlink($databasePath);
+@unlink($maintenanceStatePath);
+@unlink($appLogPath);
+@unlink($securityLogPath);
 
 $environment = [
     'APP_ENV' => 'test',
     'APP_KEY' => str_repeat('t', 64),
     'APP_DEBUG' => 'false',
     'APP_URL' => 'http://localhost:8000',
+    'APP_LOG_PATH' => $appLogPath,
+    'SECURITY_LOG_PATH' => $securityLogPath,
     'APP_FORCE_HTTPS' => 'false',
     'SERVER_IP' => 'play.atlanticeu.online',
     'BEDROCK_SERVER_IP' => 'play.atlanticeu.online',
@@ -25,6 +33,7 @@ $environment = [
     'TEBEX_COUPONS_ENABLED' => 'false',
     'DB_DRIVER' => 'sqlite',
     'DB_PATH' => $databasePath,
+    'MAINTENANCE_STATE_PATH' => $maintenanceStatePath,
     'ADMIN_USERNAME' => 'test-admin',
     'ADMIN_PASSWORD_HASH' => password_hash('test-password', PASSWORD_DEFAULT),
 ];
@@ -57,6 +66,7 @@ foreach ([
     'coupons',
     'cart',
     'security',
+    'maintenance',
     'admin_auth',
     'admin_formatting',
     'media',
