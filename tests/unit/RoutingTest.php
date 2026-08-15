@@ -7,6 +7,7 @@ $assert(
         && public_route_name_from_request_uri('/admin') === 'admin'
         && public_route_name_from_request_uri('/purchase-policy?from=footer') === 'purchase-policy'
         && public_route_name_from_request_uri('/faq') === 'faq'
+        && public_route_name_from_request_uri('/search?q=sea') === 'search'
         && public_route_name_from_request_uri('/does-not-exist') === null,
     'Clean request paths resolve through the shared public route table.'
 );
@@ -30,6 +31,7 @@ $assert(
         'rubis',
         'keys',
         'boosters',
+        'search',
         'cart',
         'checkout',
         'login',

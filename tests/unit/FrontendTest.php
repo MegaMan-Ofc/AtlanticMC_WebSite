@@ -85,15 +85,18 @@ $assert(
 );
 
 $catalogTemplate = file_get_contents($root . '/templates/catalog.php');
+$productCardTemplate = file_get_contents($root . '/templates/product-card.php');
 $cartTemplate = file_get_contents($root . '/templates/cart_panel.php');
 
 $assert(
     is_string($catalogTemplate)
-        && str_contains($catalogTemplate, 'product_has_discount')
-        && str_contains($catalogTemplate, 'product_effective_price_cents')
+        && str_contains($catalogTemplate, "product-card.php")
+        && is_string($productCardTemplate)
+        && str_contains($productCardTemplate, 'product_has_discount')
+        && str_contains($productCardTemplate, 'product_effective_price_cents')
         && is_string($cartTemplate)
         && str_contains($cartTemplate, 'cart-original-price'),
-    'Discounted products render the regular price crossed out and the promotional price as the active price.'
+    'Catalogue and search pages share the same discounted product card rendering.'
 );
 
 $loginJavaScript = file_get_contents($root . '/public_html/js/login.js');

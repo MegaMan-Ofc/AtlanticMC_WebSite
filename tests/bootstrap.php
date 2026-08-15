@@ -52,6 +52,7 @@ foreach ([
     'i18n',
     'categories',
     'catalog',
+    'product_search',
     'recommended',
     'coupons',
     'cart',
