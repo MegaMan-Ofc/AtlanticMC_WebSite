@@ -15,13 +15,23 @@ $pdo->beginTransaction();
 seed_store_database($pdo);
 $pdo->commit();
 
-$assert((int) $pdo->query('SELECT COUNT(*) FROM schema_migrations')->fetchColumn() >= 8, 'All SQLite migrations are recorded.');
+$assert((int) $pdo->query('SELECT COUNT(*) FROM schema_migrations')->fetchColumn() >= 9, 'All SQLite migrations are recorded.');
 
 $orderColumns = array_column($pdo->query('PRAGMA table_info(orders)')->fetchAll(), 'name');
 $assert(
     in_array('tebex_total_cents', $orderColumns, true)
         && in_array('tebex_currency', $orderColumns, true),
     'The Tebex hardening migration stores provider basket totals on orders.'
+);
+
+
+$assert(
+    in_array('paid_at', $orderColumns, true),
+    'The analytics migration stores the original paid timestamp on orders.'
+);
+$assert(
+    (int) $pdo->query("SELECT COUNT(*) FROM sqlite_master WHERE type = 'table' AND name IN ('daily_route_stats', 'daily_product_stats')")->fetchColumn() === 2,
+    'The analytics migration creates route and product daily statistic tables.'
 );
 
 $productColumns = array_column($pdo->query('PRAGMA table_info(products)')->fetchAll(), 'name');
