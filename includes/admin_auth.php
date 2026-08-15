@@ -39,7 +39,7 @@ function admin_is_authenticated(): bool
     $regeneratedAt = (int) ($session['regenerated_at'] ?? 0);
 
     if ($regeneratedAt < $now - 900) {
-        session_regenerate_id(false);
+        session_regenerate_id(true);
         $_SESSION['admin']['regenerated_at'] = $now;
     }
 

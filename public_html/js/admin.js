@@ -977,9 +977,9 @@ if (adminHomeLayout instanceof HTMLElement) {
     });
 }
 
-const adminTrafficWidget = document.querySelector('[data-admin-traffic-widget]');
-
 const loadAdminTraffic = async days => {
+    const adminTrafficWidget = document.querySelector('[data-admin-traffic-widget]');
+
     if (!(adminTrafficWidget instanceof HTMLElement)) {
         return;
     }
@@ -1016,7 +1016,60 @@ const loadAdminTraffic = async days => {
         fallback.searchParams.set('section', 'overview');
         window.location.assign(fallback);
     } finally {
-        adminTrafficWidget.removeAttribute('aria-busy');
+        if (adminTrafficWidget.isConnected) {
+            adminTrafficWidget.removeAttribute('aria-busy');
+        }
+    }
+};
+
+const loadAdminAnalytics = async days => {
+    const dashboard = document.querySelector('[data-admin-analytics-dashboard]');
+
+    if (!(dashboard instanceof HTMLElement)) {
+        return;
+    }
+
+    const endpoint = dashboard.dataset.endpoint;
+
+    if (!endpoint) {
+        return;
+    }
+
+    const url = new URL(endpoint, window.location.href);
+    url.searchParams.set('days', String(days));
+    dashboard.setAttribute('aria-busy', 'true');
+
+    try {
+        const response = await fetch(url, {
+            method: 'GET',
+            credentials: 'same-origin',
+            headers: {
+                Accept: 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+            },
+        });
+        const payload = await response.json();
+        const html = payload?.data?.html;
+
+        if (!response.ok || payload?.ok !== true || typeof html !== 'string') {
+            throw new Error(payload?.error ?? 'Unable to load analytics.');
+        }
+
+        dashboard.innerHTML = html;
+
+        const browserUrl = new URL(window.location.href);
+        browserUrl.searchParams.set('section', 'overview');
+        browserUrl.searchParams.set('analytics_days', String(payload?.data?.days ?? days));
+        window.history.replaceState({}, '', browserUrl);
+    } catch (error) {
+        const fallback = new URL(window.location.href);
+        fallback.searchParams.set('section', 'overview');
+        fallback.searchParams.set('analytics_days', String(days));
+        window.location.assign(fallback);
+    } finally {
+        if (dashboard.isConnected) {
+            dashboard.removeAttribute('aria-busy');
+        }
     }
 };
 
@@ -1027,12 +1080,18 @@ document.addEventListener('click', event => {
         return;
     }
 
-    const toggle = target.closest('[data-admin-traffic-toggle]');
+    const trafficToggle = target.closest('[data-admin-traffic-toggle]');
 
-    if (!(toggle instanceof HTMLButtonElement)) {
+    if (trafficToggle instanceof HTMLButtonElement) {
+        const days = Number.parseInt(trafficToggle.dataset.days ?? '7', 10);
+        loadAdminTraffic(Number.isFinite(days) ? days : 7);
         return;
     }
 
-    const days = Number.parseInt(toggle.dataset.days ?? '7', 10);
-    loadAdminTraffic(Number.isFinite(days) ? days : 7);
+    const periodButton = target.closest('[data-admin-analytics-period]');
+
+    if (periodButton instanceof HTMLButtonElement) {
+        const days = Number.parseInt(periodButton.dataset.adminAnalyticsPeriod ?? '30', 10);
+        loadAdminAnalytics(Number.isFinite(days) ? days : 30);
+    }
 });

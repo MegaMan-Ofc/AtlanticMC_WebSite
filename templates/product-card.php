@@ -9,7 +9,7 @@ if ($productCategorySlug === 'keys' && $theme !== '') {
     $cardClasses[] = 'package-' . $theme . '-card';
 }
 ?>
-<article class="<?= e(implode(' ', $cardClasses)) ?>"<?php if (isset($metadata['color'])): ?> style="--rank-color: <?= e($metadata['color']) ?>; --booster-color: <?= e($metadata['color']) ?>"<?php endif; ?>>
+<article data-product-analytics data-product-id="<?= (int) $product['id'] ?>" data-product-analytics-endpoint="<?= e(url('ajax/product-interaction.php')) ?>" class="<?= e(implode(' ', $cardClasses)) ?>"<?php if (isset($metadata['color'])): ?> style="--rank-color: <?= e($metadata['color']) ?>; --booster-color: <?= e($metadata['color']) ?>"<?php endif; ?>>
     <?php if (product_has_discount($product)): ?>
         <span class="package-discount-badge"><?= e(t('common.discount')) ?></span>
     <?php endif; ?>
@@ -18,8 +18,8 @@ if ($productCategorySlug === 'keys' && $theme !== '') {
     <?php endif; ?>
     <div class="image">
         <div class="package-image-wrap">
-            <img class="package-image-glow" src="<?= e(url((string) $product['image'])) ?>" alt="" aria-hidden="true">
-            <img class="package-image-main" src="<?= e(url((string) $product['image'])) ?>" alt="<?= e((string) $localizedProduct['name']) ?>">
+            <img class="package-image-glow" src="<?= e(url((string) $product['image'])) ?>" alt="" aria-hidden="true" loading="lazy" decoding="async">
+            <img class="package-image-main" src="<?= e(url((string) $product['image'])) ?>" alt="<?= e((string) $localizedProduct['name']) ?>" loading="lazy" decoding="async">
         </div>
     </div>
     <div class="info">

@@ -39,7 +39,7 @@
                         <?php $product = localized_product($item['product']); ?>
                         <tr>
                             <td class="cart-item-image">
-                                <img src="<?= e(url($item['product']['image'])) ?>" alt="<?= e($product['name']) ?>">
+                                <img src="<?= e(url($item['product']['image'])) ?>" alt="<?= e($product['name']) ?>" loading="lazy" decoding="async">
                             </td>
                             <td>
                                 <div class="item-name"><?= e($product['name']) ?></div>

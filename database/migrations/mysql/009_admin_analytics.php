@@ -26,7 +26,7 @@ return static function (PDO $pdo): void {
     $pdo->exec(
         'CREATE TABLE IF NOT EXISTS daily_product_stats (
             visit_date DATE NOT NULL,
-            product_id INT UNSIGNED NOT NULL,
+            product_id BIGINT UNSIGNED NOT NULL,
             impressions INT UNSIGNED NOT NULL DEFAULT 0,
             unique_sessions INT UNSIGNED NOT NULL DEFAULT 0,
             cart_additions INT UNSIGNED NOT NULL DEFAULT 0,

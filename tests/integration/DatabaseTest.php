@@ -15,7 +15,7 @@ $pdo->beginTransaction();
 seed_store_database($pdo);
 $pdo->commit();
 
-$assert((int) $pdo->query('SELECT COUNT(*) FROM schema_migrations')->fetchColumn() >= 9, 'All SQLite migrations are recorded.');
+$assert((int) $pdo->query('SELECT COUNT(*) FROM schema_migrations')->fetchColumn() >= 10, 'All SQLite migrations are recorded.');
 
 $orderColumns = array_column($pdo->query('PRAGMA table_info(orders)')->fetchAll(), 'name');
 $assert(
@@ -33,6 +33,22 @@ $assert(
     (int) $pdo->query("SELECT COUNT(*) FROM sqlite_master WHERE type = 'table' AND name IN ('daily_route_stats', 'daily_product_stats')")->fetchColumn() === 2,
     'The analytics migration creates route and product daily statistic tables.'
 );
+
+$siteStatColumns = array_column($pdo->query('PRAGMA table_info(daily_site_stats)')->fetchAll(), 'name');
+$productStatColumns = array_column($pdo->query('PRAGMA table_info(daily_product_stats)')->fetchAll(), 'name');
+$assert(
+    in_array('product_sessions', $siteStatColumns, true)
+        && in_array('cart_sessions', $siteStatColumns, true)
+        && in_array('interactions', $productStatColumns, true)
+        && in_array('interaction_sessions', $productStatColumns, true),
+    'Analytics integrity migration adds site funnel and product interaction counters.'
+);
+
+$ordersIndexes = array_column($pdo->query('PRAGMA index_list(orders)')->fetchAll(), 'name');
+$assert(in_array('idx_orders_status_paid_at', $ordersIndexes, true), 'Paid-order analytics have a status and paid timestamp index.');
+
+$integrityTriggers = (int) $pdo->query("SELECT COUNT(*) FROM sqlite_master WHERE type = 'trigger' AND name IN ('trg_products_category_insert', 'trg_products_category_update', 'trg_categories_products_delete')")->fetchColumn();
+$assert($integrityTriggers === 3, 'SQLite enforces product/category integrity with database triggers.');
 
 $productColumns = array_column($pdo->query('PRAGMA table_info(products)')->fetchAll(), 'name');
 $assert(

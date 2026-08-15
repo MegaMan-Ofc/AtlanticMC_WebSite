@@ -281,6 +281,53 @@ function clampQuantityInput(input, value = input.value) {
     return normalized;
 }
 
+function trackProductCardInteraction(target) {
+    if (!(target instanceof Element)) {
+        return;
+    }
+
+    const interactiveTarget = target.closest('button, a, input, select, [role="button"]');
+    const card = target.closest('[data-product-analytics]');
+
+    if (!(interactiveTarget instanceof Element) || !(card instanceof HTMLElement)) {
+        return;
+    }
+
+    if (card.dataset.analyticsTracked === '1') {
+        return;
+    }
+
+    const endpoint = card.dataset.productAnalyticsEndpoint;
+    const productId = card.dataset.productId;
+    const csrfInput = card.querySelector('input[name="csrf_token"]');
+    const csrfToken = csrfInput instanceof HTMLInputElement ? csrfInput.value : '';
+
+    if (!endpoint || !productId || !csrfToken) {
+        return;
+    }
+
+    card.dataset.analyticsTracked = '1';
+    const body = new FormData();
+    body.set('product_id', productId);
+    body.set('csrf_token', csrfToken);
+
+    if (navigator.sendBeacon) {
+        navigator.sendBeacon(endpoint, body);
+        return;
+    }
+
+    fetch(endpoint, {
+        method: 'POST',
+        credentials: 'same-origin',
+        body,
+        keepalive: true,
+        headers: {
+            Accept: 'application/json',
+            'X-Requested-With': 'XMLHttpRequest',
+        },
+    }).catch(() => {});
+}
+
 function initializeQuantitySteppers(root = document) {
     root.querySelectorAll("[data-quantity-input]").forEach((input) => {
         if (input instanceof HTMLInputElement) {
@@ -404,6 +451,8 @@ async function handleCheckoutSubmit(event, form) {
 }
 
 document.addEventListener("click", async (event) => {
+    trackProductCardInteraction(event.target);
+
     const quantityButton = event.target.closest("[data-quantity-increase], [data-quantity-decrease]");
 
     if (quantityButton instanceof HTMLButtonElement) {
