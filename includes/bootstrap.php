@@ -13,6 +13,7 @@ require_once __DIR__ . '/security.php';
 require_once __DIR__ . '/database.php';
 require_once __DIR__ . '/categories.php';
 require_once __DIR__ . '/catalog.php';
+require_once __DIR__ . '/product_search.php';
 require_once __DIR__ . '/recommended.php';
 require_once __DIR__ . '/coupons.php';
 require_once __DIR__ . '/cart.php';
