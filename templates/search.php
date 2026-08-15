@@ -8,8 +8,9 @@
             </div>
         </header>
 
+        <div class="search-ajax-shell" data-search-shell data-search-path="<?= e(route_url('search')) ?>">
         <section class="search-panel" aria-label="<?= e(t('search.controls_aria')) ?>">
-            <form class="search-form" action="<?= e(route_url('search')) ?>" method="get" role="search">
+            <form class="search-form" action="<?= e(route_url('search')) ?>" method="get" role="search" data-ajax-search>
                 <label class="sr-only" for="product-search"><?= e(t('search.input_label')) ?></label>
                 <div class="search-input-wrap">
                     <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
@@ -32,12 +33,12 @@
             <div class="search-filter-group">
                 <span class="search-filter-label"><?= e(t('search.filter_category')) ?></span>
                 <div class="search-filter-chips">
-                    <a class="search-filter-chip<?= $searchCategory === '' ? ' is-active' : '' ?>" href="<?= e(route_url('search', product_search_query_parameters($searchQuery, '', $searchDiscountOnly, $searchSort))) ?>"><?= e(t('search.all_categories')) ?></a>
+                    <a data-search-link class="search-filter-chip<?= $searchCategory === '' ? ' is-active' : '' ?>" href="<?= e(route_url('search', product_search_query_parameters($searchQuery, '', $searchDiscountOnly, $searchSort))) ?>"><?= e(t('search.all_categories')) ?></a>
                     <?php foreach ($searchCategories as $filterCategory): ?>
                         <?php $filterSlug = (string) $filterCategory['slug']; ?>
-                        <a class="search-filter-chip<?= $searchCategory === $filterSlug ? ' is-active' : '' ?>" href="<?= e(route_url('search', product_search_query_parameters($searchQuery, $filterSlug, $searchDiscountOnly, $searchSort))) ?>"><?= e((string) $filterCategory['name']) ?></a>
+                        <a data-search-link class="search-filter-chip<?= $searchCategory === $filterSlug ? ' is-active' : '' ?>" href="<?= e(route_url('search', product_search_query_parameters($searchQuery, $filterSlug, $searchDiscountOnly, $searchSort))) ?>"><?= e((string) $filterCategory['name']) ?></a>
                     <?php endforeach; ?>
-                    <a class="search-filter-chip search-filter-chip--accent<?= $searchDiscountOnly ? ' is-active' : '' ?>" href="<?= e(route_url('search', product_search_query_parameters($searchQuery, $searchCategory, !$searchDiscountOnly, $searchSort))) ?>">
+                    <a data-search-link class="search-filter-chip search-filter-chip--accent<?= $searchDiscountOnly ? ' is-active' : '' ?>" href="<?= e(route_url('search', product_search_query_parameters($searchQuery, $searchCategory, !$searchDiscountOnly, $searchSort))) ?>">
                         <i class="fa-solid fa-tag" aria-hidden="true"></i>
                         <?= e(t('search.only_discounts')) ?>
                     </a>
@@ -53,7 +54,7 @@
                         'price-desc' => t('search.sort_price_desc'),
                         'name' => t('search.sort_name'),
                     ] as $sortKey => $sortLabel): ?>
-                        <a class="search-filter-chip<?= $searchSort === $sortKey ? ' is-active' : '' ?>" href="<?= e(route_url('search', product_search_query_parameters($searchQuery, $searchCategory, $searchDiscountOnly, $sortKey))) ?>"><?= e($sortLabel) ?></a>
+                        <a data-search-link class="search-filter-chip<?= $searchSort === $sortKey ? ' is-active' : '' ?>" href="<?= e(route_url('search', product_search_query_parameters($searchQuery, $searchCategory, $searchDiscountOnly, $sortKey))) ?>"><?= e($sortLabel) ?></a>
                     <?php endforeach; ?>
                 </div>
             </div>
@@ -65,7 +66,7 @@
                 <?php if ($searchQuery !== ''): ?><strong><?= e(t('search.results_for', ['query' => $searchQuery])) ?></strong><?php else: ?><strong><?= e(t('search.all_products')) ?></strong><?php endif; ?>
             </div>
             <?php if ($searchQuery !== '' || $searchCategory !== '' || $searchDiscountOnly || $searchSort !== 'relevance'): ?>
-                <a class="search-clear" href="<?= e(route_url('search')) ?>"><?= e(t('search.clear_filters')) ?></a>
+                <a data-search-link class="search-clear" href="<?= e(route_url('search')) ?>"><?= e(t('search.clear_filters')) ?></a>
             <?php endif; ?>
         </div>
 
@@ -74,7 +75,7 @@
                 <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
                 <h2><?= e(t('search.no_results')) ?></h2>
                 <p><?= e(t('search.no_results_text')) ?></p>
-                <a class="button button--ghost" href="<?= e(route_url('search')) ?>"><?= e(t('search.show_all')) ?></a>
+                <a data-search-link class="button button--ghost" href="<?= e(route_url('search')) ?>"><?= e(t('search.show_all')) ?></a>
             </section>
         <?php else: ?>
             <section class="catalog-grid search-results-grid" aria-label="<?= e(t('search.results_aria')) ?>">
@@ -83,5 +84,6 @@
                 <?php endforeach; ?>
             </section>
         <?php endif; ?>
+        </div>
     </div>
 </main>

@@ -1,3 +1,18 @@
+.search-ajax-shell {
+    transition: opacity .18s ease;
+}
+
+.search-ajax-shell[aria-busy="true"] {
+    cursor: wait;
+    opacity: .58;
+}
+
+.search-ajax-shell[aria-busy="true"] a,
+.search-ajax-shell[aria-busy="true"] button,
+.search-ajax-shell[aria-busy="true"] input {
+    pointer-events: none;
+}
+
 .search-page-title {
     margin-bottom: 1.4rem;
 }
