@@ -26,6 +26,7 @@ try {
 
     json_response([
         'ok' => true,
+        'category_id' => request_int('category_id'),
         'settings' => $settings,
         'message' => t('admin.home_banner_saved'),
     ]);

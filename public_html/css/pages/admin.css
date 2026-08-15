@@ -2435,15 +2435,28 @@ html.admin-dialog-open {
 
 .admin-home-banner-dialog {
     width: min(68rem, calc(100% - 2rem));
+    height: min(52rem, calc(100dvh - 2rem));
+    max-height: min(52rem, calc(100dvh - 2rem));
 }
 
 .admin-home-banner-dialog .admin-dialog-form {
-    max-height: min(58rem, calc(100vh - 2rem));
+    height: 100%;
+    min-height: 0;
+    max-height: none;
 }
 
 .admin-home-banner-dialog-body {
     display: grid;
+    min-height: 0;
     gap: 1.25rem;
+    overflow-y: auto;
+}
+
+.admin-home-banner-dialog .admin-dialog-actions {
+    position: relative;
+    z-index: 3;
+    flex: 0 0 auto;
+    box-shadow: 0 -0.75rem 1.8rem rgba(0, 0, 0, .18);
 }
 
 .admin-home-banner-preview-wrap {

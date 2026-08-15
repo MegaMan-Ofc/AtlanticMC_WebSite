@@ -438,7 +438,7 @@
             <span class="admin-home-banner-form-state" data-admin-home-banner-form-state aria-live="polite"></span>
             <span class="admin-dialog-actions-spacer"></span>
             <button class="button button--ghost" type="button" data-dialog-close><?= e(t('common.close')) ?></button>
-            <button class="button button--primary" type="submit">
+            <button class="button button--primary" type="submit" data-admin-home-banner-save disabled>
                 <i class="fa-solid fa-floppy-disk" aria-hidden="true"></i>
                 <?= e(t('common.save')) ?>
             </button>

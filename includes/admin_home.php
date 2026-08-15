@@ -175,35 +175,64 @@ function save_admin_home_banner_customization(int $categoryId, array $input): ar
         'show_cta' => (bool) ($input['show_cta'] ?? false),
     ];
 
-    $statement = db()->prepare(
-        'UPDATE categories
-         SET home_banner_kicker = :home_banner_kicker,
-             home_banner_title = :home_banner_title,
-             home_banner_text = :home_banner_text,
-             home_banner_cta = :home_banner_cta,
-             home_banner_style = :home_banner_style,
-             home_banner_image_side = :home_banner_image_side,
-             home_banner_image_size = :home_banner_image_size,
-             home_banner_show_watermark = :home_banner_show_watermark,
-             home_banner_show_cta = :home_banner_show_cta,
-             updated_at = :updated_at
-         WHERE id = :id'
-    );
-    $statement->execute([
-        'home_banner_kicker' => $settings['kicker'] !== '' ? $settings['kicker'] : null,
-        'home_banner_title' => $settings['title'] !== '' ? $settings['title'] : null,
-        'home_banner_text' => $settings['text'] !== '' ? $settings['text'] : null,
-        'home_banner_cta' => $settings['cta'] !== '' ? $settings['cta'] : null,
-        'home_banner_style' => $settings['style'],
-        'home_banner_image_side' => $settings['image_side'],
-        'home_banner_image_size' => $settings['image_size'],
-        'home_banner_show_watermark' => $settings['show_watermark'] ? 1 : 0,
-        'home_banner_show_cta' => $settings['show_cta'] ? 1 : 0,
-        'updated_at' => now_sql(),
-        'id' => $categoryId,
-    ]);
+    $database = db();
+    $database->beginTransaction();
+
+    try {
+        $statement = $database->prepare(
+            'UPDATE categories
+             SET home_banner_kicker = :home_banner_kicker,
+                 home_banner_title = :home_banner_title,
+                 home_banner_text = :home_banner_text,
+                 home_banner_cta = :home_banner_cta,
+                 home_banner_style = :home_banner_style,
+                 home_banner_image_side = :home_banner_image_side,
+                 home_banner_image_size = :home_banner_image_size,
+                 home_banner_show_watermark = :home_banner_show_watermark,
+                 home_banner_show_cta = :home_banner_show_cta,
+                 updated_at = :updated_at
+             WHERE id = :id'
+        );
+        $statement->execute([
+            'home_banner_kicker' => $settings['kicker'] !== '' ? $settings['kicker'] : null,
+            'home_banner_title' => $settings['title'] !== '' ? $settings['title'] : null,
+            'home_banner_text' => $settings['text'] !== '' ? $settings['text'] : null,
+            'home_banner_cta' => $settings['cta'] !== '' ? $settings['cta'] : null,
+            'home_banner_style' => $settings['style'],
+            'home_banner_image_side' => $settings['image_side'],
+            'home_banner_image_size' => $settings['image_size'],
+            'home_banner_show_watermark' => $settings['show_watermark'] ? 1 : 0,
+            'home_banner_show_cta' => $settings['show_cta'] ? 1 : 0,
+            'updated_at' => now_sql(),
+            'id' => $categoryId,
+        ]);
+
+        $reload = $database->prepare(
+            'SELECT id, slug, name, image, active, sort_order, home_placement, home_sort_order,
+                    home_banner_kicker, home_banner_title, home_banner_text, home_banner_cta,
+                    home_banner_style, home_banner_image_side, home_banner_image_size,
+                    home_banner_show_watermark, home_banner_show_cta, created_at, updated_at
+             FROM categories
+             WHERE id = :id
+             LIMIT 1'
+        );
+        $reload->execute(['id' => $categoryId]);
+        $persistedCategory = $reload->fetch();
+
+        if (!is_array($persistedCategory)) {
+            throw new RuntimeException(t('validation.category_not_found'));
+        }
+
+        $database->commit();
+    } catch (Throwable $error) {
+        if ($database->inTransaction()) {
+            $database->rollBack();
+        }
+
+        throw $error;
+    }
 
     reset_store_categories_cache();
 
-    return $settings;
+    return home_banner_settings($persistedCategory);
 }

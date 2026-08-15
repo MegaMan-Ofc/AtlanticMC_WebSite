@@ -1006,6 +1006,8 @@ if (adminHomeLayout instanceof HTMLElement) {
 const adminHomeBannerDialog = document.getElementById('admin-home-banner-dialog');
 const adminHomeBannerForm = adminHomeBannerDialog?.querySelector('[data-admin-home-banner-form]') ?? null;
 let adminHomeBannerEditingCard = null;
+let adminHomeBannerInitialSnapshot = '';
+let adminHomeBannerSaving = false;
 
 const adminHomeBannerField = name => {
     if (!(adminHomeBannerDialog instanceof HTMLDialogElement)) {
@@ -1116,6 +1118,68 @@ const setAdminHomeBannerFormState = (message, isError = false) => {
     target.classList.toggle('is-error', isError);
 };
 
+const adminHomeBannerSnapshot = () => {
+    const valueOf = name => {
+        const field = adminHomeBannerField(name);
+
+        if (field instanceof HTMLInputElement
+            || field instanceof HTMLTextAreaElement
+            || field instanceof HTMLSelectElement) {
+            return field.value;
+        }
+
+        return '';
+    };
+
+    const checkedOf = name => {
+        const field = adminHomeBannerField(name);
+        return field instanceof HTMLInputElement && field.checked;
+    };
+
+    return JSON.stringify({
+        kicker: valueOf('kicker'),
+        title: valueOf('title'),
+        text: valueOf('text'),
+        cta: valueOf('cta'),
+        style: valueOf('style'),
+        image_side: valueOf('image_side'),
+        image_size: valueOf('image_size'),
+        show_watermark: checkedOf('show_watermark'),
+        show_cta: checkedOf('show_cta'),
+    });
+};
+
+const syncAdminHomeBannerSaveState = () => {
+    const saveButton = adminHomeBannerForm?.querySelector('[data-admin-home-banner-save]');
+
+    if (!(saveButton instanceof HTMLButtonElement)) {
+        return;
+    }
+
+    const hasPendingChanges = adminHomeBannerEditingCard instanceof HTMLElement
+        && adminHomeBannerInitialSnapshot !== ''
+        && adminHomeBannerSnapshot() !== adminHomeBannerInitialSnapshot;
+
+    saveButton.disabled = adminHomeBannerSaving || !hasPendingChanges;
+};
+
+const setAdminHomeBannerSaving = saving => {
+    adminHomeBannerSaving = saving;
+
+    if (adminHomeBannerForm instanceof HTMLFormElement) {
+        adminHomeBannerForm.setAttribute('aria-busy', String(saving));
+    }
+
+    adminHomeBannerDialog?.querySelectorAll('[data-dialog-close], [data-admin-home-banner-reset]')
+        .forEach(button => {
+            if (button instanceof HTMLButtonElement) {
+                button.disabled = saving;
+            }
+        });
+
+    syncAdminHomeBannerSaveState();
+};
+
 const loadAdminHomeBannerFormFromCard = card => {
     if (!(card instanceof HTMLElement)
         || !(adminHomeBannerDialog instanceof HTMLDialogElement)) {
@@ -1173,6 +1237,8 @@ const loadAdminHomeBannerFormFromCard = card => {
 
     setAdminHomeBannerFormState('');
     updateAdminHomeBannerPreview();
+    adminHomeBannerInitialSnapshot = adminHomeBannerSnapshot();
+    syncAdminHomeBannerSaveState();
 };
 
 const adminHomeBannerIsCustomized = settings => {
@@ -1260,63 +1326,106 @@ if (adminHomeBannerDialog instanceof HTMLDialogElement) {
 
             setAdminHomeBannerFormState('');
             updateAdminHomeBannerPreview();
+            syncAdminHomeBannerSaveState();
         }
     });
 
-    adminHomeBannerDialog.addEventListener('input', updateAdminHomeBannerPreview);
-    adminHomeBannerDialog.addEventListener('change', updateAdminHomeBannerPreview);
+    const handleAdminHomeBannerChange = () => {
+        updateAdminHomeBannerPreview();
+        setAdminHomeBannerFormState('');
+        syncAdminHomeBannerSaveState();
+    };
+
+    adminHomeBannerDialog.addEventListener('input', handleAdminHomeBannerChange);
+    adminHomeBannerDialog.addEventListener('change', handleAdminHomeBannerChange);
+    adminHomeBannerDialog.addEventListener('cancel', event => {
+        if (adminHomeBannerSaving) {
+            event.preventDefault();
+        }
+    });
+    adminHomeBannerDialog.addEventListener('click', event => {
+        if (adminHomeBannerSaving && event.target === adminHomeBannerDialog) {
+            event.stopPropagation();
+        }
+    });
+    adminHomeBannerDialog.addEventListener('close', () => {
+        adminHomeBannerEditingCard = null;
+        adminHomeBannerInitialSnapshot = '';
+        adminHomeBannerSaving = false;
+    });
 }
 
 if (adminHomeBannerForm instanceof HTMLFormElement) {
     adminHomeBannerForm.addEventListener('submit', async event => {
         event.preventDefault();
 
-        if (!(adminHomeBannerEditingCard instanceof HTMLElement)) {
+        if (!(adminHomeBannerEditingCard instanceof HTMLElement) || adminHomeBannerSaving) {
             return;
         }
 
-        const submitButton = adminHomeBannerForm.querySelector('button[type="submit"]');
+        if (adminHomeBannerSnapshot() === adminHomeBannerInitialSnapshot) {
+            syncAdminHomeBannerSaveState();
+            return;
+        }
+
         const formData = new FormData(adminHomeBannerForm);
         const showWatermark = adminHomeBannerField('show_watermark');
         const showCta = adminHomeBannerField('show_cta');
+        const categoryId = adminHomeBannerEditingCard.dataset.categoryId ?? '';
 
+        if (categoryId === '') {
+            setAdminHomeBannerFormState('Unable to identify the banner category.', true);
+            return;
+        }
+
+        formData.set('category_id', categoryId);
         formData.set('show_watermark', showWatermark instanceof HTMLInputElement && showWatermark.checked ? '1' : '0');
         formData.set('show_cta', showCta instanceof HTMLInputElement && showCta.checked ? '1' : '0');
-        setAdminHomeBannerFormState(adminHomeLayout?.dataset.savingLabel ?? '');
 
-        if (submitButton instanceof HTMLButtonElement) {
-            submitButton.disabled = true;
-        }
+        setAdminHomeBannerFormState(adminHomeLayout?.dataset.savingLabel ?? '');
+        setAdminHomeBannerSaving(true);
 
         try {
             const response = await fetch(adminHomeBannerForm.action, {
                 method: 'POST',
                 body: formData,
                 credentials: 'same-origin',
+                cache: 'no-store',
                 headers: {
                     Accept: 'application/json',
                     'X-Requested-With': 'XMLHttpRequest',
                 },
             });
-            const payload = await response.json();
+            const responseText = await response.text();
+            let payload = null;
+
+            try {
+                payload = JSON.parse(responseText);
+            } catch {
+                throw new Error(responseText.trim() || 'Unable to save banner.');
+            }
 
             if (!response.ok || payload?.ok !== true || typeof payload?.settings !== 'object') {
                 throw new Error(payload?.error ?? 'Unable to save banner.');
             }
 
+            if (String(payload.category_id ?? '') !== categoryId) {
+                throw new Error('The server returned a different banner category.');
+            }
+
             applyAdminHomeBannerSettingsToCard(adminHomeBannerEditingCard, payload.settings);
+            adminHomeBannerInitialSnapshot = adminHomeBannerSnapshot();
             setAdminHomeBannerFormState(payload.message ?? '');
+
             window.setTimeout(() => {
-                if (adminHomeBannerDialog.open) {
+                if (adminHomeBannerDialog?.open) {
                     adminHomeBannerDialog.close();
                 }
             }, 450);
         } catch (error) {
             setAdminHomeBannerFormState(error instanceof Error ? error.message : '', true);
         } finally {
-            if (submitButton instanceof HTMLButtonElement) {
-                submitButton.disabled = false;
-            }
+            setAdminHomeBannerSaving(false);
         }
     });
 }

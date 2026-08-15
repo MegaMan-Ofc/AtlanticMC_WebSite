@@ -60,8 +60,10 @@ $assert(
         && str_contains($adminHomeJavaScript, 'applyAdminHomeBannerSettingsToCard')
         && str_contains($adminHomeJavaScript, 'admin_save_home_banner.php') === false
         && is_string($adminHomeCss)
-        && str_contains($adminHomeCss, '.admin-home-banner-preview'),
-    'Banner customization uses reusable AJAX behavior and a responsive live preview.'
+        && str_contains($adminHomeCss, '.admin-home-banner-preview')
+        && str_contains($adminHomeCss, 'height: min(52rem, calc(100dvh - 2rem));')
+        && str_contains($adminHomeCss, '.admin-home-banner-dialog .admin-dialog-actions'),
+    'Banner customization uses reusable AJAX behavior, a responsive live preview and an always-visible action footer.'
 );
 
 $assert(
@@ -73,4 +75,24 @@ $assert(
         && str_contains($homeCss, 'data-banner-style="atlantic"')
         && str_contains($homeCss, 'home-category-banner--image-left'),
     'The storefront banner renders the saved style, image placement, watermark and responsive variants.'
+);
+
+
+$adminHomeAction = file_get_contents($root . '/public_html/actions/admin_save_home_banner.php');
+$adminHomePhp = file_get_contents($root . '/includes/admin_home.php');
+
+$assert(
+    is_string($adminHomeAction)
+        && str_contains($adminHomeAction, "'category_id' => request_int('category_id')")
+        && is_string($adminHomePhp)
+        && str_contains($adminHomePhp, 'beginTransaction()')
+        && str_contains($adminHomePhp, 'return home_banner_settings($persistedCategory);')
+        && str_contains($adminHomeJavaScript, "formData.set('category_id', categoryId)")
+        && str_contains($adminHomeJavaScript, "cache: 'no-store'")
+        && str_contains($adminHomeJavaScript, 'JSON.parse(responseText)')
+        && str_contains($adminHomeTemplate, 'data-admin-home-banner-save disabled')
+        && str_contains($adminHomeJavaScript, 'adminHomeBannerSnapshot')
+        && str_contains($adminHomeJavaScript, 'syncAdminHomeBannerSaveState')
+        && str_contains($adminHomeJavaScript, 'setAdminHomeBannerSaving(true)'),
+    'Banner saves explicitly bind the edited category, require pending changes and return persisted database values.'
 );
