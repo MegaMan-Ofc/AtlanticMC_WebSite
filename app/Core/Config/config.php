@@ -2,7 +2,8 @@
 
 declare(strict_types=1);
 
-const BASE_PATH = __DIR__ . '/..';
+const BASE_PATH = __DIR__ . '/../../..';
+const TEMPLATE_PATH = BASE_PATH . '/templates';
 
 function parse_environment_line(string $line): ?array
 {

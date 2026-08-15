@@ -2,40 +2,13 @@
 
 declare(strict_types=1);
 
-require_once __DIR__ . '/config.php';
-require_once __DIR__ . '/routes.php';
-require_once __DIR__ . '/error_pages.php';
-require_once __DIR__ . '/helpers.php';
-require_once __DIR__ . '/logging.php';
-require_once __DIR__ . '/session.php';
-require_once __DIR__ . '/i18n.php';
-require_once __DIR__ . '/legal.php';
-require_once __DIR__ . '/security.php';
-require_once __DIR__ . '/maintenance.php';
-require_once __DIR__ . '/database.php';
-require_once __DIR__ . '/categories.php';
-require_once __DIR__ . '/catalog.php';
-require_once __DIR__ . '/product_search.php';
-require_once __DIR__ . '/recommended.php';
-require_once __DIR__ . '/coupons.php';
-require_once __DIR__ . '/cart.php';
-require_once __DIR__ . '/admin_auth.php';
-require_once __DIR__ . '/admin_formatting.php';
-require_once __DIR__ . '/media.php';
-require_once __DIR__ . '/admin_categories.php';
-require_once __DIR__ . '/admin_products.php';
-require_once __DIR__ . '/admin_recommended.php';
-require_once __DIR__ . '/admin_home.php';
-require_once __DIR__ . '/admin_coupons.php';
-require_once __DIR__ . '/admin_orders.php';
-require_once __DIR__ . '/analytics.php';
-require_once __DIR__ . '/admin_analytics.php';
-require_once __DIR__ . '/admin_dashboard.php';
-require_once __DIR__ . '/minecraft_recipient.php';
-require_once __DIR__ . '/http.php';
-require_once __DIR__ . '/tebex.php';
-require_once __DIR__ . '/orders.php';
-require_once __DIR__ . '/checkout.php';
+$modules = require __DIR__ . '/modules.php';
+
+foreach ($modules as $module) {
+    require_once __DIR__ . '/' . $module;
+}
+
+unset($modules, $module);
 
 try {
     $debugEnabled = (bool) config('app.debug', false) && !is_production();
