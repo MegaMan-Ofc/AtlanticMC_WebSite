@@ -25,11 +25,11 @@ $adminOrderFilters = [];
 $adminOrdersPage = ['orders' => [], 'total' => 0, 'page' => 1, 'pages' => 1];
 $adminTraffic = [];
 $adminAnalytics = [];
+$adminMaintenanceState = maintenance_state();
 
 if ($adminAuthenticated) {
-    $adminSummary = admin_dashboard_summary();
-
     if ($adminSection === 'overview') {
+        $adminSummary = admin_dashboard_summary();
         $analyticsDays = admin_analytics_normalize_days(query_int('analytics_days', 30));
         $adminTraffic = daily_traffic_stats(7);
         $adminAnalytics = admin_dashboard_analytics($analyticsDays);
@@ -60,6 +60,7 @@ function admin_section_icon(string $section): string
         'recommended' => 'fa-solid fa-house',
         'coupons' => 'fa-solid fa-ticket',
         'orders' => 'fa-solid fa-receipt',
+        'maintenance' => 'fa-solid fa-screwdriver-wrench',
         default => 'fa-solid fa-gauge-high',
     };
 }

@@ -13,6 +13,14 @@ function admin_is_configured(): bool
         && trim((string) config('admin.password_hash', '')) !== '';
 }
 
+
+function admin_password_is_valid(string $password): bool
+{
+    $hash = trim((string) config('admin.password_hash', ''));
+
+    return $hash !== '' && password_verify($password, $hash);
+}
+
 function admin_session_fingerprint(): string
 {
     return hash('sha256', (string) ($_SERVER['HTTP_USER_AGENT'] ?? 'unknown'));
@@ -194,9 +202,8 @@ function admin_attempt_login(string $username, string $password): string
     }
 
     $expectedUsername = (string) config('admin.username', '');
-    $hash = (string) config('admin.password_hash', '');
     $usernameValid = hash_equals($expectedUsername, $username);
-    $passwordValid = password_verify($password, $hash);
+    $passwordValid = admin_password_is_valid($password);
 
     if (!$usernameValid || !$passwordValid) {
         admin_record_failed_login($username);

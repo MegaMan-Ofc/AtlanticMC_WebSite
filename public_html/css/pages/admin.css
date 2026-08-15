@@ -2770,3 +2770,490 @@ html.admin-dialog-open {
         grid-template-columns: 1fr;
     }
 }
+
+.admin-site-state {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    gap: .55rem;
+    padding: .65rem .9rem;
+    border: 1px solid var(--border);
+    border-radius: .7rem;
+    font-size: .75rem;
+    font-weight: 800;
+    text-decoration: none;
+}
+
+.admin-site-state-dot {
+    width: .5rem;
+    height: .5rem;
+    border-radius: 50%;
+}
+
+.admin-site-state--online {
+    background: rgba(46, 204, 113, .07);
+    color: #72e7a4;
+}
+
+.admin-site-state--online .admin-site-state-dot {
+    background: #2ecc71;
+    box-shadow: 0 0 0 .3rem rgba(46, 204, 113, .09);
+}
+
+.admin-site-state--maintenance {
+    border-color: rgba(255, 190, 62, .2);
+    background: rgba(255, 190, 62, .07);
+    color: #ffca61;
+}
+
+.admin-site-state--maintenance .admin-site-state-dot {
+    background: #ffbd3e;
+    box-shadow: 0 0 0 .3rem rgba(255, 189, 62, .09);
+}
+
+.admin-maintenance-integrity {
+    margin: 0;
+}
+
+.admin-maintenance-status {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 1.25rem;
+    overflow: hidden;
+    padding: clamp(1.25rem, 3vw, 2rem);
+    border: 1px solid var(--border);
+    border-radius: 1.15rem;
+    background: rgba(19, 22, 28, .96);
+    box-shadow: 0 1rem 2.5rem rgba(0, 0, 0, .16);
+}
+
+.admin-maintenance-status::before {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: .25rem;
+    content: '';
+}
+
+.admin-maintenance-status.is-online::before {
+    background: #2ecc71;
+}
+
+.admin-maintenance-status.is-maintenance::before {
+    background: #ffbd3e;
+}
+
+.admin-maintenance-status-icon {
+    position: relative;
+    display: grid;
+    width: 4.25rem;
+    height: 4.25rem;
+    place-items: center;
+    border: 1px solid var(--border);
+    border-radius: 1.1rem;
+    background: rgba(255, 255, 255, .035);
+    font-size: 1.35rem;
+}
+
+.admin-maintenance-status-icon span {
+    position: absolute;
+    top: .65rem;
+    right: .65rem;
+    width: .5rem;
+    height: .5rem;
+    border-radius: 50%;
+}
+
+.is-online .admin-maintenance-status-icon {
+    color: #65dfa0;
+}
+
+.is-online .admin-maintenance-status-icon span {
+    background: #2ecc71;
+    box-shadow: 0 0 0 .3rem rgba(46, 204, 113, .08);
+}
+
+.is-maintenance .admin-maintenance-status-icon {
+    color: #ffcb64;
+}
+
+.is-maintenance .admin-maintenance-status-icon span {
+    background: #ffbd3e;
+    box-shadow: 0 0 0 .3rem rgba(255, 189, 62, .08);
+}
+
+.admin-maintenance-status-copy h3,
+.admin-maintenance-status-copy p {
+    margin: 0;
+}
+
+.admin-maintenance-status-copy h3 {
+    margin-block: .2rem .35rem;
+    font-size: clamp(1.3rem, 3vw, 1.8rem);
+}
+
+.admin-maintenance-status-copy p {
+    max-width: 46rem;
+    color: var(--muted);
+    line-height: 1.6;
+}
+
+.admin-maintenance-status-kicker {
+    color: var(--subtle);
+    font-size: .68rem;
+    font-weight: 900;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+}
+
+.admin-maintenance-status-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: .65rem;
+}
+
+.admin-maintenance-grid {
+    display: grid;
+    grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+    gap: 1.25rem;
+}
+
+.admin-maintenance-details,
+.admin-maintenance-guards {
+    min-width: 0;
+}
+
+.admin-maintenance-panel-heading {
+    display: flex;
+    align-items: flex-start;
+    gap: .9rem;
+    margin-bottom: 1.2rem;
+}
+
+.admin-maintenance-panel-heading h3,
+.admin-maintenance-panel-heading p {
+    margin: 0;
+}
+
+.admin-maintenance-panel-heading p {
+    margin-top: .3rem;
+    color: var(--muted);
+    font-size: .82rem;
+    line-height: 1.55;
+}
+
+.admin-maintenance-panel-icon {
+    display: grid;
+    width: 2.7rem;
+    height: 2.7rem;
+    flex: 0 0 2.7rem;
+    place-items: center;
+    border: 1px solid rgba(108, 92, 231, .22);
+    border-radius: .75rem;
+    background: rgba(108, 92, 231, .08);
+    color: var(--accent);
+}
+
+.admin-maintenance-facts {
+    display: grid;
+    gap: .7rem;
+    margin: 0;
+}
+
+.admin-maintenance-facts > div {
+    display: grid;
+    gap: .2rem;
+    padding: .85rem .95rem;
+    border: 1px solid var(--border);
+    border-radius: .75rem;
+    background: rgba(255, 255, 255, .025);
+}
+
+.admin-maintenance-facts dt {
+    color: var(--subtle);
+    font-size: .66rem;
+    font-weight: 900;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+}
+
+.admin-maintenance-facts dd {
+    margin: 0;
+    color: var(--text);
+    font-size: .86rem;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+.admin-maintenance-guard-list {
+    display: grid;
+    gap: .7rem;
+}
+
+.admin-maintenance-guard-list article {
+    display: flex;
+    align-items: flex-start;
+    gap: .8rem;
+    padding: .85rem .95rem;
+    border: 1px solid var(--border);
+    border-radius: .75rem;
+    background: rgba(255, 255, 255, .025);
+}
+
+.admin-maintenance-guard-list article > i {
+    width: 1.3rem;
+    flex: 0 0 1.3rem;
+    margin-top: .15rem;
+    color: #66d7ff;
+    text-align: center;
+}
+
+.admin-maintenance-guard-list strong,
+.admin-maintenance-guard-list p {
+    display: block;
+    margin: 0;
+}
+
+.admin-maintenance-guard-list strong {
+    font-size: .86rem;
+}
+
+.admin-maintenance-guard-list p {
+    margin-top: .2rem;
+    color: var(--muted);
+    font-size: .76rem;
+    line-height: 1.5;
+}
+
+.admin-maintenance-dialog {
+    width: min(56rem, calc(100% - 2rem));
+}
+
+.admin-maintenance-dialog-body {
+    display: grid;
+    align-content: start;
+    gap: 1.2rem;
+}
+
+.admin-maintenance-stepper {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: .55rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.admin-maintenance-stepper li {
+    display: flex;
+    align-items: center;
+    gap: .55rem;
+    min-width: 0;
+    padding: .65rem .75rem;
+    border: 1px solid var(--border);
+    border-radius: .7rem;
+    background: rgba(255, 255, 255, .025);
+    color: var(--subtle);
+}
+
+.admin-maintenance-stepper li > span {
+    display: grid;
+    width: 1.65rem;
+    height: 1.65rem;
+    flex: 0 0 1.65rem;
+    place-items: center;
+    border-radius: .5rem;
+    background: rgba(255, 255, 255, .05);
+    font-size: .7rem;
+    font-weight: 900;
+}
+
+.admin-maintenance-stepper strong {
+    overflow: hidden;
+    font-size: .72rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.admin-maintenance-stepper li.is-active {
+    border-color: rgba(108, 92, 231, .4);
+    background: rgba(108, 92, 231, .1);
+    color: var(--text);
+}
+
+.admin-maintenance-stepper li.is-active > span {
+    background: var(--primary);
+    color: #fff;
+}
+
+.admin-maintenance-stepper li.is-complete {
+    border-color: rgba(46, 204, 113, .2);
+    color: #72e7a4;
+}
+
+.admin-maintenance-stepper li.is-complete > span {
+    background: rgba(46, 204, 113, .15);
+    color: #72e7a4;
+}
+
+.admin-maintenance-step {
+    display: grid;
+    gap: 1rem;
+    min-height: 15rem;
+    align-content: start;
+    padding: 1rem;
+    border: 1px solid var(--border);
+    border-radius: .9rem;
+    background: rgba(255, 255, 255, .02);
+}
+
+.admin-maintenance-config-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(14rem, .8fr);
+    gap: 1rem;
+}
+
+.admin-maintenance-message-field textarea {
+    min-height: 7rem;
+}
+
+.admin-maintenance-acknowledgements {
+    display: grid;
+    gap: .65rem;
+}
+
+.admin-maintenance-acknowledgements label {
+    display: flex;
+    align-items: flex-start;
+    gap: .75rem;
+    padding: .8rem .9rem;
+    border: 1px solid var(--border);
+    border-radius: .75rem;
+    background: rgba(11, 14, 19, .42);
+    color: var(--muted);
+    font-size: .8rem;
+    line-height: 1.5;
+    cursor: pointer;
+}
+
+.admin-maintenance-acknowledgements input {
+    width: 1.05rem;
+    height: 1.05rem;
+    flex: 0 0 1.05rem;
+    margin-top: .15rem;
+    accent-color: var(--primary);
+}
+
+.admin-maintenance-confirmation-copy,
+.admin-maintenance-password-copy {
+    display: grid;
+    justify-items: center;
+    gap: .75rem;
+    padding: 1.1rem;
+    text-align: center;
+}
+
+.admin-maintenance-confirmation-copy > i {
+    color: #66d7ff;
+    font-size: 1.7rem;
+}
+
+.admin-maintenance-confirmation-copy p,
+.admin-maintenance-password-copy p {
+    max-width: 36rem;
+    margin: 0;
+    color: var(--muted);
+    line-height: 1.6;
+}
+
+.admin-maintenance-confirmation-copy code {
+    padding: .65rem .9rem;
+    border: 1px solid rgba(255, 190, 62, .2);
+    border-radius: .65rem;
+    background: rgba(255, 190, 62, .07);
+    color: #ffca61;
+    font-size: .9rem;
+    font-weight: 900;
+    letter-spacing: .08em;
+}
+
+.admin-maintenance-password-copy {
+    grid-template-columns: auto minmax(0, 1fr);
+    justify-items: start;
+    text-align: left;
+}
+
+.admin-maintenance-password-copy h4 {
+    margin: 0 0 .25rem;
+}
+
+.admin-maintenance-lock {
+    display: grid;
+    width: 3rem;
+    height: 3rem;
+    place-items: center;
+    border: 1px solid rgba(108, 92, 231, .24);
+    border-radius: .8rem;
+    background: rgba(108, 92, 231, .09);
+    color: var(--accent);
+}
+
+.admin-maintenance-dialog-actions {
+    min-height: 4.75rem;
+}
+
+@media (max-width: 900px) {
+    .admin-maintenance-status {
+        grid-template-columns: auto minmax(0, 1fr);
+    }
+
+    .admin-maintenance-status-actions {
+        grid-column: 1 / -1;
+        justify-content: flex-start;
+    }
+
+    .admin-maintenance-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 640px) {
+    .admin-site-state {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .admin-maintenance-status {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-maintenance-status-icon {
+        width: 3.7rem;
+        height: 3.7rem;
+    }
+
+    .admin-maintenance-status-actions,
+    .admin-maintenance-status-actions .button {
+        width: 100%;
+    }
+
+    .admin-maintenance-stepper strong {
+        display: none;
+    }
+
+    .admin-maintenance-stepper li {
+        justify-content: center;
+    }
+
+    .admin-maintenance-config-grid,
+    .admin-maintenance-password-copy {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-maintenance-password-copy {
+        justify-items: center;
+        text-align: center;
+    }
+}

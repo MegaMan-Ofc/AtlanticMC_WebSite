@@ -29,6 +29,15 @@ $adminLanguageReturnTo = current_public_return_path();
                     <span class="language-code"><?= e(language_label($adminLanguage)) ?></span>
                 </button>
             </form>
+            <?php if ($adminAuthenticated): ?>
+                <a
+                    class="admin-site-state <?= maintenance_is_enabled($adminMaintenanceState) ? 'admin-site-state--maintenance' : 'admin-site-state--online' ?>"
+                    href="<?= e(admin_section_url('maintenance')) ?>"
+                >
+                    <span class="admin-site-state-dot" aria-hidden="true"></span>
+                    <span><?= e(maintenance_is_enabled($adminMaintenanceState) ? t('admin.maintenance_status_active_short') : t('admin.maintenance_status_online_short')) ?></span>
+                </a>
+            <?php endif; ?>
             <a class="button button--ghost" href="<?= e(route_url('home')) ?>"><?= e(t('common.back_to_store')) ?></a>
             <?php if ($adminAuthenticated): ?>
                 <form action="<?= e(url('actions/admin_logout.php')) ?>" method="post">

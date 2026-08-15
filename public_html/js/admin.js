@@ -1548,3 +1548,119 @@ document.addEventListener('click', event => {
         loadAdminAnalytics(Number.isFinite(days) ? days : 30);
     }
 });
+
+const adminMaintenanceDialog = document.getElementById('admin-maintenance-dialog');
+const adminMaintenanceForm = adminMaintenanceDialog?.querySelector('[data-admin-maintenance-form]') ?? null;
+let adminMaintenanceStep = 1;
+
+const adminMaintenanceStepIsValid = step => {
+    if (!(adminMaintenanceForm instanceof HTMLFormElement)) {
+        return false;
+    }
+
+    if (step === 1) {
+        const required = [...adminMaintenanceForm.querySelectorAll('[data-admin-maintenance-required]')];
+        return required.length > 0 && required.every(field => field instanceof HTMLInputElement && field.checked);
+    }
+
+    if (step === 2) {
+        const phrase = adminMaintenanceForm.querySelector('[data-admin-maintenance-phrase]');
+        return phrase instanceof HTMLInputElement
+            && phrase.value === (adminMaintenanceForm.dataset.confirmationPhrase ?? '');
+    }
+
+    const password = adminMaintenanceForm.querySelector('[data-admin-maintenance-password]');
+    return password instanceof HTMLInputElement && password.value.length > 0;
+};
+
+const syncAdminMaintenanceDialog = () => {
+    if (!(adminMaintenanceForm instanceof HTMLFormElement)) {
+        return;
+    }
+
+    adminMaintenanceForm.querySelectorAll('[data-admin-maintenance-step]').forEach(section => {
+        const sectionStep = Number.parseInt(section.dataset.adminMaintenanceStep ?? '0', 10);
+        section.hidden = sectionStep !== adminMaintenanceStep;
+    });
+
+    adminMaintenanceForm.querySelectorAll('[data-admin-maintenance-step-marker]').forEach(marker => {
+        const markerStep = Number.parseInt(marker.dataset.adminMaintenanceStepMarker ?? '0', 10);
+        marker.classList.toggle('is-active', markerStep === adminMaintenanceStep);
+        marker.classList.toggle('is-complete', markerStep < adminMaintenanceStep);
+        marker.toggleAttribute('aria-current', markerStep === adminMaintenanceStep);
+    });
+
+    const backButton = adminMaintenanceForm.querySelector('[data-admin-maintenance-back]');
+    const nextButton = adminMaintenanceForm.querySelector('[data-admin-maintenance-next]');
+    const submitButton = adminMaintenanceForm.querySelector('[data-admin-maintenance-submit]');
+
+    if (backButton instanceof HTMLButtonElement) {
+        backButton.hidden = adminMaintenanceStep === 1;
+    }
+
+    if (nextButton instanceof HTMLButtonElement) {
+        nextButton.hidden = adminMaintenanceStep === 3;
+        nextButton.disabled = !adminMaintenanceStepIsValid(adminMaintenanceStep);
+    }
+
+    if (submitButton instanceof HTMLButtonElement) {
+        submitButton.hidden = adminMaintenanceStep !== 3;
+        submitButton.disabled = !adminMaintenanceStepIsValid(3);
+    }
+};
+
+const resetAdminMaintenanceDialog = () => {
+    if (!(adminMaintenanceForm instanceof HTMLFormElement)) {
+        return;
+    }
+
+    adminMaintenanceForm.reset();
+    adminMaintenanceStep = 1;
+    syncAdminMaintenanceDialog();
+};
+
+if (adminMaintenanceForm instanceof HTMLFormElement) {
+    syncAdminMaintenanceDialog();
+
+    adminMaintenanceForm.addEventListener('input', syncAdminMaintenanceDialog);
+    adminMaintenanceForm.addEventListener('change', syncAdminMaintenanceDialog);
+
+    adminMaintenanceForm.querySelector('[data-admin-maintenance-next]')?.addEventListener('click', () => {
+        if (adminMaintenanceStep >= 3 || !adminMaintenanceStepIsValid(adminMaintenanceStep)) {
+            return;
+        }
+
+        adminMaintenanceStep += 1;
+        syncAdminMaintenanceDialog();
+        adminMaintenanceForm.querySelector(`[data-admin-maintenance-step="${adminMaintenanceStep}"] input`)?.focus();
+    });
+
+    adminMaintenanceForm.querySelector('[data-admin-maintenance-back]')?.addEventListener('click', () => {
+        if (adminMaintenanceStep <= 1) {
+            return;
+        }
+
+        adminMaintenanceStep -= 1;
+        syncAdminMaintenanceDialog();
+    });
+
+    adminMaintenanceForm.addEventListener('submit', event => {
+        if (adminMaintenanceStep < 3) {
+            event.preventDefault();
+
+            if (adminMaintenanceStepIsValid(adminMaintenanceStep)) {
+                adminMaintenanceStep += 1;
+                syncAdminMaintenanceDialog();
+            }
+
+            return;
+        }
+
+        if (!adminMaintenanceStepIsValid(1) || !adminMaintenanceStepIsValid(2) || !adminMaintenanceStepIsValid(3)) {
+            event.preventDefault();
+            syncAdminMaintenanceDialog();
+        }
+    });
+}
+
+adminMaintenanceDialog?.addEventListener('close', resetAdminMaintenanceDialog);
