@@ -14,3 +14,4 @@ $homeCategories = $homeCategoryLayout['grid'];
 $homeBottomCategory = $homeCategoryLayout['bottom'];
 $homeHasCategories = $homeTopCategory !== null || $homeCategories !== [] || $homeBottomCategory !== null;
 $homeRecommendedProducts = recommended_products_for_home();
+track_product_impressions($homeRecommendedProducts);

@@ -132,7 +132,7 @@ function mark_order_status_by_token(string $token, string $status, ?string $prov
     $pdo->beginTransaction();
 
     try {
-        $select = $pdo->prepare('SELECT id, status, coupon_code FROM orders WHERE public_token = :token');
+        $select = $pdo->prepare('SELECT id, status, coupon_code, paid_at FROM orders WHERE public_token = :token');
         $select->execute(['token' => $token]);
         $order = $select->fetch();
 
@@ -140,15 +140,20 @@ function mark_order_status_by_token(string $token, string $status, ?string $prov
             throw new RuntimeException(t('validation.order_not_found'));
         }
 
+        $updatedAt = now_sql();
+        $paidAt = $status === 'paid' && empty($order['paid_at']) ? $updatedAt : $order['paid_at'];
         $statement = $pdo->prepare(
             'UPDATE orders SET status = :status,
-             provider_reference = COALESCE(:provider_reference, provider_reference), updated_at = :updated_at
+             provider_reference = COALESCE(:provider_reference, provider_reference),
+             paid_at = :paid_at,
+             updated_at = :updated_at
              WHERE id = :id'
         );
         $statement->execute([
             'status' => $status,
             'provider_reference' => $providerReference,
-            'updated_at' => now_sql(),
+            'paid_at' => $paidAt,
+            'updated_at' => $updatedAt,
             'id' => $order['id'],
         ]);
 
@@ -219,7 +224,7 @@ function process_order_webhook(
             throw $error;
         }
 
-        $select = $pdo->prepare('SELECT id, status, coupon_code FROM orders WHERE public_token = :token');
+        $select = $pdo->prepare('SELECT id, status, coupon_code, paid_at FROM orders WHERE public_token = :token');
         $select->execute(['token' => $orderToken]);
         $order = $select->fetch();
 
@@ -227,15 +232,20 @@ function process_order_webhook(
             throw new RuntimeException(t('validation.order_not_found'));
         }
 
+        $updatedAt = now_sql();
+        $paidAt = $status === 'paid' && empty($order['paid_at']) ? $updatedAt : $order['paid_at'];
         $update = $pdo->prepare(
             'UPDATE orders SET status = :status,
-             provider_reference = COALESCE(:provider_reference, provider_reference), updated_at = :updated_at
+             provider_reference = COALESCE(:provider_reference, provider_reference),
+             paid_at = :paid_at,
+             updated_at = :updated_at
              WHERE id = :id'
         );
         $update->execute([
             'status' => $status,
             'provider_reference' => $providerReference,
-            'updated_at' => now_sql(),
+            'paid_at' => $paidAt,
+            'updated_at' => $updatedAt,
             'id' => $order['id'],
         ]);
 

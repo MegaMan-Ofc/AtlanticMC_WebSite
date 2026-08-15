@@ -21,3 +21,4 @@ $pageDescription = $page['description'];
 $bodyClass = $page['bodyClass'];
 $pageStyles = $page['styles'];
 $products = products_by_category($category);
+track_product_impressions($products);

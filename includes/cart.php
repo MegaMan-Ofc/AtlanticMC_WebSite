@@ -18,8 +18,15 @@ function cart_add(int $productId, int $quantity = 1): void
     $max = (int) config('app.max_cart_quantity', 20);
     $cart = cart_raw();
     $current = (int) ($cart[$productId] ?? 0);
-    $cart[$productId] = min($max, max(1, $current + $quantity));
+    $next = min($max, max(1, $current + $quantity));
+    $cart[$productId] = $next;
     $_SESSION['cart'] = $cart;
+
+    $added = max(0, $next - $current);
+
+    if ($added > 0 && function_exists('track_product_cart_add')) {
+        track_product_cart_add($productId, $added);
+    }
 }
 
 function cart_update(array $quantities): void
@@ -40,7 +47,13 @@ function cart_update(array $quantities): void
             continue;
         }
 
-        $cart[$productId] = min($max, $quantity);
+        $previous = (int) $cart[$productId];
+        $next = min($max, $quantity);
+        $cart[$productId] = $next;
+
+        if ($next > $previous && function_exists('track_product_cart_add')) {
+            track_product_cart_add($productId, $next - $previous);
+        }
     }
 
     $_SESSION['cart'] = $cart;
