@@ -2381,9 +2381,6 @@ html.admin-dialog-open {
     color: var(--subtle);
 }
 
-.admin-home-layout-zone-actions > i {
-    font-size: 1.1rem;
-}
 
 .admin-home-banner-edit {
     display: grid;
@@ -2398,12 +2395,21 @@ html.admin-dialog-open {
     transition: transform .16s ease, border-color .16s ease, background .16s ease, color .16s ease;
 }
 
-.admin-home-banner-edit:hover,
-.admin-home-banner-edit:focus-visible {
+.admin-home-banner-edit:hover:not(:disabled),
+.admin-home-banner-edit:focus-visible:not(:disabled) {
     border-color: rgba(255, 190, 62, .72);
     background: rgba(255, 190, 62, .14);
     color: #ffe09a;
     transform: translateY(-.08rem);
+}
+
+.admin-home-banner-edit:disabled {
+    border-color: var(--border);
+    background: rgba(255, 255, 255, .025);
+    color: var(--subtle);
+    cursor: not-allowed;
+    opacity: .42;
+    transform: none;
 }
 
 .admin-home-category-customized {

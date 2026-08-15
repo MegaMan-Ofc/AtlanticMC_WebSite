@@ -188,7 +188,6 @@
                 <strong><?= e(t('admin.home_top_banner_help')) ?></strong>
             </div>
             <div class="admin-home-layout-zone-actions">
-                <i class="fa-solid fa-panorama" aria-hidden="true"></i>
                 <button
                     class="admin-home-banner-edit"
                     type="button"
@@ -196,7 +195,7 @@
                     data-zone="top"
                     title="<?= e(t('admin.home_banner_edit')) ?>"
                     aria-label="<?= e(t('admin.home_banner_edit')) ?>"
-                    <?= is_array($adminHomeCategoryLayout['top']) ? '' : 'hidden' ?>
+                    <?= is_array($adminHomeCategoryLayout['top']) ? '' : 'disabled' ?>
                 >
                     <i class="fa-solid fa-pen" aria-hidden="true"></i>
                 </button>
@@ -247,7 +246,6 @@
                 <strong><?= e(t('admin.home_bottom_banner_help')) ?></strong>
             </div>
             <div class="admin-home-layout-zone-actions">
-                <i class="fa-solid fa-panorama" aria-hidden="true"></i>
                 <button
                     class="admin-home-banner-edit"
                     type="button"
@@ -255,7 +253,7 @@
                     data-zone="bottom"
                     title="<?= e(t('admin.home_banner_edit')) ?>"
                     aria-label="<?= e(t('admin.home_banner_edit')) ?>"
-                    <?= is_array($adminHomeCategoryLayout['bottom']) ? '' : 'hidden' ?>
+                    <?= is_array($adminHomeCategoryLayout['bottom']) ? '' : 'disabled' ?>
                 >
                     <i class="fa-solid fa-pen" aria-hidden="true"></i>
                 </button>

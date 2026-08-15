@@ -765,7 +765,7 @@ const syncAdminHomeBannerEditButtons = () => {
             : null;
         const category = adminHomeDirectCategoryCards(zone)[0] ?? null;
 
-        button.hidden = !(category instanceof HTMLElement);
+        button.disabled = !(category instanceof HTMLElement);
         button.dataset.categoryId = category instanceof HTMLElement
             ? (category.dataset.categoryId ?? '')
             : '';
