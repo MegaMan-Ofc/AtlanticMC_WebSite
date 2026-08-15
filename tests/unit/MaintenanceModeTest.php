@@ -113,6 +113,7 @@ $maintenanceControllerSource = file_get_contents($root . '/controllers/maintenan
 $maintenancePageSource = file_get_contents($root . '/public_html/maintenance.php');
 $gitignoreSource = file_get_contents($root . '/.gitignore');
 $adminDashboardSource = file_get_contents($root . '/includes/admin_dashboard.php');
+$adminCssSource = file_get_contents($root . '/public_html/css/pages/admin.css');
 
 $assert(
     is_string($bootstrapSource)
@@ -157,6 +158,13 @@ $assert(
         && is_string($adminDashboardSource)
         && str_contains($adminDashboardSource, "'maintenance'"),
     'Runtime maintenance state stays out of the public repository and maintenance is isolated as an administrator section.'
+);
+
+$assert(
+    is_string($adminCssSource)
+        && str_contains($adminCssSource, '.admin-maintenance-dialog [hidden]')
+        && preg_match('/\.admin-maintenance-dialog \[hidden\]\s*\{[^}]*display:\s*none;/s', $adminCssSource) === 1,
+    'Maintenance dialog hidden steps and actions remain visually hidden despite component display rules.'
 );
 
 @unlink($maintenanceStatePath);
