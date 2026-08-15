@@ -82,6 +82,15 @@ return [
 
     'head.default_description' => 'Atlantic SMP Minecraft Store',
 
+    'not_found.page_title' => 'Atlantic SMP - Page not found',
+    'not_found.kicker' => 'Error 404',
+    'not_found.title' => 'This chunk has not been generated yet.',
+    'not_found.description' => 'The page you are looking for does not exist, was removed, or the address is incorrect. You can return to the store or search directly for what you need.',
+    'not_found.home_action' => 'Back to the store',
+    'not_found.search_action' => 'Search products',
+    'not_found.help' => 'Think this link should work?',
+    'not_found.discord_action' => 'Talk to us on Discord',
+
     'home.title' => 'Atlantic SMP Store',
     'home.page_title' => 'Atlantic SMP - Store',
     'home.description' => 'Official Atlantic SMP Minecraft Store.',

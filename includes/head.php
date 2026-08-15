@@ -3,6 +3,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#0b0e13">
     <meta name="description" content="<?= e($pageDescription ?? t('head.default_description')) ?>">
+    <?php if (isset($pageRobots) && is_string($pageRobots) && trim($pageRobots) !== ''): ?>
+        <meta name="robots" content="<?= e($pageRobots) ?>">
+    <?php endif; ?>
     <title><?= e($pageTitle ?? config('app.name')) ?></title>
     <?php if (($canonicalUrl = current_canonical_url()) !== null): ?>
         <link rel="canonical" href="<?= e($canonicalUrl) ?>">
