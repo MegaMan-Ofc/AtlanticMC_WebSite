@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-const ADMIN_SECTIONS = ['overview', 'categories', 'products', 'recommended', 'coupons', 'orders'];
+const ADMIN_SECTIONS = ['overview', 'categories', 'products', 'recommended', 'coupons', 'orders', 'maintenance'];
 
 function admin_section(): string
 {

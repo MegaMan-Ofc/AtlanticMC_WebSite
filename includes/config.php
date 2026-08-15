@@ -210,6 +210,9 @@ function config(?string $key = null, mixed $default = null): mixed
                 'app_path' => resolve_application_path((string) env_value('APP_LOG_PATH', 'storage/app.log')),
                 'security_path' => resolve_application_path((string) env_value('SECURITY_LOG_PATH', 'storage/security.log')),
             ],
+            'maintenance' => [
+                'state_path' => resolve_application_path((string) env_value('MAINTENANCE_STATE_PATH', 'storage/maintenance.json')),
+            ],
             'admin' => [
                 'username' => (string) env_value('ADMIN_USERNAME', ''),
                 'password_hash' => (string) env_value('ADMIN_PASSWORD_HASH', ''),

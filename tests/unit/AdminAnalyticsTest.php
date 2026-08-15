@@ -15,7 +15,7 @@ $mysqlAnalyticsMigration = file_get_contents($root . '/database/migrations/mysql
 $assert(
     is_string($dashboardSource)
         && !str_contains($dashboardSource, "'analytics'")
-        && str_contains($dashboardSource, "const ADMIN_SECTIONS = ['overview', 'categories', 'products', 'recommended', 'coupons', 'orders'];"),
+        && str_contains($dashboardSource, "const ADMIN_SECTIONS = ['overview', 'categories', 'products', 'recommended', 'coupons', 'orders', 'maintenance'];"),
     'Daily access analytics are consolidated into the overview instead of a separate admin section.'
 );
 

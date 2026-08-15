@@ -42,6 +42,7 @@ function reserved_category_slugs(): array
         'css',
         'js',
         'uploads',
+        'maintenance',
     ];
 
     foreach (public_routes() as $route) {

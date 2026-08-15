@@ -16,6 +16,7 @@ foreach ([
     'unit/AboutSectionTest.php',
     'unit/FaqTest.php',
     'unit/NotFoundPageTest.php',
+    'unit/MaintenanceModeTest.php',
     'unit/ProductSearchTest.php',
     'unit/CartAjaxTest.php',
     'unit/AdminAnalyticsTest.php',
@@ -28,5 +29,8 @@ foreach ([
 }
 
 @unlink($databasePath);
+@unlink($maintenanceStatePath);
+@unlink($appLogPath);
+@unlink($securityLogPath);
 
 exit($suite->finish());

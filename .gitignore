@@ -6,6 +6,8 @@ storage/*.sqlite-*
 storage/*.sqlite3
 storage/*.db
 storage/*.log
+storage/maintenance.json
+storage/maintenance-*.tmp
 !storage/.gitignore
 !storage/.htaccess
 *.sql.gz
