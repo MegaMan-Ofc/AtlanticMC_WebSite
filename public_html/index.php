@@ -94,8 +94,15 @@ require_once dirname(__DIR__) . '/controllers/index.php';
                     ?>
                 <?php endif; ?>
 
-                <?php if ($homeCategories !== []): ?>
+                <?php if ($homeHasCategories): ?>
                     <section aria-label="<?= e(t('home.categories_aria')) ?>" class="category-grid">
+                        <a class="category-card category-card--search" href="<?= e(route_url('search')) ?>">
+                            <span class="category-search-icon" aria-hidden="true"><i class="fa-solid fa-magnifying-glass"></i></span>
+                            <div class="category-search-copy">
+                                <small><?= e(t('home.search_category_kicker')) ?></small>
+                                <h2><?= e(t('home.search_category_title')) ?></h2>
+                            </div>
+                        </a>
                         <?php foreach ($homeCategories as $category): ?>
                             <a
                                 class="category-card"
