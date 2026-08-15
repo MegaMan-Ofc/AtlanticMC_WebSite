@@ -1,8 +1,8 @@
 <?php
 $trafficRows = array_reverse($adminTraffic);
 $trafficExpanded = (bool) ($adminTrafficExpanded ?? false);
-$maxViews = max(1, ...array_map(static fn (array $row): int => (int) $row['page_views'], $trafficRows));
-$maxSessions = max(1, ...array_map(static fn (array $row): int => (int) $row['unique_sessions'], $trafficRows));
+$maxViews = admin_analytics_max_metric($trafficRows, 'page_views');
+$maxSessions = admin_analytics_max_metric($trafficRows, 'unique_sessions');
 ?>
 <div class="admin-card-heading admin-traffic-heading">
     <div>

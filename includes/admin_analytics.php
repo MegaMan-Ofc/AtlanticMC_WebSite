@@ -16,6 +16,21 @@ function admin_analytics_period(int $days = 30): array
     ];
 }
 
+function admin_analytics_max_metric(array $rows, string $field, int $minimum = 1): int
+{
+    $maximum = $minimum;
+
+    foreach ($rows as $row) {
+        if (!is_array($row)) {
+            continue;
+        }
+
+        $maximum = max($maximum, (int) ($row[$field] ?? 0));
+    }
+
+    return $maximum;
+}
+
 function admin_analytics_percent(int|float $part, int|float $total): float
 {
     if ((float) $total <= 0.0) {

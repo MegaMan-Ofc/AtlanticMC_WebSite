@@ -59,3 +59,21 @@ $assert(
         && str_contains($adminStyles, '.admin-analytics-grid--three'),
     'Traffic history expands with AJAX and the analytics dashboard has responsive styling.'
 );
+
+$assert(
+    admin_analytics_max_metric([], 'value') === 1
+        && admin_analytics_max_metric([['value' => 0], ['value' => 12]], 'value') === 12
+        && admin_analytics_max_metric([['other' => 5]], 'value', 3) === 3,
+    'Analytics chart maxima are safe when rankings or traffic datasets are empty.'
+);
+
+$trafficTemplate = file_get_contents($root . '/templates/admin/traffic-widget-content.php');
+$assert(
+    is_string($overviewTemplate)
+        && is_string($trafficTemplate)
+        && !str_contains($overviewTemplate, 'max(1, ...array_map')
+        && !str_contains($trafficTemplate, 'max(1, ...array_map')
+        && str_contains($overviewTemplate, 'admin_analytics_max_metric')
+        && str_contains($trafficTemplate, 'admin_analytics_max_metric'),
+    'Admin analytics templates use the empty-safe maximum helper.'
+);
