@@ -11,6 +11,7 @@ require_once __DIR__ . '/session.php';
 require_once __DIR__ . '/i18n.php';
 require_once __DIR__ . '/legal.php';
 require_once __DIR__ . '/security.php';
+require_once __DIR__ . '/maintenance.php';
 require_once __DIR__ . '/database.php';
 require_once __DIR__ . '/categories.php';
 require_once __DIR__ . '/catalog.php';
@@ -91,6 +92,8 @@ set_exception_handler(static function (Throwable $error): void {
         . '<p><a style="color:#8fd3ff" href="' . e(route_url('home')) . '">' . e(t('messages.back_to_store')) . '</a></p></body></html>';
 });
 
-if (!defined('ATLANTIC_STATELESS') || ATLANTIC_STATELESS !== true) {
+enforce_maintenance_mode();
+
+if ((!defined('ATLANTIC_STATELESS') || ATLANTIC_STATELESS !== true) && !maintenance_is_enabled()) {
     track_public_page_view();
 }
