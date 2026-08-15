@@ -2,18 +2,42 @@
 
 declare(strict_types=1);
 
+const ADMIN_ANALYTICS_PERIODS = [7, 30, 90, 36500];
+
+function admin_analytics_normalize_days(int $days): int
+{
+    return in_array($days, ADMIN_ANALYTICS_PERIODS, true) ? $days : 30;
+}
+
+function admin_analytics_is_all(int $days): bool
+{
+    return $days >= 36500;
+}
+
 function admin_analytics_period(int $days = 30): array
 {
-    $days = max(7, min(365, $days));
-    $start = (new DateTimeImmutable('today'))->modify('-' . ($days - 1) . ' days');
-    $end = (new DateTimeImmutable('tomorrow'));
+    $days = admin_analytics_normalize_days($days);
+    $start = admin_analytics_is_all($days)
+        ? new DateTimeImmutable('2000-01-01')
+        : (new DateTimeImmutable('today'))->modify('-' . ($days - 1) . ' days');
+    $end = new DateTimeImmutable('tomorrow');
 
     return [
         'days' => $days,
+        'is_all' => admin_analytics_is_all($days),
         'start_date' => $start->format('Y-m-d'),
         'start' => $start->format('Y-m-d 00:00:00'),
         'end' => $end->format('Y-m-d 00:00:00'),
     ];
+}
+
+function admin_analytics_period_label(int $days): string
+{
+    $days = admin_analytics_normalize_days($days);
+
+    return admin_analytics_is_all($days)
+        ? t('admin.analytics_all_time')
+        : t('admin.analytics_last_days', ['days' => $days]);
 }
 
 function admin_analytics_max_metric(array $rows, string $field, int $minimum = 1): int
@@ -45,7 +69,9 @@ function admin_analytics_traffic_totals(int $days): array
     $period = admin_analytics_period($days);
     $statement = db()->prepare(
         'SELECT COALESCE(SUM(page_views), 0) AS page_views,
-                COALESCE(SUM(unique_sessions), 0) AS unique_sessions
+                COALESCE(SUM(unique_sessions), 0) AS unique_sessions,
+                COALESCE(SUM(product_sessions), 0) AS product_sessions,
+                COALESCE(SUM(cart_sessions), 0) AS cart_sessions
          FROM daily_site_stats
          WHERE visit_date >= :start_date'
     );
@@ -55,6 +81,8 @@ function admin_analytics_traffic_totals(int $days): array
     return [
         'page_views' => (int) ($row['page_views'] ?? 0),
         'unique_sessions' => (int) ($row['unique_sessions'] ?? 0),
+        'product_sessions' => (int) ($row['product_sessions'] ?? 0),
+        'cart_sessions' => (int) ($row['cart_sessions'] ?? 0),
     ];
 }
 
@@ -73,8 +101,8 @@ function admin_analytics_sales_totals(int $days): array
                 COALESCE(SUM(discount_cents), 0) AS discount_cents
          FROM orders
          WHERE status = :status
-           AND COALESCE(paid_at, updated_at) >= :start
-           AND COALESCE(paid_at, updated_at) < :end'
+           AND paid_at >= :start
+           AND paid_at < :end'
     );
     $statement->execute($params);
     $row = $statement->fetch() ?: [];
@@ -84,8 +112,8 @@ function admin_analytics_sales_totals(int $days): array
          FROM order_items oi
          INNER JOIN orders o ON o.id = oi.order_id
          WHERE o.status = :status
-           AND COALESCE(o.paid_at, o.updated_at) >= :start
-           AND COALESCE(o.paid_at, o.updated_at) < :end'
+           AND o.paid_at >= :start
+           AND o.paid_at < :end'
     );
     $itemsStatement->execute($params);
 
@@ -100,16 +128,18 @@ function admin_analytics_sales_totals(int $days): array
 
 function admin_analytics_daily_sales(int $days): array
 {
-    $period = admin_analytics_period($days);
+    $days = admin_analytics_normalize_days($days);
+    $chartDays = admin_analytics_is_all($days) ? 30 : min(30, $days);
+    $period = admin_analytics_period($chartDays);
     $statement = db()->prepare(
-        'SELECT DATE(COALESCE(paid_at, updated_at)) AS sale_date,
+        'SELECT DATE(paid_at) AS sale_date,
                 COUNT(*) AS paid_orders,
                 COALESCE(SUM(total_cents), 0) AS revenue_cents
          FROM orders
          WHERE status = :status
-           AND COALESCE(paid_at, updated_at) >= :start
-           AND COALESCE(paid_at, updated_at) < :end
-         GROUP BY DATE(COALESCE(paid_at, updated_at))
+           AND paid_at >= :start
+           AND paid_at < :end
+         GROUP BY DATE(paid_at)
          ORDER BY sale_date ASC'
     );
     $statement->execute([
@@ -162,13 +192,16 @@ function admin_analytics_product_rows(int $days): array
             'category_slug' => (string) $product['category_slug'],
             'impressions' => 0,
             'unique_sessions' => 0,
+            'interactions' => 0,
+            'interaction_sessions' => 0,
             'cart_additions' => 0,
             'cart_sessions' => 0,
             'sold_quantity' => 0,
             'paid_orders' => 0,
             'revenue_cents' => 0,
+            'view_to_interaction_rate' => 0.0,
             'view_to_cart_rate' => 0.0,
-            'view_to_sale_rate' => 0.0,
+            'cart_to_order_rate' => 0.0,
         ];
     }
 
@@ -180,6 +213,8 @@ function admin_analytics_product_rows(int $days): array
         'SELECT product_id,
                 COALESCE(SUM(impressions), 0) AS impressions,
                 COALESCE(SUM(unique_sessions), 0) AS unique_sessions,
+                COALESCE(SUM(interactions), 0) AS interactions,
+                COALESCE(SUM(interaction_sessions), 0) AS interaction_sessions,
                 COALESCE(SUM(cart_additions), 0) AS cart_additions,
                 COALESCE(SUM(cart_sessions), 0) AS cart_sessions
          FROM daily_product_stats
@@ -197,6 +232,8 @@ function admin_analytics_product_rows(int $days): array
 
         $rows[$id]['impressions'] = (int) $row['impressions'];
         $rows[$id]['unique_sessions'] = (int) $row['unique_sessions'];
+        $rows[$id]['interactions'] = (int) $row['interactions'];
+        $rows[$id]['interaction_sessions'] = (int) $row['interaction_sessions'];
         $rows[$id]['cart_additions'] = (int) $row['cart_additions'];
         $rows[$id]['cart_sessions'] = (int) $row['cart_sessions'];
     }
@@ -209,8 +246,8 @@ function admin_analytics_product_rows(int $days): array
          FROM order_items oi
          INNER JOIN orders o ON o.id = oi.order_id
          WHERE o.status = :status
-           AND COALESCE(o.paid_at, o.updated_at) >= :start
-           AND COALESCE(o.paid_at, o.updated_at) < :end
+           AND o.paid_at >= :start
+           AND o.paid_at < :end
          GROUP BY oi.product_id'
     );
     $salesStatement->execute([
@@ -232,8 +269,9 @@ function admin_analytics_product_rows(int $days): array
     }
 
     foreach ($rows as &$row) {
+        $row['view_to_interaction_rate'] = admin_analytics_percent($row['interaction_sessions'], $row['unique_sessions']);
         $row['view_to_cart_rate'] = admin_analytics_percent($row['cart_sessions'], $row['unique_sessions']);
-        $row['view_to_sale_rate'] = admin_analytics_percent($row['sold_quantity'], $row['impressions']);
+        $row['cart_to_order_rate'] = admin_analytics_percent($row['paid_orders'], $row['cart_sessions']);
     }
     unset($row);
 
@@ -271,6 +309,7 @@ function admin_analytics_category_rows(int $days, array $productRows): array
             'page_views' => 0,
             'unique_sessions' => 0,
             'impressions' => 0,
+            'interactions' => 0,
             'cart_additions' => 0,
             'sold_quantity' => 0,
             'revenue_cents' => 0,
@@ -285,6 +324,7 @@ function admin_analytics_category_rows(int $days, array $productRows): array
         }
 
         $rows[$id]['impressions'] += (int) $product['impressions'];
+        $rows[$id]['interactions'] += (int) $product['interactions'];
         $rows[$id]['cart_additions'] += (int) $product['cart_additions'];
         $rows[$id]['sold_quantity'] += (int) $product['sold_quantity'];
         $rows[$id]['revenue_cents'] += (int) $product['revenue_cents'];
@@ -324,7 +364,10 @@ function admin_analytics_category_rows(int $days, array $productRows): array
     }
 
     $result = array_values($rows);
-    usort($result, static fn (array $a, array $b): int => $b['revenue_cents'] <=> $a['revenue_cents']);
+    usort($result, static function (array $a, array $b): int {
+        $revenue = $b['revenue_cents'] <=> $a['revenue_cents'];
+        return $revenue !== 0 ? $revenue : $b['page_views'] <=> $a['page_views'];
+    });
 
     return $result;
 }
@@ -366,18 +409,31 @@ function admin_analytics_top_pages(int $days, int $limit = 6): array
          WHERE visit_date >= :start_date
          GROUP BY route_key
          ORDER BY page_views DESC, unique_sessions DESC
-         LIMIT ' . max(1, min(20, $limit))
+         LIMIT ' . max(1, min(40, $limit * 3))
     );
     $statement->execute(['start_date' => $period['start_date']]);
     $rows = [];
 
     foreach ($statement->fetchAll() as $row) {
+        $routeKey = (string) $row['route_key'];
+
+        if (str_starts_with($routeKey, 'category:')) {
+            $slug = substr($routeKey, 9);
+            if (store_category_by_slug($slug, true) === null) {
+                continue;
+            }
+        }
+
         $rows[] = [
-            'route_key' => (string) $row['route_key'],
-            'label' => admin_analytics_route_label((string) $row['route_key']),
+            'route_key' => $routeKey,
+            'label' => admin_analytics_route_label($routeKey),
             'page_views' => (int) $row['page_views'],
             'unique_sessions' => (int) $row['unique_sessions'],
         ];
+
+        if (count($rows) >= $limit) {
+            break;
+        }
     }
 
     return $rows;
@@ -410,8 +466,8 @@ function admin_analytics_platforms(int $days): array
         'SELECT minecraft_platform AS platform, COUNT(*) AS total
          FROM orders
          WHERE status = :status
-           AND COALESCE(paid_at, updated_at) >= :start
-           AND COALESCE(paid_at, updated_at) < :end
+           AND paid_at >= :start
+           AND paid_at < :end
          GROUP BY minecraft_platform
          ORDER BY total DESC'
     );
@@ -434,8 +490,8 @@ function admin_analytics_coupon_rows(int $days, int $limit = 5): array
          WHERE status = :status
            AND coupon_code IS NOT NULL
            AND coupon_code <> :empty_code
-           AND COALESCE(paid_at, updated_at) >= :start
-           AND COALESCE(paid_at, updated_at) < :end
+           AND paid_at >= :start
+           AND paid_at < :end
          GROUP BY coupon_code
          ORDER BY uses DESC, discount_cents DESC
          LIMIT ' . max(1, min(20, $limit))
@@ -456,27 +512,26 @@ function admin_analytics_coupon_rows(int $days, int $limit = 5): array
 
 function admin_dashboard_analytics(int $days = 30): array
 {
-    $days = max(7, min(365, $days));
+    $days = admin_analytics_normalize_days($days);
     $traffic = admin_analytics_traffic_totals($days);
     $sales = admin_analytics_sales_totals($days);
     $products = admin_analytics_product_rows($days);
     $categories = admin_analytics_category_rows($days, $products);
-    $impressions = array_sum(array_column($products, 'impressions'));
-    $cartAdditions = array_sum(array_column($products, 'cart_additions'));
-    $soldQuantity = array_sum(array_column($products, 'sold_quantity'));
 
     return [
         'days' => $days,
+        'period_label' => admin_analytics_period_label($days),
         'traffic_totals' => $traffic,
         'sales_totals' => $sales,
         'daily_sales' => admin_analytics_daily_sales($days),
         'top_selling_products' => admin_analytics_rank_products($products, 'sold_quantity'),
         'top_revenue_products' => admin_analytics_rank_products($products, 'revenue_cents'),
-        'top_viewed_products' => admin_analytics_rank_products($products, 'impressions'),
+        'top_displayed_products' => admin_analytics_rank_products($products, 'impressions'),
+        'top_interacted_products' => admin_analytics_rank_products($products, 'interactions'),
         'top_cart_products' => admin_analytics_rank_products($products, 'cart_additions'),
         'best_conversion_products' => array_slice(array_values(array_filter(
             admin_analytics_rank_products($products, 'view_to_cart_rate', 20),
-            static fn (array $row): bool => (int) $row['impressions'] > 0
+            static fn (array $row): bool => (int) $row['unique_sessions'] > 0
         )), 0, 5),
         'categories' => $categories,
         'top_pages' => admin_analytics_top_pages($days),
@@ -484,11 +539,11 @@ function admin_dashboard_analytics(int $days = 30): array
         'platforms' => admin_analytics_platforms($days),
         'coupons' => admin_analytics_coupon_rows($days),
         'funnel' => [
-            'impressions' => $impressions,
-            'cart_additions' => $cartAdditions,
-            'sold_quantity' => $soldQuantity,
-            'view_to_cart_rate' => admin_analytics_percent($cartAdditions, $impressions),
-            'cart_to_sale_rate' => admin_analytics_percent($soldQuantity, $cartAdditions),
+            'product_sessions' => $traffic['product_sessions'],
+            'cart_sessions' => $traffic['cart_sessions'],
+            'paid_orders' => $sales['paid_orders'],
+            'view_to_cart_rate' => admin_analytics_percent($traffic['cart_sessions'], $traffic['product_sessions']),
+            'cart_to_sale_rate' => admin_analytics_percent($sales['paid_orders'], $traffic['cart_sessions']),
         ],
         'site_conversion_rate' => admin_analytics_percent($sales['paid_orders'], $traffic['unique_sessions']),
     ];
