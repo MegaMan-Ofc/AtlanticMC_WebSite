@@ -976,3 +976,63 @@ if (adminHomeLayout instanceof HTMLElement) {
         adminHomeDragNextSibling = null;
     });
 }
+
+const adminTrafficWidget = document.querySelector('[data-admin-traffic-widget]');
+
+const loadAdminTraffic = async days => {
+    if (!(adminTrafficWidget instanceof HTMLElement)) {
+        return;
+    }
+
+    const endpoint = adminTrafficWidget.dataset.endpoint;
+
+    if (!endpoint) {
+        return;
+    }
+
+    const url = new URL(endpoint, window.location.href);
+    url.searchParams.set('days', String(days));
+    adminTrafficWidget.setAttribute('aria-busy', 'true');
+
+    try {
+        const response = await fetch(url, {
+            method: 'GET',
+            credentials: 'same-origin',
+            headers: {
+                Accept: 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+            },
+        });
+        const payload = await response.json();
+        const html = payload?.data?.html;
+
+        if (!response.ok || payload?.ok !== true || typeof html !== 'string') {
+            throw new Error(payload?.error ?? 'Unable to load traffic analytics.');
+        }
+
+        adminTrafficWidget.innerHTML = html;
+    } catch (error) {
+        const fallback = new URL(window.location.href);
+        fallback.searchParams.set('section', 'overview');
+        window.location.assign(fallback);
+    } finally {
+        adminTrafficWidget.removeAttribute('aria-busy');
+    }
+};
+
+document.addEventListener('click', event => {
+    const target = event.target;
+
+    if (!(target instanceof Element)) {
+        return;
+    }
+
+    const toggle = target.closest('[data-admin-traffic-toggle]');
+
+    if (!(toggle instanceof HTMLButtonElement)) {
+        return;
+    }
+
+    const days = Number.parseInt(toggle.dataset.days ?? '7', 10);
+    loadAdminTraffic(Number.isFinite(days) ? days : 7);
+});

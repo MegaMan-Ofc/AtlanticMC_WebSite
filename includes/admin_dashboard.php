@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-const ADMIN_SECTIONS = ['overview', 'categories', 'products', 'recommended', 'coupons', 'orders', 'analytics'];
+const ADMIN_SECTIONS = ['overview', 'categories', 'products', 'recommended', 'coupons', 'orders'];
 
 function admin_section(): string
 {
@@ -50,7 +50,7 @@ function admin_dashboard_summary(): array
             "SELECT COUNT(*) FROM orders WHERE status IN ('pending', 'awaiting_payment')"
         ),
         'paid_today' => admin_scalar(
-            'SELECT COUNT(*) FROM orders WHERE status = :status AND updated_at >= :start AND updated_at < :end',
+            'SELECT COUNT(*) FROM orders WHERE status = :status AND COALESCE(paid_at, updated_at) >= :start AND COALESCE(paid_at, updated_at) < :end',
             [
                 'status' => 'paid',
                 'start' => $today . ' 00:00:00',
@@ -58,7 +58,7 @@ function admin_dashboard_summary(): array
             ]
         ),
         'revenue_today' => admin_scalar(
-            'SELECT COALESCE(SUM(total_cents), 0) FROM orders WHERE status = :status AND updated_at >= :start AND updated_at < :end',
+            'SELECT COALESCE(SUM(total_cents), 0) FROM orders WHERE status = :status AND COALESCE(paid_at, updated_at) >= :start AND COALESCE(paid_at, updated_at) < :end',
             [
                 'status' => 'paid',
                 'start' => $today . ' 00:00:00',

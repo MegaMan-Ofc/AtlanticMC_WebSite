@@ -27,6 +27,7 @@ require_once __DIR__ . '/admin_home.php';
 require_once __DIR__ . '/admin_coupons.php';
 require_once __DIR__ . '/admin_orders.php';
 require_once __DIR__ . '/analytics.php';
+require_once __DIR__ . '/admin_analytics.php';
 require_once __DIR__ . '/admin_dashboard.php';
 require_once __DIR__ . '/minecraft_recipient.php';
 require_once __DIR__ . '/http.php';

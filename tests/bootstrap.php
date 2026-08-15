@@ -66,6 +66,8 @@ foreach ([
     'admin_home',
     'admin_coupons',
     'admin_orders',
+    'analytics',
+    'admin_analytics',
     'admin_dashboard',
     'minecraft_recipient',
     'tebex',

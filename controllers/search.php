@@ -26,6 +26,7 @@ if (!in_array($searchSort, product_search_sort_options(), true)) {
 }
 
 $products = product_search_results($searchQuery, $searchCategory, $searchDiscountOnly, $searchSort);
+track_product_impressions($products);
 $pageTitle = t('search.page_title');
 $pageDescription = t('search.description');
 $bodyClass = 'page-search';
