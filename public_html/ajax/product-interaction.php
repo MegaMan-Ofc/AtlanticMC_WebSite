@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 define('ATLANTIC_JSON', true);
-require_once dirname(__DIR__, 2) . '/includes/bootstrap.php';
+require_once dirname(__DIR__, 2) . '/app/bootstrap.php';
 require_post();
 verify_csrf();
 enforce_rate_limit('product_interaction', 240, 60);

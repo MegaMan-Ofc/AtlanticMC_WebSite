@@ -1,10 +1,10 @@
-<?php require_once dirname(__DIR__) . '/controllers/success.php'; ?>
+<?php require_once dirname(__DIR__) . '/controllers/Store/success.php'; ?>
 <!DOCTYPE html>
 <html lang="<?= e(current_language()) ?>">
-<?php require dirname(__DIR__) . '/includes/head.php'; ?>
+<?php require dirname(__DIR__) . '/templates/layout/head.php'; ?>
 <body class="<?= e($bodyClass) ?>">
 <div id="wrap">
-    <?php require dirname(__DIR__) . '/includes/header.php'; ?>
+    <?php require dirname(__DIR__) . '/templates/layout/header.php'; ?>
     <main class="main-content" id="main">
         <section class="success-card">
             <?php if ($order === null): ?>
@@ -27,7 +27,7 @@
             <div class="success-actions"><a class="button button--primary" href="<?= e(route_url('home')) ?>"><?= e(t('common.back_to_store')) ?></a><a class="button button--ghost" href="<?= e(config('app.discord_url')) ?>" target="_blank" rel="noopener noreferrer"><?= e(t('common.support')) ?></a></div>
         </section>
     </main>
-    <?php require dirname(__DIR__) . '/includes/footer.php'; ?>
+    <?php require dirname(__DIR__) . '/templates/layout/footer.php'; ?>
 </div>
 </body>
 </html>

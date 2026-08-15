@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 define('ATLANTIC_JSON', true);
 define('ATLANTIC_STATELESS', true);
-require_once dirname(__DIR__, 2) . '/includes/bootstrap.php';
+require_once dirname(__DIR__, 2) . '/app/bootstrap.php';
 
 if (strtoupper((string) ($_SERVER['REQUEST_METHOD'] ?? 'GET')) !== 'POST') {
     json_response(['error' => 'Method Not Allowed'], 405);

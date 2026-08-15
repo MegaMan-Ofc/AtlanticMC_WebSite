@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 header_remove('X-Powered-By');
 
-require_once __DIR__ . '/includes/config.php';
-require_once __DIR__ . '/includes/routes.php';
-require_once __DIR__ . '/includes/error_pages.php';
+require_once __DIR__ . '/app/Core/Config/config.php';
+require_once __DIR__ . '/app/Core/Routing/routes.php';
+require_once __DIR__ . '/app/Core/Routing/error_pages.php';
 
 $requestUri = (string) ($_SERVER['REQUEST_URI'] ?? '/');
 $requestPath = rawurldecode((string) (parse_url($requestUri, PHP_URL_PATH) ?? '/'));

@@ -7,9 +7,9 @@ if (PHP_SAPI !== 'cli') {
     exit;
 }
 
-require_once dirname(__DIR__) . '/includes/config.php';
-require_once dirname(__DIR__) . '/includes/database.php';
-require_once dirname(__DIR__) . '/includes/migrations.php';
+require_once dirname(__DIR__) . '/app/Core/Config/config.php';
+require_once dirname(__DIR__) . '/app/Core/Database/database.php';
+require_once dirname(__DIR__) . '/app/Core/Database/migrations.php';
 
 try {
     $pdo = db();

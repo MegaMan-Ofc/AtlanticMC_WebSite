@@ -1,7 +1,7 @@
-<?php require_once dirname(__DIR__) . '/controllers/maintenance.php'; ?>
+<?php require_once dirname(__DIR__) . '/controllers/Site/maintenance.php'; ?>
 <!DOCTYPE html>
 <html lang="<?= e(current_language()) ?>">
-<?php require dirname(__DIR__) . '/includes/head.php'; ?>
+<?php require dirname(__DIR__) . '/templates/layout/head.php'; ?>
 <body class="<?= e($bodyClass) ?>">
 <main class="maintenance-shell" id="main">
     <div class="maintenance-grid" aria-hidden="true"></div>

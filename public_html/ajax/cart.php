@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 define('ATLANTIC_JSON', true);
-require_once dirname(__DIR__, 2) . '/includes/bootstrap.php';
+require_once dirname(__DIR__, 2) . '/app/bootstrap.php';
 require_post();
 verify_csrf();
 enforce_rate_limit('ajax_cart', 120, 60);
@@ -54,7 +54,7 @@ try {
 
     if (request_string('render_cart') === '1') {
         ob_start();
-        require BASE_PATH . '/templates/cart_panel.php';
+        require TEMPLATE_PATH . '/store/cart.php';
         $rendered = ob_get_clean();
         $cartHtml = is_string($rendered) ? $rendered : null;
     }
