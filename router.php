@@ -6,6 +6,7 @@ header_remove('X-Powered-By');
 
 require_once __DIR__ . '/includes/config.php';
 require_once __DIR__ . '/includes/routes.php';
+require_once __DIR__ . '/includes/error_pages.php';
 
 $requestUri = (string) ($_SERVER['REQUEST_URI'] ?? '/');
 $requestPath = rawurldecode((string) (parse_url($requestUri, PHP_URL_PATH) ?? '/'));
@@ -83,10 +84,7 @@ if ($requestPath === '/') {
     $categorySlug = public_category_slug_from_path($trimmedPath);
 
     if ($categorySlug === null) {
-        http_response_code(404);
-        header('Content-Type: text/plain; charset=utf-8');
-        echo '404 Not Found';
-        exit;
+        render_not_found_page();
     }
 
     $_GET['slug'] = $categorySlug;
