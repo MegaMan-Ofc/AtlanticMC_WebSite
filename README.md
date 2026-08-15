@@ -11,6 +11,7 @@ O projeto inclui uma área pública para jogadores e um painel de administraçã
 - Descontos por produto
 - Produtos recomendados
 - Organização das categorias da homepage pelo admin
+- Pesquisa inteligente e filtros de produtos
 - FAQ
 - Páginas legais
 - Carrinho de compras
@@ -55,6 +56,12 @@ Aplica as migrations:
 
 ```bash
 php bin/migrate.php
+```
+
+Opcionalmente, cria o catálogo mock de desenvolvimento:
+
+```bash
+php bin/seed.php
 ```
 
 Inicia o servidor local:
