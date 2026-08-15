@@ -749,6 +749,29 @@ const adminHomeDirectCategoryCards = zone => {
     return [...zone.children].filter(child => child instanceof HTMLElement && child.matches('[data-admin-home-category]'));
 };
 
+const syncAdminHomeBannerEditButtons = () => {
+    if (!(adminHomeLayout instanceof HTMLElement)) {
+        return;
+    }
+
+    adminHomeLayout.querySelectorAll('[data-admin-home-banner-edit]').forEach(button => {
+        if (!(button instanceof HTMLButtonElement)) {
+            return;
+        }
+
+        const zoneName = button.dataset.zone;
+        const zone = zoneName
+            ? adminHomeLayout.querySelector(`[data-admin-home-zone="${zoneName}"]`)
+            : null;
+        const category = adminHomeDirectCategoryCards(zone)[0] ?? null;
+
+        button.disabled = !(category instanceof HTMLElement);
+        button.dataset.categoryId = category instanceof HTMLElement
+            ? (category.dataset.categoryId ?? '')
+            : '';
+    });
+};
+
 const updateAdminHomeLayoutEmptyStates = () => {
     if (!(adminHomeLayout instanceof HTMLElement)) {
         return;
@@ -768,6 +791,8 @@ const updateAdminHomeLayoutEmptyStates = () => {
             emptyState.hidden = hasCategory;
         }
     });
+
+    syncAdminHomeBannerEditButtons();
 };
 
 const setAdminHomeLayoutState = (message, isError = false) => {
@@ -974,6 +999,434 @@ if (adminHomeLayout instanceof HTMLElement) {
         adminHomeDraggedCategory = null;
         adminHomeDragOrigin = null;
         adminHomeDragNextSibling = null;
+    });
+}
+
+
+const adminHomeBannerDialog = document.getElementById('admin-home-banner-dialog');
+const adminHomeBannerForm = adminHomeBannerDialog?.querySelector('[data-admin-home-banner-form]') ?? null;
+let adminHomeBannerEditingCard = null;
+let adminHomeBannerInitialSnapshot = '';
+let adminHomeBannerSaving = false;
+
+const adminHomeBannerField = name => {
+    if (!(adminHomeBannerDialog instanceof HTMLDialogElement)) {
+        return null;
+    }
+
+    return adminHomeBannerDialog.querySelector(`[data-admin-home-banner-input="${name}"]`);
+};
+
+const adminHomeBannerEffectiveValue = (name, categoryName = '') => {
+    const field = adminHomeBannerField(name);
+    const value = field instanceof HTMLInputElement
+        || field instanceof HTMLTextAreaElement
+        || field instanceof HTMLSelectElement
+        ? field.value.trim()
+        : '';
+
+    if (value !== '') {
+        return value;
+    }
+
+    if (name === 'kicker') {
+        return adminHomeBannerDialog?.dataset.defaultKicker ?? '';
+    }
+
+    if (name === 'cta') {
+        return adminHomeBannerDialog?.dataset.defaultCta ?? '';
+    }
+
+    return name === 'title' ? categoryName : '';
+};
+
+const updateAdminHomeBannerPreview = () => {
+    if (!(adminHomeBannerDialog instanceof HTMLDialogElement)) {
+        return;
+    }
+
+    const preview = adminHomeBannerDialog.querySelector('[data-admin-home-banner-preview]');
+    const categoryName = adminHomeBannerEditingCard?.dataset.categoryName ?? '';
+
+    if (!(preview instanceof HTMLElement)) {
+        return;
+    }
+
+    const style = adminHomeBannerField('style');
+    const imageSide = adminHomeBannerField('image_side');
+    const imageSize = adminHomeBannerField('image_size');
+    const showWatermark = adminHomeBannerField('show_watermark');
+    const showCta = adminHomeBannerField('show_cta');
+    const kicker = adminHomeBannerEffectiveValue('kicker', categoryName);
+    const title = adminHomeBannerEffectiveValue('title', categoryName);
+    const textField = adminHomeBannerField('text');
+    const text = textField instanceof HTMLTextAreaElement ? textField.value.trim() : '';
+    const cta = adminHomeBannerEffectiveValue('cta', categoryName);
+
+    preview.dataset.style = style instanceof HTMLSelectElement ? style.value : 'auto';
+    preview.dataset.theme = adminHomeBannerEditingCard?.dataset.bannerTheme ?? 'default';
+    preview.dataset.imageSide = imageSide instanceof HTMLSelectElement ? imageSide.value : 'right';
+    preview.dataset.imageSize = imageSize instanceof HTMLSelectElement ? imageSize.value : 'normal';
+
+    const kickerTarget = preview.querySelector('[data-admin-home-banner-preview-kicker]');
+    const titleTarget = preview.querySelector('[data-admin-home-banner-preview-title]');
+    const textTarget = preview.querySelector('[data-admin-home-banner-preview-text]');
+    const ctaTarget = preview.querySelector('[data-admin-home-banner-preview-cta]');
+    const ctaLabel = preview.querySelector('[data-admin-home-banner-preview-cta-label]');
+    const watermark = preview.querySelector('[data-admin-home-banner-preview-watermark]');
+    const image = preview.querySelector('[data-admin-home-banner-preview-image]');
+
+    if (kickerTarget instanceof HTMLElement) {
+        kickerTarget.textContent = kicker;
+    }
+
+    if (titleTarget instanceof HTMLElement) {
+        titleTarget.textContent = title;
+    }
+
+    if (textTarget instanceof HTMLElement) {
+        textTarget.textContent = text;
+        textTarget.hidden = text === '';
+    }
+
+    if (ctaTarget instanceof HTMLElement) {
+        ctaTarget.hidden = !(showCta instanceof HTMLInputElement && showCta.checked);
+    }
+
+    if (ctaLabel instanceof HTMLElement) {
+        ctaLabel.textContent = cta;
+    }
+
+    if (watermark instanceof HTMLElement) {
+        watermark.textContent = title;
+        watermark.hidden = !(showWatermark instanceof HTMLInputElement && showWatermark.checked);
+    }
+
+    if (image instanceof HTMLImageElement) {
+        image.src = adminHomeBannerEditingCard?.dataset.bannerImage ?? '';
+    }
+};
+
+const setAdminHomeBannerFormState = (message, isError = false) => {
+    const target = adminHomeBannerDialog?.querySelector('[data-admin-home-banner-form-state]');
+
+    if (!(target instanceof HTMLElement)) {
+        return;
+    }
+
+    target.textContent = message;
+    target.classList.toggle('is-error', isError);
+};
+
+const adminHomeBannerSnapshot = () => {
+    const valueOf = name => {
+        const field = adminHomeBannerField(name);
+
+        if (field instanceof HTMLInputElement
+            || field instanceof HTMLTextAreaElement
+            || field instanceof HTMLSelectElement) {
+            return field.value;
+        }
+
+        return '';
+    };
+
+    const checkedOf = name => {
+        const field = adminHomeBannerField(name);
+        return field instanceof HTMLInputElement && field.checked;
+    };
+
+    return JSON.stringify({
+        kicker: valueOf('kicker'),
+        title: valueOf('title'),
+        text: valueOf('text'),
+        cta: valueOf('cta'),
+        style: valueOf('style'),
+        image_side: valueOf('image_side'),
+        image_size: valueOf('image_size'),
+        show_watermark: checkedOf('show_watermark'),
+        show_cta: checkedOf('show_cta'),
+    });
+};
+
+const syncAdminHomeBannerSaveState = () => {
+    const saveButton = adminHomeBannerForm?.querySelector('[data-admin-home-banner-save]');
+
+    if (!(saveButton instanceof HTMLButtonElement)) {
+        return;
+    }
+
+    const hasPendingChanges = adminHomeBannerEditingCard instanceof HTMLElement
+        && adminHomeBannerInitialSnapshot !== ''
+        && adminHomeBannerSnapshot() !== adminHomeBannerInitialSnapshot;
+
+    saveButton.disabled = adminHomeBannerSaving || !hasPendingChanges;
+};
+
+const setAdminHomeBannerSaving = saving => {
+    adminHomeBannerSaving = saving;
+
+    if (adminHomeBannerForm instanceof HTMLFormElement) {
+        adminHomeBannerForm.setAttribute('aria-busy', String(saving));
+    }
+
+    adminHomeBannerDialog?.querySelectorAll('[data-dialog-close], [data-admin-home-banner-reset]')
+        .forEach(button => {
+            if (button instanceof HTMLButtonElement) {
+                button.disabled = saving;
+            }
+        });
+
+    syncAdminHomeBannerSaveState();
+};
+
+const loadAdminHomeBannerFormFromCard = card => {
+    if (!(card instanceof HTMLElement)
+        || !(adminHomeBannerDialog instanceof HTMLDialogElement)) {
+        return;
+    }
+
+    adminHomeBannerEditingCard = card;
+
+    const categoryId = adminHomeBannerDialog.querySelector('[data-admin-home-banner-category-id]');
+    const categoryLabel = adminHomeBannerDialog.querySelector('[data-admin-home-banner-dialog-category]');
+
+    if (categoryId instanceof HTMLInputElement) {
+        categoryId.value = card.dataset.categoryId ?? '0';
+    }
+
+    if (categoryLabel instanceof HTMLElement) {
+        categoryLabel.textContent = card.dataset.categoryName ?? '';
+    }
+
+    const textFields = ['kicker', 'title', 'text', 'cta'];
+
+    textFields.forEach(name => {
+        const field = adminHomeBannerField(name);
+
+        if (field instanceof HTMLInputElement || field instanceof HTMLTextAreaElement) {
+            field.value = card.dataset[`banner${name.charAt(0).toUpperCase()}${name.slice(1)}`] ?? '';
+        }
+    });
+
+    const style = adminHomeBannerField('style');
+    const imageSide = adminHomeBannerField('image_side');
+    const imageSize = adminHomeBannerField('image_size');
+    const showWatermark = adminHomeBannerField('show_watermark');
+    const showCta = adminHomeBannerField('show_cta');
+
+    if (style instanceof HTMLSelectElement) {
+        style.value = card.dataset.bannerStyle ?? 'auto';
+    }
+
+    if (imageSide instanceof HTMLSelectElement) {
+        imageSide.value = card.dataset.bannerImageSide ?? 'right';
+    }
+
+    if (imageSize instanceof HTMLSelectElement) {
+        imageSize.value = card.dataset.bannerImageSize ?? 'normal';
+    }
+
+    if (showWatermark instanceof HTMLInputElement) {
+        showWatermark.checked = card.dataset.bannerShowWatermark !== '0';
+    }
+
+    if (showCta instanceof HTMLInputElement) {
+        showCta.checked = card.dataset.bannerShowCta !== '0';
+    }
+
+    setAdminHomeBannerFormState('');
+    updateAdminHomeBannerPreview();
+    adminHomeBannerInitialSnapshot = adminHomeBannerSnapshot();
+    syncAdminHomeBannerSaveState();
+};
+
+const adminHomeBannerIsCustomized = settings => {
+    return settings.kicker !== ''
+        || settings.title !== ''
+        || settings.text !== ''
+        || settings.cta !== ''
+        || settings.style !== 'auto'
+        || settings.image_side !== 'right'
+        || settings.image_size !== 'normal'
+        || settings.show_watermark !== true
+        || settings.show_cta !== true;
+};
+
+const applyAdminHomeBannerSettingsToCard = (card, settings) => {
+    if (!(card instanceof HTMLElement)) {
+        return;
+    }
+
+    card.dataset.bannerKicker = settings.kicker ?? '';
+    card.dataset.bannerTitle = settings.title ?? '';
+    card.dataset.bannerText = settings.text ?? '';
+    card.dataset.bannerCta = settings.cta ?? '';
+    card.dataset.bannerStyle = settings.style ?? 'auto';
+    card.dataset.bannerImageSide = settings.image_side ?? 'right';
+    card.dataset.bannerImageSize = settings.image_size ?? 'normal';
+    card.dataset.bannerShowWatermark = settings.show_watermark ? '1' : '0';
+    card.dataset.bannerShowCta = settings.show_cta ? '1' : '0';
+
+    const customized = card.querySelector('[data-admin-home-banner-customized]');
+
+    if (customized instanceof HTMLElement) {
+        customized.hidden = !adminHomeBannerIsCustomized(settings);
+    }
+};
+
+if (adminHomeBannerDialog instanceof HTMLDialogElement) {
+    document.addEventListener('click', event => {
+        const target = event.target;
+
+        if (!(target instanceof Element)) {
+            return;
+        }
+
+        const editButton = target.closest('[data-admin-home-banner-edit]');
+
+        if (editButton instanceof HTMLButtonElement) {
+            const zoneName = editButton.dataset.zone;
+            const zone = zoneName && adminHomeLayout instanceof HTMLElement
+                ? adminHomeLayout.querySelector(`[data-admin-home-zone="${zoneName}"]`)
+                : null;
+            const card = adminHomeDirectCategoryCards(zone)[0] ?? null;
+
+            if (card instanceof HTMLElement) {
+                loadAdminHomeBannerFormFromCard(card);
+                adminHomeBannerDialog.showModal();
+                syncAdminDialogState();
+            }
+
+            return;
+        }
+
+        const resetButton = target.closest('[data-admin-home-banner-reset]');
+
+        if (resetButton instanceof HTMLButtonElement) {
+            ['kicker', 'title', 'text', 'cta'].forEach(name => {
+                const field = adminHomeBannerField(name);
+
+                if (field instanceof HTMLInputElement || field instanceof HTMLTextAreaElement) {
+                    field.value = '';
+                }
+            });
+
+            const style = adminHomeBannerField('style');
+            const imageSide = adminHomeBannerField('image_side');
+            const imageSize = adminHomeBannerField('image_size');
+            const showWatermark = adminHomeBannerField('show_watermark');
+            const showCta = adminHomeBannerField('show_cta');
+
+            if (style instanceof HTMLSelectElement) style.value = 'auto';
+            if (imageSide instanceof HTMLSelectElement) imageSide.value = 'right';
+            if (imageSize instanceof HTMLSelectElement) imageSize.value = 'normal';
+            if (showWatermark instanceof HTMLInputElement) showWatermark.checked = true;
+            if (showCta instanceof HTMLInputElement) showCta.checked = true;
+
+            setAdminHomeBannerFormState('');
+            updateAdminHomeBannerPreview();
+            syncAdminHomeBannerSaveState();
+        }
+    });
+
+    const handleAdminHomeBannerChange = () => {
+        updateAdminHomeBannerPreview();
+        setAdminHomeBannerFormState('');
+        syncAdminHomeBannerSaveState();
+    };
+
+    adminHomeBannerDialog.addEventListener('input', handleAdminHomeBannerChange);
+    adminHomeBannerDialog.addEventListener('change', handleAdminHomeBannerChange);
+    adminHomeBannerDialog.addEventListener('cancel', event => {
+        if (adminHomeBannerSaving) {
+            event.preventDefault();
+        }
+    });
+    adminHomeBannerDialog.addEventListener('click', event => {
+        if (adminHomeBannerSaving && event.target === adminHomeBannerDialog) {
+            event.stopPropagation();
+        }
+    });
+    adminHomeBannerDialog.addEventListener('close', () => {
+        adminHomeBannerEditingCard = null;
+        adminHomeBannerInitialSnapshot = '';
+        adminHomeBannerSaving = false;
+    });
+}
+
+if (adminHomeBannerForm instanceof HTMLFormElement) {
+    adminHomeBannerForm.addEventListener('submit', async event => {
+        event.preventDefault();
+
+        if (!(adminHomeBannerEditingCard instanceof HTMLElement) || adminHomeBannerSaving) {
+            return;
+        }
+
+        if (adminHomeBannerSnapshot() === adminHomeBannerInitialSnapshot) {
+            syncAdminHomeBannerSaveState();
+            return;
+        }
+
+        const formData = new FormData(adminHomeBannerForm);
+        const showWatermark = adminHomeBannerField('show_watermark');
+        const showCta = adminHomeBannerField('show_cta');
+        const categoryId = adminHomeBannerEditingCard.dataset.categoryId ?? '';
+
+        if (categoryId === '') {
+            setAdminHomeBannerFormState('Unable to identify the banner category.', true);
+            return;
+        }
+
+        formData.set('category_id', categoryId);
+        formData.set('show_watermark', showWatermark instanceof HTMLInputElement && showWatermark.checked ? '1' : '0');
+        formData.set('show_cta', showCta instanceof HTMLInputElement && showCta.checked ? '1' : '0');
+
+        setAdminHomeBannerFormState(adminHomeLayout?.dataset.savingLabel ?? '');
+        setAdminHomeBannerSaving(true);
+
+        try {
+            const response = await fetch(adminHomeBannerForm.action, {
+                method: 'POST',
+                body: formData,
+                credentials: 'same-origin',
+                cache: 'no-store',
+                headers: {
+                    Accept: 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+            });
+            const responseText = await response.text();
+            let payload = null;
+
+            try {
+                payload = JSON.parse(responseText);
+            } catch {
+                throw new Error(responseText.trim() || 'Unable to save banner.');
+            }
+
+            if (!response.ok || payload?.ok !== true || typeof payload?.settings !== 'object') {
+                throw new Error(payload?.error ?? 'Unable to save banner.');
+            }
+
+            if (String(payload.category_id ?? '') !== categoryId) {
+                throw new Error('The server returned a different banner category.');
+            }
+
+            applyAdminHomeBannerSettingsToCard(adminHomeBannerEditingCard, payload.settings);
+            adminHomeBannerInitialSnapshot = adminHomeBannerSnapshot();
+            setAdminHomeBannerFormState(payload.message ?? '');
+
+            window.setTimeout(() => {
+                if (adminHomeBannerDialog?.open) {
+                    adminHomeBannerDialog.close();
+                }
+            }, 450);
+        } catch (error) {
+            setAdminHomeBannerFormState(error instanceof Error ? error.message : '', true);
+        } finally {
+            setAdminHomeBannerSaving(false);
+        }
     });
 }
 
