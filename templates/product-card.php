@@ -45,6 +45,7 @@ if ($productCategorySlug === 'keys' && $theme !== '') {
             <span class="package-active-price"><?= e(format_money(product_effective_price_cents($product), (string) $product['currency'])) ?></span>
         </div>
         <form
+            class="package-purchase"
             action="<?= e(url('actions/add_to_cart.php')) ?>"
             method="post"
             data-ajax-cart
@@ -54,12 +55,32 @@ if ($productCategorySlug === 'keys' && $theme !== '') {
             <?= csrf_field() ?>
             <input type="hidden" name="product_id" value="<?= (int) $product['id'] ?>">
             <input type="hidden" name="return_to" value="<?= e(current_public_return_path()) ?>">
-            <label class="sr-only" for="quantity-<?= (int) $product['id'] ?>"><?= e(t('catalog.quantity')) ?></label>
-            <select class="field product-quantity" id="quantity-<?= (int) $product['id'] ?>" name="quantity">
-                <?php for ($quantity = 1; $quantity <= min(5, (int) config('app.max_cart_quantity')); $quantity++): ?>
-                    <option value="<?= $quantity ?>"><?= $quantity ?>×</option>
-                <?php endfor; ?>
-            </select>
+            <div class="quantity-stepper" data-quantity-stepper>
+                <button
+                    class="quantity-stepper__button"
+                    type="button"
+                    data-quantity-decrease
+                    aria-label="<?= e(t('catalog.quantity_decrease')) ?>"
+                >−</button>
+                <label class="sr-only" for="quantity-<?= (int) $product['id'] ?>"><?= e(t('catalog.quantity')) ?></label>
+                <input
+                    class="quantity-stepper__input"
+                    id="quantity-<?= (int) $product['id'] ?>"
+                    name="quantity"
+                    type="number"
+                    min="1"
+                    max="<?= (int) config('app.max_cart_quantity') ?>"
+                    value="1"
+                    inputmode="numeric"
+                    data-quantity-input
+                >
+                <button
+                    class="quantity-stepper__button"
+                    type="button"
+                    data-quantity-increase
+                    aria-label="<?= e(t('catalog.quantity_increase')) ?>"
+                >+</button>
+            </div>
             <button class="button button--primary button--wide" type="submit">
                 <i class="fa-solid fa-cart-plus" aria-hidden="true"></i>
                 <?= e(t('catalog.add_to_cart')) ?>
