@@ -24,6 +24,8 @@ if (!is_array($homeBannerCategory)) {
         <img
             src="<?= e(url((string) $homeBannerCategory['image'])) ?>"
             alt="<?= e(t('home.category_image_alt', ['category' => (string) $homeBannerCategory['name']])) ?>"
+            loading="lazy"
+            decoding="async"
         >
     </div>
 </a>

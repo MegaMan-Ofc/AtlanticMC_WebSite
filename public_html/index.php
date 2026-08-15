@@ -34,7 +34,7 @@ require_once dirname(__DIR__) . '/controllers/index.php';
 
                                 <a class="home-recommended-product" href="<?= e(category_url((string) $product['category_slug'])) ?>">
                                     <div class="home-recommended-image">
-                                        <img src="<?= e(url((string) $product['image'])) ?>" alt="<?= e((string) $localizedProduct['name']) ?>" loading="lazy">
+                                        <img src="<?= e(url((string) $product['image'])) ?>" alt="<?= e((string) $localizedProduct['name']) ?>" loading="lazy" decoding="async">
                                     </div>
                                     <small><?= e((string) $product['category_name']) ?></small>
                                     <h3><?= e((string) $localizedProduct['name']) ?></h3>
@@ -112,6 +112,8 @@ require_once dirname(__DIR__) . '/controllers/index.php';
                                 <img
                                     alt="<?= e(t('home.category_image_alt', ['category' => $category['name']])) ?>"
                                     src="<?= e(url($category['image'])) ?>"
+                                    loading="lazy"
+                                    decoding="async"
                                 >
                                 <h2><?= e($category['name']) ?></h2>
                             </a>
@@ -160,7 +162,7 @@ require_once dirname(__DIR__) . '/controllers/index.php';
                     </article>
 
                     <figure class="home-about-visual home-about-visual--brand">
-                        <img src="<?= e(url('assets/logo atlantic.png')) ?>" alt="<?= e(t('home.about_brand_alt')) ?>" loading="lazy">
+                        <img src="<?= e(url('assets/logo atlantic.png')) ?>" alt="<?= e(t('home.about_brand_alt')) ?>" loading="lazy" decoding="async">
                     </figure>
 
                     <article class="home-about-copy home-about-copy--secondary">
@@ -177,7 +179,7 @@ require_once dirname(__DIR__) . '/controllers/index.php';
 
                     <figure class="home-about-visual home-about-visual--player">
                         <div class="home-about-player-glow" aria-hidden="true"></div>
-                        <img src="<?= e(url('assets/steve.png')) ?>" alt="<?= e(t('home.about_player_alt')) ?>" loading="lazy">
+                        <img src="<?= e(url('assets/steve.png')) ?>" alt="<?= e(t('home.about_player_alt')) ?>" loading="lazy" decoding="async">
                     </figure>
                 </div>
             </section>

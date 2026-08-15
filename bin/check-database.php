@@ -9,6 +9,7 @@ if (PHP_SAPI !== 'cli') {
 
 require_once dirname(__DIR__) . '/includes/config.php';
 require_once dirname(__DIR__) . '/includes/database.php';
+require_once dirname(__DIR__) . '/includes/migrations.php';
 
 try {
     $pdo = db();
@@ -39,6 +40,30 @@ try {
 
     if ((int) $pdo->query($migrationTable)->fetchColumn() !== 1) {
         throw new RuntimeException('Database migrations have not been applied.');
+    }
+
+    $expected = array_map('basename', migration_files($driver));
+    $applied = array_keys(applied_migrations($pdo));
+    $missing = array_values(array_diff($expected, $applied));
+    $unexpected = array_values(array_diff($applied, $expected));
+
+    fwrite(STDOUT, 'Expected migrations: ' . count($expected) . PHP_EOL);
+    fwrite(STDOUT, 'Applied migrations: ' . count($applied) . PHP_EOL);
+
+    if ($missing !== []) {
+        fwrite(STDERR, 'Missing migrations:' . PHP_EOL);
+        foreach ($missing as $migration) {
+            fwrite(STDERR, '  - ' . $migration . PHP_EOL);
+        }
+
+        throw new RuntimeException('Database schema is behind the application. Run php bin/migrate.php.');
+    }
+
+    if ($unexpected !== []) {
+        fwrite(STDOUT, 'Migration ledger contains files no longer present in the repository:' . PHP_EOL);
+        foreach ($unexpected as $migration) {
+            fwrite(STDOUT, '  - ' . $migration . PHP_EOL);
+        }
     }
 
     fwrite(STDOUT, 'Connection and migration ledger are ready.' . PHP_EOL);

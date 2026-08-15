@@ -53,7 +53,7 @@
                             <?php foreach ($cart['items'] as $item): ?>
                                 <?php $localizedProduct = localized_product($item['product']); ?>
                                 <div class="summary-item">
-                                    <div class="summary-item-info"><img src="<?= e(url($item['product']['image'])) ?>" alt=""><div><div class="summary-item-name"><?= e($localizedProduct['name']) ?></div><div class="summary-item-qty"><?= e(t('checkout.quantity', ['quantity' => (int) $item['quantity']])) ?></div></div></div>
+                                    <div class="summary-item-info"><img src="<?= e(url($item['product']['image'])) ?>" alt="" loading="lazy" decoding="async"><div><div class="summary-item-name"><?= e($localizedProduct['name']) ?></div><div class="summary-item-qty"><?= e(t('checkout.quantity', ['quantity' => (int) $item['quantity']])) ?></div></div></div>
                                     <div class="summary-item-price"><?= e(format_money($item['line_total_cents'])) ?></div>
                                 </div>
                             <?php endforeach; ?>
