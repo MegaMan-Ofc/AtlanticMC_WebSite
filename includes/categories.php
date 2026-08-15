@@ -15,7 +15,11 @@ function all_store_categories(bool $includeInactive = false): array
         return $GLOBALS['store_categories_cache'][$cacheKey];
     }
 
-    $sql = 'SELECT id, slug, name, image, active, sort_order, home_placement, home_sort_order, created_at, updated_at FROM categories';
+    $sql = 'SELECT id, slug, name, image, active, sort_order, home_placement, home_sort_order,
+               home_banner_kicker, home_banner_title, home_banner_text, home_banner_cta,
+               home_banner_style, home_banner_image_side, home_banner_image_size,
+               home_banner_show_watermark, home_banner_show_cta, created_at, updated_at
+        FROM categories';
 
     if (!$includeInactive) {
         $sql .= ' WHERE active = 1';
@@ -104,6 +108,55 @@ function category_card_theme(string $slug): string
     };
 }
 
+function home_banner_style_options(): array
+{
+    return ['auto', 'atlantic', 'sunset', 'emerald', 'violet', 'crimson'];
+}
+
+function home_banner_image_side_options(): array
+{
+    return ['left', 'right'];
+}
+
+function home_banner_image_size_options(): array
+{
+    return ['compact', 'normal', 'large'];
+}
+
+function home_banner_settings(array $category): array
+{
+    $style = (string) ($category['home_banner_style'] ?? 'auto');
+    $imageSide = (string) ($category['home_banner_image_side'] ?? 'right');
+    $imageSize = (string) ($category['home_banner_image_size'] ?? 'normal');
+
+    return [
+        'kicker' => trim((string) ($category['home_banner_kicker'] ?? '')),
+        'title' => trim((string) ($category['home_banner_title'] ?? '')),
+        'text' => trim((string) ($category['home_banner_text'] ?? '')),
+        'cta' => trim((string) ($category['home_banner_cta'] ?? '')),
+        'style' => in_array($style, home_banner_style_options(), true) ? $style : 'auto',
+        'image_side' => in_array($imageSide, home_banner_image_side_options(), true) ? $imageSide : 'right',
+        'image_size' => in_array($imageSize, home_banner_image_size_options(), true) ? $imageSize : 'normal',
+        'show_watermark' => (bool) ($category['home_banner_show_watermark'] ?? true),
+        'show_cta' => (bool) ($category['home_banner_show_cta'] ?? true),
+    ];
+}
+
+function home_banner_is_customized(array $category): bool
+{
+    $settings = home_banner_settings($category);
+
+    return $settings['kicker'] !== ''
+        || $settings['title'] !== ''
+        || $settings['text'] !== ''
+        || $settings['cta'] !== ''
+        || $settings['style'] !== 'auto'
+        || $settings['image_side'] !== 'right'
+        || $settings['image_size'] !== 'normal'
+        || $settings['show_watermark'] !== true
+        || $settings['show_cta'] !== true;
+}
+
 function home_category_view_model(array $category): array
 {
     return [
@@ -118,6 +171,7 @@ function home_category_view_model(array $category): array
         'home_sort_order' => (int) ($category['home_sort_order'] ?? $category['sort_order']),
         'theme' => category_card_theme((string) $category['slug']),
         'url' => category_url((string) $category['slug']),
+        'banner' => home_banner_settings($category),
     ];
 }
 

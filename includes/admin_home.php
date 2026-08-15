@@ -122,3 +122,88 @@ function save_admin_home_category_layout(int $topCategoryId, array $gridCategory
 
     reset_store_categories_cache();
 }
+
+function admin_home_banner_text(string $value, int $maxLength, string $fieldLabel): string
+{
+    $value = trim($value);
+
+    $length = function_exists('mb_strlen') ? mb_strlen($value, 'UTF-8') : strlen($value);
+
+    if ($value !== '' && $length > $maxLength) {
+        throw new InvalidArgumentException(t('validation.home_banner_text_length', [
+            'field' => $fieldLabel,
+            'max' => $maxLength,
+        ]));
+    }
+
+    return $value;
+}
+
+function save_admin_home_banner_customization(int $categoryId, array $input): array
+{
+    $category = store_category_by_id($categoryId, true);
+
+    if ($category === null) {
+        throw new InvalidArgumentException(t('validation.category_not_found'));
+    }
+
+    $style = (string) ($input['style'] ?? 'auto');
+    $imageSide = (string) ($input['image_side'] ?? 'right');
+    $imageSize = (string) ($input['image_size'] ?? 'normal');
+
+    if (!in_array($style, home_banner_style_options(), true)) {
+        throw new InvalidArgumentException(t('validation.home_banner_style'));
+    }
+
+    if (!in_array($imageSide, home_banner_image_side_options(), true)) {
+        throw new InvalidArgumentException(t('validation.home_banner_image_side'));
+    }
+
+    if (!in_array($imageSize, home_banner_image_size_options(), true)) {
+        throw new InvalidArgumentException(t('validation.home_banner_image_size'));
+    }
+
+    $settings = [
+        'kicker' => admin_home_banner_text((string) ($input['kicker'] ?? ''), 80, t('admin.home_banner_kicker_label')),
+        'title' => admin_home_banner_text((string) ($input['title'] ?? ''), 120, t('admin.home_banner_title_label')),
+        'text' => admin_home_banner_text((string) ($input['text'] ?? ''), 255, t('admin.home_banner_text_label')),
+        'cta' => admin_home_banner_text((string) ($input['cta'] ?? ''), 80, t('admin.home_banner_cta_label')),
+        'style' => $style,
+        'image_side' => $imageSide,
+        'image_size' => $imageSize,
+        'show_watermark' => (bool) ($input['show_watermark'] ?? false),
+        'show_cta' => (bool) ($input['show_cta'] ?? false),
+    ];
+
+    $statement = db()->prepare(
+        'UPDATE categories
+         SET home_banner_kicker = :home_banner_kicker,
+             home_banner_title = :home_banner_title,
+             home_banner_text = :home_banner_text,
+             home_banner_cta = :home_banner_cta,
+             home_banner_style = :home_banner_style,
+             home_banner_image_side = :home_banner_image_side,
+             home_banner_image_size = :home_banner_image_size,
+             home_banner_show_watermark = :home_banner_show_watermark,
+             home_banner_show_cta = :home_banner_show_cta,
+             updated_at = :updated_at
+         WHERE id = :id'
+    );
+    $statement->execute([
+        'home_banner_kicker' => $settings['kicker'] !== '' ? $settings['kicker'] : null,
+        'home_banner_title' => $settings['title'] !== '' ? $settings['title'] : null,
+        'home_banner_text' => $settings['text'] !== '' ? $settings['text'] : null,
+        'home_banner_cta' => $settings['cta'] !== '' ? $settings['cta'] : null,
+        'home_banner_style' => $settings['style'],
+        'home_banner_image_side' => $settings['image_side'],
+        'home_banner_image_size' => $settings['image_size'],
+        'home_banner_show_watermark' => $settings['show_watermark'] ? 1 : 0,
+        'home_banner_show_cta' => $settings['show_cta'] ? 1 : 0,
+        'updated_at' => now_sql(),
+        'id' => $categoryId,
+    ]);
+
+    reset_store_categories_cache();
+
+    return $settings;
+}
