@@ -1,6 +1,6 @@
 # Atlantic SMP Store
 
-Website oficial da **Atlantic SMP**, desenvolvido para apresentar e gerir os produtos da loja do servidor Minecraft.
+Website oficial da **Atlantic SMP** para apresentar e gerir os produtos da loja do servidor Minecraft.
 
 O projeto inclui uma área pública para jogadores e um painel de administração para gestão do conteúdo da loja.
 
@@ -16,6 +16,7 @@ O projeto inclui uma área pública para jogadores e um painel de administraçã
 - Páginas legais
 - Carrinho de compras
 - Painel de administração
+- Modo de manutenção protegido
 - Preparação para integração com Tebex
 
 ## Tecnologias
@@ -26,23 +27,52 @@ O projeto inclui uma área pública para jogadores e um painel de administraçã
 - SQLite para desenvolvimento local
 - MySQL para produção
 
-## Estrutura principal
+## Arquitetura
 
 ```text
 AtlanticStore/
+├── app/
+│   ├── Admin/
+│   ├── Core/
+│   ├── Integrations/
+│   ├── Site/
+│   ├── Store/
+│   ├── bootstrap.php
+│   └── modules.php
 ├── bin/
 ├── controllers/
+│   ├── Admin/
+│   ├── Site/
+│   └── Store/
 ├── database/
-├── includes/
 ├── public_html/
+│   ├── actions/
+│   ├── ajax/
+│   ├── api/
+│   ├── assets/
+│   ├── css/
+│   └── js/
 ├── storage/
 ├── templates/
-├── translations/
+│   ├── admin/
+│   ├── components/
+│   ├── errors/
+│   ├── home/
+│   ├── layout/
+│   ├── site/
+│   └── store/
 ├── tests/
+│   ├── integration/
+│   └── unit/
+├── translations/
 ├── .env.example
 ├── compose.yaml
 └── router.php
 ```
+
+`app/` contém a lógica da aplicação organizada por domínio. `controllers/` prepara os dados das páginas. `templates/` contém apenas apresentação. `public_html/` mantém os entry points públicos e os assets servidos pelo servidor web.
+
+O carregamento dos módulos internos é centralizado em `app/modules.php`, usado pelo bootstrap e pelos testes para evitar listas de dependências duplicadas.
 
 ## Instalação local
 
@@ -85,20 +115,13 @@ php bin/quality.php
 
 ## Configuração
 
-As configurações privadas devem ficar no ficheiro `.env`.
+As configurações privadas devem ficar no ficheiro `.env` e nunca devem ser publicadas no repositório.
 
-Nunca devem ser publicados valores reais como:
-
-- `APP_KEY`
-- passwords da base de dados
-- credenciais de administrador
-- secrets do Tebex
-
-O ficheiro `.env.example` contém apenas a estrutura necessária para configurar o projeto.
+O `.env.example` contém apenas valores de exemplo e os nomes das variáveis suportadas pela aplicação.
 
 ## Produção
 
-Em produção, o conteúdo público deve ser servido através da pasta:
+Em produção, o document root deve apontar para:
 
 ```text
 public_html/

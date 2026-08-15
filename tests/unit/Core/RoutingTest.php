@@ -52,7 +52,7 @@ $assert(
         && is_file($root . '/database/migrations/mysql/004_dynamic_categories.php')
         && is_file($root . '/public_html/actions/admin_delete_category.php')
         && is_file($root . '/public_html/category.php')
-        && is_file($root . '/controllers/category.php')
-        && is_file($root . '/controllers/catalog.php'),
+        && is_file($root . '/controllers/Store/category.php')
+        && is_file($root . '/controllers/Store/catalog.php'),
     'Dynamic category administration, migrations and public storefront routing are present.'
 );

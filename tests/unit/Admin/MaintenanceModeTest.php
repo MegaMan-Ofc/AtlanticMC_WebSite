@@ -106,13 +106,13 @@ $assert(
     'Maintenance keeps recovery and Tebex administration paths available while blocking storefront requests.'
 );
 
-$bootstrapSource = file_get_contents($root . '/includes/bootstrap.php');
+$bootstrapSource = file_get_contents($root . '/app/bootstrap.php');
 $actionSource = file_get_contents($root . '/public_html/actions/admin_set_maintenance.php');
-$adminTemplateSource = file_get_contents($root . '/templates/admin/maintenance.php');
-$maintenanceControllerSource = file_get_contents($root . '/controllers/maintenance.php');
+$adminTemplateSource = file_get_contents($root . '/templates/admin/maintenance/index.php');
+$maintenanceControllerSource = file_get_contents($root . '/controllers/Site/maintenance.php');
 $maintenancePageSource = file_get_contents($root . '/public_html/maintenance.php');
 $gitignoreSource = file_get_contents($root . '/.gitignore');
-$adminDashboardSource = file_get_contents($root . '/includes/admin_dashboard.php');
+$adminDashboardSource = file_get_contents($root . '/app/Admin/Dashboard/dashboard.php');
 $adminCssSource = file_get_contents($root . '/public_html/css/pages/admin.css');
 
 $assert(

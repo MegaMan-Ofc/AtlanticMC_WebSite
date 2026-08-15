@@ -67,8 +67,8 @@ $assert(
 );
 $assert((int) $pdo->query('SELECT COUNT(*) FROM products WHERE category_id IS NULL')->fetchColumn() === 0, 'Seed products are linked to dynamic category IDs.');
 
-require __DIR__ . '/ProductSearchTest.php';
-require __DIR__ . '/CategoryProductTest.php';
-require __DIR__ . '/CommerceTest.php';
-require __DIR__ . '/RecommendedProductsTest.php';
-require __DIR__ . '/HomeCategoryLayoutTest.php';
+require dirname(__DIR__) . '/Store/ProductSearchTest.php';
+require dirname(__DIR__) . '/Store/CategoryProductTest.php';
+require dirname(__DIR__) . '/Store/CommerceTest.php';
+require dirname(__DIR__) . '/Store/RecommendedProductsTest.php';
+require dirname(__DIR__) . '/Store/HomeCategoryLayoutTest.php';

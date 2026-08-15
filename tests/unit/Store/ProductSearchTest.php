@@ -32,8 +32,8 @@ $assert(
 );
 
 $searchPage = file_get_contents($root . '/public_html/search.php');
-$searchTemplate = file_get_contents($root . '/templates/search.php');
-$searchAlgorithm = file_get_contents($root . '/includes/product_search.php');
+$searchTemplate = file_get_contents($root . '/templates/store/search.php');
+$searchAlgorithm = file_get_contents($root . '/app/Store/Search/product_search.php');
 $homePage = file_get_contents($root . '/public_html/index.php');
 
 $assert(

@@ -5,7 +5,8 @@ declare(strict_types=1);
 $bannerMigrationMysql = file_get_contents($root . '/database/migrations/mysql/011_home_banner_customization.php');
 $bannerMigrationSqlite = file_get_contents($root . '/database/migrations/sqlite/011_home_banner_customization.php');
 $bannerTemplate = file_get_contents($root . '/templates/home/category-banner.php');
-$adminHomeTemplate = file_get_contents($root . '/templates/admin/recommended.php');
+$adminHomeTemplate = file_get_contents($root . '/templates/admin/home/category-layout.php')
+    . file_get_contents($root . '/templates/admin/home/banner-dialog.php');
 $adminHomeJavaScript = file_get_contents($root . '/public_html/js/admin.js');
 $adminHomeCss = file_get_contents($root . '/public_html/css/pages/admin.css');
 $homeCss = file_get_contents($root . '/public_html/css/pages/home.css');
@@ -79,7 +80,7 @@ $assert(
 
 
 $adminHomeAction = file_get_contents($root . '/public_html/actions/admin_save_home_banner.php');
-$adminHomePhp = file_get_contents($root . '/includes/admin_home.php');
+$adminHomePhp = file_get_contents($root . '/app/Admin/Home/customization.php');
 
 $assert(
     is_string($adminHomeAction)

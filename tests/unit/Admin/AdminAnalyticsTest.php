@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-$dashboardSource = file_get_contents($root . '/includes/admin_dashboard.php');
-$analyticsSource = file_get_contents($root . '/includes/analytics.php');
-$adminAnalyticsSource = file_get_contents($root . '/includes/admin_analytics.php');
-$overviewTemplate = file_get_contents($root . '/templates/admin/overview.php');
-$analyticsTemplate = file_get_contents($root . '/templates/admin/analytics-dashboard-content.php');
-$trafficTemplate = file_get_contents($root . '/templates/admin/traffic-widget-content.php');
+$dashboardSource = file_get_contents($root . '/app/Admin/Dashboard/dashboard.php');
+$analyticsSource = file_get_contents($root . '/app/Store/Analytics/analytics.php');
+$adminAnalyticsSource = file_get_contents($root . '/app/Admin/Analytics/analytics.php');
+$overviewTemplate = file_get_contents($root . '/templates/admin/dashboard/overview.php');
+$analyticsTemplate = file_get_contents($root . '/templates/admin/analytics/dashboard-content.php');
+$trafficTemplate = file_get_contents($root . '/templates/admin/analytics/traffic-widget.php');
 $adminJavaScript = file_get_contents($root . '/public_html/js/admin.js');
 $adminStyles = file_get_contents($root . '/public_html/css/pages/admin.css');
 $mysqlAnalyticsMigration = file_get_contents($root . '/database/migrations/mysql/009_admin_analytics.php');

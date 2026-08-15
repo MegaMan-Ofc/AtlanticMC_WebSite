@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 $homeTemplate = file_get_contents($root . '/public_html/index.php');
 $homeStyles = file_get_contents($root . '/public_html/css/pages/home.css');
-$footerTemplate = file_get_contents($root . '/includes/footer.php');
+$footerTemplate = file_get_contents($root . '/templates/layout/footer.php');
 
 $assert(
     is_string($homeTemplate)

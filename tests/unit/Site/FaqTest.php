@@ -3,10 +3,10 @@
 declare(strict_types=1);
 
 $faqPage = file_get_contents($root . '/public_html/faq.php');
-$faqController = file_get_contents($root . '/controllers/faq.php');
+$faqController = file_get_contents($root . '/controllers/Site/faq.php');
 $faqStyles = file_get_contents($root . '/public_html/css/pages/faq.css');
-$footerTemplate = file_get_contents($root . '/includes/footer.php');
-$legalTemplate = file_get_contents($root . '/templates/legal.php');
+$footerTemplate = file_get_contents($root . '/templates/layout/footer.php');
+$legalTemplate = file_get_contents($root . '/templates/site/legal.php');
 $homePage = file_get_contents($root . '/public_html/index.php');
 $publicHtaccess = file_get_contents($root . '/public_html/.htaccess');
 

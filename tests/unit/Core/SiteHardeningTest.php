@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-$adminAuthSource = file_get_contents($root . '/includes/admin_auth.php');
+$adminAuthSource = file_get_contents($root . '/app/Admin/Auth/auth.php');
 $databaseCheckSource = file_get_contents($root . '/bin/check-database.php');
 $composeSource = file_get_contents($root . '/compose.yaml');
-$productCardSource = file_get_contents($root . '/templates/product-card.php');
+$productCardSource = file_get_contents($root . '/templates/components/product-card.php');
 $mainJavaScript = file_get_contents($root . '/public_html/js/main.js');
 $privacyPt = file_get_contents($root . '/translations/pt.php');
 $privacyEn = file_get_contents($root . '/translations/en.php');

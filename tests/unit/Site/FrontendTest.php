@@ -16,7 +16,7 @@ $headerJavaScript = file_get_contents(
 );
 
 $headerTemplate = file_get_contents(
-    $root . '/includes/header.php'
+    $root . '/templates/layout/header.php'
 );
 
 $headerStyles = file_get_contents(
@@ -61,12 +61,12 @@ $assert(
         && str_contains($adminJavaScript, 'data-admin-image-input')
         && str_contains($adminJavaScript, 'data-admin-slug-source')
         && str_contains($adminJavaScript, 'data-admin-discount-toggle')
-        && is_file($root . '/templates/admin/coupons-results.php'),
+        && is_file($root . '/templates/admin/commerce/coupons/results.php'),
     'Administrator JavaScript supports AJAX filters and pagination.'
 );
 
-$categoryDialogTemplate = file_get_contents($root . '/templates/admin/category-dialog.php');
-$productDialogTemplate = file_get_contents($root . '/templates/admin/product-dialog.php');
+$categoryDialogTemplate = file_get_contents($root . '/templates/admin/catalog/categories/dialog.php');
+$productDialogTemplate = file_get_contents($root . '/templates/admin/catalog/products/dialog.php');
 $uploadProtection = file_get_contents($root . '/public_html/uploads/.htaccess');
 $publicHtaccess = file_get_contents($root . '/public_html/.htaccess');
 $assert(
@@ -84,9 +84,9 @@ $assert(
     'Category and product forms use protected PNG uploads with a bounded request size.'
 );
 
-$catalogTemplate = file_get_contents($root . '/templates/catalog.php');
-$productCardTemplate = file_get_contents($root . '/templates/product-card.php');
-$cartTemplate = file_get_contents($root . '/templates/cart_panel.php');
+$catalogTemplate = file_get_contents($root . '/templates/store/catalog.php');
+$productCardTemplate = file_get_contents($root . '/templates/components/product-card.php');
+$cartTemplate = file_get_contents($root . '/templates/store/cart.php');
 
 $assert(
     is_string($catalogTemplate)
@@ -100,7 +100,7 @@ $assert(
 );
 
 $loginJavaScript = file_get_contents($root . '/public_html/js/login.js');
-$headerTemplate = file_get_contents($root . '/includes/header.php');
+$headerTemplate = file_get_contents($root . '/templates/layout/header.php');
 $assert(
     is_string($loginJavaScript)
         && str_contains($loginJavaScript, 'value === "bedrock"')
@@ -124,7 +124,7 @@ $_SERVER['REQUEST_URI'] = '/admin?section=products';
 $adminConfigured = true;
 $adminAuthenticated = false;
 ob_start();
-require $root . '/templates/admin/page.php';
+require $root . '/templates/admin/layout/page.php';
 $adminLoginHtml = (string) ob_get_clean();
 $assert(
     str_contains($adminLoginHtml, 'name="language" value="en"'),

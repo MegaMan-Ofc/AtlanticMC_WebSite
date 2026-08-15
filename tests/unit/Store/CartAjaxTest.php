@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-$productCard = file_get_contents($root . '/templates/product-card.php');
-$cartPanel = file_get_contents($root . '/templates/cart_panel.php');
+$productCard = file_get_contents($root . '/templates/components/product-card.php');
+$cartPanel = file_get_contents($root . '/templates/store/cart.php');
 $mainJavaScript = file_get_contents($root . '/public_html/js/main.js');
 $componentStyles = file_get_contents($root . '/public_html/css/components.css');
-$searchTemplate = file_get_contents($root . '/templates/search.php');
+$searchTemplate = file_get_contents($root . '/templates/store/search.php');
 
 $assert(
     is_string($productCard)

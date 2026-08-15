@@ -3,14 +3,14 @@
 declare(strict_types=1);
 
 $notFoundPage = file_get_contents($root . '/public_html/404.php');
-$notFoundController = file_get_contents($root . '/controllers/not_found.php');
+$notFoundController = file_get_contents($root . '/controllers/Site/not_found.php');
 $notFoundTemplate = file_get_contents($root . '/templates/errors/not-found.php');
 $notFoundStyles = file_get_contents($root . '/public_html/css/pages/not-found.css');
-$errorPages = file_get_contents($root . '/includes/error_pages.php');
-$headTemplate = file_get_contents($root . '/includes/head.php');
+$errorPages = file_get_contents($root . '/app/Core/Routing/error_pages.php');
+$headTemplate = file_get_contents($root . '/templates/layout/head.php');
 $router = file_get_contents($root . '/router.php');
-$publicRouter = file_get_contents($root . '/controllers/public_router.php');
-$catalogController = file_get_contents($root . '/controllers/catalog.php');
+$publicRouter = file_get_contents($root . '/app/Core/Routing/public_router.php');
+$catalogController = file_get_contents($root . '/controllers/Store/catalog.php');
 $publicHtaccess = file_get_contents($root . '/public_html/.htaccess');
 $portugueseTranslations = require $root . '/translations/pt.php';
 $englishTranslations = require $root . '/translations/en.php';
@@ -20,7 +20,7 @@ $assert(
         && is_string($notFoundController)
         && is_string($notFoundTemplate)
         && is_string($notFoundStyles)
-        && str_contains($notFoundPage, "controllers/not_found.php")
+        && str_contains($notFoundPage, "controllers/Site/not_found.php")
         && str_contains($notFoundPage, "templates/errors/not-found.php")
         && str_contains($notFoundController, 'http_response_code(404)')
         && str_contains($notFoundController, "'css/pages/not-found.css'")
