@@ -24,11 +24,15 @@ $adminCoupons = [];
 $adminOrderFilters = [];
 $adminOrdersPage = ['orders' => [], 'total' => 0, 'page' => 1, 'pages' => 1];
 $adminTraffic = [];
+$adminAnalytics = [];
 
 if ($adminAuthenticated) {
     $adminSummary = admin_dashboard_summary();
 
-    if ($adminSection === 'categories') {
+    if ($adminSection === 'overview') {
+        $adminTraffic = daily_traffic_stats(7);
+        $adminAnalytics = admin_dashboard_analytics(30);
+    } elseif ($adminSection === 'categories') {
         $adminCategories = all_categories_admin();
     } elseif ($adminSection === 'products') {
         $adminCategoryOptions = all_store_categories(true);
@@ -44,8 +48,6 @@ if ($adminAuthenticated) {
     } elseif ($adminSection === 'orders') {
         $adminOrderFilters = admin_order_filters();
         $adminOrdersPage = admin_orders_page($adminOrderFilters);
-    } elseif ($adminSection === 'analytics') {
-        $adminTraffic = daily_traffic_stats(30);
     }
 }
 
@@ -57,7 +59,6 @@ function admin_section_icon(string $section): string
         'recommended' => 'fa-solid fa-house',
         'coupons' => 'fa-solid fa-ticket',
         'orders' => 'fa-solid fa-receipt',
-        'analytics' => 'fa-solid fa-chart-column',
         default => 'fa-solid fa-gauge-high',
     };
 }
