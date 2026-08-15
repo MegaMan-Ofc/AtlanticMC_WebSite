@@ -17,6 +17,7 @@ foreach ([
     'unit/ProductSearchTest.php',
     'unit/CartAjaxTest.php',
     'unit/AdminAnalyticsTest.php',
+    'unit/SiteHardeningTest.php',
     'unit/AdminFiltersTest.php',
     'unit/FrontendTest.php',
     'integration/DatabaseTest.php',
