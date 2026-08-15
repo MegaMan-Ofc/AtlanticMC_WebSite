@@ -30,8 +30,9 @@ if ($adminAuthenticated) {
     $adminSummary = admin_dashboard_summary();
 
     if ($adminSection === 'overview') {
+        $analyticsDays = admin_analytics_normalize_days(query_int('analytics_days', 30));
         $adminTraffic = daily_traffic_stats(7);
-        $adminAnalytics = admin_dashboard_analytics(30);
+        $adminAnalytics = admin_dashboard_analytics($analyticsDays);
     } elseif ($adminSection === 'categories') {
         $adminCategories = all_categories_admin();
     } elseif ($adminSection === 'products') {
