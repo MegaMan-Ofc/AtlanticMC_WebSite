@@ -8,10 +8,7 @@ $category = strtolower(trim((string) ($category ?? '')));
 $storeCategory = store_category_by_slug($category, false);
 
 if ($storeCategory === null) {
-    http_response_code(404);
-    header('Content-Type: text/plain; charset=utf-8');
-    echo 'Not Found';
-    exit;
+    render_not_found_page();
 }
 
 $page = category_configuration($category);

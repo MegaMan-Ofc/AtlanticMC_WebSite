@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
+require_once __DIR__ . '/../includes/config.php';
 require_once __DIR__ . '/../includes/routes.php';
+require_once __DIR__ . '/../includes/error_pages.php';
 
 $requestUri = (string) ($_SERVER['REQUEST_URI'] ?? '/');
 $routeName = public_route_name_from_request_uri($requestUri);
@@ -19,10 +21,7 @@ if ($routeName !== null) {
     $categorySlug = public_category_slug_from_request_uri($requestUri);
 
     if ($categorySlug === null) {
-        http_response_code(404);
-        header('Content-Type: text/plain; charset=utf-8');
-        echo 'Not Found';
-        exit;
+        render_not_found_page();
     }
 
     $_GET['slug'] = $categorySlug;

@@ -1,6 +1,7 @@
 LimitRequestBody 6291456
 Options -Indexes
 DirectoryIndex index.php
+ErrorDocument 404 /404.php
 
 <IfModule mod_rewrite.c>
     RewriteEngine On
