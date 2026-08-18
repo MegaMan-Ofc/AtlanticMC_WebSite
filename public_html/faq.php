@@ -1,10 +1,10 @@
-<?php require_once dirname(__DIR__) . '/controllers/faq.php'; ?>
+<?php require_once dirname(__DIR__) . '/controllers/Site/faq.php'; ?>
 <!DOCTYPE html>
 <html lang="<?= e(current_language()) ?>">
-<?php require dirname(__DIR__) . '/includes/head.php'; ?>
+<?php require dirname(__DIR__) . '/templates/layout/head.php'; ?>
 <body class="<?= e($bodyClass) ?>">
 <div id="wrap">
-    <?php require dirname(__DIR__) . '/includes/header.php'; ?>
+    <?php require dirname(__DIR__) . '/templates/layout/header.php'; ?>
     <main class="main-content" id="main">
         <div class="container">
             <header class="page-title faq-page-title">
@@ -47,7 +47,7 @@
             </section>
         </div>
     </main>
-    <?php require dirname(__DIR__) . '/includes/footer.php'; ?>
+    <?php require dirname(__DIR__) . '/templates/layout/footer.php'; ?>
 </div>
 </body>
 </html>

@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-require_once dirname(__DIR__) . '/controllers/public_router.php';
-require_once dirname(__DIR__) . '/controllers/index.php';
+require_once dirname(__DIR__) . '/app/Core/Routing/public_router.php';
+require_once dirname(__DIR__) . '/controllers/Site/home.php';
 ?>
 <!DOCTYPE html>
 <html lang="<?= e(current_language()) ?>">
-<?php require dirname(__DIR__) . '/includes/head.php'; ?>
+<?php require dirname(__DIR__) . '/templates/layout/head.php'; ?>
 <body class="<?= e($bodyClass) ?>">
 <div id="wrap">
-    <?php require dirname(__DIR__) . '/includes/header.php'; ?>
+    <?php require dirname(__DIR__) . '/templates/layout/header.php'; ?>
     <main class="main-content" id="main">
         <div class="container">
             <h1 class="sr-only"><?= e(t('home.title')) ?></h1>
@@ -185,7 +185,7 @@ require_once dirname(__DIR__) . '/controllers/index.php';
             </section>
         </div>
     </main>
-    <?php require dirname(__DIR__) . '/includes/footer.php'; ?>
+    <?php require dirname(__DIR__) . '/templates/layout/footer.php'; ?>
 </div>
 </body>
 </html>

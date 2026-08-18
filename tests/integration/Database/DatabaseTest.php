@@ -1,0 +1,74 @@
+<?php
+
+declare(strict_types=1);
+
+if (!in_array('sqlite', PDO::getAvailableDrivers(), true)) {
+    fwrite(STDOUT, 'Skipped database integration tests because pdo_sqlite is unavailable.' . PHP_EOL);
+    return;
+}
+
+migrate_database_cli(static function (): void {});
+require_once $root . '/database/seed.php';
+
+$pdo = db();
+$pdo->beginTransaction();
+seed_store_database($pdo);
+$pdo->commit();
+
+$assert((int) $pdo->query('SELECT COUNT(*) FROM schema_migrations')->fetchColumn() >= 10, 'All SQLite migrations are recorded.');
+
+$orderColumns = array_column($pdo->query('PRAGMA table_info(orders)')->fetchAll(), 'name');
+$assert(
+    in_array('tebex_total_cents', $orderColumns, true)
+        && in_array('tebex_currency', $orderColumns, true),
+    'The Tebex hardening migration stores provider basket totals on orders.'
+);
+
+
+$assert(
+    in_array('paid_at', $orderColumns, true),
+    'The analytics migration stores the original paid timestamp on orders.'
+);
+$assert(
+    (int) $pdo->query("SELECT COUNT(*) FROM sqlite_master WHERE type = 'table' AND name IN ('daily_route_stats', 'daily_product_stats')")->fetchColumn() === 2,
+    'The analytics migration creates route and product daily statistic tables.'
+);
+
+$siteStatColumns = array_column($pdo->query('PRAGMA table_info(daily_site_stats)')->fetchAll(), 'name');
+$productStatColumns = array_column($pdo->query('PRAGMA table_info(daily_product_stats)')->fetchAll(), 'name');
+$assert(
+    in_array('product_sessions', $siteStatColumns, true)
+        && in_array('cart_sessions', $siteStatColumns, true)
+        && in_array('interactions', $productStatColumns, true)
+        && in_array('interaction_sessions', $productStatColumns, true),
+    'Analytics integrity migration adds site funnel and product interaction counters.'
+);
+
+$ordersIndexes = array_column($pdo->query('PRAGMA index_list(orders)')->fetchAll(), 'name');
+$assert(in_array('idx_orders_status_paid_at', $ordersIndexes, true), 'Paid-order analytics have a status and paid timestamp index.');
+
+$integrityTriggers = (int) $pdo->query("SELECT COUNT(*) FROM sqlite_master WHERE type = 'trigger' AND name IN ('trg_products_category_insert', 'trg_products_category_update', 'trg_categories_products_delete')")->fetchColumn();
+$assert($integrityTriggers === 3, 'SQLite enforces product/category integrity with database triggers.');
+
+$productColumns = array_column($pdo->query('PRAGMA table_info(products)')->fetchAll(), 'name');
+$assert(
+    in_array('discount_price_cents', $productColumns, true),
+    'The product discount migration adds the promotional price column.'
+);
+
+$assert((int) $pdo->query('SELECT COUNT(*) FROM products')->fetchColumn() > 0, 'The seed creates products.');
+$assert((int) $pdo->query('SELECT COUNT(*) FROM categories')->fetchColumn() >= 4, 'The dynamic category migration creates catalogue categories.');
+
+$categoryColumns = array_column($pdo->query('PRAGMA table_info(categories)')->fetchAll(), 'name');
+$assert(
+    in_array('home_placement', $categoryColumns, true)
+        && in_array('home_sort_order', $categoryColumns, true),
+    'The homepage category layout migration adds placement and independent homepage ordering.'
+);
+$assert((int) $pdo->query('SELECT COUNT(*) FROM products WHERE category_id IS NULL')->fetchColumn() === 0, 'Seed products are linked to dynamic category IDs.');
+
+require dirname(__DIR__) . '/Store/ProductSearchTest.php';
+require dirname(__DIR__) . '/Store/CategoryProductTest.php';
+require dirname(__DIR__) . '/Store/CommerceTest.php';
+require dirname(__DIR__) . '/Store/RecommendedProductsTest.php';
+require dirname(__DIR__) . '/Store/HomeCategoryLayoutTest.php';

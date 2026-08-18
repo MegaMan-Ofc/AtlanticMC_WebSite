@@ -50,40 +50,8 @@ $_SERVER['REQUEST_METHOD'] = 'GET';
 $_SERVER['SCRIPT_NAME'] = '/index.php';
 $_SERVER['SCRIPT_FILENAME'] = $root . '/public_html/index.php';
 
-foreach ([
-    'config',
-    'routes',
-    'helpers',
-    'logging',
-    'session',
-    'database',
-    'migrations',
-    'i18n',
-    'categories',
-    'catalog',
-    'product_search',
-    'recommended',
-    'coupons',
-    'cart',
-    'security',
-    'maintenance',
-    'admin_auth',
-    'admin_formatting',
-    'media',
-    'admin_categories',
-    'admin_products',
-    'admin_recommended',
-    'admin_home',
-    'admin_coupons',
-    'admin_orders',
-    'analytics',
-    'admin_analytics',
-    'admin_dashboard',
-    'minecraft_recipient',
-    'tebex',
-    'orders',
-] as $include) {
-    require_once $root . '/includes/' . $include . '.php';
+foreach (require $root . '/app/modules.php' as $module) {
+    require_once $root . '/app/' . $module;
 }
 
 $suite = new TestSuite();
